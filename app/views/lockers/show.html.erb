@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @locker.location %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @locker.size %>
+</p>
+
+<p>
+  <strong>General area:</strong>
+  <%= @locker.general_area %>
+</p>
+
+<p>
+  <strong>Accessible:</strong>
+  <%= @locker.accessible %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @locker.notes %>
+</p>
+
+<p>
+  <strong>Combination:</strong>
+  <%= @locker.combination %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @locker.code %>
+</p>
+
+<p>
+  <strong>Tag:</strong>
+  <%= @locker.tag %>
+</p>
+
+<p>
+  <strong>Discs:</strong>
+  <%= @locker.discs %>
+</p>
+
+<p>
+  <strong>Clutch:</strong>
+  <%= @locker.clutch %>
+</p>
+
+<p>
+  <strong>Hubpos:</strong>
+  <%= @locker.hubpos %>
+</p>
+
+<p>
+  <strong>Key number:</strong>
+  <%= @locker.key_number %>
+</p>
+
+<p>
+  <strong>Floor:</strong>
+  <%= @locker.floor %>
+</p>
+
+<%= link_to 'Edit', edit_locker_path(@locker) %> |
+<%= link_to 'Back', lockers_path %>

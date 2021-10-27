@@ -1,0 +1,52 @@
+<%= form_with(model: locker_application, local: true) do |form| %>
+  <% if locker_application.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(locker_application.errors.count, "error") %> prohibited this locker_application from being saved:</h2>
+
+      <ul>
+      <% locker_application.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :preferred_size %>
+    <%= form.number_field :preferred_size %>
+  </div>
+
+  <div class="field">
+    <%= form.label :preferred_general_area %>
+    <%= form.text_field :preferred_general_area %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accessible %>
+    <%= form.check_box :accessible %>
+  </div>
+
+  <div class="field">
+    <%= form.label :semester %>
+    <%= form.text_field :semester %>
+  </div>
+
+  <div class="field">
+    <%= form.label :staus_at_application %>
+    <%= form.text_field :staus_at_application %>
+  </div>
+
+  <div class="field">
+    <%= form.label :department_at_application %>
+    <%= form.text_field :department_at_application %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

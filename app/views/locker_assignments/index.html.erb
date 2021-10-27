@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Locker Assignments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Locker application</th>
+      <th>Locker</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @locker_assignments.each do |locker_assignment| %>
+      <tr>
+        <td><%= locker_assignment.start_date %></td>
+        <td><%= locker_assignment.end_date %></td>
+        <td><%= locker_assignment.locker_application.applicant %></td>
+        <td><%= locker_assignment.locker.location %></td>
+        <td><%= link_to 'Show', locker_assignment %></td>
+        <td><%= link_to 'Edit', edit_locker_assignment_path(locker_assignment) %></td>
+        <td><%= link_to 'Destroy', locker_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Locker Assignment', new_locker_assignment_path %>

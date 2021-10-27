@@ -1,0 +1,82 @@
+<%= form_with(model: locker, local: true) do |form| %>
+  <% if locker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(locker.errors.count, "error") %> prohibited this locker from being saved:</h2>
+
+      <ul>
+      <% locker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :size %>
+    <%= form.number_field :size %>
+  </div>
+
+  <div class="field">
+    <%= form.label :general_area %>
+    <%= form.text_field :general_area %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accessible %>
+    <%= form.check_box :accessible %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_field :notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :combination %>
+    <%= form.text_field :combination %>
+  </div>
+
+  <div class="field">
+    <%= form.label :code %>
+    <%= form.text_field :code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tag %>
+    <%= form.text_field :tag %>
+  </div>
+
+  <div class="field">
+    <%= form.label :discs %>
+    <%= form.text_field :discs %>
+  </div>
+
+  <div class="field">
+    <%= form.label :clutch %>
+    <%= form.text_field :clutch %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hubpos %>
+    <%= form.text_field :hubpos %>
+  </div>
+
+  <div class="field">
+    <%= form.label :key_number %>
+    <%= form.text_field :key_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :floor %>
+    <%= form.number_field :floor %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

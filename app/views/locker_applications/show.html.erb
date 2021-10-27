@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Preferred size:</strong>
+  <%= @locker_application.preferred_size %>
+</p>
+
+<p>
+  <strong>Preferred general area:</strong>
+  <%= @locker_application.preferred_general_area %>
+</p>
+
+<p>
+  <strong>Accessible:</strong>
+  <%= @locker_application.accessible %>
+</p>
+
+<p>
+  <strong>Semester:</strong>
+  <%= @locker_application.semester %>
+</p>
+
+<p>
+  <strong>Staus at application:</strong>
+  <%= @locker_application.staus_at_application %>
+</p>
+
+<p>
+  <strong>Department at application:</strong>
+  <%= @locker_application.department_at_application %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @locker_application.applicant %>
+</p>
+
+<%= link_to 'Edit', edit_locker_application_path(@locker_application) %> |
+<%= link_to 'Back', locker_applications_path %>

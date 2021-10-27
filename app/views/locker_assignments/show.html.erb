@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @locker_assignment.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @locker_assignment.end_date %>
+</p>
+
+<p>
+  <strong>Locker application:</strong>
+  <%= @locker_assignment.locker_application.applicant %>
+</p>
+
+<p>
+  <strong>Locker:</strong>
+  <%= @locker_assignment.locker.location %>
+</p>
+
+<%= link_to 'Edit', edit_locker_assignment_path(@locker_assignment) %> |
+<%= link_to 'Back', locker_assignments_path %>

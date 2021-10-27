@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Lockers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Location</th>
+      <th>Size</th>
+      <th>General area</th>
+      <th>Accessible</th>
+      <th>Notes</th>
+      <th>Combination</th>
+      <th>Code</th>
+      <th>Tag</th>
+      <th>Discs</th>
+      <th>Clutch</th>
+      <th>Hubpos</th>
+      <th>Key number</th>
+      <th>Floor</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lockers.each do |locker| %>
+      <tr>
+        <td><%= locker.location %></td>
+        <td><%= locker.size %></td>
+        <td><%= locker.general_area %></td>
+        <td><%= locker.accessible %></td>
+        <td><%= locker.notes %></td>
+        <td><%= locker.combination %></td>
+        <td><%= locker.code %></td>
+        <td><%= locker.tag %></td>
+        <td><%= locker.discs %></td>
+        <td><%= locker.clutch %></td>
+        <td><%= locker.hubpos %></td>
+        <td><%= locker.key_number %></td>
+        <td><%= locker.floor %></td>
+        <td><%= link_to 'Show', locker %></td>
+        <td><%= link_to 'Edit', edit_locker_path(locker) %></td>
+        <td><%= link_to 'Destroy', locker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Locker', new_locker_path %>

@@ -1,0 +1,37 @@
+<%= form_with(model: locker_assignment, local: true) do |form| %>
+  <% if locker_assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(locker_assignment.errors.count, "error") %> prohibited this locker_assignment from being saved:</h2>
+
+      <ul>
+      <% locker_assignment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_date %>
+    <%= form.date_select :end_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :locker_application %>
+    <%= form.text_field :locker_application %>
+  </div>
+
+  <div class="field">
+    <%= form.label :locker_id %>
+    <%= form.text_field :locker_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
