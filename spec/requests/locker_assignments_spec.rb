@@ -22,56 +22,65 @@ RSpec.describe '/locker_assignments', type: :request do
 
   # LockerAssignment. As you add validations to LockerAssignment, be sure to
   # adjust the attributes here as well.
+  let(:locker) { FactoryBot.create :locker }
+  let(:locker_application) { FactoryBot.create :locker_application }
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    {
+      locker_application_id: locker_application.id,
+      locker_id: locker.id,
+      start_date: DateTime.current.to_date
+    }
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    {
+      start_date: DateTime.current.to_date
+    }
   end
 
   describe 'GET /index' do
-    it 'renders a successful response' do
+    it 'redirects to root' do
       LockerAssignment.create! valid_attributes
       get locker_assignments_url
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe 'GET /show' do
-    it 'renders a successful response' do
+    it 'redirects to root' do
       locker_assignment = LockerAssignment.create! valid_attributes
       get locker_assignment_url(locker_assignment)
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe 'GET /new' do
-    it 'renders a successful response' do
+    it 'redirects to root' do
       get new_locker_assignment_url
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe 'GET /edit' do
-    it 'render a successful response' do
+    it 'redirects to root' do
       locker_assignment = LockerAssignment.create! valid_attributes
       get edit_locker_assignment_url(locker_assignment)
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe 'POST /create' do
     context 'with valid parameters' do
-      it 'creates a new LockerAssignment' do
+      it 'redirects to root' do
         expect do
           post locker_assignments_url, params: { locker_assignment: valid_attributes }
-        end.to change(LockerAssignment, :count).by(1)
+        end.to change(LockerAssignment, :count).by(0)
+        expect(response).to redirect_to(root_path)
       end
 
-      it 'redirects to the created locker_assignment' do
+      it 'redirects to root' do
         post locker_assignments_url, params: { locker_assignment: valid_attributes }
-        expect(response).to redirect_to(locker_assignment_url(LockerAssignment.last))
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -80,11 +89,12 @@ RSpec.describe '/locker_assignments', type: :request do
         expect do
           post locker_assignments_url, params: { locker_assignment: invalid_attributes }
         end.to change(LockerAssignment, :count).by(0)
+        expect(response).to redirect_to(root_path)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "redirects to root" do
         post locker_assignments_url, params: { locker_assignment: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -92,45 +102,159 @@ RSpec.describe '/locker_assignments', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        { locker_application_id: locker_application.id,
+        locker_id: locker.id,
+        start_date: DateTime.current.to_date,
+        start_date: DateTime.tomorrow.to_date }
       end
 
-      it 'updates the requested locker_assignment' do
+      it 'redirects to root' do
         locker_assignment = LockerAssignment.create! valid_attributes
         patch locker_assignment_url(locker_assignment), params: { locker_assignment: new_attributes }
         locker_assignment.reload
-        skip('Add assertions for updated state')
+        expect(response).to redirect_to(root_path)
       end
 
-      it 'redirects to the locker_assignment' do
+      it 'redirects to root' do
         locker_assignment = LockerAssignment.create! valid_attributes
         patch locker_assignment_url(locker_assignment), params: { locker_assignment: new_attributes }
         locker_assignment.reload
-        expect(response).to redirect_to(locker_assignment_url(locker_assignment))
+        expect(response).to redirect_to(root_path)
       end
     end
 
     context 'with invalid parameters' do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "redirects to root" do
         locker_assignment = LockerAssignment.create! valid_attributes
         patch locker_assignment_url(locker_assignment), params: { locker_assignment: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested locker_assignment' do
+    it 'redirects to root' do
       locker_assignment = LockerAssignment.create! valid_attributes
       expect do
         delete locker_assignment_url(locker_assignment)
-      end.to change(LockerAssignment, :count).by(-1)
+      end.to change(LockerAssignment, :count).by(0)
+      expect(response).to redirect_to(root_path)
     end
 
-    it 'redirects to the locker_assignments list' do
+    it 'redirects to root' do
       locker_assignment = LockerAssignment.create! valid_attributes
       delete locker_assignment_url(locker_assignment)
-      expect(response).to redirect_to(locker_assignments_url)
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
+  context "with an admin user" do
+    let(:user) {FactoryBot.create :user, :admin}
+    describe 'GET /index' do
+      it 'renders a successful response' do
+        LockerAssignment.create! valid_attributes
+        get locker_assignments_url
+        expect(response).to be_successful
+      end
+    end
+  
+    describe 'GET /show' do
+      it 'renders a successful response' do
+        locker_assignment = LockerAssignment.create! valid_attributes
+        get locker_assignment_url(locker_assignment)
+        expect(response).to be_successful
+      end
+    end
+  
+    describe 'GET /new' do
+      it 'renders a successful response' do
+        get new_locker_assignment_url
+        expect(response).to be_successful
+      end
+    end
+  
+    describe 'GET /edit' do
+      it 'render a successful response' do
+        locker_assignment = LockerAssignment.create! valid_attributes
+        get edit_locker_assignment_url(locker_assignment)
+        expect(response).to be_successful
+      end
+    end
+  
+    describe 'POST /create' do
+      context 'with valid parameters' do
+        it 'creates a new LockerAssignment' do
+          expect do
+            post locker_assignments_url, params: { locker_assignment: valid_attributes }
+          end.to change(LockerAssignment, :count).by(1)
+        end
+  
+        it 'redirects to the created locker_assignment' do
+          post locker_assignments_url, params: { locker_assignment: valid_attributes }
+          expect(response).to redirect_to(locker_assignment_url(LockerAssignment.last))
+        end
+      end
+  
+      context 'with invalid parameters' do
+        it 'does not create a new LockerAssignment' do
+          expect do
+            post locker_assignments_url, params: { locker_assignment: invalid_attributes }
+          end.to change(LockerAssignment, :count).by(0)
+        end
+  
+        it "renders a successful response (i.e. to display the 'new' template)" do
+          post locker_assignments_url, params: { locker_assignment: invalid_attributes }
+          expect(response).to be_unprocessable
+        end
+      end
+    end
+  
+    describe 'PATCH /update' do
+      context 'with valid parameters' do
+        let(:new_attributes) do
+          { locker_application_id: locker_application.id,
+            locker_id: locker.id,
+            start_date: DateTime.current.to_date,
+            end_date: DateTime.tomorrow.to_date }
+        end
+  
+        it 'updates the requested locker_assignment' do
+          locker_assignment = LockerAssignment.create! valid_attributes
+          patch locker_assignment_url(locker_assignment), params: { locker_assignment: new_attributes }
+          locker_assignment.reload
+          expect(locker_assignment.end_date).to eq(DateTime.tomorrow.to_date)
+        end
+  
+        it 'redirects to the locker_assignment' do
+          locker_assignment = LockerAssignment.create! valid_attributes
+          patch locker_assignment_url(locker_assignment), params: { locker_assignment: new_attributes }
+          locker_assignment.reload
+          expect(response).to redirect_to(locker_assignment_url(locker_assignment))
+        end
+      end
+  
+      context 'with invalid parameters' do
+        it "renders a successful response (i.e. to display the 'edit' template)" do
+          locker_assignment = LockerAssignment.create! valid_attributes
+          patch locker_assignment_url(locker_assignment), params: { locker_assignment: invalid_attributes }
+          expect(response).to redirect_to(locker_assignment_path(locker_assignment))
+        end
+      end
+    end
+  
+    describe 'DELETE /destroy' do
+      it 'destroys the requested locker_assignment' do
+        locker_assignment = LockerAssignment.create! valid_attributes
+        expect do
+          delete locker_assignment_url(locker_assignment)
+        end.to change(LockerAssignment, :count).by(-1)
+      end
+  
+      it 'redirects to the locker_assignments list' do
+        locker_assignment = LockerAssignment.create! valid_attributes
+        delete locker_assignment_url(locker_assignment)
+        expect(response).to redirect_to(locker_assignments_url)
+      end
     end
   end
 end

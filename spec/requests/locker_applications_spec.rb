@@ -23,68 +23,107 @@ RSpec.describe '/locker_applications', type: :request do
   # LockerApplication. As you add validations to LockerApplication, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    {
+      preferred_size: 2,
+      preferred_general_area: 'Preferred General Area',
+      accessible: false,
+      semester: 'Semester',
+      staus_at_application: 'Staus At Application',
+      department_at_application: 'Department At Application',
+      user_id: user.id
+    }
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    {
+      preferred_size: 2,
+      preferred_general_area: 'Preferred General Area',
+      accessible: false,
+      semester: 'Semester',
+      staus_at_application: 'Staus At Application',
+      department_at_application: 'Department At Application',
+      user_id: nil
+    }
   end
 
   describe 'GET /index' do
-    it 'renders a successful response' do
+    it 'redirects to root' do
       LockerApplication.create! valid_attributes
       get locker_applications_url
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe 'GET /show' do
-    it 'renders a successful response' do
+    it 'Shows the user their application' do
       locker_application = LockerApplication.create! valid_attributes
       get locker_application_url(locker_application)
       expect(response).to be_successful
     end
+
+    context "another's application" do
+      before do
+        valid_attributes[:user_id] = FactoryBot.create(:user).id
+      end
+      it 'redirects to root' do
+        locker_application = LockerApplication.create! valid_attributes
+        get locker_application_url(locker_application)
+        expect(response).to redirect_to(root_path)
+      end
+    end
   end
 
   describe 'GET /new' do
-    it 'renders a successful response' do
+    it 'allows a user to apply for a locker' do
       get new_locker_application_url
       expect(response).to be_successful
     end
   end
 
   describe 'GET /edit' do
-    it 'render a successful response' do
+    it 'redirects to root' do
       locker_application = LockerApplication.create! valid_attributes
       get edit_locker_application_url(locker_application)
-      expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe 'POST /create' do
-    context 'with valid parameters' do
-      it 'creates a new LockerApplication' do
+    context 'creates an application for the user' do
+      it 'redirects to root' do
         expect do
           post locker_applications_url, params: { locker_application: valid_attributes }
         end.to change(LockerApplication, :count).by(1)
       end
 
-      it 'redirects to the created locker_application' do
+      it 'Shows the user their application' do
         post locker_applications_url, params: { locker_application: valid_attributes }
         expect(response).to redirect_to(locker_application_url(LockerApplication.last))
       end
+
+      context "another's application" do
+        before do
+          valid_attributes[:user_id] = FactoryBot.create(:user).id
+        end
+        it 'redirects to root' do
+          locker_application = LockerApplication.create! valid_attributes
+          get locker_application_url(locker_application)
+          expect(response).to redirect_to(root_path)
+        end
+      end  
     end
 
     context 'with invalid parameters' do
-      it 'does not create a new LockerApplication' do
+      it 'redirects to root' do
         expect do
           post locker_applications_url, params: { locker_application: invalid_attributes }
         end.to change(LockerApplication, :count).by(0)
+        expect(response).to redirect_to(root_path)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "redirects to root" do
         post locker_applications_url, params: { locker_application: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -92,45 +131,184 @@ RSpec.describe '/locker_applications', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        {
+          preferred_size: 4,
+          preferred_general_area: 'Preferred General Area two',
+          accessible: false,
+          semester: 'Semester',
+          staus_at_application: 'Staus At Application',
+          department_at_application: 'Department At Application',
+          user_id: user.id
+        }
       end
 
-      it 'updates the requested locker_application' do
+      it 'redirects to root and does not update the data' do
         locker_application = LockerApplication.create! valid_attributes
         patch locker_application_url(locker_application), params: { locker_application: new_attributes }
         locker_application.reload
-        skip('Add assertions for updated state')
+        expect(locker_application.preferred_size).to eq(2)
+        expect(locker_application.preferred_general_area).to eq('Preferred General Area')
       end
 
-      it 'redirects to the locker_application' do
+      it 'redirects to root' do
         locker_application = LockerApplication.create! valid_attributes
         patch locker_application_url(locker_application), params: { locker_application: new_attributes }
         locker_application.reload
-        expect(response).to redirect_to(locker_application_url(locker_application))
+        expect(response).to redirect_to(root_path)
       end
     end
 
     context 'with invalid parameters' do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "redirects to root" do
         locker_application = LockerApplication.create! valid_attributes
         patch locker_application_url(locker_application), params: { locker_application: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested locker_application' do
+    it 'redirects to root' do
       locker_application = LockerApplication.create! valid_attributes
       expect do
         delete locker_application_url(locker_application)
-      end.to change(LockerApplication, :count).by(-1)
+      end.to change(LockerApplication, :count).by(0)
+      expect(response).to redirect_to(root_path)
     end
 
-    it 'redirects to the locker_applications list' do
+    it 'redirects to root' do
       locker_application = LockerApplication.create! valid_attributes
       delete locker_application_url(locker_application)
-      expect(response).to redirect_to(locker_applications_url)
+      expect(response).to redirect_to(root_path)
     end
+  end
+
+  context "with an admin user" do
+    let(:user) { FactoryBot.create :user, :admin }
+
+    describe 'GET /index' do
+      it 'renders a successful response' do
+        LockerApplication.create! valid_attributes
+        get locker_applications_url
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'GET /show' do
+      it 'renders a successful response' do
+        locker_application = LockerApplication.create! valid_attributes
+        get locker_application_url(locker_application)
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'GET /new' do
+      it 'renders a successful response' do
+        get new_locker_application_url
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'GET /edit' do
+      it 'render a successful response' do
+        locker_application = LockerApplication.create! valid_attributes
+        get edit_locker_application_url(locker_application)
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'POST /create' do
+      context 'with valid parameters' do
+        it 'creates a new LockerApplication' do
+          expect do
+            post locker_applications_url, params: { locker_application: valid_attributes }
+          end.to change(LockerApplication, :count).by(1)
+        end
+
+        it 'redirects to the created locker_application' do
+          post locker_applications_url, params: { locker_application: valid_attributes }
+          expect(response).to redirect_to(locker_application_url(LockerApplication.last))
+        end
+
+        context "another's application" do
+          before do
+            valid_attributes[:user_id] = FactoryBot.create(:user).id
+          end
+          it 'creates a new LockerApplication' do
+            expect do
+              post locker_applications_url, params: { locker_application: valid_attributes }
+            end.to change(LockerApplication, :count).by(1)
+          end
+        end    
+      end
+
+      context 'with invalid parameters' do
+        it 'does not create a new LockerApplication' do
+          expect do
+            post locker_applications_url, params: { locker_application: invalid_attributes }
+          end.to change(LockerApplication, :count).by(0)
+        end
+
+        it "renders a successful response (i.e. to display the 'new' template)" do
+          post locker_applications_url, params: { locker_application: invalid_attributes }
+          expect(response).to be_unprocessable
+        end
+      end
+    end
+
+    describe 'PATCH /update' do
+      context 'with valid parameters' do
+        let(:new_attributes) do
+          {
+            preferred_size: 4,
+            preferred_general_area: 'Preferred General Area Two',
+            accessible: false,
+            semester: 'Semester',
+            staus_at_application: 'Staus At Application',
+            department_at_application: 'Department At Application',
+            user_id: user.id
+          }
+        end
+
+        it 'updates the requested locker_application' do
+          locker_application = LockerApplication.create! valid_attributes
+          patch locker_application_url(locker_application), params: { locker_application: new_attributes }
+          locker_application.reload
+          expect(locker_application.preferred_size).to eq(4)
+          expect(locker_application.preferred_general_area).to eq('Preferred General Area Two')
+        end
+
+        it 'redirects to the locker_application' do
+          locker_application = LockerApplication.create! valid_attributes
+          patch locker_application_url(locker_application), params: { locker_application: new_attributes }
+          locker_application.reload
+          expect(response).to redirect_to(locker_application_url(locker_application))
+        end
+      end
+
+      context 'with invalid parameters' do
+        it "renders a successful response (i.e. to display the 'edit' template)" do
+          locker_application = LockerApplication.create! valid_attributes
+          patch locker_application_url(locker_application), params: { locker_application: invalid_attributes }
+          expect(response).to be_unprocessable
+        end
+      end
+    end
+
+    describe 'DELETE /destroy' do
+      it 'destroys the requested locker_application' do
+        locker_application = LockerApplication.create! valid_attributes
+        expect do
+          delete locker_application_url(locker_application)
+        end.to change(LockerApplication, :count).by(-1)
+      end
+
+      it 'redirects to the locker_applications list' do
+        locker_application = LockerApplication.create! valid_attributes
+        delete locker_application_url(locker_application)
+        expect(response).to redirect_to(locker_applications_url)
+      end
+    end
+
   end
 end

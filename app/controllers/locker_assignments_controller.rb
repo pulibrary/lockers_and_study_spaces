@@ -2,6 +2,7 @@
 
 class LockerAssignmentsController < ApplicationController
   before_action :set_locker_assignment, only: %i[show edit update destroy]
+  before_action :force_admin
 
   # GET /locker_assignments or /locker_assignments.json
   def index
@@ -65,6 +66,13 @@ class LockerAssignmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def locker_assignment_params
-    params.require(:locker_assignment).permit(:start_date, :end_date, :locker_application, :locker_id)
+    params.require(:locker_assignment).permit(:start_date, :end_date, :locker_application_id, :locker_id)
   end
+
+  def force_admin
+    return if current_user.admin?
+
+    redirect_to :root, alert: 'Only administrators have access to Locker Assignments!'
+  end
+
 end

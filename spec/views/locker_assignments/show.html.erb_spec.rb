@@ -8,7 +8,8 @@ RSpec.describe 'locker_assignments/show', type: :view do
   before(:each) do
     @locker_assignment = assign(:locker_assignment, LockerAssignment.create!(
                                                       locker_application: locker_application,
-                                                      locker: locker
+                                                      locker: locker,
+                                                      start_date: DateTime.current.to_date
                                                     ))
   end
 

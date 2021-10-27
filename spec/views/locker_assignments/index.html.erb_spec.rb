@@ -11,11 +11,13 @@ RSpec.describe 'locker_assignments/index', type: :view do
     assign(:locker_assignments, [
              LockerAssignment.create!(
                locker_application: locker_application1,
-               locker: locker1
+               locker: locker1,
+               start_date: DateTime.current.to_date
              ),
              LockerAssignment.create!(
                locker_application: locker_application2,
-               locker: locker2
+               locker: locker2,
+               start_date: DateTime.current.to_date
              )
            ])
   end

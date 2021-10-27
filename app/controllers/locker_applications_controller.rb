@@ -2,6 +2,7 @@
 
 class LockerApplicationsController < ApplicationController
   before_action :set_locker_application, only: %i[show edit update destroy]
+  before_action :force_admin, except: [:new, :create, :show]
 
   # GET /locker_applications or /locker_applications.json
   def index
@@ -9,7 +10,9 @@ class LockerApplicationsController < ApplicationController
   end
 
   # GET /locker_applications/1 or /locker_applications/1.json
-  def show; end
+  def show
+    force_admin if @locker_application.user != current_user
+  end
 
   # GET /locker_applications/new
   def new
@@ -22,6 +25,8 @@ class LockerApplicationsController < ApplicationController
   # POST /locker_applications or /locker_applications.json
   def create
     @locker_application = LockerApplication.new(locker_application_params)
+    force_admin if @locker_application.user != current_user
+    return if !current_user.admin? && @locker_application.user != current_user
 
     respond_to do |format|
       if @locker_application.save
@@ -67,5 +72,11 @@ class LockerApplicationsController < ApplicationController
   def locker_application_params
     params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
                                                :staus_at_application, :department_at_application, :user_id)
+  end
+
+  def force_admin
+    return if current_user.admin?
+
+    redirect_to :root, alert: 'Only administrators have access to the everyone\'s Locker Applications!'
   end
 end

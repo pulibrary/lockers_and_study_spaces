@@ -7,5 +7,6 @@ FactoryBot.define do
     general_area { 'location-1' }
     accessible { false }
     floor { 1 }
+    combination {'11-22-33'}
   end
 end
