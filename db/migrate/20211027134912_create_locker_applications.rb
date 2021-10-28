@@ -7,7 +7,7 @@ class CreateLockerApplications < ActiveRecord::Migration[5.2]
       t.string :preferred_general_area
       t.boolean :accessible
       t.string :semester
-      t.string :staus_at_application
+      t.string :status_at_application
       t.string :department_at_application
       t.belongs_to :user, foreign_key: true
 

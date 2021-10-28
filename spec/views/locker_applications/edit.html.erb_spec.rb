@@ -11,7 +11,7 @@ RSpec.describe 'locker_applications/edit', type: :view do
                                                         preferred_general_area: 'MyString',
                                                         accessible: false,
                                                         semester: 'MyString',
-                                                        staus_at_application: 'MyString',
+                                                        status_at_application: 'MyString',
                                                         department_at_application: 'MyString',
                                                         user: user
                                                       ))
@@ -29,7 +29,7 @@ RSpec.describe 'locker_applications/edit', type: :view do
 
       assert_select 'select[name=?]', 'locker_application[semester]'
 
-      assert_select 'input[name=?]', 'locker_application[staus_at_application]'
+      assert_select 'input[name=?]', 'locker_application[status_at_application]'
 
       assert_select 'input[name=?]', 'locker_application[department_at_application]'
 
@@ -52,7 +52,7 @@ RSpec.describe 'locker_applications/edit', type: :view do
 
         assert_select 'select[name=?]', 'locker_application[semester]'
 
-        assert_select 'input[name=?]', 'locker_application[staus_at_application]'
+        assert_select 'input[name=?]', 'locker_application[status_at_application]'
 
         assert_select 'input[name=?]', 'locker_application[department_at_application]'
 

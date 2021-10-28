@@ -10,10 +10,8 @@ module LockerAndStudySpaces
   def config_yaml
     raise "You are missing a configuration file: #{config_file}." unless File.exist?(config_file)
 
-    requests_erb = read_config_file
-
     begin
-      YAML.safe_load(requests_erb, aliases: true)[Rails.env]
+      YAML.safe_load(read_config_file, aliases: true)[Rails.env]
     rescue StandardError => e
       raise("#{config_file} was found, but could not be parsed.\n#{e.inspect}")
     end
@@ -24,7 +22,7 @@ module LockerAndStudySpaces
   end
 
   def read_config_file
-    ERB.new(IO.read(config_file)).result(binding)
+    ERB.new(File.read(config_file)).result(binding)
   rescue StandardError, SyntaxError => e
     raise("#{config_file} was found, but could not be parsed with ERB. \n#{e.inspect}")
   end

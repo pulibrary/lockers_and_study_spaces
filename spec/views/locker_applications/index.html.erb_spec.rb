@@ -12,7 +12,7 @@ RSpec.describe 'locker_applications/index', type: :view do
                preferred_general_area: 'Preferred General Area',
                accessible: false,
                semester: 'Semester',
-               staus_at_application: 'Staus At Application',
+               status_at_application: 'Staus At Application',
                department_at_application: 'Department At Application',
                user: user1
              ),
@@ -21,7 +21,7 @@ RSpec.describe 'locker_applications/index', type: :view do
                preferred_general_area: 'Preferred General Area',
                accessible: false,
                semester: 'Semester',
-               staus_at_application: 'Staus At Application',
+               status_at_application: 'Staus At Application',
                department_at_application: 'Department At Application',
                user: user2
              )

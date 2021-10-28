@@ -28,7 +28,7 @@ RSpec.describe '/locker_applications', type: :request do
       preferred_general_area: 'Preferred General Area',
       accessible: false,
       semester: 'Semester',
-      staus_at_application: 'Staus At Application',
+      status_at_application: 'Staus At Application',
       department_at_application: 'Department At Application',
       user_id: user.id
     }
@@ -40,7 +40,7 @@ RSpec.describe '/locker_applications', type: :request do
       preferred_general_area: 'Preferred General Area',
       accessible: false,
       semester: 'Semester',
-      staus_at_application: 'Staus At Application',
+      status_at_application: 'Staus At Application',
       department_at_application: 'Department At Application',
       user_uid: user.uid
     }
@@ -52,7 +52,7 @@ RSpec.describe '/locker_applications', type: :request do
       preferred_general_area: 'Preferred General Area',
       accessible: false,
       semester: 'Semester',
-      staus_at_application: 'Staus At Application',
+      status_at_application: 'Staus At Application',
       department_at_application: 'Department At Application',
       user_id: nil
     }
@@ -64,7 +64,7 @@ RSpec.describe '/locker_applications', type: :request do
       preferred_general_area: 'Preferred General Area',
       accessible: false,
       semester: 'Semester',
-      staus_at_application: 'Staus At Application',
+      status_at_application: 'Staus At Application',
       department_at_application: 'Department At Application',
       user_uid: nil
     }
@@ -161,7 +161,7 @@ RSpec.describe '/locker_applications', type: :request do
           preferred_general_area: 'Preferred General Area two',
           accessible: false,
           semester: 'Semester',
-          staus_at_application: 'Staus At Application',
+          status_at_application: 'Staus At Application',
           department_at_application: 'Department At Application',
           user_uid: user.uid
         }
@@ -289,7 +289,7 @@ RSpec.describe '/locker_applications', type: :request do
             preferred_general_area: 'Preferred General Area Two',
             accessible: false,
             semester: 'Semester',
-            staus_at_application: 'Staus At Application',
+            status_at_application: 'Staus At Application',
             department_at_application: 'Department At Application',
             user_uid: user.uid
           }

@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20_211_027_134_912) do
     t.string 'preferred_general_area'
     t.boolean 'accessible'
     t.string 'semester'
-    t.string 'staus_at_application'
+    t.string 'status_at_application'
     t.string 'department_at_application'
     t.bigint 'user_id'
     t.datetime 'created_at', null: false

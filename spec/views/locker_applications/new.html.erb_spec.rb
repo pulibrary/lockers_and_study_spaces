@@ -8,11 +8,11 @@ RSpec.describe 'locker_applications/new', type: :view do
     sign_in user
     assign(:locker_application, LockerApplication.new(
                                   preferred_size: 1,
-                                  preferred_general_area: 'MyString',
+                                  preferred_general_area: 'area',
                                   accessible: false,
-                                  semester: 'MyString',
-                                  staus_at_application: 'MyString',
-                                  department_at_application: 'MyString',
+                                  semester: 'Fall',
+                                  status_at_application: 'junior',
+                                  department_at_application: 'department',
                                   user: user
                                 ))
   end
@@ -21,17 +21,17 @@ RSpec.describe 'locker_applications/new', type: :view do
     render
 
     assert_select 'form[action=?][method=?]', locker_applications_path, 'post' do
-      assert_select 'select[name=?]', 'locker_application[preferred_size]'
+      assert_select 'select[name=?]', 'locker_application[preferred_size]', value: 1
 
-      assert_select 'select[name=?]', 'locker_application[preferred_general_area]'
+      assert_select 'select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
 
-      assert_select 'input[name=?]', 'locker_application[accessible]'
+      assert_select 'input[name=?]', 'locker_application[accessible]', value: false
 
-      assert_select 'select[name=?]', 'locker_application[semester]'
+      assert_select 'select[name=?]', 'locker_application[semester]', value: 'Fall'
 
-      assert_select 'input[name=?]', 'locker_application[staus_at_application]'
+      assert_select 'input[name=?]', 'locker_application[status_at_application]', value: 'junior'
 
-      assert_select 'input[name=?]', 'locker_application[department_at_application]'
+      assert_select 'input[name=?]', 'locker_application[department_at_application]', value: 'department'
 
       assert_select 'input[type=hidden][name=?]', 'locker_application[user_uid]'
     end
@@ -52,7 +52,7 @@ RSpec.describe 'locker_applications/new', type: :view do
 
         assert_select 'select[name=?]', 'locker_application[semester]'
 
-        assert_select 'input[name=?]', 'locker_application[staus_at_application]'
+        assert_select 'input[name=?]', 'locker_application[status_at_application]'
 
         assert_select 'input[name=?]', 'locker_application[department_at_application]'
 

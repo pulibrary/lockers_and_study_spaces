@@ -27,9 +27,9 @@ RSpec.describe 'lockers/edit', type: :view do
     assert_select 'form[action=?][method=?]', locker_path(@locker), 'post' do
       assert_select 'input[name=?]', 'locker[location]'
 
-      assert_select 'input[name=?]', 'locker[size]'
+      assert_select 'select[name=?]', 'locker[size]'
 
-      assert_select 'input[name=?]', 'locker[general_area]'
+      assert_select 'select[name=?]', 'locker[general_area]'
 
       assert_select 'input[name=?]', 'locker[accessible]'
 

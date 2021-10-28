@@ -24,8 +24,8 @@ RSpec.describe 'locker_assignments/index', type: :view do
 
   it 'renders a list of locker_assignments' do
     render
-    assert_select 'tr>td', text: locker_application1.applicant
-    assert_select 'tr>td', text: locker_application2.applicant
+    assert_select 'tr>td', text: locker_application1.applicant.to_s
+    assert_select 'tr>td', text: locker_application2.applicant.to_s
     assert_select 'tr>td', text: locker1.location
     assert_select 'tr>td', text: locker2.location
   end

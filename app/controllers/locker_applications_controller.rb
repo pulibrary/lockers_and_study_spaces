@@ -60,7 +60,7 @@ class LockerApplicationsController < ApplicationController
 
   def lookup_user_from_params
     locker_params = params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
-                                                               :staus_at_application, :department_at_application, :user_uid)
+                                                               :status_at_application, :department_at_application, :user_uid)
     uid = locker_params.delete(:user_uid)
     user = if current_user.uid == uid
              current_user
