@@ -87,7 +87,7 @@ RSpec.describe '/lockers', type: :request do
         end.to change(Locker, :count).by(0)
       end
 
-      it "redirects to root path" do
+      it 'redirects to root path' do
         post lockers_url, params: { locker: invalid_attributes }
         expect(response).to redirect_to(root_path)
       end
@@ -118,7 +118,7 @@ RSpec.describe '/lockers', type: :request do
     end
 
     context 'with invalid parameters' do
-      it "redirects to root path" do
+      it 'redirects to root path' do
         locker = Locker.create! valid_attributes
         patch locker_url(locker), params: { locker: invalid_attributes }
         expect(response).to redirect_to(root_path)
@@ -141,9 +141,9 @@ RSpec.describe '/lockers', type: :request do
     end
   end
 
-  context "with an admin user" do
+  context 'with an admin user' do
     let(:user) { FactoryBot.create :user, :admin }
-  
+
     describe 'GET /index' do
       it 'renders a successful response' do
         Locker.create! valid_attributes
@@ -210,7 +210,7 @@ RSpec.describe '/lockers', type: :request do
             combination: '12-23-34', code: 'code', tag: 'tag', discs: 'disc', clutch: 'clutch',
             hubpos: 'hub', key_number: 'key', floor: 1 }
         end
-  
+
         it 'updates the requested locker' do
           locker = Locker.create! valid_attributes
           patch locker_url(locker), params: { locker: new_attributes }
@@ -246,7 +246,7 @@ RSpec.describe '/lockers', type: :request do
           delete locker_url(locker)
         end.to change(Locker, :count).by(-1)
       end
-  
+
       it 'redirects to the lockers list' do
         locker = Locker.create! valid_attributes
         delete locker_url(locker)

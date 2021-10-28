@@ -4,6 +4,6 @@ class LockerApplication < ApplicationRecord
   belongs_to :user
 
   def applicant
-    user.uid
+    user&.uid
   end
 end

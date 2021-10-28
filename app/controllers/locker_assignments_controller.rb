@@ -74,5 +74,4 @@ class LockerAssignmentsController < ApplicationController
 
     redirect_to :root, alert: 'Only administrators have access to Locker Assignments!'
   end
-
 end

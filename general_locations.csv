@@ -1,0 +1,11 @@
+id,location,sort,disabled
+0,No preference,0,false
+1,A floor,10,false
+2,B floor,20,false
+3,C floor,30,false
+4,3rd floor,40,false
+10,Classics Graduate Study Room,100,true
+11,German Graduate Study Room,110,true
+12,History Graduate Study Room,120,true
+13,Religion Graduate Study Room,130,true
+14,2nd floor,35,false

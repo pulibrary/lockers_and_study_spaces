@@ -1,0 +1,28 @@
+development: &default
+  general_locations:
+    - No preference
+    - A floor
+    - B floor
+    - C floor
+    - 2nd floor
+    - 3rd floor
+  study_room_locations:
+    - Classics Graduate Study Room
+    - German Graduate Study Room
+    - History Graduate Study Room
+    - Religion Graduate Study Room
+  locker_sizes:
+    - 4
+    - 6
+  semesters:
+    - Fall
+    - Spring
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+
+staging:
+  <<: *default

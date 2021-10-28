@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :preferred_size %>
-    <%= form.number_field :preferred_size %>
+    <%= form.select :preferred_size, LockerAndStudySpaces.config.fetch(:locker_sizes,[]) %>
   </div>
 
   <div class="field">
     <%= form.label :preferred_general_area %>
-    <%= form.text_field :preferred_general_area %>
+    <%= form.select :preferred_general_area, LockerAndStudySpaces.config.fetch(:general_locations,[]) %>
   </div>
 
   <div class="field">
@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :semester %>
-    <%= form.text_field :semester %>
+    <%= form.select :semester, LockerAndStudySpaces.config.fetch(:semesters,[]) %>
   </div>
 
   <div class="field">
@@ -41,10 +41,15 @@
     <%= form.text_field :department_at_application %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= form.label :user_uid %>
+      <%= form.text_field :user_uid %>
+    </div>
+  <% else %>
+    <%= form.hidden_field :user_uid , value: locker_application.applicant %>
+  <% end %>
+
 
   <div class="actions">
     <%= form.submit %>
