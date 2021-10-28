@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :preferred_size %>
-    <%= form.select :preferred_size, LockerAndStudySpaces.config.fetch(:locker_sizes,[]) %>
+    <%= form.select :preferred_size, locker_application.size_choices %>
   </div>
 
   <div class="field">
