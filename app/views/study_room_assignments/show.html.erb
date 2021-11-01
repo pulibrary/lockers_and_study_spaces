@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @study_room_assignment.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @study_room_assignment.end_date %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @study_room_assignment.user %>
+</p>
+
+<p>
+  <strong>Study room:</strong>
+  <%= @study_room_assignment.study_room %>
+</p>
+
+<%= link_to 'Edit', edit_study_room_assignment_path(@study_room_assignment) %> |
+<%= link_to 'Back', study_room_assignments_path %>

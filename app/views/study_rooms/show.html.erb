@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @study_room.location %>
+</p>
+
+<p>
+  <strong>General area:</strong>
+  <%= @study_room.general_area %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @study_room.notes %>
+</p>
+
+<%= link_to 'Edit', edit_study_room_path(@study_room) %> |
+<%= link_to 'Back', study_rooms_path %>

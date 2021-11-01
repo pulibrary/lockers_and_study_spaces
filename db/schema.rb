@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_027_134_912) do
+ActiveRecord::Schema.define(version: 20_211_028_191_806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -58,6 +58,25 @@ ActiveRecord::Schema.define(version: 20_211_027_134_912) do
     t.datetime 'updated_at', null: false
   end
 
+  create_table 'study_room_assignments', force: :cascade do |t|
+    t.date 'start_date'
+    t.date 'end_date'
+    t.bigint 'user_id'
+    t.bigint 'study_room_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['study_room_id'], name: 'index_study_room_assignments_on_study_room_id'
+    t.index ['user_id'], name: 'index_study_room_assignments_on_user_id'
+  end
+
+  create_table 'study_rooms', force: :cascade do |t|
+    t.string 'location'
+    t.string 'general_area'
+    t.string 'notes'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'provider', default: 'cas', null: false
     t.string 'uid', null: false
@@ -72,4 +91,6 @@ ActiveRecord::Schema.define(version: 20_211_027_134_912) do
 
   add_foreign_key 'locker_applications', 'users'
   add_foreign_key 'locker_assignments', 'lockers'
+  add_foreign_key 'study_room_assignments', 'study_rooms'
+  add_foreign_key 'study_room_assignments', 'users'
 end

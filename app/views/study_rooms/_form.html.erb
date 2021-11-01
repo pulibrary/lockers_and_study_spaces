@@ -1,0 +1,32 @@
+<%= form_with(model: study_room, local: true) do |form| %>
+  <% if study_room.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(study_room.errors.count, "error") %> prohibited this study_room from being saved:</h2>
+
+      <ul>
+      <% study_room.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :general_area %>
+    <%= form.text_field :general_area %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_field :notes %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

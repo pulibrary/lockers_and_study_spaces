@@ -8,4 +8,8 @@ class User < ApplicationRecord
     user = User.create(provider: access_token.provider, uid: access_token.uid, admin: false) if user.blank?
     user
   end
+
+  def to_s
+    uid
+  end
 end

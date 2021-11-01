@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :study_room_assignments
+  resources :study_rooms
   root 'locker_applications#new'
 
   resources :locker_applications
