@@ -6,7 +6,7 @@ class StudyRoomAssignmentsController < ApplicationController
 
   # GET /study_room_assignments or /study_room_assignments.json
   def index
-    @study_room_assignments = StudyRoomAssignment.all
+    @pagy, @study_room_assignments = pagy(StudyRoomAssignment.order(expiration_date: :desc).order(start_date: :desc).all)
   end
 
   # GET /study_room_assignments/1 or /study_room_assignments/1.json

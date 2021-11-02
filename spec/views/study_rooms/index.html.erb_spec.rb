@@ -16,6 +16,7 @@ RSpec.describe 'study_rooms/index', type: :view do
                notes: 'Notes'
              )
            ])
+    assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
   end
 
   it 'renders a list of study_rooms' do

@@ -8,16 +8,23 @@
   </head>
 
   <body>
+    <library-header app-name="Firestone Locker and Study Rooms" abbr-name="FLSR" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
+      <menu-bar type="main-menu" :menu-items="[
+        <% if current_user&.admin %>
+          {name: 'Locker Management', component: 'Locker Management', children: [
+            {name: 'Lockers', component: 'Lockers', href: '/lockers/'},
+            {name: 'Requests', component: 'Requests', href: '/locker_applications/'},
+            {name: 'Assignments', component: 'Assignments', href: '/locker_assignments/'},
+          ]},  
+          {name: 'Study Room Management', component: 'Study Room Management', children: [
+            {name: 'Study Rooms', component: 'Study Rooms', href: '/study_rooms/'},
+            {name: 'Assignments', component: 'Assignments', href: '/study_room_assignments/'},
+          ]},  
+        <% end %>
+        {name: 'Logout', component: 'Logout', href: '/sign_out'},
+      ]"></menu-bar>
+    </library-header>
     <div class="lux">
-      <library-header app-name="Firestone Locker and Study Rooms" abbr-name="LTR" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
-          <menu-bar type="main-menu" :menu-items="[
-            <% if current_user&.admin %>
-              {name: 'Lockers', component: 'Lockers', href: '/lockers/'},
-              {name: 'Study Rooms', component: 'Study Rooms', href: '/study_rooms/'},
-            <% end %>
-           {name: 'Logout', component: 'Logout', href: '/sign_out'},
-          ]"></menu-bar>
-      </library-header>
       <%= yield %>
     </div>
   </body>

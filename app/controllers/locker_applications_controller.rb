@@ -6,7 +6,7 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications or /locker_applications.json
   def index
-    @locker_applications = LockerApplication.all
+    @pagy, @locker_applications = pagy(LockerApplication.all)
   end
 
   # GET /locker_applications/1 or /locker_applications/1.json

@@ -43,6 +43,7 @@ gem 'omniauth-rails_csrf_protection'
 
 # ldap
 gem 'net-ldap'
+gem 'pagy', '~> 3.5'
 
 gem 'webpacker', '>= 4.0.x'
 

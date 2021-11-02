@@ -26,6 +26,7 @@ RSpec.describe 'locker_applications/index', type: :view do
                user: user2
              )
            ])
+    assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
   end
 
   it 'renders a list of locker_applications' do

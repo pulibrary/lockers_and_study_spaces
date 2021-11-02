@@ -6,7 +6,7 @@ class StudyRoomsController < ApplicationController
 
   # GET /study_rooms or /study_rooms.json
   def index
-    @study_rooms = StudyRoom.all
+    @pagy, @study_rooms = pagy(StudyRoom.order(:location).all)
   end
 
   # GET /study_rooms/1 or /study_rooms/1.json
