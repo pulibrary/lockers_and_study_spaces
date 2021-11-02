@@ -9,10 +9,16 @@
 
   <body>
     <div class="lux">
-    <div>
-      <logo-university></logo-university>
-    </div>
-        <%= yield %>
+      <library-header app-name="Firestone Locker and Study Rooms" abbr-name="LTR" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
+          <menu-bar type="main-menu" :menu-items="[
+            <% if current_user&.admin %>
+              {name: 'Lockers', component: 'Lockers', href: '/lockers/'},
+              {name: 'Study Rooms', component: 'Study Rooms', href: '/study_rooms/'},
+            <% end %>
+           {name: 'Logout', component: 'Logout', href: '/sign_out'},
+          ]"></menu-bar>
+      </library-header>
+      <%= yield %>
     </div>
   </body>
 </html>

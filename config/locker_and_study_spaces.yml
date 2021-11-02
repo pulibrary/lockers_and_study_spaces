@@ -17,6 +17,12 @@ development: &default
   semesters:
     - Fall
     - Spring
+  statuses:
+    - senior
+    - junior
+    - graduate
+    - faculty
+    - staff
 
 test:
   <<: *default

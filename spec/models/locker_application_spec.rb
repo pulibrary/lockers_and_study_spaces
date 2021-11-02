@@ -10,7 +10,7 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   it 'only has one size choice' do
-    expect(locker_application.size_choices).to eq([4])
+    expect(locker_application.size_choices).to eq([{:label=>4, :value=>4}])
   end
 
   context 'a user is present' do
@@ -26,7 +26,7 @@ RSpec.describe LockerApplication, type: :model do
     end
 
     it 'only has multiple size choices' do
-      expect(locker_application.size_choices).to eq([4, 6])
+      expect(locker_application.size_choices).to eq([{:label=>4, :value=>4}, {:label=>6, :value=>6}])
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe LockerApplication, type: :model do
     end
 
     it 'only has one size choice' do
-      expect(locker_application.size_choices).to eq([4])
+      expect(locker_application.size_choices).to eq([{:label=>4, :value=>4}])
     end
   end
 end

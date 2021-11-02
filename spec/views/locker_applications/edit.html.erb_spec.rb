@@ -21,17 +21,17 @@ RSpec.describe 'locker_applications/edit', type: :view do
     render
 
     assert_select 'form[action=?][method=?]', locker_application_path(@locker_application), 'post' do
-      assert_select 'select[name=?]', 'locker_application[preferred_size]'
+      assert_select 'input-select[name=?]', 'locker_application[preferred_size]'
 
-      assert_select 'select[name=?]', 'locker_application[preferred_general_area]'
+      assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]'
 
-      assert_select 'input[name=?]', 'locker_application[accessible]'
+      assert_select 'input-checkbox'
 
-      assert_select 'select[name=?]', 'locker_application[semester]'
+      assert_select 'input-select[name=?]', 'locker_application[semester]'
 
-      assert_select 'input[name=?]', 'locker_application[status_at_application]'
+      assert_select 'input-select[name=?]', 'locker_application[status_at_application]'
 
-      assert_select 'input[name=?]', 'locker_application[department_at_application]'
+      assert_select 'input-text[name=?]', 'locker_application[department_at_application]'
 
       assert_select 'input[type=hidden][name=?]', 'locker_application[user_uid]'
     end
@@ -44,20 +44,20 @@ RSpec.describe 'locker_applications/edit', type: :view do
       render
 
       assert_select 'form[action=?][method=?]', locker_application_path(@locker_application), 'post' do
-        assert_select 'select[name=?]', 'locker_application[preferred_size]'
+        assert_select 'input-select[name=?]', 'locker_application[preferred_size]'
 
-        assert_select 'select[name=?]', 'locker_application[preferred_general_area]'
+        assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]'
 
-        assert_select 'input[name=?]', 'locker_application[accessible]'
+        assert_select 'input-checkbox'
 
-        assert_select 'select[name=?]', 'locker_application[semester]'
+        assert_select 'input-select[name=?]', 'locker_application[semester]'
 
-        assert_select 'input[name=?]', 'locker_application[status_at_application]'
+        assert_select 'input-select[name=?]', 'locker_application[status_at_application]'
 
-        assert_select 'input[name=?]', 'locker_application[department_at_application]'
+        assert_select 'input-text[name=?]', 'locker_application[department_at_application]'
 
         assert_select 'input[type=hidden][name=?]', 'locker_application[user_uid]', count: 0
-        assert_select 'input[name=?]', 'locker_application[user_uid]'
+        assert_select 'input-text[name=?]', 'locker_application[user_uid]'
       end
     end
   end

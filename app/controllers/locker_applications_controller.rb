@@ -28,7 +28,7 @@ class LockerApplicationsController < ApplicationController
     force_admin if @locker_application.user != current_user
     return if !current_user.admin? && @locker_application.user != current_user
 
-    update_or_create(@locker_application.save, message: 'Locker application was successfully created.')
+    update_or_create(@locker_application.save, message: 'Locker application was successfully created.', method: :new)
   end
 
   # PATCH/PUT /locker_applications/1 or /locker_applications/1.json
@@ -77,13 +77,13 @@ class LockerApplicationsController < ApplicationController
     redirect_to :root, alert: 'Only administrators have access to the everyone\'s Locker Applications!'
   end
 
-  def update_or_create(valid, message: 'Locker application was successfully updated.')
+  def update_or_create(valid, message: 'Locker application was successfully updated.', method: :edit)
     respond_to do |format|
       if valid
         format.html { redirect_to @locker_application, notice: message }
         format.json { render :show, status: :ok, location: @locker_application }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render method, status: :unprocessable_entity }
         format.json { render json: @locker_application.errors, status: :unprocessable_entity }
       end
     end

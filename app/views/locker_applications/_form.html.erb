@@ -1,57 +1,79 @@
+<card id="locker-form-header" size="full-width">
+  <card-header>
+    <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
+    <heading level="h2" size="h3"><hyperlink href="#">Firestone Locker Application</hyperlink></heading>
+  </card-header>
+</card>
 <%= form_with(model: locker_application, local: true) do |form| %>
   <% if locker_application.errors.any? %>
-    <div id="error_explanation">
+    <card id="error_explanation" size="full-width">
       <h2><%= pluralize(locker_application.errors.count, "error") %> prohibited this locker_application from being saved:</h2>
-
       <ul>
       <% locker_application.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
+    </card>
   <% end %>
+  <card size="full-width">
+   <grid-container>
+   <grid-item columns="lg-3 md-6 sm-12">
+     <input-select label="Preferred Size" name="locker_application[preferred_size]"
+                      id="locker_application_preferred_size"
+                      width="expand"
+                      value="<%= locker_application.preferred_size %>"
+                      :options="<%= locker_application.size_choices.to_json %>"
+        ></input-select>
+   </grid-item>
+   <grid-item columns="lg-3 md-6 sm-12">
+     <input-select label="Preferred General Area" name="locker_application[preferred_general_area]"
+                      id="locker_application_preferred_general_area"
+                      width="expand"
+                      value="<%= locker_application.preferred_general_area %>"
+                      :options="<%= locker_application.general_area_choices.to_json %>"
+        ></input-select>
+   </grid-item>
+   <grid-item columns="lg-3 md-6 sm-12">
 
-  <div class="field">
-    <%= form.label :preferred_size %>
-    <%= form.select :preferred_size, locker_application.size_choices %>
-  </div>
+     <input-checkbox groupLabel="accessible" :options="[{label: 'Accessible', name: 'locker_application[accessible]', value: 'true', id: 'locker_accessible'}]"
+                      width="expand"></input-checkbox>
+  
+   </grid-item>
+   <grid-item columns="lg-3 md-6 sm-12">
+     <input-select label="Semester of Occupancy" name="locker_application[semester]"
+                      id="locker_semester"
+                      width="expand"
+                      value="<%= locker_application.semester %>"
+                      :options="<%= locker_application.semester_choices.to_json %>"
+        ></input-select>
 
-  <div class="field">
-    <%= form.label :preferred_general_area %>
-    <%= form.select :preferred_general_area, LockerAndStudySpaces.config.fetch(:general_locations,[]) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :accessible %>
-    <%= form.check_box :accessible %>
-  </div>
-
-  <div class="field">
-    <%= form.label :semester %>
-    <%= form.select :semester, LockerAndStudySpaces.config.fetch(:semesters,[]) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status_at_application %>
-    <%= form.text_field :status_at_application %>
-  </div>
-
-  <div class="field">
-    <%= form.label :department_at_application %>
-    <%= form.text_field :department_at_application %>
-  </div>
+   </grid-item>
+   <grid-item columns="lg-6 md-6 sm-12">
+     <input-select label="Student/Staff/Faculty Status" name="locker_application[status_at_application]"
+                      id="locker_application_status_at_application"
+                      width="expand"
+                      value="<%= locker_application.status_at_application %>"
+                      :options="<%= locker_application.status_choices.to_json %>"
+        ></input-select>
+   </grid-item>
+   <grid-item columns="lg-6 md-6 sm-12">
+     <input-text id="locker_application_department_at_application" 
+                name="locker_application[department_at_application]" 
+                value="<%= locker_application.department_at_application %>" 
+                label="Department" width="expand"></input-text>
+   </grid-item>
 
   <% if current_user.admin? %>
-    <div class="field">
-      <%= form.label :user_uid %>
-      <%= form.text_field :user_uid %>
-    </div>
+    <grid-item columns="lg-12 md-6  sm-12">
+      <input-text id="locker_application_user_uid" name="locker_application[user_uid]" value="<%= locker_application.applicant %>" label="Applicant Netid"></input-text>
+    </grid-item>
   <% else %>
     <%= form.hidden_field :user_uid , value: locker_application.applicant %>
   <% end %>
 
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <grid-item columns="lg-12 md-12 sm-12">
+    <input-button type="submit" variation="solid">Submit Locker Application</input-button>
+  </grid-item>
+  </grid-container>
+</card>
 <% end %>

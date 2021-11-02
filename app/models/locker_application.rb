@@ -19,8 +19,29 @@ class LockerApplication < ApplicationRecord
 
   def size_choices
     choices = LockerAndStudySpaces.config.fetch(:locker_sizes, [])
-    return [choices.first] if user.blank? || applicant.junior?
-
-    choices
+    choices = [choices.first] if user.blank? || applicant.junior?
+    prepare_choices_for_lux(choices)
   end
+
+  def general_area_choices
+    choices = LockerAndStudySpaces.config.fetch(:general_locations,[])
+    prepare_choices_for_lux(choices)
+  end
+
+  def semester_choices
+    choices = LockerAndStudySpaces.config.fetch(:semesters,[])
+    prepare_choices_for_lux(choices)
+  end
+
+  def status_choices
+    choices = LockerAndStudySpaces.config.fetch(:statuses,[])
+    prepare_choices_for_lux(choices)
+  end
+
+
+  private 
+
+    def prepare_choices_for_lux(choices)
+      choices.map {|val| {label: val, value: val}}
+    end
 end
