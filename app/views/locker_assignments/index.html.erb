@@ -17,7 +17,7 @@
     <% @locker_assignments.each do |locker_assignment| %>
       <tr>
         <td><%= locker_assignment.start_date %></td>
-        <td><%= locker_assignment.end_date %></td>
+        <td><%= locker_assignment.expiration_date %></td>
         <td><%= locker_assignment.locker_application.applicant %></td>
         <td><%= locker_assignment.locker.location %></td>
         <td><%= link_to 'Show', locker_assignment %></td>

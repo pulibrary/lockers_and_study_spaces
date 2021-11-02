@@ -105,14 +105,14 @@ RSpec.describe '/locker_assignments', type: :request do
         { locker_application_id: locker_application.id,
           locker_id: locker.id,
           start_date: DateTime.current.to_date,
-          end_date: DateTime.tomorrow.to_date }
+          expiration_date: DateTime.tomorrow.to_date }
       end
 
       it 'redirects to root' do
         locker_assignment = LockerAssignment.create! valid_attributes
         patch locker_assignment_url(locker_assignment), params: { locker_assignment: new_attributes }
         locker_assignment.reload
-        expect(locker_assignment.end_date).to be_blank
+        expect(locker_assignment.expiration_date).to be_blank
         expect(response).to redirect_to(root_path)
       end
 
@@ -216,14 +216,14 @@ RSpec.describe '/locker_assignments', type: :request do
           { locker_application_id: locker_application.id,
             locker_id: locker.id,
             start_date: DateTime.current.to_date,
-            end_date: DateTime.tomorrow.to_date }
+            expiration_date: DateTime.tomorrow.to_date }
         end
 
         it 'updates the requested locker_assignment' do
           locker_assignment = LockerAssignment.create! valid_attributes
           patch locker_assignment_url(locker_assignment), params: { locker_assignment: new_attributes }
           locker_assignment.reload
-          expect(locker_assignment.end_date).to eq(DateTime.tomorrow.to_date)
+          expect(locker_assignment.expiration_date).to eq(DateTime.tomorrow.to_date)
         end
 
         it 'redirects to the locker_assignment' do

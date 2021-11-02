@@ -17,7 +17,7 @@
     <% @study_room_assignments.each do |study_room_assignment| %>
       <tr>
         <td><%= study_room_assignment.start_date %></td>
-        <td><%= study_room_assignment.end_date %></td>
+        <td><%= study_room_assignment.expiration_date %></td>
         <td><%= study_room_assignment.user %></td>
         <td><%= study_room_assignment.study_room %></td>
         <td><%= link_to 'Show', study_room_assignment %></td>

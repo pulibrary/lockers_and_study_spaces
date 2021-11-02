@@ -31,7 +31,9 @@ ActiveRecord::Schema.define(version: 20_211_028_191_806) do
 
   create_table 'locker_assignments', force: :cascade do |t|
     t.date 'start_date'
-    t.date 'end_date'
+    t.date 'expiration_date'
+    t.date 'released_date'
+    t.string 'notes'
     t.bigint 'locker_application_id'
     t.bigint 'locker_id'
     t.datetime 'created_at', null: false
@@ -60,7 +62,9 @@ ActiveRecord::Schema.define(version: 20_211_028_191_806) do
 
   create_table 'study_room_assignments', force: :cascade do |t|
     t.date 'start_date'
-    t.date 'end_date'
+    t.date 'expiration_date'
+    t.date 'released_date'
+    t.string 'notes'
     t.bigint 'user_id'
     t.bigint 'study_room_id'
     t.datetime 'created_at', null: false

@@ -24,24 +24,23 @@ class LockerApplication < ApplicationRecord
   end
 
   def general_area_choices
-    choices = LockerAndStudySpaces.config.fetch(:general_locations,[])
+    choices = LockerAndStudySpaces.config.fetch(:general_locations, [])
     prepare_choices_for_lux(choices)
   end
 
   def semester_choices
-    choices = LockerAndStudySpaces.config.fetch(:semesters,[])
+    choices = LockerAndStudySpaces.config.fetch(:semesters, [])
     prepare_choices_for_lux(choices)
   end
 
   def status_choices
-    choices = LockerAndStudySpaces.config.fetch(:statuses,[])
+    choices = LockerAndStudySpaces.config.fetch(:statuses, [])
     prepare_choices_for_lux(choices)
   end
 
+  private
 
-  private 
-
-    def prepare_choices_for_lux(choices)
-      choices.map {|val| {label: val, value: val}}
-    end
+  def prepare_choices_for_lux(choices)
+    choices.map { |val| { label: val, value: val } }
+  end
 end

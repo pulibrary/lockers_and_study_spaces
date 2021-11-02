@@ -66,7 +66,7 @@ class LockerAssignmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def locker_assignment_params
-    params.require(:locker_assignment).permit(:start_date, :end_date, :locker_application_id, :locker_id)
+    params.require(:locker_assignment).permit(:start_date, :expiration_date, :locker_application_id, :locker_id)
   end
 
   def force_admin
