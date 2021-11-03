@@ -78,14 +78,12 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
+production: &production
   <<: *default
-  database: locker_and_study_spaces_production
-  username: locker_and_study_spaces
-  password: <%= ENV['LOCKER_AND_STUDY_SPACES_DATABASE_PASSWORD'] %>
+  database: <%= ENV.fetch("APP_DB", "database") %>
+  host: <%= ENV.fetch("APP_DB_HOST", "host") %>
+  username: <%= ENV.fetch("APP_DB_USERNAME",'user') %>
+  password: <%= ENV.fetch("APP_DB_PASSWORD",'password') %>
 
 staging:
-  <<: *default
-  database: locker_and_study_spaces_staging
-  username: locker_and_study_spaces
-  password: <%= ENV['LOCKER_AND_STUDY_SPACES_DATABASE_PASSWORD'] %>
+  <<: *production
