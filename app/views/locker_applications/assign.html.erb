@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= render 'view', locker_application: @locker_application %>
+<%= render '/locker_assignments/form', locker_assignment: @locker_assignment %>
 
 <%= link_to 'Edit', edit_locker_application_path(@locker_application) %> |
 <%= link_to 'Back', locker_applications_path %>

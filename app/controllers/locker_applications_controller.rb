@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LockerApplicationsController < ApplicationController
-  before_action :set_locker_application, only: %i[show edit update destroy]
+  before_action :set_locker_application, only: %i[show edit update destroy assign]
   before_action :force_admin, except: %i[new create show]
 
   # GET /locker_applications or /locker_applications.json
@@ -21,6 +21,11 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications/1/edit
   def edit; end
+
+  # GET /locker_applications/1/assign
+  def assign
+    @locker_assignment = @locker_application.locker_assignment || LockerAssignment.new(locker_application: @locker_application)
+  end
 
   # POST /locker_applications or /locker_applications.json
   def create

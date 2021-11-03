@@ -5,6 +5,35 @@ require 'rails_helper'
 RSpec.describe LockerApplication, type: :model do
   subject(:locker_application) { described_class.new(user: user) }
   let(:user) { nil }
+
+  it 'responds to the attributes' do
+    expect(locker_application.user).to eq(nil)
+    expect(locker_application.preferred_size).to eq(nil)
+    expect(locker_application.accessible).to eq(nil)
+    expect(locker_application.semester).to eq(nil)
+    expect(locker_application.status_at_application).to eq(nil)
+    expect(locker_application.department_at_application).to eq(nil)
+    expect(locker_application.locker_assignment).to eq(nil)
+  end
+
+  describe '#available_lockers_in_area' do
+    let(:locker_application) { FactoryBot.create :locker_application }
+    let(:locker_assignment) { LockerAssignment.create(locker_application: locker_application, locker: locker1, start_date: DateTime.now) }
+    let(:locker1) {  FactoryBot.create :locker }
+    let(:locker2) {  FactoryBot.create :locker }
+    let(:locker3) {  FactoryBot.create :locker, general_area: locker_application.preferred_general_area }
+
+    before do
+      locker_assignment
+      locker2
+      locker3
+    end
+
+    it 'to only returns unassigned lockers in area' do
+      expect(locker_application.available_lockers_in_area).to contain_exactly(locker3)
+    end
+  end
+
   it 'does not create an applicant' do
     expect(locker_application.applicant).to be_blank
   end

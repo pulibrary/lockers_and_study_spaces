@@ -2,6 +2,7 @@
 
 class LockerApplication < ApplicationRecord
   belongs_to :user
+  has_one :locker_assignment
 
   def initialize(*args)
     super
@@ -36,6 +37,10 @@ class LockerApplication < ApplicationRecord
   def status_choices
     choices = LockerAndStudySpaces.config.fetch(:statuses, [])
     prepare_choices_for_lux(choices)
+  end
+
+  def available_lockers_in_area
+    Locker.available_lockers.where(general_area: preferred_general_area).order(:location)
   end
 
   private

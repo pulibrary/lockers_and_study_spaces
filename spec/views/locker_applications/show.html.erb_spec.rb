@@ -10,7 +10,7 @@ RSpec.describe 'locker_applications/show', type: :view do
                                                         preferred_general_area: 'Preferred General Area',
                                                         accessible: false,
                                                         semester: 'Semester',
-                                                        status_at_application: 'Staus At Application',
+                                                        status_at_application: 'Stauts At Application',
                                                         department_at_application: 'Department At Application',
                                                         user: user
                                                       ))
@@ -22,7 +22,7 @@ RSpec.describe 'locker_applications/show', type: :view do
     expect(rendered).to match(/Preferred General Area/)
     expect(rendered).to match(/false/)
     expect(rendered).to match(/Semester/)
-    expect(rendered).to match(/Staus At Application/)
+    expect(rendered).to match(/Stauts At Application/)
     expect(rendered).to match(/Department At Application/)
     expect(rendered).to match(/#{user.uid}/)
   end
