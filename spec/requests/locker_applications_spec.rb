@@ -104,6 +104,14 @@ RSpec.describe '/locker_applications', type: :request do
     end
   end
 
+  describe 'GET /assign' do
+    it 'redirects to root' do
+      locker_application = LockerApplication.create! valid_attributes
+      get assign_locker_application_url(locker_application)
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
   describe 'GET /edit' do
     it 'redirects to root' do
       locker_application = LockerApplication.create! valid_attributes
@@ -332,6 +340,14 @@ RSpec.describe '/locker_applications', type: :request do
         locker_application = LockerApplication.create! valid_attributes
         delete locker_application_url(locker_application)
         expect(response).to redirect_to(locker_applications_url)
+      end
+    end
+
+    describe 'GET /assign' do
+      it 'allows an admin to assign a locker' do
+        locker_application = LockerApplication.create! valid_attributes
+        get assign_locker_application_url(locker_application)
+        expect(response).to be_successful
       end
     end
   end

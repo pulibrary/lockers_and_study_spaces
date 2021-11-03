@@ -1,6 +1,7 @@
+<%= render '/locker_applications/view', locker_application: locker_assignment.locker_application if locker_assignment.locker_application.present? %>
 <%= form_with(model: locker_assignment, local: true) do |form| %>
   <% if locker_assignment.errors.any? %>
-    <div id="error_explanation">
+    <card id="error_explanation" size="full-width">
       <h2><%= pluralize(locker_assignment.errors.count, "error") %> prohibited this locker_assignment from being saved:</h2>
 
       <ul>
@@ -8,30 +9,43 @@
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
+    </card>
   <% end %>
+  <card size="full-width">
+   <grid-container>
+     <grid-item columns="lg-3 md-6 sm-12">
+       <date-picker class="lux" id="locker_assignment_start_date" name="locker_assignment[start_date]" label="Start Date" mode="single" placeholder="<%= locker_assignment.start_date || DateTime.now.to_date%>" :defaultDate="new Date(<%= "'#{locker_assignment.start_date}'" if locker_assignment.start_date.present? %>)" />
+     </grid-item>
 
-  <div class="field">
-    <%= form.label :start_date %>
-    <%= form.date_select :start_date %>
-  </div>
+     <grid-item columns="lg-3 md-6 sm-12">
+       <date-picker id="locker_assignment_expiration_date" name="locker_assignment[expiration_date]" label="Expiration Date" mode="single" placeholder="<%= locker_assignment.expiration_date || DateTime.now.to_date %>" :defaultDate="new Date(<%= "'#{locker_assignment.expiration_date}'" if locker_assignment.expiration_date.present? %>)" />
+     </grid-item>
 
-  <div class="field">
-    <%= form.label :expiration_date %>
-    <%= form.date_select :expiration_date %>
-  </div>
+     <grid-item columns="lg-3 md-6 sm-12">
+       <date-picker id="locker_assignment_released_date" name="locker_assignment[released_date]" label="Released Date" mode="single" placeholder="<%= locker_assignment.released_date || DateTime.now.to_date %>" :defaultDate="new Date(<%= "'#{locker_assignment.released_date}'" if locker_assignment.released_date.present? %>)" />
+     </grid-item>
 
-  <div class="field">
-    <%= form.label :locker_application %>
-    <%= form.text_field :locker_application %>
-  </div>
+     <%= form.hidden_field :locker_application_id , value: locker_assignment.locker_application %>
 
-  <div class="field">
-    <%= form.label :locker_id %>
-    <%= form.text_field :locker_id %>
-  </div>
+   <grid-item columns="lg-6 md-6 sm-12">
+     <input-select label="Lockers Available in Preferred General Area" name="locker_assignment[locker_id]"
+                      id="locker_assignment_locker_id"
+                      width="expand"
+                      value="<%= locker_assignment.locker %>"
+                      :options="<%= locker_assignment.preferred_locker_choices.to_json %>"
+        ></input-select>
+   </grid-item>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+   <grid-item columns="lg-6 md-6 sm-12">
+     <input-select label="Lockers Available in Any Area" name="locker_assignment[any_locker_id]"
+                      id="any_locker_assignment_locker_id"
+                      width="expand"
+                      :options="<%= locker_assignment.locker_choices.to_json %>"
+        ></input-select>
+   </grid-item>
+
+    <grid-item columns="lg-12 md-12 sm-12">
+      <input-button type="submit" variation="solid">Submit Locker Assignment</input-button>
+    </grid-item>
+  </grid-container>
 <% end %>

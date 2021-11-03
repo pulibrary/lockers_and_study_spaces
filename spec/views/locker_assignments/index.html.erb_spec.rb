@@ -21,7 +21,7 @@ RSpec.describe 'locker_assignments/index', type: :view do
              )
            ])
     assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
-   end
+  end
 
   it 'renders a list of locker_assignments' do
     render

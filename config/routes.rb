@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   resources :study_rooms
   root 'locker_applications#new'
 
-  resources :locker_applications
+  resources :locker_applications do
+    member do
+      get 'assign'
+    end
+  end
   resources :locker_assignments
   resources :lockers
 
