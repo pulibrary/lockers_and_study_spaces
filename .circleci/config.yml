@@ -1,0 +1,160 @@
+---
+version: 2.1
+executors:
+  lockers_and_study_spaces-executor:
+    docker:
+      - image: circleci/ruby:2.6.5-node-browsers
+        environment:
+          BUNDLER_VERSION: 2.0.1
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: lockers_and_study_spaces
+          RAILS_ENV: test
+      - image: postgres:10
+        environment:
+          POSTGRES_USER: lockers_and_study_spaces
+          POSTGRES_DB: lockers_and_study_spaces_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+    working_directory: ~/project
+
+commands:
+  setup-bundler:
+    description: "Install correct version of bundler and load from cache or bundle install"
+    steps:
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+      # Which version of bundler?
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - lockers_and_study_spaces-bundle-v3-{{ checksum "Gemfile.lock" }}
+            - lockers_and_study_spaces-bundle-v3-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: lockers_and_study_spaces-bundle-v3-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+jobs:
+  build:
+    executor: lockers_and_study_spaces-executor
+    steps:
+      - attach_workspace:
+          at: '~/project'
+      - checkout
+      - setup-bundler
+
+      # Only necessary if app uses webpacker or yarn in some other way
+      - restore_cache:
+          keys:
+            - lockers_and_study_spaces-yarn-v1-{{ checksum "yarn.lock" }}
+            - lockers_and_study_spaces-yarn-v1-
+
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+
+      # Store yarn / webpacker cache
+      - save_cache:
+          key: lockers_and_study_spaces-yarn-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - persist_to_workspace:
+          root: '~/project'
+          paths: '*'
+
+  test:
+    executor: lockers_and_study_spaces-executor
+    steps:
+      - attach_workspace:
+          at: '~/project'
+      - setup-bundler
+
+      # ensure we have psql which we need for db:schema:load
+      - run: sudo apt-get update --allow-releaseinfo-change
+      - run: sudo apt-get install -y postgresql-client || true
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: project?
+          command: pwd; ls -la config/
+      - run:
+          name: Database setup
+          command: |
+            bin/rails db:create
+            bin/rails db:schema:load
+
+      # Run rspec with percy
+      - run:
+          name: Run rspec
+          command: |
+            bundle exec rspec --tag \~no_ci --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec/results.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb")
+
+
+      # Save test results for timing analysis
+      - store_test_results:
+          path: test_results
+
+      - persist_to_workspace:
+          root: '~/project'
+          paths: '*'
+
+  rubocop:
+    executor: lockers_and_study_spaces-executor
+    steps:
+      - attach_workspace:
+          at: '~/project'
+      - setup-bundler
+      - run: bundle exec rubocop
+
+  coverage_report:
+    executor: lockers_and_study_spaces-executor
+    steps:
+      - attach_workspace:
+          at: '~/project'
+      - run: gem install simplecov
+      - run:
+          name: Inspect coverage report
+          command: |
+            RAILS_ENV=test ruby ./scripts/report_coverage.rb
+      - store_artifacts:
+          path: ~/project/coverage
+          destination: coverage
+
+workflows:
+  build_accept:
+    jobs:
+      - build
+      - rubocop:
+         requires:
+          - build
+      - test:
+         requires:
+          - build
+      - coverage_report:
+         requires:
+          - test
