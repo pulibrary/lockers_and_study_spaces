@@ -1,0 +1,26 @@
+
+  <card size="full-width">
+   <grid-container>
+    <grid-item columns="lg-3 md-4 sm-12">
+      <strong>User:</strong>
+      <span><%= locker_application.applicant %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Status:</strong>
+      <span><%= locker_application.status_at_application %></span>
+    </grid-item>
+    <grid-item columns="lg-3 md-4 sm-12">
+      <strong>Department:</strong>
+      <span><%= locker_application.department_at_application %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Semester:</strong>
+      <span><%= locker_application.semester %></span>
+    </grid-item>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <%= link_to 'Edit', edit_locker_application_path(locker_application) %>
+      <%= link_to 'Assign Locker', assign_locker_application_path(locker_application) %>
+    </grid-item>
+   </grid-container>
+</card>

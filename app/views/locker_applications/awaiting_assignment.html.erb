@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Locker Applications</h1>
+
+<%= render partial: "index_view", collection: @locker_applications, as: :locker_application %>
+
+<br>
+
+<%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
+<%== pagy_nav(@pagy) %>
+
+<%= link_to 'Firestone Library Locker Application', new_locker_application_path %>

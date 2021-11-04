@@ -20,6 +20,10 @@ RSpec.describe LockerApplicationsController, type: :routing do
       expect(get: '/locker_applications/1/edit').to route_to('locker_applications#edit', id: '1')
     end
 
+    it 'routes to #assign' do
+      expect(get: '/locker_applications/1/assign').to route_to('locker_applications#assign', id: '1')
+    end
+
     it 'routes to #create' do
       expect(post: '/locker_applications').to route_to('locker_applications#create')
     end

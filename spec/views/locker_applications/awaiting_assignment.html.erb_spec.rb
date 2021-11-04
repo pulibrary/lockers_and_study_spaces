@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_applications/index', type: :view do
+RSpec.describe 'locker_applications/awaiting_assignment', type: :view do
   let(:user1) { FactoryBot.create :user }
   let(:user2) { FactoryBot.create :user }
   before(:each) do

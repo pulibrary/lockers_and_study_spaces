@@ -19,9 +19,15 @@ RSpec.describe 'locker_applications/assign', type: :view do
     expect(rendered).to match(/#{locker_application.preferred_general_area}/)
     expect(rendered).to match(/#{locker_application.applicant}/)
     assert_select 'form[action=?][method=?]', locker_assignments_path, 'post' do
-      assert_select 'date-picker[name=?]', 'locker_assignment[start_date]'
-      assert_select 'date-picker[name=?]', 'locker_assignment[expiration_date]'
-      assert_select 'date-picker[name=?]', 'locker_assignment[released_date]'
+      assert_select 'select[name=?]', 'locker_assignment[start_date(1i)]'
+      assert_select 'select[name=?]', 'locker_assignment[start_date(2i)]'
+      assert_select 'select[name=?]', 'locker_assignment[start_date(3i)]'
+      assert_select 'select[name=?]', 'locker_assignment[expiration_date(1i)]'
+      assert_select 'select[name=?]', 'locker_assignment[expiration_date(2i)]'
+      assert_select 'select[name=?]', 'locker_assignment[expiration_date(3i)]'
+      assert_select 'select[name=?]', 'locker_assignment[released_date(1i)]'
+      assert_select 'select[name=?]', 'locker_assignment[released_date(2i)]'
+      assert_select 'select[name=?]', 'locker_assignment[released_date(3i)]'
       assert_select 'input-select[name=?]', 'locker_assignment[locker_id]'
     end
   end
