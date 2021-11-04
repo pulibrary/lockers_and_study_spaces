@@ -1,42 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Locker Applications</h1>
+<card id="locker-form-header" size="full-width">
+  <card-header>
+    <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
+    <heading level="h1" size="h3">Locker Applications</heading>
+  </card-header>
+</card>
 
-<table>
-  <thead>
-    <tr>
-      <th>Preferred size</th>
-      <th>Preferred general area</th>
-      <th>Accessible</th>
-      <th>Semester</th>
-      <th>Staus at application</th>
-      <th>Department at application</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @locker_applications.each do |locker_application| %>
-      <tr>
-        <td><%= locker_application.preferred_size %></td>
-        <td><%= locker_application.preferred_general_area %></td>
-        <td><%= locker_application.accessible %></td>
-        <td><%= locker_application.semester %></td>
-        <td><%= locker_application.status_at_application %></td>
-        <td><%= locker_application.department_at_application %></td>
-        <td><%= locker_application.user %></td>
-        <td><%= link_to 'Show', locker_application %></td>
-        <td><%= link_to 'Edit', edit_locker_application_path(locker_application) %></td>
-        <td><%= link_to 'Destroy', locker_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+<%= render partial: "index_view", collection: @locker_applications, as: :locker_application %>
 
 <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
 <%== pagy_nav(@pagy) %>
-
-<%= link_to 'Firestone Library Locker Application', new_locker_application_path %>

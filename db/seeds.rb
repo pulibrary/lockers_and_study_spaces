@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize
 require 'csv'
 
 def row_attributes(row, klass)
@@ -27,6 +28,7 @@ def space_attributes(row, user, klass)
   attributes[:start_date] = row['assignedDate']
   attributes[:released_date] = row['releaseDate']
   attributes[:notes] = [row['carrelMate'], row['Notes']].compact.join(', ')
+  attributes[:created_at] = row['assignedDate']
   if user.provider == 'migration'
     attributes[:notes] = "Invalid user lookup for #{row['emailAddress']}, original_name: #{row['fistName']} #{row['lastName']}; #{attributes[:notes]}"
   end
@@ -51,6 +53,7 @@ def locker_application_attributes(row, user)
   attributes = row_attributes(row, LockerApplication)
   attributes[:preferred_size] = locker_size(row['type'])
   attributes[:accessible] = row['handicapped']
+  attributes[:created_at] = row['date_of_application']
   attributes[:user] = user
   attributes
 end
@@ -90,3 +93,4 @@ end
 Rails.logger.warn("Created #{User.count} Users")
 Rails.logger.warn("Created #{LockerApplication.count} Locker Applications and #{LockerAssignment.count} Locker Assignments")
 Rails.logger.warn("Created #{StudyRoomAssignment.count} Study Rooms")
+# rubocop:enable Metrics/AbcSize

@@ -350,5 +350,13 @@ RSpec.describe '/locker_applications', type: :request do
         expect(response).to be_successful
       end
     end
+
+    describe 'GET /awaiting_assignment' do
+      it 'allows an admin to assign a locker' do
+        LockerApplication.create! valid_attributes
+        get awaiting_assignment_locker_applications_url
+        expect(response).to be_successful
+      end
+    end
   end
 end

@@ -14,18 +14,21 @@
   <card size="full-width">
    <grid-container>
      <grid-item columns="lg-3 md-6 sm-12">
-       <date-picker class="lux" id="locker_assignment_start_date" name="locker_assignment[start_date]" label="Start Date" mode="single" placeholder="<%= locker_assignment.start_date || DateTime.now.to_date%>" :defaultDate="new Date(<%= "'#{locker_assignment.start_date}'" if locker_assignment.start_date.present? %>)" />
+       <%= form.label :start_date %>
+       <%= form.date_select :start_date %>
      </grid-item>
 
      <grid-item columns="lg-3 md-6 sm-12">
-       <date-picker id="locker_assignment_expiration_date" name="locker_assignment[expiration_date]" label="Expiration Date" mode="single" placeholder="<%= locker_assignment.expiration_date || DateTime.now.to_date %>" :defaultDate="new Date(<%= "'#{locker_assignment.expiration_date}'" if locker_assignment.expiration_date.present? %>)" />
+       <%= form.label :expiration_date  %>
+       <%= form.date_select :expiration_date, {:include_blank => true, :default => nil} %>
      </grid-item>
 
      <grid-item columns="lg-3 md-6 sm-12">
-       <date-picker id="locker_assignment_released_date" name="locker_assignment[released_date]" label="Released Date" mode="single" placeholder="<%= locker_assignment.released_date || DateTime.now.to_date %>" :defaultDate="new Date(<%= "'#{locker_assignment.released_date}'" if locker_assignment.released_date.present? %>)" />
+        <%= form.label :released_date %>
+        <%= form.date_select :released_date, {:include_blank => true, :default => nil} %>
      </grid-item>
 
-     <%= form.hidden_field :locker_application_id , value: locker_assignment.locker_application %>
+     <%= form.hidden_field :locker_application_id , value: locker_assignment.locker_application&.id %>
 
    <grid-item columns="lg-6 md-6 sm-12">
      <input-select label="Lockers Available in Preferred General Area" name="locker_assignment[locker_id]"

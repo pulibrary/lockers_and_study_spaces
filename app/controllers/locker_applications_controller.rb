@@ -6,7 +6,7 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications or /locker_applications.json
   def index
-    @pagy, @locker_applications = pagy(LockerApplication.all)
+    @pagy, @locker_applications = pagy(LockerApplication.all.order(:created_at))
   end
 
   # GET /locker_applications/1 or /locker_applications/1.json
@@ -21,6 +21,11 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications/1/edit
   def edit; end
+
+  # GET /locker_applications/awaiting_assignment
+  def awaiting_assignment
+    @pagy, @locker_applications = pagy(LockerApplication.awaiting_assignment)
+  end
 
   # GET /locker_applications/1/assign
   def assign

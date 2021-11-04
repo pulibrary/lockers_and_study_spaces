@@ -54,13 +54,6 @@ RSpec.describe '/locker_assignments', type: :request do
     end
   end
 
-  describe 'GET /new' do
-    it 'redirects to root' do
-      get new_locker_assignment_url
-      expect(response).to redirect_to(root_path)
-    end
-  end
-
   describe 'GET /edit' do
     it 'redirects to root' do
       locker_assignment = LockerAssignment.create! valid_attributes
@@ -94,6 +87,21 @@ RSpec.describe '/locker_assignments', type: :request do
 
       it 'redirects to root' do
         post locker_assignments_url, params: { locker_assignment: invalid_attributes }
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'with a undesirable locker' do
+      let(:valid_attributes) do
+        {
+          locker_application_id: locker_application.id,
+          any_locker_id: locker.id,
+          start_date: DateTime.current.to_date
+        }
+      end
+
+      it 'redirects to root' do
+        post locker_assignments_url, params: { locker_assignment: valid_attributes }
         expect(response).to redirect_to(root_path)
       end
     end
@@ -167,13 +175,6 @@ RSpec.describe '/locker_assignments', type: :request do
       end
     end
 
-    describe 'GET /new' do
-      it 'renders a successful response' do
-        get new_locker_assignment_url
-        expect(response).to be_successful
-      end
-    end
-
     describe 'GET /edit' do
       it 'render a successful response' do
         locker_assignment = LockerAssignment.create! valid_attributes
@@ -206,6 +207,22 @@ RSpec.describe '/locker_assignments', type: :request do
         it "renders a successful response (i.e. to display the 'new' template)" do
           post locker_assignments_url, params: { locker_assignment: invalid_attributes }
           expect(response).to be_unprocessable
+        end
+      end
+
+      context 'with a undesirable locker' do
+        let(:valid_attributes) do
+          {
+            locker_application_id: locker_application.id,
+            any_locker_id: locker.id,
+            start_date: DateTime.current.to_date
+          }
+        end
+
+        it 'creates a new LockerAssignment' do
+          expect do
+            post locker_assignments_url, params: { locker_assignment: valid_attributes }
+          end.to change(LockerAssignment, :count).by(1)
         end
       end
     end

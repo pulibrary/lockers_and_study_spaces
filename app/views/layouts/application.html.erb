@@ -13,7 +13,8 @@
         <% if current_user&.admin %>
           {name: 'Locker Management', component: 'Locker Management', children: [
             {name: 'Lockers', component: 'Lockers', href: '/lockers/'},
-            {name: 'Requests', component: 'Requests', href: '/locker_applications/'},
+            {name: 'Assign Lockers', component: 'Assing Lockers', href: '/locker_applications/awaiting_assignment'},
+            {name: 'All Applications', component: 'All Applications', href: '/locker_applications/'},
             {name: 'Assignments', component: 'Assignments', href: '/locker_assignments/'},
           ]},  
           {name: 'Study Room Management', component: 'Study Room Management', children: [

@@ -34,6 +34,23 @@ RSpec.describe LockerApplication, type: :model do
     end
   end
 
+  describe '##awaiting_assignment' do
+    let(:locker_application1) { FactoryBot.create :locker_application }
+    let(:locker_application2) { FactoryBot.create :locker_application }
+    let(:locker_application3) { FactoryBot.create :locker_application }
+    let(:locker_assignment) { LockerAssignment.create(locker_application: locker_application1, locker: locker1, start_date: DateTime.now) }
+    let(:locker1) { FactoryBot.create :locker }
+
+    before do
+      locker_assignment
+      locker_application1
+      locker_application2
+    end
+    it 'contains applications awaiting assignment' do
+      expect(described_class.awaiting_assignment).to contain_exactly(locker_application2, locker_application3)
+    end
+  end
+
   it 'does not create an applicant' do
     expect(locker_application.applicant).to be_blank
   end

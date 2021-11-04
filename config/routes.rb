@@ -6,11 +6,12 @@ Rails.application.routes.draw do
   root 'locker_applications#new'
 
   resources :locker_applications do
+    get 'awaiting_assignment', on: :collection
     member do
       get 'assign'
     end
   end
-  resources :locker_assignments
+  resources :locker_assignments, except: :new
   resources :lockers
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

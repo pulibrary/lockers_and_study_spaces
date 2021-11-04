@@ -8,10 +8,6 @@ RSpec.describe LockerAssignmentsController, type: :routing do
       expect(get: '/locker_assignments').to route_to('locker_assignments#index')
     end
 
-    it 'routes to #new' do
-      expect(get: '/locker_assignments/new').to route_to('locker_assignments#new')
-    end
-
     it 'routes to #show' do
       expect(get: '/locker_assignments/1').to route_to('locker_assignments#show', id: '1')
     end

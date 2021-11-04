@@ -4,6 +4,10 @@ class LockerApplication < ApplicationRecord
   belongs_to :user
   has_one :locker_assignment
 
+  def self.awaiting_assignment
+    left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
+  end
+
   def initialize(*args)
     super
     return unless user.present?
