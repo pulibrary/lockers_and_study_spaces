@@ -1,0 +1,25 @@
+
+  <card size="full-width">
+   <grid-container>
+    <grid-item columns="lg-3 md-4 sm-12">
+      <strong>Location:</strong>
+      <span><%= locker.location %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Size:</strong>
+      <span><%= locker.size %></span>
+    </grid-item>
+    <grid-item columns="lg-3 md-4 sm-12">
+      <strong>General Area:</strong>
+      <span><%= locker.general_area %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Accessible:</strong>
+      <span><%= locker.accessible %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <%= link_to 'Show', locker_path(locker) %>
+      <%= link_to 'Edit', edit_locker_path(locker) %>
+    </grid-item>
+   </grid-container>
+</card>

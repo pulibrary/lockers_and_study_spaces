@@ -1,6 +1,6 @@
 <%= form_with(model: locker, local: true) do |form| %>
   <% if locker.errors.any? %>
-    <div id="error_explanation">
+    <card id="error_explanation" size="full-width">
       <h2><%= pluralize(locker.errors.count, "error") %> prohibited this locker from being saved:</h2>
 
       <ul>
@@ -8,75 +8,96 @@
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
+    </card>
   <% end %>
 
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location %>
-  </div>
+  <card size="full-width">
+   <grid-container>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_location" 
+                name="locker[location]" 
+                value="<%= locker.location %>" 
+                label="Location" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-1 md-4 sm-12">
+     <input-select label="Size" name="locker[size]"
+                      id="locker_size"
+                      width="expand"
+                      value="<%= locker.size %>"
+                      :options="<%= locker.size_choices.to_json %>"
+        ></input-select>
+   </grid-item>
 
-  <div class="field">
-    <%= form.label :size %>
-    <%= form.select :size, LockerAndStudySpaces.config.fetch(:locker_sizes,[]) %>
-  </div>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-select label="General Area" name="locker[general_area]"
+                      id="locker_general_area"
+                      width="expand"
+                      value="<%= locker.general_area %>"
+                      :options="<%= locker.general_area_choices.to_json %>"
+        ></input-select>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-checkbox groupLabel="accessible" :options="[{label: 'Accessible', name: 'locker[accessible]', value: 'true', id: 'locker_accessible'}]"
+                      width="expand"></input-checkbox>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_combination" 
+                name="locker[combination]" 
+                value="<%= locker.combination %>" 
+                label="Combination" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_code" 
+                name="locker[code]" 
+                value="<%= locker.code %>" 
+                label="Code" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_tag" 
+                name="locker[tag]" 
+                value="<%= locker.tag %>" 
+                label="Tag" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_discs" 
+                name="locker[discs]" 
+                value="<%= locker.discs %>" 
+                label="Discs" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_clutch" 
+                name="locker[clutch]" 
+                value="<%= locker.clutch %>" 
+                label="Clutch" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_hubpos" 
+                name="locker[hubpos]" 
+                value="<%= locker.hubpos %>" 
+                label="Hubpos" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_key_number" 
+                name="locker[key_number]" 
+                value="<%= locker.key_number %>" 
+                label="Key Number" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-2 md-4 sm-12">
+     <input-text id="locker_floor" 
+                name="locker[floor]" 
+                value="<%= locker.floor %>" 
+                label="Floor" width="expand"></input-text>
+   </grid-item>
+   <grid-item columns="lg-6 md-12 sm-12">
+     <input-text id="locker_notes" type="textarea"
+                name="locker[notes]" 
+                value="<%= locker.notes %>" 
+                label="Notes" width="expand"></input-text>
+   </grid-item>
 
-  <div class="field">
-    <%= form.label :general_area %>
-    <%= form.select :general_area, LockerAndStudySpaces.config.fetch(:general_locations,[]) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :accessible %>
-    <%= form.check_box :accessible %>
-  </div>
-
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_field :notes %>
-  </div>
-
-  <div class="field">
-    <%= form.label :combination %>
-    <%= form.text_field :combination %>
-  </div>
-
-  <div class="field">
-    <%= form.label :code %>
-    <%= form.text_field :code %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tag %>
-    <%= form.text_field :tag %>
-  </div>
-
-  <div class="field">
-    <%= form.label :discs %>
-    <%= form.text_field :discs %>
-  </div>
-
-  <div class="field">
-    <%= form.label :clutch %>
-    <%= form.text_field :clutch %>
-  </div>
-
-  <div class="field">
-    <%= form.label :hubpos %>
-    <%= form.text_field :hubpos %>
-  </div>
-
-  <div class="field">
-    <%= form.label :key_number %>
-    <%= form.text_field :key_number %>
-  </div>
-
-  <div class="field">
-    <%= form.label :floor %>
-    <%= form.number_field :floor %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <grid-item columns="lg-12 md-12 sm-12">
+    <input-button type="submit" variation="solid">Submit Locker</input-button>
+  </grid-item>
+  </grid-container>
+</card>
 <% end %>

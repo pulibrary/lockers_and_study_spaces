@@ -46,10 +46,4 @@ class LockerApplication < ApplicationRecord
   def available_lockers_in_area
     Locker.available_lockers.where(general_area: preferred_general_area).order(:location)
   end
-
-  private
-
-  def prepare_choices_for_lux(choices)
-    choices.map { |val| { label: val, value: val } }
-  end
 end
