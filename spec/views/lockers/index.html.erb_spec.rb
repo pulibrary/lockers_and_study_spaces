@@ -41,18 +41,13 @@ RSpec.describe 'lockers/index', type: :view do
 
   it 'renders a list of lockers' do
     render
-    assert_select 'tr>td', text: 'Location'.to_s, count: 2
-    assert_select 'tr>td', text: 2.to_s, count: 2
-    assert_select 'tr>td', text: 'General Area'.to_s, count: 2
-    assert_select 'tr>td', text: false.to_s, count: 2
-    assert_select 'tr>td', text: 'Notes'.to_s, count: 2
-    assert_select 'tr>td', text: 'Combination'.to_s, count: 2
-    assert_select 'tr>td', text: 'Code'.to_s, count: 2
-    assert_select 'tr>td', text: 'Tag'.to_s, count: 2
-    assert_select 'tr>td', text: 'Discs'.to_s, count: 2
-    assert_select 'tr>td', text: 'Clutch'.to_s, count: 2
-    assert_select 'tr>td', text: 'Hubpos'.to_s, count: 2
-    assert_select 'tr>td', text: 'Key Number'.to_s, count: 2
-    assert_select 'tr>td', text: 3.to_s, count: 2
+    assert_select 'grid-item>strong', text: 'Location:'
+    assert_select 'grid-item>strong', text: 'Size:'
+    assert_select 'grid-item>strong', text: 'General Area:'
+    assert_select 'grid-item>strong', text: 'Accessible:'
+    assert_select 'grid-item>span', text: 'Location'.to_s, count: 2
+    assert_select 'grid-item>span', text: 2.to_s, count: 2
+    assert_select 'grid-item>span', text: 'General Area'.to_s, count: 2
+    assert_select 'grid-item>span', text: false.to_s, count: 2
   end
 end

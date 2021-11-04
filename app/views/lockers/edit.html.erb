@@ -1,6 +1,12 @@
-<h1>Editing Locker</h1>
-
+<card size="full-width"><heading level="h1">Editing Locker</heading></card>
 <%= render 'form', locker: @locker %>
-
-<%= link_to 'Show', @locker %> |
-<%= link_to 'Back', lockers_path %>
+<card size="medium">
+  <grid-container>
+    <grid-item columns="lg-6 md-6 sm-6">
+      <%= link_to 'Show', @locker %>
+    </grid-item>
+    <grid-item columns="lg-6 md-6 sm-6">
+      <%= link_to 'Back', lockers_path %>
+    </grid-item>
+  </grid-container>
+</card>

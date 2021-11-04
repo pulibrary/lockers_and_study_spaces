@@ -25,31 +25,31 @@ RSpec.describe 'lockers/edit', type: :view do
     render
 
     assert_select 'form[action=?][method=?]', locker_path(@locker), 'post' do
-      assert_select 'input[name=?]', 'locker[location]'
+      assert_select 'input-select[name=?]', 'locker[size]'
 
-      assert_select 'select[name=?]', 'locker[size]'
+      assert_select 'input-select[name=?]', 'locker[general_area]'
 
-      assert_select 'select[name=?]', 'locker[general_area]'
+      assert_select 'input-checkbox'
 
-      assert_select 'input[name=?]', 'locker[accessible]'
+      assert_select 'input-text[name=?]', 'locker[location]'
 
-      assert_select 'input[name=?]', 'locker[notes]'
+      assert_select 'input-text[name=?]', 'locker[notes]'
 
-      assert_select 'input[name=?]', 'locker[combination]'
+      assert_select 'input-text[name=?]', 'locker[combination]'
 
-      assert_select 'input[name=?]', 'locker[code]'
+      assert_select 'input-text[name=?]', 'locker[code]'
 
-      assert_select 'input[name=?]', 'locker[tag]'
+      assert_select 'input-text[name=?]', 'locker[tag]'
 
-      assert_select 'input[name=?]', 'locker[discs]'
+      assert_select 'input-text[name=?]', 'locker[discs]'
 
-      assert_select 'input[name=?]', 'locker[clutch]'
+      assert_select 'input-text[name=?]', 'locker[clutch]'
 
-      assert_select 'input[name=?]', 'locker[hubpos]'
+      assert_select 'input-text[name=?]', 'locker[hubpos]'
 
-      assert_select 'input[name=?]', 'locker[key_number]'
+      assert_select 'input-text[name=?]', 'locker[key_number]'
 
-      assert_select 'input[name=?]', 'locker[floor]'
+      assert_select 'input-text[name=?]', 'locker[floor]'
     end
   end
 end

@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <library-header app-name="Firestone Locker and Study Rooms" abbr-name="FLSR" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
+    <library-header app-name="Firestone Locker and Study Rooms" abbr-name="Lockers" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
       <menu-bar type="main-menu" :menu-items="[
         <% if current_user&.admin %>
           {name: 'Locker Management', component: 'Locker Management', children: [
@@ -16,6 +16,7 @@
             {name: 'Assign Lockers', component: 'Assing Lockers', href: '/locker_applications/awaiting_assignment'},
             {name: 'All Applications', component: 'All Applications', href: '/locker_applications/'},
             {name: 'Assignments', component: 'Assignments', href: '/locker_assignments/'},
+            {name: 'New Locker', component: 'New Locker', href: '/lockers/new'},
           ]},  
           {name: 'Study Room Management', component: 'Study Room Management', children: [
             {name: 'Study Rooms', component: 'Study Rooms', href: '/study_rooms/'},

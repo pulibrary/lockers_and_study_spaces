@@ -1,69 +1,62 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Location:</strong>
-  <%= @locker.location %>
-</p>
-
-<p>
-  <strong>Size:</strong>
-  <%= @locker.size %>
-</p>
-
-<p>
-  <strong>General area:</strong>
-  <%= @locker.general_area %>
-</p>
-
-<p>
-  <strong>Accessible:</strong>
-  <%= @locker.accessible %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @locker.notes %>
-</p>
-
-<p>
-  <strong>Combination:</strong>
-  <%= @locker.combination %>
-</p>
-
-<p>
-  <strong>Code:</strong>
-  <%= @locker.code %>
-</p>
-
-<p>
-  <strong>Tag:</strong>
-  <%= @locker.tag %>
-</p>
-
-<p>
-  <strong>Discs:</strong>
-  <%= @locker.discs %>
-</p>
-
-<p>
-  <strong>Clutch:</strong>
-  <%= @locker.clutch %>
-</p>
-
-<p>
-  <strong>Hubpos:</strong>
-  <%= @locker.hubpos %>
-</p>
-
-<p>
-  <strong>Key number:</strong>
-  <%= @locker.key_number %>
-</p>
-
-<p>
-  <strong>Floor:</strong>
-  <%= @locker.floor %>
-</p>
-
-<%= link_to 'Edit', edit_locker_path(@locker) %> |
-<%= link_to 'Back', lockers_path %>
+<card size="full-width">
+   <grid-container>
+    <grid-item columns="lg-2 md-3 sm-12">
+      <strong>Location:</strong>
+      <span><%= @locker.location %></span>
+    </grid-item>
+    <grid-item columns="lg-1 md-2 sm-12">
+      <strong>Size:</strong>
+      <span><%= @locker.size %></span>
+    </grid-item>
+    <grid-item columns="lg-3 md-4 sm-12">
+      <strong>General area:</strong>
+      <span><%= @locker.general_area %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-3 sm-12">
+      <strong>Accessible:</strong>
+      <span><%= @locker.accessible %></span>
+    </grid-item>
+    <grid-item columns="lg-3 md-4 sm-12">
+      <strong>Combination:</strong>
+      <span><%= @locker.combination %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-3 sm-12">
+      <strong>Code:</strong>
+      <span><%= @locker.code %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Tag:</strong>
+      <span><%= @locker.tag %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-3 sm-12">
+      <strong>Discs:</strong>
+      <span><%= @locker.discs %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-3 sm-12">
+      <strong>Clutch:</strong>
+      <span><%= @locker.clutch %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Hubpos:</strong>
+      <span><%= @locker.hubpos %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Key number:</strong>
+      <span><%= @locker.key_number %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Floor:</strong>
+      <span><%= @locker.floor %></span>
+    </grid-item>
+    <grid-item columns="lg-12 md-12 sm-12">
+      <strong>Notes:</strong>
+      <span><%= @locker.notes %></span>
+    </grid-item>
+    <grid-item columns="lg-12 md-12 sm-12">
+      <%= link_to 'Edit', edit_locker_path(@locker) %>
+      <%= link_to 'Back', lockers_path %>
+    </grid-item>
+   </grid-container>
+</card>
