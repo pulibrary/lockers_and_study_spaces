@@ -34,7 +34,8 @@ class Ldap
         status: result[:edupersonprimaryaffiliation]&.first,
         pustatus: result[:pustatus]&.first,
         universityid: result[:universityid]&.first,
-        class_year: result[:puclassyear]&.first
+        class_year: result[:puclassyear]&.first,
+        email: result[:mail]&.first
       }
     end
 
