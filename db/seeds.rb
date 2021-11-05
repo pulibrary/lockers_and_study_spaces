@@ -58,12 +58,51 @@ def locker_application_attributes(row, user)
   attributes
 end
 
+def setup_study_room(row, user)
+  study_room = StudyRoom.find_by(location: row['location'])
+  if study_room.blank?
+    puts "Blank location: #{row['location']}"
+  else
+    StudyRoomAssignment.create(study_room_assignment_attributes(row, user, study_room))
+  end
+end
+
+def lookup_locker(row)
+  locker = Locker.find_by(location: row['space'])
+  locker ||= Locker.find_by(location: row['location'])
+
+  # defunct location, lets assume it was a locker they wanted...
+  if row['location'] == 'NULL' && (row['spaceAssigned'] != 'NULL')
+    locker = Locker.find_by(location: 'DEFUNCT')
+    locker ||= Locker.create!(location: 'DEFUNCT', combination: 'DEFUNCT', general_area: 'DEFUNCT')
+  end
+  locker
+end
+
+def setup_locker(row, user)
+  locker = lookup_locker(row)
+  if locker.present?
+    application = LockerApplication.create(locker_application_attributes(row, user))
+    LockerAssignment.create(locker_assignment_attributes(row, application, locker)) if row['assignedDate'].present?
+  elsif row['location'] == 'NULL'
+    LockerApplication.create(locker_application_attributes(row, user))
+  else
+    setup_study_room(row, user)
+  end
+end
+
+# file was generate using `SELECT TOP * FROM [Admins]` query
 CSV.parse(File.open(Rails.root.join('space_admins.csv'), encoding: 'ISO-8859-1'), headers: true) do |row|
   attributes = Ldap.find_by_netid(row['admin'])
   User.create(uid: row['admin'], admin: true, provider: 'cas') if attributes[:status] == 'staff'
 end
 Rails.logger.warn("Created #{User.count} Administrative Users")
 
+# file was generated using the following sql from the old application
+# ```
+# SELECT Spaces.*, Location.location as general_area, SpaceType.type
+#    FROM [Spaces] join SpaceType on Spaces.spaceType = SpaceType.id join location on Spaces.floor = Location.id
+# ```
 CSV.parse(File.open(Rails.root.join('spaces.csv'), encoding: 'ISO-8859-1'), headers: true) do |row|
   if row['combination'].present? && row['combination'] != 'NULL'
     Locker.create(locker_attributes(row))
@@ -76,17 +115,24 @@ end
 
 Rails.logger.warn("Created #{Locker.count} Lockers and #{StudyRoom.count} Study Rooms")
 
+# File was generated using the following sql from the old application
+# ```
+# SELECT Applicant.*, Status.status as statusAtApplication, Location.location as preferredGeneralArea, Department.deptTitle as departmentAtApplication,
+#    Semester.semester, Spaces.space, Spaces.location, SpaceType.type FROM [Applicant]
+# join Status on Applicant.status = Status.id
+# join Location on Applicant.locationPreference = Location.id
+# join Department on Applicant.deptID = Department.deptId
+# join Semester on Applicant.occupancySemester = Semester.id
+# left join Spaces on Applicant.spaceAssigned = Spaces.spaceId
+# join SpaceType on Applicant.spaceTypePreference = SpaceType.id
+# where date_of_application > '20190101'
+# ```
 CSV.parse(File.open(Rails.root.join('space_applicants.csv'), encoding: 'ISO-8859-1'), headers: true) do |row|
   user = User.from_email(row['emailAddress'])
   if %w[2 4].include?(row['spaceTypePreference'])
-    application = LockerApplication.create(locker_application_attributes(row, user))
-    if row['assignedDate'].present?
-      locker = Locker.find_by(location: row['space'])
-      LockerAssignment.create(locker_assignment_attributes(row, application, locker))
-    end
+    setup_locker(row, user)
   else
-    study_room = StudyRoom.find_by(location: row['location'])
-    StudyRoomAssignment.create(study_room_assignment_attributes(row, user, study_room))
+    setup_study_room(row, user)
   end
 end
 
