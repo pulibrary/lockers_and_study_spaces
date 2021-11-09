@@ -17,7 +17,7 @@
     </grid-item>
     <grid-item columns="lg-3 md-6 sm-12">
       <strong>Locker:</strong>
-      <%= @locker_assignment.locker.location %>
+      <%= link_to @locker_assignment.locker.location, locker_path(@locker_assignment.locker) %>
     </grid-item>
    </grid-container>
   </card>

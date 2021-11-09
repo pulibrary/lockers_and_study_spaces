@@ -1,11 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<card size="full-width">
+<card size="full-width"> 
+    <heading level="h1" size="h2">Locker <%=@locker.location %></heading>
    <grid-container>
-    <grid-item columns="lg-2 md-3 sm-12">
-      <strong>Location:</strong>
-      <span><%= @locker.location %></span>
-    </grid-item>
     <grid-item columns="lg-1 md-2 sm-12">
       <strong>Size:</strong>
       <span><%= @locker.size %></span>
@@ -60,3 +57,22 @@
     </grid-item>
    </grid-container>
 </card>
+<% if @locker.current_assignment.present? %>
+<card size="full-width">
+  <heading level="h2" size="h4">Currently Assigned to Applicant</heading>
+   <grid-container>
+    <grid-item columns="lg-3 md-6 sm-12">
+      <strong>Start date:</strong>
+      <%= link_to @locker.current_assignment.netid, locker_assignment_path(@locker.current_assignment) %>
+    </grid-item>
+    <grid-item columns="lg-3 md-6 sm-12">
+      <strong>Start date:</strong>
+      <%= @locker.current_assignment.start_date %>
+    </grid-item>
+    <grid-item columns="lg-3 md-6 sm-12">
+      <strong>Expiration date:</strong>
+      <%= @locker.current_assignment.expiration_date %>
+    </grid-item>
+   </grid-container>
+</card>
+<%end %>

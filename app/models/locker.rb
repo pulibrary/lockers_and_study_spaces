@@ -18,4 +18,8 @@ class Locker < ApplicationRecord
     choices = LockerAndStudySpaces.config.fetch(:general_locations, [])
     prepare_choices_for_lux(choices)
   end
+
+  def current_assignment
+    @current_assignment ||= LockerAssignment.where(locker_id: id, released_date: nil).first
+  end
 end

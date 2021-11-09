@@ -20,6 +20,10 @@ class LockerAssignment < ApplicationRecord
     prepare_locker_choices_for_lux(available)
   end
 
+  def netid
+    locker_application.user.uid
+  end
+
   private
 
   def prepare_locker_choices_for_lux(choices)
