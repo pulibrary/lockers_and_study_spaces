@@ -1,6 +1,6 @@
 <% if locker_assignment.locker.present?%>
 <card size="full-width">
-  <heading level="h3" size="h4">Locker is already Assigned to <%= locker_assignment.locker.location %> Locker.  Submitting this form will change the assigned locker! </heading>
+  <heading level="h3" size="h4">Locker is already Assigned to <%= link_to locker_assignment.locker.location, locker_path(locker_assignment.locker) %> Locker.  Submitting this form will change the assigned locker! </heading>
 </card>
 <% end %>
 <%= render '/locker_applications/view', locker_application: locker_assignment.locker_application if locker_assignment.locker_application.present? %>

@@ -37,4 +37,13 @@ RSpec.describe 'lockers/show', type: :view do
     expect(rendered).to match(/Key Number/)
     expect(rendered).to match(/3/)
   end
+
+  context 'An assigned locker' do
+    let(:locker_assignment) { FactoryBot.create :locker_assignment, locker: @locker }
+    it 'renders a link to the assignment' do
+      locker_assignment
+      render
+      expect(rendered).to match(/#{locker_assignment_path(locker_assignment)}/)
+    end
+  end
 end
