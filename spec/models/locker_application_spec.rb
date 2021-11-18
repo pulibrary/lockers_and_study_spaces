@@ -92,4 +92,18 @@ RSpec.describe LockerApplication, type: :model do
       expect(locker_application.size_choices).to eq([{ label: 4, value: 4 }])
     end
   end
+
+  describe '##search' do
+    let!(:locker_application1) { FactoryBot.create :locker_application }
+    let!(:locker_application2) { FactoryBot.create :locker_application }
+    let!(:locker_application3) { FactoryBot.create :locker_application }
+
+    it 'searches by user netid' do
+      expect(LockerApplication.search(uid: locker_application1.user.uid)).to contain_exactly(locker_application1)
+    end
+
+    it 'searches returns all if search term is empty' do
+      expect(LockerApplication.search(uid: nil)).to contain_exactly(locker_application1, locker_application2, locker_application3)
+    end
+  end
 end

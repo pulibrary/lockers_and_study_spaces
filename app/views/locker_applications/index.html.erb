@@ -5,6 +5,15 @@
     <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
     <heading level="h1" size="h3">Locker Applications</heading>
   </card-header>
+  <card-content>
+  <%= form_tag(locker_applications_path, method: :get) do %>
+  <search-box >
+    <input-text id="search" name="search" label="Search by user netid" :hide-label="true" placeholder="Search by user netid" size="large" value="<%= params[:search]%>"></input-text>
+    <input-button id="search_sumbit" type="submit" variation="icon" size="medium" icon="search"></input-button>
+  </search-box>    
+  <% end %>
+  <%= link_to 'Clear Search', locker_applications_path %>
+  </card-content>
 </card>
 
 <%= render partial: "index_view", collection: @locker_applications, as: :locker_application %>

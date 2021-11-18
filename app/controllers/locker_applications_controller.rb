@@ -6,7 +6,7 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications or /locker_applications.json
   def index
-    @pagy, @locker_applications = pagy(LockerApplication.all.order(:created_at))
+    @pagy, @locker_applications = pagy(LockerApplication.search(uid: params[:search]).order(:created_at))
   end
 
   # GET /locker_applications/1 or /locker_applications/1.json
