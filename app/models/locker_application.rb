@@ -46,4 +46,11 @@ class LockerApplication < ApplicationRecord
   def available_lockers_in_area
     Locker.available_lockers.where(general_area: preferred_general_area).order(:location)
   end
+
+  def self.search(uid:)
+    return all if uid.blank?
+
+    user_id = User.find_by(uid: uid)&.id
+    where(user_id: user_id)
+  end
 end
