@@ -6,5 +6,6 @@ FactoryBot.define do
     preferred_size { 4 }
     preferred_general_area { 'location-1' }
     accessible { false }
+    status_at_application { 'senior' }
   end
 end

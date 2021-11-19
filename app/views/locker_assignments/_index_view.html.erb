@@ -1,0 +1,29 @@
+
+  <card size="full-width">
+   <grid-container>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Start Date:</strong>
+      <span><%= locker_assignment.start_date %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Expiration Date:</strong>
+      <span><%= locker_assignment.expiration_date %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Released Date:</strong>
+      <span><%= locker_assignment.released_date %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Applicant:</strong>
+      <span><%= locker_assignment.uid %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <strong>Location:</strong>
+      <span><%= locker_assignment.location %></span>
+    </grid-item>
+    <grid-item columns="lg-2 md-4 sm-12">
+      <%= link_to 'Edit', edit_locker_assignment_path(locker_assignment) %>
+      <%= link_to 'Release Locker', "Not Implimented" %>
+    </grid-item>
+   </grid-container>
+</card>

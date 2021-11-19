@@ -4,6 +4,8 @@ class LockerApplication < ApplicationRecord
   belongs_to :user
   has_one :locker_assignment
 
+  delegate :uid, to: :user
+
   def self.awaiting_assignment
     left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
   end
@@ -50,7 +52,6 @@ class LockerApplication < ApplicationRecord
   def self.search(uid:)
     return all if uid.blank?
 
-    user_id = User.find_by(uid: uid)&.id
-    where(user_id: user_id)
+    joins(:user).where("users.uid = '#{uid}'")
   end
 end

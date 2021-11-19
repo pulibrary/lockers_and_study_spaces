@@ -6,7 +6,7 @@ class LockerAssignmentsController < ApplicationController
 
   # GET /locker_assignments or /locker_assignments.json
   def index
-    @pagy, @locker_assignments = pagy(LockerAssignment.order(expiration_date: :desc).order(start_date: :desc).all)
+    @pagy, @locker_assignments = pagy(LockerAssignment.order(expiration_date: :desc).order(start_date: :desc).search(queries: query_params))
   end
 
   # GET /locker_assignments/1 or /locker_assignments/1.json
@@ -70,5 +70,9 @@ class LockerAssignmentsController < ApplicationController
     return if current_user.admin?
 
     redirect_to :root, alert: 'Only administrators have access to Locker Assignments!'
+  end
+
+  def query_params
+    params[:query]&.permit(:uid, :status_at_application, :general_area)
   end
 end
