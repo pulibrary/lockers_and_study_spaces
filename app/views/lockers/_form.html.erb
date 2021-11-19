@@ -29,11 +29,11 @@
    </grid-item>
 
    <grid-item columns="lg-2 md-4 sm-12">
-     <input-select label="General Area" name="locker[general_area]"
-                      id="locker_general_area"
+     <input-select label="Floor" name="locker[floor]"
+                      id="locker_floor"
                       width="expand"
-                      value="<%= locker.general_area %>"
-                      :options="<%= locker.general_area_choices.to_json %>"
+                      value="<%= locker.floor %>"
+                      :options="<%= locker.floor_choices.to_json %>"
         ></input-select>
    </grid-item>
    <grid-item columns="lg-2 md-4 sm-12">
@@ -83,10 +83,10 @@
                 label="Key Number" width="expand"></input-text>
    </grid-item>
    <grid-item columns="lg-2 md-4 sm-12">
-     <input-text id="locker_floor" 
-                name="locker[floor]" 
-                value="<%= locker.floor %>" 
-                label="Floor" width="expand"></input-text>
+     <input-text id="locker_general_area" 
+                name="locker[general_area]" 
+                value="<%= locker.general_area %>" 
+                label="General Area" width="expand"></input-text>
    </grid-item>
    <grid-item columns="lg-6 md-12 sm-12">
      <input-text id="locker_notes" type="textarea"

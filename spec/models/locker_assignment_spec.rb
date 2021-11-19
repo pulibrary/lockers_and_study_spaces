@@ -9,8 +9,8 @@ RSpec.describe LockerAssignment, type: :model do
   let(:locker_assignment2) { described_class.create(locker_application: locker_application2, locker: locker4, start_date: DateTime.now) }
   let(:locker1) {  FactoryBot.create :locker }
   let(:locker2) {  FactoryBot.create :locker }
-  let(:locker3) {  FactoryBot.create :locker, general_area: locker_application1.preferred_general_area }
-  let(:locker4) {  FactoryBot.create :locker, general_area: locker_application1.preferred_general_area }
+  let(:locker3) {  FactoryBot.create :locker, floor: locker_application1.preferred_general_area }
+  let(:locker4) {  FactoryBot.create :locker, floor: locker_application1.preferred_general_area }
 
   before do
     locker_assignment1
@@ -41,9 +41,9 @@ RSpec.describe LockerAssignment, type: :model do
     let(:locker_application2) { FactoryBot.create(:locker_application, status_at_application: 'senior') }
     let(:locker_application3) { FactoryBot.create(:locker_application, status_at_application: 'junior') }
     let(:locker_application4) { FactoryBot.create(:locker_application, user: locker_application1.user, status_at_application: 'senior') }
-    let(:locker1) { FactoryBot.create(:locker, general_area: 'A floor') }
-    let(:locker2) { FactoryBot.create(:locker, general_area: 'B floor') }
-    let(:locker3) { FactoryBot.create(:locker, general_area: 'B floor') }
+    let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }
+    let(:locker2) { FactoryBot.create(:locker, floor: 'B floor') }
+    let(:locker3) { FactoryBot.create(:locker, floor: 'B floor') }
     let!(:locker_assignment1) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
     let!(:locker_assignment2) { FactoryBot.create :locker_assignment, locker_application: locker_application2, locker: locker2 }
     let!(:locker_assignment3) { FactoryBot.create :locker_assignment, locker_application: locker_application3, locker: locker3 }
@@ -58,18 +58,18 @@ RSpec.describe LockerAssignment, type: :model do
                                                                                locker_assignment4)
     end
 
-    it 'filters by status_at_application and general_area (order does not matter)' do
-      expect(described_class.search(queries: { general_area: 'B floor', status_at_application: 'junior' })).to contain_exactly(locker_assignment3)
-      expect(described_class.search(queries: { status_at_application: 'junior', general_area: 'B floor' })).to contain_exactly(locker_assignment3)
+    it 'filters by status_at_application and floor (order does not matter)' do
+      expect(described_class.search(queries: { floor: 'B floor', status_at_application: 'junior' })).to contain_exactly(locker_assignment3)
+      expect(described_class.search(queries: { status_at_application: 'junior', floor: 'B floor' })).to contain_exactly(locker_assignment3)
     end
 
-    it 'filters by user status_at_application and general_area' do
-      expect(described_class.search(queries: { uid: locker_assignment1.uid, general_area: 'A floor',
+    it 'filters by user status_at_application and floor' do
+      expect(described_class.search(queries: { uid: locker_assignment1.uid, floor: 'A floor',
                                                status_at_application: 'junior' })).to contain_exactly(locker_assignment1)
     end
 
     it 'ignores invalid queries' do
-      expect(described_class.search(queries: { foo: 'bar', uid: locker_assignment1.uid, general_area: 'A floor',
+      expect(described_class.search(queries: { foo: 'bar', uid: locker_assignment1.uid, floor: 'A floor',
                                                status_at_application: 'junior' })).to contain_exactly(locker_assignment1)
     end
   end

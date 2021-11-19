@@ -19,7 +19,15 @@ def locker_attributes(row)
   attributes = row_attributes(row, Locker)
   attributes[:accessible] = row['AHA']
   attributes[:location] = row['space']
+  attributes[:general_area] = row['location']
+  attributes[:floor] = row['floor_str']
   attributes['size'] = locker_size(row['type'])
+  attributes
+end
+
+def study_room_attributes(row)
+  attributes = row_attributes(row, StudyRoom)
+  attributes[:general_area] = row['floor_str']
   attributes
 end
 
@@ -51,6 +59,8 @@ end
 
 def locker_application_attributes(row, user)
   attributes = row_attributes(row, LockerApplication)
+  attributes['status_at_application'] = attributes['status_at_application'].downcase
+  attributes['status_at_application'] = 'graduate' if attributes['status_at_application'] == 'grad student'
   attributes[:preferred_size] = locker_size(row['type'])
   attributes[:accessible] = row['handicapped']
   attributes[:created_at] = row['date_of_application']
@@ -100,14 +110,14 @@ Rails.logger.warn("Created #{User.count} Administrative Users")
 
 # file was generated using the following sql from the old application
 # ```
-# SELECT Spaces.*, Location.location as general_area, SpaceType.type
+# SELECT Spaces.*, Location.location as floor_str, SpaceType.type
 #    FROM [Spaces] join SpaceType on Spaces.spaceType = SpaceType.id join location on Spaces.floor = Location.id
 # ```
 CSV.parse(File.open(Rails.root.join('spaces.csv'), encoding: 'ISO-8859-1'), headers: true) do |row|
   if row['combination'].present? && row['combination'] != 'NULL'
     Locker.create(locker_attributes(row))
   elsif row['type'] == 'Study Room'
-    StudyRoom.create(row_attributes(row, StudyRoom))
+    StudyRoom.create(study_room_attributes(row))
   else
     puts "Unknown type #{row['spaceID']}: #{row['type']}"
   end
@@ -125,7 +135,7 @@ Rails.logger.warn("Created #{Locker.count} Lockers and #{StudyRoom.count} Study 
 # join Semester on Applicant.occupancySemester = Semester.id
 # left join Spaces on Applicant.spaceAssigned = Spaces.spaceId
 # join SpaceType on Applicant.spaceTypePreference = SpaceType.id
-# where date_of_application > '20190101'
+# where date_of_application > '20190101' or (releaseDate is null and assignedDate is not null and expirationDate > CURRENT_TIMESTAMP)
 # ```
 CSV.parse(File.open(Rails.root.join('space_applicants.csv'), encoding: 'ISO-8859-1'), headers: true) do |row|
   user = User.from_email(row['emailAddress'])

@@ -30,8 +30,8 @@ class LockerApplication < ApplicationRecord
     prepare_choices_for_lux(choices)
   end
 
-  def general_area_choices
-    choices = LockerAndStudySpaces.config.fetch(:general_locations, [])
+  def floor_choices
+    choices = LockerAndStudySpaces.config.fetch(:locker_floor_choices, [])
     prepare_choices_for_lux(choices)
   end
 
@@ -46,7 +46,7 @@ class LockerApplication < ApplicationRecord
   end
 
   def available_lockers_in_area
-    Locker.available_lockers.where(general_area: preferred_general_area).order(:location)
+    Locker.available_lockers.where(floor: preferred_general_area).order(:location)
   end
 
   def self.search(uid:)

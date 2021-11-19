@@ -21,7 +21,7 @@ RSpec.describe LockerApplication, type: :model do
     let(:locker_assignment) { LockerAssignment.create(locker_application: locker_application, locker: locker1, start_date: DateTime.now) }
     let(:locker1) {  FactoryBot.create :locker }
     let(:locker2) {  FactoryBot.create :locker }
-    let(:locker3) {  FactoryBot.create :locker, general_area: locker_application.preferred_general_area }
+    let(:locker3) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area }
 
     before do
       locker_assignment

@@ -14,8 +14,13 @@ class Locker < ApplicationRecord
     prepare_choices_for_lux(choices)
   end
 
+  def floor_choices
+    choices = LockerAndStudySpaces.config.fetch(:locker_floors, [])
+    prepare_choices_for_lux(choices)
+  end
+
   def general_area_choices
-    choices = LockerAndStudySpaces.config.fetch(:general_locations, [])
+    choices = Locker.pluck(:general_area).uniq.sort
     prepare_choices_for_lux(choices)
   end
 

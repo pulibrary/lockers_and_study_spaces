@@ -22,7 +22,8 @@
 <card size="full-width">
   <div class="row" >
     <input-select class="row" label="Applicant Status" id="query_status_at_application" name="query[status_at_application]" class="search-select" value="<%= params.fetch(:query,{})[:status_at_application]%>" :options="<%= LockerApplication.new.status_choices.to_json %>"></input-select>
-    <input-select class="row" label="Floor" id="query_general_area" name="query[general_area]" class="search-select" value="<%= params.fetch(:query,{})[:general_area]%>" :options="<%= LockerApplication.new.general_area_choices.to_json %>"></input-select>
+    <input-select class="row" label="Floor" id="query_floor" name="query[floor]" class="search-select" value="<%= params.fetch(:query,{})[:floor]%>" :options="<%= Locker.new.floor_choices.to_json %>"></input-select>
+    <input-select class="row" label="General Area" id="query_general_area" name="query[general_area]" class="search-select" value="<%= params.fetch(:query,{})[:general_area]%>" :options="<%= Locker.new.general_area_choices.to_json %>"></input-select>
     <input-button id="filter_sumbit" type="submit" size="medium">Filter</input-button>
     <%= link_to locker_assignments_path do %>
       <lux-icon-base icon-name="clear - return to all results"> <lux-icon-denied></lux-icon-denied> </lux-icon-base>   

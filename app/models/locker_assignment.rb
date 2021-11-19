@@ -19,7 +19,7 @@ class LockerAssignment < ApplicationRecord
           memo.search_by_user(uid: val)
         when :status_at_application, 'status_at_application'
           memo.search_by_relation(relation: :locker_application, field: field, value: val)
-        when :general_area, 'general_area'
+        when :general_area, 'general_area', :floor, 'floor'
           memo.search_by_relation(relation: :locker, field: field, value: val)
         else
           memo
