@@ -1,33 +1,40 @@
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+<card>
+  <p id="notice"><%= notice %></p>
+</card>
+<% end %>
 
-<h1>Locker Assignments</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Start date</th>
-      <th>End date</th>
-      <th>Locker application</th>
-      <th>Locker</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @locker_assignments.each do |locker_assignment| %>
-      <tr>
-        <td><%= locker_assignment.start_date %></td>
-        <td><%= locker_assignment.expiration_date %></td>
-        <td><%= locker_assignment.locker_application.applicant %></td>
-        <td><%= locker_assignment.locker.location %></td>
-        <td><%= link_to 'Show', locker_assignment %></td>
-        <td><%= link_to 'Edit', edit_locker_assignment_path(locker_assignment) %></td>
-        <td><%= link_to 'Destroy', locker_assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<%= form_tag(locker_assignments_path, method: :get) do %>
+<card id="locker-form-header" size="full-width">
+  <card-header>
+    <heading level="h1">Locker Assignments</heading>
+  </card-header>
+  <card-content class="row">
+    <search-box >
+      <input-text id="query_uid" name="query[uid]" label="Search by user netid" :hide-label="true" placeholder="Search by user netid" size="large" value="<%= params.fetch(:query,{})[:uid]%>"></input-text>
+      <input-button id="search_sumbit" type="submit" variation="icon" size="medium" icon="search"></input-button>
+    </search-box> 
+    <%= link_to locker_assignments_path do %>
+      <lux-icon-base icon-name="clear - return to all results"> <lux-icon-denied></lux-icon-denied> </lux-icon-base>   
     <% end %>
-  </tbody>
-</table>
+  </card-content>
+</card>
+<card size="full-width">
+  <div class="row" >
+    <input-select class="row" label="Applicant Status" id="query_status_at_application" name="query[status_at_application]" class="search-select" value="<%= params.fetch(:query,{})[:status_at_application]%>" :options="<%= LockerApplication.new.status_choices.to_json %>"></input-select>
+    <input-select class="row" label="Floor" id="query_floor" name="query[floor]" class="search-select" value="<%= params.fetch(:query,{})[:floor]%>" :options="<%= Locker.new.floor_choices.to_json %>"></input-select>
+    <input-select class="row" label="General Area" id="query_general_area" name="query[general_area]" class="search-select" value="<%= params.fetch(:query,{})[:general_area]%>" :options="<%= Locker.new.general_area_choices.to_json %>"></input-select>
+    <input-button id="filter_sumbit" type="submit" size="medium">Filter</input-button>
+    <%= link_to locker_assignments_path do %>
+      <lux-icon-base icon-name="clear - return to all results"> <lux-icon-denied></lux-icon-denied> </lux-icon-base>   
+    <% end %>
+  </div>    
+</card>
+  <% end %>
 
-<br>
+<card size="full-width">
+<%= render partial: "index_view", collection: @locker_assignments, as: :locker_assignment %>
+
 <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
 <%== pagy_nav(@pagy) %>
+</card>

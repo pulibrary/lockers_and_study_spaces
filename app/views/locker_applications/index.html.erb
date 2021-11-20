@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+<card>
+  <p id="notice"><%= notice %></p>
+</card>
+<% end %>
 
 <card id="locker-form-header" size="full-width">
   <card-header>

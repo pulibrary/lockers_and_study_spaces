@@ -16,3 +16,25 @@
 .lux-col {
   padding: .2rem;
 }
+
+.lux-select.search-select{
+  margin-bottom: 0;
+  margin-right: .2rem;
+} 
+
+.row {
+  display: flex;
+}
+
+.lux-card-content.row {
+  padding-bottom: 0;
+}
+
+.row.lux-select {
+  padding-left: .2rem;
+  padding-right: .2rem;
+  label, select{
+    margin-top: .5rem;
+    margin-right: .5rem;
+  }
+}

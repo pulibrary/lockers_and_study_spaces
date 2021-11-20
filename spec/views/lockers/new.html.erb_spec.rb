@@ -17,7 +17,7 @@ RSpec.describe 'lockers/new', type: :view do
                       clutch: 'clutch',
                       hubpos: 'hubpos',
                       key_number: 'num',
-                      floor: 1
+                      floor: 'floor'
                     ))
   end
 
@@ -29,7 +29,7 @@ RSpec.describe 'lockers/new', type: :view do
 
       assert_select 'input-select[name=?]', 'locker[size]', value: '4'
 
-      assert_select 'input-select[name=?]', 'locker[general_area]', value: 'general_area'
+      assert_select 'input-select[name=?]', 'locker[floor]', value: 'floor'
 
       assert_select 'input-checkbox', value: false
 
@@ -49,7 +49,7 @@ RSpec.describe 'lockers/new', type: :view do
 
       assert_select 'input-text[name=?]', 'locker[key_number]', value: 'num'
 
-      assert_select 'input-text[name=?]', 'locker[floor]', value: 1
+      assert_select 'input-text[name=?]', 'locker[general_area]', value: 'general_area'
     end
   end
 end
