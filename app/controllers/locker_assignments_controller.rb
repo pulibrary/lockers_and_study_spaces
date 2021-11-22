@@ -73,6 +73,6 @@ class LockerAssignmentsController < ApplicationController
   end
 
   def query_params
-    params[:query]&.permit(:uid, :status_at_application, :general_area)
+    params[:query]&.permit(:uid, :status_at_application, :general_area, :floor)
   end
 end
