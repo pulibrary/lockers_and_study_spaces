@@ -27,7 +27,7 @@ RSpec.describe Applicant, type: :model do
 
   it 'looks up ldap on initialization' do
     expect(applicant.ldap).to eq(class_year: nil, department: 'Library Information Technology', email: 'sally.smith@princeton.edu',
-                                 netid: 'abc123', pustatus: 'stf', status: 'staff', universityid: '999999999')
+                                 netid: 'abc123', pustatus: 'stf', status: 'staff', universityid: '999999999', name: 'Sally Smith')
   end
 
   it 'is not a senior' do

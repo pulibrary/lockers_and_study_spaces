@@ -5,8 +5,12 @@ require 'rails_helper'
 RSpec.describe LockerAssignment, type: :model do
   let(:locker_application1) { FactoryBot.create :locker_application }
   let(:locker_application2) { FactoryBot.create :locker_application }
-  let(:locker_assignment1) { described_class.create(locker_application: locker_application2, locker: locker1, start_date: DateTime.now) }
-  let(:locker_assignment2) { described_class.create(locker_application: locker_application2, locker: locker4, start_date: DateTime.now) }
+  let(:locker_assignment1) do
+    described_class.create(locker_application: locker_application2, locker: locker1, start_date: DateTime.now, expiration_date: DateTime.now.next_year)
+  end
+  let(:locker_assignment2) do
+    described_class.create(locker_application: locker_application2, locker: locker4, start_date: DateTime.now, expiration_date: DateTime.now.next_year)
+  end
   let(:locker1) {  FactoryBot.create :locker }
   let(:locker2) {  FactoryBot.create :locker }
   let(:locker3) {  FactoryBot.create :locker, floor: locker_application1.preferred_general_area }

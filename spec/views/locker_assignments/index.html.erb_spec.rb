@@ -9,16 +9,12 @@ RSpec.describe 'locker_assignments/index', type: :view do
   let(:locker_application2) { FactoryBot.create :locker_application }
   before(:each) do
     assign(:locker_assignments, [
-             LockerAssignment.create!(
-               locker_application: locker_application1,
-               locker: locker1,
-               start_date: DateTime.current.to_date
-             ),
-             LockerAssignment.create!(
-               locker_application: locker_application2,
-               locker: locker2,
-               start_date: DateTime.current.to_date
-             )
+             FactoryBot.create(:locker_assignment,
+                               locker_application: locker_application1,
+                               locker: locker1),
+             FactoryBot.create(:locker_assignment,
+                               locker_application: locker_application2,
+                               locker: locker2)
            ])
     assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
   end

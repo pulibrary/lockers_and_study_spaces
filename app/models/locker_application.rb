@@ -4,24 +4,22 @@ class LockerApplication < ApplicationRecord
   belongs_to :user
   has_one :locker_assignment
 
+  attr_accessor :applicant
+
   delegate :uid, to: :user
+
+  delegate :email, :name, :department, to: :applicant
 
   def self.awaiting_assignment
     left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
   end
 
-  def initialize(*args)
-    super
-    return unless user.present?
-
-    self.department_at_application ||= applicant.department
-    self.status_at_application ||= applicant.status
-  end
-
-  def applicant
-    return nil unless user.present?
-
-    @applicant ||= Applicant.new(user)
+  after_initialize do |_locker_application|
+    if user.present?
+      @applicant ||= Applicant.new(user)
+      self.department_at_application ||= applicant.department
+      self.status_at_application ||= applicant.status
+    end
   end
 
   def size_choices

@@ -18,7 +18,7 @@ RSpec.describe LockerApplication, type: :model do
 
   describe '#available_lockers_in_area' do
     let(:locker_application) { FactoryBot.create :locker_application }
-    let(:locker_assignment) { LockerAssignment.create(locker_application: locker_application, locker: locker1, start_date: DateTime.now) }
+    let(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application, locker: locker1 }
     let(:locker1) {  FactoryBot.create :locker }
     let(:locker2) {  FactoryBot.create :locker }
     let(:locker3) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area }
@@ -38,7 +38,7 @@ RSpec.describe LockerApplication, type: :model do
     let(:locker_application1) { FactoryBot.create :locker_application }
     let(:locker_application2) { FactoryBot.create :locker_application }
     let(:locker_application3) { FactoryBot.create :locker_application }
-    let(:locker_assignment) { LockerAssignment.create(locker_application: locker_application1, locker: locker1, start_date: DateTime.now) }
+    let(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
     let(:locker1) { FactoryBot.create :locker }
 
     before do

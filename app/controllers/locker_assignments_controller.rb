@@ -18,29 +18,15 @@ class LockerAssignmentsController < ApplicationController
   # POST /locker_assignments or /locker_assignments.json
   def create
     @locker_assignment = LockerAssignment.new(locker_assignment_params)
-    respond_to do |format|
-      if @locker_assignment.save
-        format.html { redirect_to @locker_assignment, notice: 'Locker assignment was successfully created.' }
-        format.json { render :show, status: :created, location: @locker_assignment }
-      else
-        @locker_application = @locker_assignment.locker_application
-        format.html { render 'locker_applications/assign', status: :unprocessable_entity }
-        format.json { render json: @locker_assignment.errors, status: :unprocessable_entity }
-      end
-    end
+    valid = @locker_assignment.save
+    respond_to_create(valid)
+    UserMailer.with(locker_assignment: @locker_assignment).locker_assignment_confirmation.deliver if valid
   end
 
   # PATCH/PUT /locker_assignments/1 or /locker_assignments/1.json
   def update
-    respond_to do |format|
-      if @locker_assignment.update(locker_assignment_params)
-        format.html { redirect_to @locker_assignment, notice: 'Locker assignment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @locker_assignment }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @locker_assignment.errors, status: :unprocessable_entity }
-      end
-    end
+    valid = @locker_assignment.update(locker_assignment_params)
+    respond_to_update(valid)
   end
 
   # DELETE /locker_assignments/1 or /locker_assignments/1.json
@@ -74,5 +60,22 @@ class LockerAssignmentsController < ApplicationController
 
   def query_params
     params[:query]&.permit(:uid, :status_at_application, :general_area, :floor)
+  end
+
+  def respond_to_update(valid)
+    respond_to_create(valid, message: 'Locker assignment was successfully updated.', error_location: :edit)
+  end
+
+  def respond_to_create(valid, message: 'Locker assignment was successfully created.', error_location: 'locker_applications/assign')
+    respond_to do |format|
+      if valid
+        format.html { redirect_to @locker_assignment, notice: message }
+        format.json { render :show, status: :created, location: @locker_assignment }
+      else
+        @locker_application = @locker_assignment.locker_application
+        format.html { render error_location, status: :unprocessable_entity }
+        format.json { render json: @locker_assignment.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end
