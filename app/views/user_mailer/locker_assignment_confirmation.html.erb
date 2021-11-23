@@ -1,0 +1,26 @@
+<tr>
+  <td style="background-color: #ffffff; box-shadow: 0 0 0 1px rgba(92,106,196,.1);">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tr>
+        <td style="padding: 20px 20px 0; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 25px; line-height: 30px; font-weight: normal;">Firestone Library Locker Assignment</h1>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;"><%= @locker_assignment.name %> is assigned to <b><%= @locker_assignment.location %></b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;">Occupency expires on <b><%= @locker_assignment.expiration_date %></b></b></p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;">Applied as <%= @locker_assignment.status_at_application %> in the <%= @locker_assignment.department %> Department</p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

@@ -4,8 +4,9 @@ FactoryBot.define do
   factory :locker_application do
     user { FactoryBot.create(:user) }
     preferred_size { 4 }
-    preferred_general_area { 'location-1' }
+    preferred_general_area { 'A floor' }
     accessible { false }
     status_at_application { 'senior' }
+    applicant { Applicant.new(user, ldap: {}) }
   end
 end

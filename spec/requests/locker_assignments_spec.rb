@@ -28,7 +28,8 @@ RSpec.describe '/locker_assignments', type: :request do
     {
       locker_application_id: locker_application.id,
       locker_id: locker.id,
-      start_date: DateTime.current.to_date
+      start_date: DateTime.current.to_date,
+      expiration_date: DateTime.current.to_date.next_year
     }
   end
 
@@ -96,7 +97,8 @@ RSpec.describe '/locker_assignments', type: :request do
         {
           locker_application_id: locker_application.id,
           any_locker_id: locker.id,
-          start_date: DateTime.current.to_date
+          start_date: DateTime.current.to_date,
+          expiration_date: DateTime.current.to_date.next_year
         }
       end
 
@@ -120,7 +122,7 @@ RSpec.describe '/locker_assignments', type: :request do
         locker_assignment = LockerAssignment.create! valid_attributes
         patch locker_assignment_url(locker_assignment), params: { locker_assignment: new_attributes }
         locker_assignment.reload
-        expect(locker_assignment.expiration_date).to be_blank
+        expect(locker_assignment.expiration_date).not_to eq(DateTime.tomorrow.to_date)
         expect(response).to redirect_to(root_path)
       end
 
@@ -215,7 +217,8 @@ RSpec.describe '/locker_assignments', type: :request do
           {
             locker_application_id: locker_application.id,
             any_locker_id: locker.id,
-            start_date: DateTime.current.to_date
+            start_date: DateTime.current.to_date,
+            expiration_date: DateTime.current.to_date.next_year
           }
         end
 

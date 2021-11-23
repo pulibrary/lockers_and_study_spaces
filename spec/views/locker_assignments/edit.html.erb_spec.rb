@@ -6,11 +6,9 @@ RSpec.describe 'locker_assignments/edit', type: :view do
   let(:locker) { FactoryBot.create :locker }
   let(:locker_application) { FactoryBot.create :locker_application }
   before(:each) do
-    @locker_assignment = assign(:locker_assignment, LockerAssignment.create!(
-                                                      locker_application: locker_application,
-                                                      locker: locker,
-                                                      start_date: DateTime.current.to_date
-                                                    ))
+    @locker_assignment = assign(:locker_assignment, FactoryBot.create(:locker_assignment,
+                                                                      locker_application: locker_application,
+                                                                      locker: locker))
   end
 
   it 'renders the edit locker_assignment form' do

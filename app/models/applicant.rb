@@ -3,9 +3,9 @@
 class Applicant
   attr_reader :user, :ldap
 
-  def initialize(user)
+  def initialize(user, ldap: Ldap.find_by_netid(user.uid))
     @user = user
-    @ldap = Ldap.find_by_netid(user.uid)
+    @ldap = ldap
   end
 
   def senior?
@@ -30,6 +30,14 @@ class Applicant
 
   def department
     ldap[:department]
+  end
+
+  def email
+    ldap[:email] || "#{user.uid}@princeton.edu"
+  end
+
+  def name
+    ldap[:name] || user.uid
   end
 
   def to_s

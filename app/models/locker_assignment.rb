@@ -5,9 +5,9 @@ class LockerAssignment < ApplicationRecord
   belongs_to :locker_application
 
   delegate :location, to: :locker
-  delegate :uid, to: :locker_application
+  delegate :uid, :email, :name, :status_at_application, :department, to: :locker_application
 
-  validates :start_date, presence: true
+  validates :start_date, :expiration_date, presence: true
 
   class << self
     def search(queries:)

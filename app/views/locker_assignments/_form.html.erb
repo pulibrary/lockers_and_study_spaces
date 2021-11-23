@@ -25,7 +25,7 @@
 
      <grid-item columns="lg-3 md-6 sm-12">
        <%= form.label :expiration_date  %>
-       <%= form.date_select :expiration_date, {:include_blank => true, :default => nil} %>
+       <%= form.date_select :expiration_date, {:default => DateTime.now.to_date.next_year} %>
      </grid-item>
 
      <grid-item columns="lg-3 md-6 sm-12">
