@@ -27,4 +27,10 @@ class Locker < ApplicationRecord
   def current_assignment
     @current_assignment ||= LockerAssignment.where(locker_id: id, released_date: nil).first
   end
+
+  def self.search(location:)
+    return all if location.blank?
+
+    where("location like '#{location}%'")
+  end
 end

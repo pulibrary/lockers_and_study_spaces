@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Locker Violations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Locker</th>
+      <th>User</th>
+      <th>Number of books</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @locker_violations.each do |violation| %>
+      <tr>
+        <td><%= violation.locker_id %></td>
+        <td><%= violation.user_id %></td>
+        <td><%= violation.number_of_books %></td>
+        <td><%= link_to 'Show', violation %></td>
+        <td><%= link_to 'Edit', edit_locker_violation_path(violation) %></td>
+        <td><%= link_to 'Destroy', violation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New LockerViolation', new_locker_violation_path %>

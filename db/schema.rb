@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_119_202_803) do
+ActiveRecord::Schema.define(version: 20_211_129_192_812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(version: 20_211_119_202_803) do
     t.datetime 'updated_at', null: false
     t.index ['locker_application_id'], name: 'index_locker_assignments_on_locker_application_id'
     t.index ['locker_id'], name: 'index_locker_assignments_on_locker_id'
+  end
+
+  create_table 'locker_violations', force: :cascade do |t|
+    t.integer 'locker_id'
+    t.integer 'user_id'
+    t.integer 'number_of_books'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
   create_table 'lockers', force: :cascade do |t|

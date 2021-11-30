@@ -75,7 +75,7 @@ Rails.application.configure do
   }
 
   config.action_mailer.default_options = {
-    from: 'no-reply@princeton.edu'
+    from: ' access@princeton.edu'
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.

@@ -18,7 +18,7 @@
       <span><%= locker.accessible %></span>
     </grid-item>
     <grid-item columns="lg-2 md-4 sm-12">
-      <%= link_to 'Show', locker_path(locker) %>
+      <%= link_to 'Record LockerViolation', new_locker_violation_path(locker_violation: {locker_id: locker.id}) %>
       <%= link_to 'Edit', edit_locker_path(locker) %>
     </grid-item>
    </grid-container>

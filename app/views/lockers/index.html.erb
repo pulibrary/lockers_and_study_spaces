@@ -1,6 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Lockers</h1>
+
+<card id="locker-form-header" size="full-width">
+  <card-header>
+    <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
+    <heading level="h1" size="h3">Lockers</heading>
+  </card-header>
+  <card-content>
+  <%= form_tag(lockers_path, method: :get) do %>
+  <search-box >
+    <input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></input-text>
+    <input-button id="search_sumbit" type="submit" variation="icon" size="medium" icon="search"></input-button>
+  </search-box>    
+  <% end %>
+  <%= link_to 'Clear Search', lockers_path %>
+  </card-content>
+</card>
+
 <%= render partial: "index_view", collection: @lockers, as: :locker %>
 
 <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>

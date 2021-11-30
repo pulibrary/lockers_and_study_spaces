@@ -6,7 +6,7 @@ class LockersController < ApplicationController
 
   # GET /lockers or /lockers.json
   def index
-    @pagy, @lockers = pagy(Locker.all)
+    @pagy, @lockers = pagy(Locker.search(location: params[:search]).order(:location))
   end
 
   # GET /lockers/1 or /lockers/1.json

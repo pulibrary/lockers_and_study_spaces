@@ -7,4 +7,11 @@ class UserMailer < ApplicationMailer
     email = @locker_assignment.email
     mail(to: email, subject: 'Your Locker has been assigned')
   end
+
+  def locker_violation
+    @locker_violation = params[:locker_violation]
+
+    email = @locker_violation.email
+    mail(to: email, subject: 'Uncharged Materials in Locker')
+  end
 end

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Locker:</strong>
+  <%= @locker_violation.locker_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @locker_violation.user_id %>
+</p>
+
+<p>
+  <strong>Number of books:</strong>
+  <%= @locker_violation.number_of_books %>
+</p>
+
+<%= link_to 'Edit', edit_locker_violation_path(@locker_violation) %> |
+<%= link_to 'Back', locker_violations_path %>
