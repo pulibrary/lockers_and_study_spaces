@@ -4,7 +4,7 @@ class LockerAssignment < ApplicationRecord
   belongs_to :locker
   belongs_to :locker_application
 
-  delegate :location, to: :locker
+  delegate :location, :combination, to: :locker
   delegate :uid, :email, :name, :status_at_application, :department, :user, :applicant, to: :locker_application
 
   validates :start_date, :expiration_date, presence: true

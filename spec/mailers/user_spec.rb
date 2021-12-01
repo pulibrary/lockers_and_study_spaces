@@ -11,8 +11,13 @@ RSpec.describe UserMailer, type: :mailer do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq 'Your Locker has been assigned'
       expect(mail.to).to eq [locker_assignment.email]
+      expect(mail.from).to eq ['access@princeton.edu']
       expect(mail.html_part.body.to_s).to have_content('Firestone Library Locker Assignment')
       expect(mail.html_part.body.to_s).to have_content(locker_assignment.name)
+      expect(mail.html_part.body.to_s).to have_content(locker_assignment.combination)
+      expect(mail.html_part.body.to_s).to have_content('To Unlock')
+      expect(mail.html_part.body.to_s).to have_content('To Lock')
+      expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Locker Space Agreement.pdf"')
     end
   end
 
@@ -25,6 +30,7 @@ RSpec.describe UserMailer, type: :mailer do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq 'Uncharged Materials in Locker'
       expect(mail.to).to eq [locker_violation.email]
+      expect(mail.from).to eq ['access@princeton.edu']
       expect(mail.html_part.body.to_s).to have_content('Firestone Library Locker Violation')
       expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your locker #{locker_violation.location}"\
                                                        ' that were not checked out and we returned them to Circulation')
