@@ -3,6 +3,12 @@
 class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[cas]
 
+  has_many :locker_violations
+
+  def number_of_violations
+    locker_violations.count
+  end
+
   def self.from_cas(access_token)
     user = User.find_by(provider: access_token.provider, uid: access_token.uid)
     user = User.create(provider: access_token.provider, uid: access_token.uid, admin: false) if user.blank?
