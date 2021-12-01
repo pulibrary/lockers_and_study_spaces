@@ -41,9 +41,9 @@ RSpec.describe LockerAssignment, type: :model do
   end
 
   describe '##search' do
-    let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior') }
-    let(:locker_application2) { FactoryBot.create(:locker_application, status_at_application: 'senior') }
-    let(:locker_application3) { FactoryBot.create(:locker_application, status_at_application: 'junior') }
+    let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior', department_at_application: 'History Department') }
+    let(:locker_application2) { FactoryBot.create(:locker_application, status_at_application: 'senior', department_at_application: 'Math Department') }
+    let(:locker_application3) { FactoryBot.create(:locker_application, status_at_application: 'junior', department_at_application: 'History Department') }
     let(:locker_application4) { FactoryBot.create(:locker_application, user: locker_application1.user, status_at_application: 'senior') }
     let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }
     let(:locker2) { FactoryBot.create(:locker, floor: 'B floor') }
@@ -51,7 +51,9 @@ RSpec.describe LockerAssignment, type: :model do
     let!(:locker_assignment1) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
     let!(:locker_assignment2) { FactoryBot.create :locker_assignment, locker_application: locker_application2, locker: locker2 }
     let!(:locker_assignment3) { FactoryBot.create :locker_assignment, locker_application: locker_application3, locker: locker3 }
-    let!(:locker_assignment4) { FactoryBot.create :locker_assignment, locker_application: locker_application4, locker: locker1 }
+    let!(:locker_assignment4) do
+      FactoryBot.create :locker_assignment, locker_application: locker_application4, locker: locker1, expiration_date: DateTime.yesterday.to_date
+    end
 
     it 'searches by user netid' do
       expect(described_class.search(queries: { uid: locker_assignment1.uid })).to contain_exactly(locker_assignment1, locker_assignment4)
@@ -67,9 +69,20 @@ RSpec.describe LockerAssignment, type: :model do
       expect(described_class.search(queries: { status_at_application: 'junior', floor: 'B floor' })).to contain_exactly(locker_assignment3)
     end
 
+    it 'filters by department_at_application and floor (order does not matter)' do
+      expect(described_class.search(queries: { floor: 'B floor',
+                                               department_at_application: 'History Department' })).to contain_exactly(locker_assignment3)
+      expect(described_class.search(queries: { department_at_application: 'History Department',
+                                               floor: 'B floor' })).to contain_exactly(locker_assignment3)
+    end
+
     it 'filters by user status_at_application and floor' do
       expect(described_class.search(queries: { uid: locker_assignment1.uid, floor: 'A floor',
                                                status_at_application: 'junior' })).to contain_exactly(locker_assignment1)
+    end
+
+    it 'filters by active (non expired)' do
+      expect(described_class.search(queries: { active: true })).to contain_exactly(locker_assignment1, locker_assignment2, locker_assignment3)
     end
 
     it 'ignores invalid queries' do

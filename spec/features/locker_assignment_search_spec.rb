@@ -9,7 +9,9 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
   let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }
   let(:locker2) { FactoryBot.create(:locker) }
 
-  let(:locker_assignment1) { FactoryBot.create(:locker_assignment, locker_application: locker_application1, locker: locker1) }
+  let(:locker_assignment1) do
+    FactoryBot.create(:locker_assignment, locker_application: locker_application1, locker: locker1, expiration_date: DateTime.yesterday.to_date)
+  end
   let(:locker_assignment2) { FactoryBot.create(:locker_assignment, locker_application: locker_application2, locker: locker2) }
 
   before do
@@ -61,6 +63,29 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
     expect(page).to have_text(locker_assignment2.uid)
 
     select locker2.general_area, from: :query_general_area
+    click_button 'filter_sumbit'
+
+    expect(page).not_to have_text(locker_assignment1.uid)
+    expect(page).to have_text(locker_assignment2.uid)
+  end
+
+  it 'enables me to filter by locker department_at_application' do
+    visit '/locker_assignments'
+    expect(page).to have_text(locker_assignment1.uid)
+    expect(page).to have_text(locker_assignment2.uid)
+
+    select locker_application1.department_at_application, from: :query_department_at_application
+    click_button 'filter_sumbit'
+
+    expect(page).to have_text(locker_assignment1.uid)
+    expect(page).not_to have_text(locker_assignment2.uid)
+  end
+
+  it 'enables me to filter by active assignments' do
+    visit '/locker_assignments'
+    expect(page).to have_text(locker_assignment1.uid)
+    expect(page).to have_text(locker_assignment2.uid)
+    check :query_active
     click_button 'filter_sumbit'
 
     expect(page).not_to have_text(locker_assignment1.uid)

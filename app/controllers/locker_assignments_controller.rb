@@ -59,7 +59,9 @@ class LockerAssignmentsController < ApplicationController
   end
 
   def query_params
-    params[:query]&.permit(:uid, :status_at_application, :general_area, :floor)
+    query_params = params[:query]&.permit(:uid, :status_at_application, :general_area, :floor, :department_at_application, :active)
+    query_params.delete(:active) if query_params && query_params[:active] == '0'
+    query_params
   end
 
   def respond_to_update(valid)

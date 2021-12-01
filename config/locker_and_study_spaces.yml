@@ -1,13 +1,13 @@
 development: &default
   locker_floors: &locker_floors
-    - A floor
-    - B floor
-    - C floor
-    - 2nd floor
-    - 3rd floor
+    ? A floor
+    ? B floor
+    ? C floor
+    ? 2nd floor
+    ? 3rd floor
   locker_floor_choices:
-    - No preference
-    - *locker_floors
+    ? No preference
+    << : *locker_floors
   study_room_locations:
     - Classics Graduate Study Room
     - German Graduate Study Room

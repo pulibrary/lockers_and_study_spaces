@@ -29,7 +29,7 @@ RSpec.describe 'lockers/edit', type: :view do
 
       assert_select 'input-select[name=?]', 'locker[floor]'
 
-      assert_select 'input-checkbox'
+      assert_select 'input[type="checkbox"][name=?]', 'locker[accessible]'
 
       assert_select 'input-text[name=?]', 'locker[location]'
 
