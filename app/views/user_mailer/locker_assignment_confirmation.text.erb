@@ -2,3 +2,11 @@ Firestone Library Locker Assignment
 <%= @locker_assignment.name %> is assigned to <%= @locker_assignment.location %>
 Occupency expires on <%= @locker_assignment.expiration_date %>
 Applied as <%= @locker_assignment.status_at_application %> in the <%= @locker_assignment.department %> Department
+Lock Combination: <%= @locker_assignment.combination %>
+To Unlock: 
+1. Turn knob RIGHT three times and stop at the first number
+2. Turn knob LEFT one full turn passing the first number in the combination stopping at the second number in the combination.
+3. Turn knob RIGHT to the last number in the combination. Continue turning until the dial stops.
+4. The locker door will open.
+To Lock:
+1. Close the door and turn the know to the LEFT one full turn.
