@@ -25,7 +25,7 @@ RSpec.describe 'locker_applications/new', type: :view do
 
       assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
 
-      assert_select 'input-checkbox', value: false
+      assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessible]', value: false
 
       assert_select 'input-select[name=?]', 'locker_application[semester]', value: 'Fall'
 
@@ -48,7 +48,7 @@ RSpec.describe 'locker_applications/new', type: :view do
 
         assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
 
-        assert_select 'input-checkbox', value: false
+        assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessible]', value: false
 
         assert_select 'input-select[name=?]', 'locker_application[semester]', value: 'Fall'
 

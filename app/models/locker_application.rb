@@ -29,7 +29,7 @@ class LockerApplication < ApplicationRecord
   end
 
   def floor_choices
-    choices = LockerAndStudySpaces.config.fetch(:locker_floor_choices, [])
+    choices = LockerAndStudySpaces.config.fetch(:locker_floor_choices, []).keys
     prepare_choices_for_lux(choices)
   end
 
@@ -40,6 +40,11 @@ class LockerApplication < ApplicationRecord
 
   def status_choices
     choices = LockerAndStudySpaces.config.fetch(:statuses, [])
+    prepare_choices_for_lux(choices)
+  end
+
+  def department_choices
+    choices = self.class.all.pluck(:department_at_application).uniq.sort
     prepare_choices_for_lux(choices)
   end
 

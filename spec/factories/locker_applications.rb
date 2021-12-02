@@ -8,5 +8,6 @@ FactoryBot.define do
     accessible { false }
     status_at_application { 'senior' }
     applicant { Applicant.new(user, ldap: {}) }
+    sequence(:department_at_application) { |n| "department-#{n}" }
   end
 end

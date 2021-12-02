@@ -106,4 +106,19 @@ RSpec.describe LockerApplication, type: :model do
       expect(described_class.search(uid: nil)).to contain_exactly(locker_application1, locker_application2, locker_application3)
     end
   end
+
+  describe '##department_choices' do
+    let!(:locker_application1) { FactoryBot.create :locker_application }
+    let!(:locker_application2) { FactoryBot.create :locker_application }
+    let!(:locker_application3) { FactoryBot.create :locker_application }
+
+    it 'shows all the departments' do
+      expect(locker_application1.department_choices).to contain_exactly({ label: locker_application1.department_at_application,
+                                                                          value: locker_application1.department_at_application },
+                                                                        { label: locker_application2.department_at_application,
+                                                                          value: locker_application2.department_at_application },
+                                                                        { label: locker_application3.department_at_application,
+                                                                          value: locker_application3.department_at_application })
+    end
+  end
 end

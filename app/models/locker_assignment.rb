@@ -17,10 +17,12 @@ class LockerAssignment < ApplicationRecord
         case field
         when :uid, 'uid'
           memo.search_by_user(uid: val)
-        when :status_at_application, 'status_at_application'
+        when :status_at_application, 'status_at_application', :department_at_application, 'department_at_application'
           memo.search_by_relation(relation: :locker_application, field: field, value: val)
         when :general_area, 'general_area', :floor, 'floor'
           memo.search_by_relation(relation: :locker, field: field, value: val)
+        when :active, 'active'
+          memo.where('expiration_date >= ?', DateTime.now.to_date)
         else
           memo
         end

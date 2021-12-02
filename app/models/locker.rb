@@ -15,7 +15,7 @@ class Locker < ApplicationRecord
   end
 
   def floor_choices
-    choices = LockerAndStudySpaces.config.fetch(:locker_floors, [])
+    choices = LockerAndStudySpaces.config.fetch(:locker_floors, []).keys
     prepare_choices_for_lux(choices)
   end
 

@@ -37,8 +37,8 @@
         ></input-select>
    </grid-item>
    <grid-item columns="lg-2 md-4 sm-12">
-     <input-checkbox groupLabel="accessible" :options="[{label: 'Accessible', name: 'locker[accessible]', value: 'true', id: 'locker_accessible'}]"
-                      width="expand"></input-checkbox>
+         <%= check_box :locker, :accessible, {}, "true", "false" %>
+         <%= label(:locker, :accessible, "Accessible") %>
    </grid-item>
    <grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_combination" 
