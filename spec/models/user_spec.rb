@@ -17,4 +17,19 @@ RSpec.describe User, type: :model do
       expect(user.number_of_violations).to eq(2)
     end
   end
+
+  describe '#from_uid' do
+    it 'finds an existing user' do
+      user1 = FactoryBot.create(:user)
+      expect do
+        User.from_uid(user1.uid)
+      end.to change { User.count }.by(0)
+    end
+
+    it 'creates a new user' do
+      expect do
+        User.from_uid('abc123')
+      end.to change { User.count }.by(1)
+    end
+  end
 end

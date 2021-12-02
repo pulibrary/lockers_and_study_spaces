@@ -22,6 +22,9 @@
             {name: 'New Locker', component: 'New Locker', href: '/lockers/new'},
           ]},  
           {name: 'Study Room Management', component: 'Study Room Management', children: [
+            <% StudyRoom.general_areas.each do |area| %>
+            {name: 'Assign <%= area %>', component: 'Assign <%= area %>', href: '<%= assign_users_study_rooms_path(general_area: area) %>'  },
+            <% end %>
             {name: 'Study Rooms', component: 'Study Rooms', href: '/study_rooms/'},
             {name: 'Assignments', component: 'Assignments', href: '/study_room_assignments/'},
           ]},  

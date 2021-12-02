@@ -15,6 +15,12 @@ class User < ApplicationRecord
     user
   end
 
+  def self.from_uid(uid)
+    user = User.find_by(uid: uid)
+    user = User.create(provider: 'cas', uid: uid, admin: false) if user.blank?
+    user
+  end
+
   def self.from_email(email)
     attributes = Ldap.find_by_email(email)
     if attributes.empty?

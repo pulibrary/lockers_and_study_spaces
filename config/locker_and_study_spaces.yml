@@ -10,9 +10,10 @@ development: &default
     << : *locker_floors
   study_room_locations:
     - Classics Graduate Study Room
-    - German Graduate Study Room
     - History Graduate Study Room
-    - Religion Graduate Study Room
+    # these existed in the old system, but do not have any locations assigned to them in the recent past
+    # - German Graduate Study Room
+    # - Religion Graduate Study Room
   locker_sizes:
     - 4
     - 6

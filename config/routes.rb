@@ -3,7 +3,10 @@
 Rails.application.routes.draw do
   resources :locker_violations
   resources :study_room_assignments
-  resources :study_rooms
+  resources :study_rooms do
+    get 'assign_users', on: :collection
+    put 'update_assignments', on: :collection
+  end
   root 'locker_applications#new'
 
   resources :locker_applications do
