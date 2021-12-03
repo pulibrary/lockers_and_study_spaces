@@ -14,6 +14,9 @@
     <library-header app-name="Firestone Locker and Study Rooms" abbr-name="Lockers" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
       <menu-bar type="main-menu" :menu-items="[
         <% if current_user&.admin %>
+          {name: 'Reporting', component: 'Reporting', children: [
+            {name: 'Locker Assignments by Department', component: 'Locker Assignments by Department', href: '/locker_assignments/assignment_report'},
+          ]},  
           {name: 'Locker Management', component: 'Locker Management', children: [
             {name: 'Lockers', component: 'Lockers', href: '/lockers/'},
             {name: 'Assign Lockers', component: 'Assing Lockers', href: '/locker_applications/awaiting_assignment'},

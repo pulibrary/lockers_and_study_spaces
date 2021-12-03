@@ -1,0 +1,4 @@
+Department, Junoirs, Seniors, Grad, Faculty, Staff
+<% LockerApplication.new.department_list.each do |department| %>
+<%=department%>,<%= @report_data.fetch([department, "junior"],0)%>,<%= @report_data.fetch([department, "senior"],0)%>,<%= @report_data.fetch([department, "graduate"],0)%>,<%= @report_data.fetch([department, "faculty"],0)%>,<%= @report_data.fetch([department, "staff"],0)%>
+<% end %>
