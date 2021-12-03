@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
   resources :locker_assignments, except: :new do
     get 'assignment_report', on: :collection, defaults: { format: :csv }
+    get 'occupancy_report', on: :collection, defaults: { format: :csv }
   end
   resources :lockers
 

@@ -34,6 +34,22 @@ class StudyRoom < ApplicationRecord
     location
   end
 
+  def space_totals
+    @space_totals ||= self.class.group(:general_area).count
+  end
+
+  def space_assigned_totals
+    @space_assigned_totals ||= StudyRoomAssignment.where(released_date: nil).joins(:study_room)
+                                                  .group(:general_area).order(:general_area).count
+  end
+
+  def space_report
+    space_totals.map do |key, total|
+      # second total is there to match lockers.  Lockers has the ability to disable one, but study room locations do not
+      [key, [total, total, space_assigned_totals[key], total - space_assigned_totals[key]]]
+    end.compact.to_h
+  end
+
   private
 
   def clear_assignments

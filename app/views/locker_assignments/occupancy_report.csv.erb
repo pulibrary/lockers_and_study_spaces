@@ -1,0 +1,4 @@
+Space, Total Spaces, Total Spaces Assignable, Total Spaces Assigned, Total Spaces Available
+<% @report_data.each do |key, report| %>
+<%= raw "#{key}, #{report.join(", ")}"%>
+<% end %>
