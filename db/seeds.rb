@@ -22,6 +22,7 @@ def locker_attributes(row)
   attributes[:general_area] = row['location']
   attributes[:floor] = row['floor_str']
   attributes['size'] = locker_size(row['type'])
+  attributes[:disabled] = row['maxOccupancy'] == '0'
   attributes
 end
 
