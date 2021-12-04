@@ -57,6 +57,22 @@ class StudyRoomsController < ApplicationController
     end
   end
 
+  def assign_users
+    @study_rooms = StudyRoom.where(general_area: params[:general_area])
+  end
+
+  def update_assignments
+    errors = []
+    study_room_assignment_params.each do |key, value|
+      study_room = StudyRoom.find(key)
+      if study_room.present?
+        study_room.assign_user(value[:user_netid])
+      else
+        errors << "Unknown Study Room #{key}"
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -67,6 +83,10 @@ class StudyRoomsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def study_room_params
     params.require(:study_room).permit(:location, :general_area, :notes)
+  end
+
+  def study_room_assignment_params
+    @study_room_assignment_params ||= params.require(:study_room_assignment).permit!
   end
 
   def force_admin
