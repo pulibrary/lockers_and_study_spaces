@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_129_192_812) do
+ActiveRecord::Schema.define(version: 20_211_203_205_037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20_211_129_192_812) do
     t.string 'floor'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.boolean 'disabled'
   end
 
   create_table 'study_room_assignments', force: :cascade do |t|
