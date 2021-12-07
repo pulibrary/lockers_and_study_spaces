@@ -147,6 +147,18 @@ CSV.parse(File.open(Rails.root.join('space_applicants.csv'), encoding: 'ISO-8859
   end
 end
 
+# clean up duplicate study room assignments
+duplicate_locations = StudyRoomAssignment.joins(:study_room).where('expiration_date >= ? and released_date is null',
+                                                                   DateTime.now.to_date).group(:location)
+                                         .count.select do |_location, count|
+  count > 1
+end
+duplicate_assignment_per_locations = duplicate_locations.map { |key, _value| StudyRoomAssignment.joins(:study_room).where("location =  '#{key}'") }
+duplicate_assignment_per_locations.each do |duplicate_assignments|
+  # the last one is the good one.  Release all the rest.
+  (0..(duplicate_assignments.count - 2)).each { |idx| duplicate_assignments[idx].release }
+end
+
 Rails.logger.warn("Created #{User.count} Users")
 Rails.logger.warn("Created #{LockerApplication.count} Locker Applications and #{LockerAssignment.count} Locker Assignments")
 Rails.logger.warn("Created #{StudyRoomAssignment.count} Study Rooms")
