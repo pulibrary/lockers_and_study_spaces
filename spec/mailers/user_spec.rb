@@ -36,4 +36,19 @@ RSpec.describe UserMailer, type: :mailer do
                                                        ' that were not checked out and we returned them to Circulation')
     end
   end
+
+  describe '#study_room_assignment_confirmation' do
+    let(:study_room_assignment) { FactoryBot.create :study_room_assignment }
+    it 'sends an email to the assignee' do
+      expect { described_class.with(study_room_assignment: study_room_assignment).study_room_assignment_confirmation.deliver }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq 'Your study room location has been assigned'
+      expect(mail.to).to eq [study_room_assignment.email]
+      expect(mail.from).to eq ['access@princeton.edu']
+      expect(mail.html_part.body.to_s).to have_content("#{study_room_assignment.general_area} Assignment")
+      expect(mail.html_part.body.to_s).to have_content(study_room_assignment.name)
+      expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Study Room Agreement.pdf"')
+    end
+  end
 end
