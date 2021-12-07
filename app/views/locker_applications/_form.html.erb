@@ -65,10 +65,10 @@
 
   <% if current_user.admin? %>
     <grid-item columns="lg-12 md-6  sm-12">
-      <input-text id="locker_application_user_uid" name="locker_application[user_uid]" value="<%= locker_application.applicant %>" label="Applicant Netid"></input-text>
+      <input-text id="locker_application_user_uid" name="locker_application[user_uid]" value="<%= locker_application.uid %>" label="Applicant Netid"></input-text>
     </grid-item>
   <% else %>
-    <%= form.hidden_field :user_uid , value: locker_application.applicant %>
+    <%= form.hidden_field :user_uid , value: locker_application.uid %>
   <% end %>
 
   <grid-item columns="lg-12 md-12 sm-12">

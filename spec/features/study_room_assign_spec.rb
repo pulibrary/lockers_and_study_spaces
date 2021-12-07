@@ -40,7 +40,8 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
     # fill in users
     fill_in "study_room_assignment_#{study_room2.id}_user_netid", with: user2.uid
 
-    expect { click_button 'Update Assignments' }.to change { StudyRoomAssignment.count }.by(1).and change { User.count }.by(0)
+    expect { click_button 'Update Assignments' }.to change { StudyRoomAssignment.count }.by(1)
+                                                .and change { User.count }.by(0)
   end
 
   it 'creates a user if needed' do

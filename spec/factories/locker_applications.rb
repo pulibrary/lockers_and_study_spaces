@@ -7,7 +7,6 @@ FactoryBot.define do
     preferred_general_area { 'A floor' }
     accessible { false }
     status_at_application { 'senior' }
-    applicant { Applicant.new(user, ldap: {}) }
     sequence(:department_at_application) { |n| "department-#{n}" }
   end
 end

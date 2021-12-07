@@ -4,11 +4,7 @@ class LockerApplication < ApplicationRecord
   belongs_to :user
   has_one :locker_assignment
 
-  attr_accessor :applicant
-
-  delegate :uid, to: :user
-
-  delegate :email, :name, :department, to: :applicant
+  delegate :uid, :email, :name, :department, :status, to: :user
 
   def self.awaiting_assignment
     left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
@@ -16,15 +12,14 @@ class LockerApplication < ApplicationRecord
 
   after_initialize do |_locker_application|
     if user.present?
-      @applicant ||= Applicant.new(user)
-      self.department_at_application ||= applicant.department
-      self.status_at_application ||= applicant.status
+      self.department_at_application ||= department
+      self.status_at_application ||= status
     end
   end
 
   def size_choices
     choices = LockerAndStudySpaces.config.fetch(:locker_sizes, [])
-    choices = [choices.first] if user.blank? || applicant.junior?
+    choices = [choices.first] if user.blank? || user.junior?
     prepare_choices_for_lux(choices)
   end
 

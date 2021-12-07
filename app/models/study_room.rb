@@ -18,6 +18,9 @@ class StudyRoom < ApplicationRecord
     # release any existing assignment
     current_assignment.release if current_assignment.present?
     StudyRoomAssignment.create(user: user, study_room: self)
+
+    #send mail
+    
   end
 
   def current_uid

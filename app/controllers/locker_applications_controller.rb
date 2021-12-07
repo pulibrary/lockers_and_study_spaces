@@ -93,6 +93,7 @@ class LockerApplicationsController < ApplicationController
         format.html { redirect_to @locker_application, notice: message }
         format.json { render :show, status: :ok, location: @locker_application }
       else
+        @locker_application.user ||= User.new
         format.html { render method, status: :unprocessable_entity }
         format.json { render json: @locker_application.errors, status: :unprocessable_entity }
       end

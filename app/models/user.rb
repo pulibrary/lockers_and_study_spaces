@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[cas]
 
   has_many :locker_violations
+  attr_writer :applicant
+
+  delegate :email, :name, :department, :status, :junior?, to: :applicant
 
   def number_of_violations
     locker_violations.count
@@ -30,6 +33,10 @@ class User < ApplicationRecord
       user = User.create(provider: 'cas', uid: attributes[:netid], admin: false) if user.blank?
       user
     end
+  end
+
+  def applicant
+    @applicant ||= Applicant.new(self)
   end
 
   def to_s
