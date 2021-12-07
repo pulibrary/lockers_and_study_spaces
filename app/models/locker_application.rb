@@ -43,9 +43,12 @@ class LockerApplication < ApplicationRecord
     prepare_choices_for_lux(choices)
   end
 
+  def department_list
+    self.class.all.pluck(:department_at_application).uniq.sort
+  end
+
   def department_choices
-    choices = self.class.all.pluck(:department_at_application).uniq.sort
-    prepare_choices_for_lux(choices)
+    prepare_choices_for_lux(department_list)
   end
 
   def available_lockers_in_area

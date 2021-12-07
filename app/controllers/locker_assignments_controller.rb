@@ -38,6 +38,30 @@ class LockerAssignmentsController < ApplicationController
     end
   end
 
+  def assignment_report
+    @report_data = LockerAssignment.search(queries: { active: true })
+                                   .joins(:locker_application)
+                                   .group(:department_at_application)
+                                   .group(:status_at_application)
+                                   .order(:department_at_application).count
+    respond_to do |format|
+      format.csv do
+        headers['Content-Disposition'] = "attachment; filename=\"locker_assignment_report_#{DateTime.now.to_date}.csv\""
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
+  end
+
+  def occupancy_report
+    @report_data = StudyRoom.new.space_report.merge(Locker.new.space_report)
+    respond_to do |format|
+      format.csv do
+        headers['Content-Disposition'] = "attachment; filename=\"locker_occupancy_report_#{DateTime.now.to_date}.csv\""
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

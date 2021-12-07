@@ -51,4 +51,34 @@ RSpec.describe StudyRoom, type: :model do
       expect(assignment.reload.released_date).to eq(DateTime.now.to_date)
     end
   end
+
+  describe '#space_totals' do
+    it 'returns all the spaces divided size and floor' do
+      described_class.general_areas.each do |general_area|
+        FactoryBot.create(:study_room, general_area: general_area)
+      end
+      expect(described_class.new.space_totals).to eq({ 'Classics Graduate Study Room' => 1,
+                                                       'History Graduate Study Room' => 1 })
+    end
+  end
+
+  describe '#space_totals' do
+    it 'returns all the spaces divided size and floor' do
+      described_class.general_areas.each do |general_area|
+        FactoryBot.create(:study_room_assignment, study_room: FactoryBot.create(:study_room, general_area: general_area))
+      end
+      expect(described_class.new.space_assigned_totals).to eq({ 'Classics Graduate Study Room' => 1,
+                                                                'History Graduate Study Room' => 1 })
+    end
+  end
+
+  describe '#space_report' do
+    it 'returns all the spaces divided size and floor' do
+      described_class.general_areas.each do |general_area|
+        FactoryBot.create(:study_room_assignment, study_room: FactoryBot.create(:study_room, general_area: general_area))
+      end
+      expect(described_class.new.space_report).to eq({ 'Classics Graduate Study Room' => [1, 1, 1, 0],
+                                                       'History Graduate Study Room' => [1, 1, 1, 0] })
+    end
+  end
 end
