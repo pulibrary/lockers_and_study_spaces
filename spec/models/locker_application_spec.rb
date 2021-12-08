@@ -16,21 +16,32 @@ RSpec.describe LockerApplication, type: :model do
     expect(locker_application.locker_assignment).to eq(nil)
   end
 
-  describe '#available_lockers_in_area' do
-    let(:locker_application) { FactoryBot.create :locker_application }
-    let(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application, locker: locker1 }
-    let(:locker1) {  FactoryBot.create :locker }
-    let(:locker2) {  FactoryBot.create :locker }
-    let(:locker3) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area }
+  describe '#available_lockers_in_area_and_size' do
+    let(:locker_application) { FactoryBot.create :locker_application, preferred_size: 4 }
+    let!(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application, locker: locker1 }
+    let!(:locker1) {  FactoryBot.create :locker, size: 4 }
+    let!(:locker2) {  FactoryBot.create :locker, size: 6 }
+    let!(:locker3) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 6 }
+    let!(:locker4) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 4 }
 
-    before do
-      locker_assignment
-      locker2
-      locker3
+    it 'to only returns unassigned lockers in area of the right size' do
+      expect(locker_application.available_lockers_in_area_and_size).to contain_exactly(locker4)
     end
 
-    it 'to only returns unassigned lockers in area' do
-      expect(locker_application.available_lockers_in_area).to contain_exactly(locker3)
+    context 'no size preference shows any' do
+      let(:locker_application) { FactoryBot.create :locker_application, preferred_size: nil }
+
+      it 'to only returns unassigned lockers in area' do
+        expect(locker_application.available_lockers_in_area_and_size).to contain_exactly(locker3, locker4)
+      end
+    end
+
+    context 'no area preference shows any in size' do
+      let(:locker_application) { FactoryBot.create :locker_application, preferred_size: 4, preferred_general_area: 'No preference' }
+
+      it 'to only returns unassigned lockers in area' do
+        expect(locker_application.available_lockers_in_area_and_size).to contain_exactly(locker4)
+      end
     end
   end
 
