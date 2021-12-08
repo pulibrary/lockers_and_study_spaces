@@ -1,6 +1,11 @@
 <% if notice.present? %>
 <card>
-  <p id="notice"><%= notice %></p>
+  <% if notice.present? %>
+<card id="notice" size="full-width">
+  <%= notice %>
+</card>
+<% end %>
+
 </card>
 <% end %>
 
