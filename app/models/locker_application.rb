@@ -51,8 +51,11 @@ class LockerApplication < ApplicationRecord
     prepare_choices_for_lux(department_list)
   end
 
-  def available_lockers_in_area
-    Locker.available_lockers.where(floor: preferred_general_area).order(:location)
+  def available_lockers_in_area_and_size
+    context = Locker.available_lockers
+    context = context.where(floor: preferred_general_area) if preferred_general_area.present? && preferred_general_area != 'No preference'
+    context = context.where(size: preferred_size) if preferred_size.present?
+    context.order(:location)
   end
 
   def self.search(uid:)

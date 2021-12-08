@@ -26,17 +26,17 @@ RSpec.describe LockerAssignment, type: :model do
   describe '#locker_choices' do
     it 'has available lockers' do
       # contains locker 1 because that is assigned to this Assignment
-      expect(locker_assignment1.locker_choices).to contain_exactly({ label: locker1.location, value: locker1.id },
-                                                                   { label: locker2.location, value: locker2.id },
-                                                                   { label: locker3.location, value: locker3.id })
+      expect(locker_assignment1.locker_choices).to contain_exactly({ label: "#{locker1.location} (#{locker1.size}')", value: locker1.id },
+                                                                   { label: "#{locker2.location} (#{locker2.size}')", value: locker2.id },
+                                                                   { label: "#{locker3.location} (#{locker3.size}')", value: locker3.id })
     end
   end
 
   describe '#preferred_locker_choices' do
     it 'has available lockers' do
       # contains locker 1 because that is assigned to this Assignment
-      expect(locker_assignment1.preferred_locker_choices).to contain_exactly({ label: locker1.location, value: locker1.id },
-                                                                             { label: locker3.location, value: locker3.id })
+      expect(locker_assignment1.preferred_locker_choices).to contain_exactly({ label: "#{locker1.location} (#{locker1.size}')", value: locker1.id },
+                                                                             { label: "#{locker3.location} (#{locker3.size}')", value: locker3.id })
     end
   end
 

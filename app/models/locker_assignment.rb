@@ -43,7 +43,7 @@ class LockerAssignment < ApplicationRecord
   end
 
   def locker_choices
-    available = Locker.available_lockers.pluck(:id, :location)
+    available = Locker.available_lockers.pluck(:id, :location, :size)
     prepare_locker_choices_for_lux(available)
   end
 
@@ -51,7 +51,7 @@ class LockerAssignment < ApplicationRecord
     available = if locker_application.blank?
                   []
                 else
-                  locker_application.available_lockers_in_area.pluck(:id, :location)
+                  locker_application.available_lockers_in_area_and_size.pluck(:id, :location, :size)
                 end
     prepare_locker_choices_for_lux(available)
   end
@@ -59,7 +59,7 @@ class LockerAssignment < ApplicationRecord
   private
 
   def prepare_locker_choices_for_lux(choices)
-    choices.unshift [locker.id, locker.location] if locker.present?
-    choices.map { |locker| { label: locker[1], value: locker[0] } }
+    choices.unshift [locker.id, locker.location, locker.size] if locker.present?
+    choices.map { |locker| { label: "#{locker[1]} (#{locker[2]}')", value: locker[0] } }
   end
 end
