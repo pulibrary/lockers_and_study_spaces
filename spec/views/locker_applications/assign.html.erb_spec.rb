@@ -17,7 +17,7 @@ RSpec.describe 'locker_applications/assign', type: :view do
     render
     expect(rendered).to match(/#{locker_application.preferred_size}/)
     expect(rendered).to match(/#{locker_application.preferred_general_area}/)
-    expect(rendered).to match(/#{locker_application.applicant}/)
+    expect(rendered).to match(/#{locker_application.uid}/)
     assert_select 'form[action=?][method=?]', locker_assignments_path, 'post' do
       assert_select 'select[name=?]', 'locker_assignment[start_date(1i)]'
       assert_select 'select[name=?]', 'locker_assignment[start_date(2i)]'

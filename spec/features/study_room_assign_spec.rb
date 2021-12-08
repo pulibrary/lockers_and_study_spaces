@@ -25,7 +25,12 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
     fill_in "study_room_assignment_#{study_room1.id}_user_netid", with: user1.uid
     fill_in "study_room_assignment_#{study_room2.id}_user_netid", with: user2.uid
 
-    expect { click_button 'Update Assignments' }.to change { StudyRoomAssignment.count }.by(2).and change { User.count }.by(0)
+    expect { click_button 'Update Assignments' }
+      .to change { StudyRoomAssignment.count }.by(2)
+                                              .and change { User.count }.by(0)
+                                                                        .and change {
+                                                                               ActionMailer::Base.deliveries.count
+                                                                             }.by(2)
   end
 
   it 'assigns study room locations by userid and only creates assignments if needed' do
@@ -40,7 +45,12 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
     # fill in users
     fill_in "study_room_assignment_#{study_room2.id}_user_netid", with: user2.uid
 
-    expect { click_button 'Update Assignments' }.to change { StudyRoomAssignment.count }.by(1).and change { User.count }.by(0)
+    expect { click_button 'Update Assignments' }
+      .to change { StudyRoomAssignment.count }.by(1)
+                                              .and change { User.count }.by(0)
+                                                                        .and change {
+                                                                               ActionMailer::Base.deliveries.count
+                                                                             }.by(1)
   end
 
   it 'creates a user if needed' do
@@ -55,7 +65,11 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
     # fill in users
     fill_in "study_room_assignment_#{study_room2.id}_user_netid", with: 'abc123'
 
-    expect { click_button 'Update Assignments' }.to change { StudyRoomAssignment.count }.by(1).and change { User.count }.by(1)
+    expect { click_button 'Update Assignments' }
+      .to change { StudyRoomAssignment.count }.by(1).and change { User.count }.by(1)
+                                                                              .and change {
+                                                                                     ActionMailer::Base.deliveries.count
+                                                                                   }.by(1)
   end
 
   it 'unasigns a user if the uid is blank' do
@@ -71,7 +85,12 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
     # fill in users
     fill_in "study_room_assignment_#{study_room1.id}_user_netid", with: ''
 
-    expect { click_button 'Update Assignments' }.to change { StudyRoomAssignment.count }.by(0).and change { User.count }.by(0)
+    expect { click_button 'Update Assignments' }
+      .to change { StudyRoomAssignment.count }.by(0)
+                                              .and change { User.count }.by(0)
+                                                                        .and change {
+                                                                               ActionMailer::Base.deliveries.count
+                                                                             }.by(0)
     expect(study_room_assignment.reload.released_date).to eq(DateTime.now.to_date)
   end
 end

@@ -14,6 +14,6 @@ RSpec.describe 'locker_assignments/show', type: :view do
   it 'renders attributes in <p>' do
     render
     expect(rendered).to match(/#{locker.location}/)
-    expect(rendered).to match(/#{locker_application.applicant}/)
+    expect(rendered).to match(/#{locker_application.uid}/)
   end
 end

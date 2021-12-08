@@ -51,24 +51,16 @@ RSpec.describe LockerApplication, type: :model do
     end
   end
 
-  it 'does not create an applicant' do
-    expect(locker_application.applicant).to be_blank
-  end
-
   it 'only has one size choice' do
     expect(locker_application.size_choices).to eq([{ label: 4, value: 4 }])
   end
 
   context 'a user is present' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user, applicant: applicant) }
     let(:applicant) { instance_double('Applicant', department: 'department', status: 'senior', junior?: false) }
 
-    before do
-      allow(Applicant).to receive(:new).and_return(applicant)
-    end
-
-    it 'creates an applicant' do
-      expect(locker_application.applicant).to eq(applicant)
+    it 'knows the user is a senior' do
+      expect(locker_application.status).to eq('senior')
     end
 
     it 'only has multiple size choices' do
@@ -77,15 +69,11 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   context 'a junior user is present' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user, applicant: applicant) }
     let(:applicant) { instance_double('Applicant', department: 'department', status: 'junior', junior?: true) }
 
-    before do
-      allow(Applicant).to receive(:new).and_return(applicant)
-    end
-
-    it 'creates an applicant' do
-      expect(locker_application.applicant).to eq(applicant)
+    it 'knows the user is a junior' do
+      expect(locker_application.status).to eq('junior')
     end
 
     it 'only has one size choice' do

@@ -14,4 +14,11 @@ class UserMailer < ApplicationMailer
     email = @locker_violation.email
     mail(to: email, subject: 'Uncharged Materials in Locker')
   end
+
+  def study_room_assignment_confirmation
+    @study_room_assignment = params[:study_room_assignment]
+    attachments['Study Room Agreement.pdf'] = File.read(Rails.root.join('study_room_agreement.pdf'))
+    email = @study_room_assignment.email
+    mail(to: email, subject: 'Your study room location has been assigned')
+  end
 end

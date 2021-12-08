@@ -28,6 +28,7 @@ class StudyRoomAssignmentsController < ApplicationController
       if @study_room_assignment.save
         format.html { redirect_to @study_room_assignment, notice: 'Study room assignment was successfully created.' }
         format.json { render :show, status: :created, location: @study_room_assignment }
+        UserMailer.with(study_room_assignment: @study_room_assignment).study_room_assignment_confirmation.deliver
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @study_room_assignment.errors, status: :unprocessable_entity }
