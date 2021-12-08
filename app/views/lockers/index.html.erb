@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 
 <card id="locker-form-header" size="full-width">
   <card-header>
@@ -16,6 +14,12 @@
   <%= link_to 'Clear Search', lockers_path %>
   </card-content>
 </card>
+<% if notice.present? %>
+<card id="notice" size="full-width">
+  <%= notice %>
+</card>
+<% end %>
+
 
 <%= render partial: "index_view", collection: @lockers, as: :locker %>
 

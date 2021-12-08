@@ -1,25 +1,30 @@
 
   <card size="full-width">
    <grid-container>
-    <grid-item columns="lg-3 md-4 sm-12">
+    <grid-item columns="lg-2 md-3 sm-12">
       <strong>Location:</strong>
       <span><%= locker.location %></span>
     </grid-item>
-    <grid-item columns="lg-2 md-4 sm-12">
+    <grid-item columns="lg-2 md-3 sm-12">
       <strong>Size:</strong>
       <span><%= locker.size %></span>
     </grid-item>
-    <grid-item columns="lg-3 md-4 sm-12">
+    <grid-item columns="lg-2 md-6 sm-12">
       <strong>General Area:</strong>
       <span><%= locker.general_area %></span>
     </grid-item>
-    <grid-item columns="lg-2 md-4 sm-12">
+    <grid-item columns="lg-2 md-3 sm-12">
       <strong>Accessible:</strong>
       <span><%= locker.accessible %></span>
     </grid-item>
-    <grid-item columns="lg-2 md-4 sm-12">
+    <grid-item columns="lg-4 md-6 sm-12">
       <%= link_to 'Record LockerViolation', new_locker_violation_path(locker_violation: {locker_id: locker.id}) %>
       <%= link_to 'Edit', edit_locker_path(locker) %>
+      <% if locker.disabled %>
+        <%= link_to "Enable", enable_locker_path(locker), id: "enable_#{locker.id}" %>
+      <% else %>
+        <%= link_to "Disable", disable_locker_path(locker), id: "disable_#{locker.id}" %>
+      <% end %%>
     </grid-item>
    </grid-container>
 </card>

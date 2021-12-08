@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LockersController < ApplicationController
-  before_action :set_locker, only: %i[show edit update destroy]
+  before_action :set_locker, only: %i[show edit update destroy enable disable]
   before_action :force_admin
 
   # GET /lockers or /lockers.json
@@ -57,6 +57,30 @@ class LockersController < ApplicationController
     end
   end
 
+  def enable
+    respond_to do |format|
+      if @locker.update(disabled: false)
+        format.html { redirect_to lockers_url, notice: 'Locker was successfully enabled.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to lockers_url, notice: 'Unable to enable locker.' }
+        format.json { render json: ['Unable to enable locker.'], status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def disable
+    respond_to do |format|
+      if @locker.update(disabled: true)
+        format.html { redirect_to lockers_url, notice: 'Locker was successfully disabled.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to lockers_url, notice: 'Unable to disable locker.' }
+        format.json { render json: ['Unable to disable locker.'], status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -67,7 +91,7 @@ class LockersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def locker_params
     params.require(:locker).permit(:location, :size, :general_area, :accessible, :boolean, :notes, :combination,
-                                   :code, :tag, :discs, :clutch, :hubpos, :key_number, :floor)
+                                   :code, :tag, :discs, :clutch, :hubpos, :key_number, :floor, :disabled)
   end
 
   def force_admin
