@@ -19,7 +19,12 @@ Rails.application.routes.draw do
     get 'assignment_report', on: :collection, defaults: { format: :csv }
     get 'occupancy_report', on: :collection, defaults: { format: :csv }
   end
-  resources :lockers
+  resources :lockers do
+    member do
+      get 'disable'
+      get 'enable'
+    end
+  end
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 

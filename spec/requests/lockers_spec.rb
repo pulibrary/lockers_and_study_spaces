@@ -134,9 +134,37 @@ RSpec.describe '/lockers', type: :request do
       end.to change(Locker, :count).by(0)
     end
 
-    it 'redirects to the lockers list' do
+    it 'redirects to the root' do
       locker = Locker.create! valid_attributes
       delete locker_url(locker)
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
+  describe 'GET /enable' do
+    it 'does not enable the item' do
+      locker = Locker.create! valid_attributes
+      get disable_locker_url(locker)
+      expect(locker.disabled).to be_falsey
+    end
+
+    it 'redirects to the root' do
+      locker = Locker.create! valid_attributes
+      get disable_locker_url(locker)
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
+  describe 'GET /disable' do
+    it 'does not disable the item' do
+      locker = Locker.create! valid_attributes.merge(disabled: true)
+      get enable_locker_url(locker)
+      expect(locker.disabled).to be_truthy
+    end
+
+    it 'redirects to the root' do
+      locker = Locker.create! valid_attributes.merge(disabled: true)
+      get enable_locker_url(locker)
       expect(response).to redirect_to(root_path)
     end
   end
@@ -250,6 +278,34 @@ RSpec.describe '/lockers', type: :request do
       it 'redirects to the lockers list' do
         locker = Locker.create! valid_attributes
         delete locker_url(locker)
+        expect(response).to redirect_to(lockers_path)
+      end
+    end
+
+    describe 'get /disable' do
+      it 'disables the requested locker' do
+        locker = Locker.create! valid_attributes
+        get disable_locker_url(locker)
+        expect(locker.reload.disabled).to be_truthy
+      end
+
+      it 'redirects to the lockers list' do
+        locker = Locker.create! valid_attributes
+        get disable_locker_url(locker)
+        expect(response).to redirect_to(lockers_path)
+      end
+    end
+
+    describe 'get /enable' do
+      it 'enables the requested locker' do
+        locker = Locker.create! valid_attributes.merge(disabled: true)
+        get enable_locker_url(locker)
+        expect(locker.reload.disabled).to be_falsey
+      end
+
+      it 'redirects to the lockers list' do
+        locker = Locker.create! valid_attributes.merge(disabled: true)
+        get enable_locker_url(locker)
         expect(response).to redirect_to(lockers_path)
       end
     end

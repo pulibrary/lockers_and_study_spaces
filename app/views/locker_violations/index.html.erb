@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+<card id="notice" size="full-width">
+  <%= notice %>
+</card>
+<% end %>
+
 
 <h1>Locker Violations</h1>
 
