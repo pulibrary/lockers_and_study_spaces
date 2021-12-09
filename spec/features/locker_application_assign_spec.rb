@@ -20,5 +20,6 @@ RSpec.describe 'Locker Application Assign', type: :feature, js: true do
     select locker.location, from: 'locker_assignment_locker_id'
 
     expect { click_button 'Submit Locker Assignment' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    click_on 'Card for printing'
   end
 end
