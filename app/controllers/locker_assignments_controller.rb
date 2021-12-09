@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LockerAssignmentsController < ApplicationController
-  before_action :set_locker_assignment, only: %i[show edit update destroy]
+  before_action :set_locker_assignment, only: %i[show edit update destroy card]
   before_action :force_admin
 
   # GET /locker_assignments or /locker_assignments.json
@@ -60,6 +60,10 @@ class LockerAssignmentsController < ApplicationController
         headers['Content-Type'] ||= 'text/csv'
       end
     end
+  end
+
+  def card
+    render layout: 'mailer'
   end
 
   private
