@@ -40,6 +40,14 @@ RSpec.describe LockerAssignment, type: :model do
     end
   end
 
+  describe '#release' do
+    it 'releases the locker assignment' do
+      expect(locker_assignment1.released_date).to be_nil
+      locker_assignment1.release
+      expect(locker_assignment1.released_date).to eq(DateTime.now.to_date)
+    end
+  end
+
   describe '##search' do
     let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior', department_at_application: 'History Department') }
     let(:locker_application2) { FactoryBot.create(:locker_application, status_at_application: 'senior', department_at_application: 'Math Department') }

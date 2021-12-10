@@ -159,6 +159,20 @@ RSpec.describe '/locker_assignments', type: :request do
     end
   end
 
+  describe 'get /release' do
+    it 'does not release the locker' do
+      locker_assignment = LockerAssignment.create! valid_attributes
+      get release_locker_assignment_url(locker_assignment)
+      expect(locker_assignment.reload.released_date).to be_nil
+    end
+
+    it 'redirects to root' do
+      locker_assignment = LockerAssignment.create! valid_attributes
+      get release_locker_assignment_url(locker_assignment)
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
   context 'with an admin user' do
     let(:user) { FactoryBot.create :user, :admin }
     describe 'GET /index' do
@@ -274,6 +288,22 @@ RSpec.describe '/locker_assignments', type: :request do
       it 'redirects to the locker_assignments list' do
         locker_assignment = LockerAssignment.create! valid_attributes
         delete locker_assignment_url(locker_assignment)
+        expect(response).to redirect_to(locker_assignments_url)
+      end
+    end
+
+    describe 'get /release' do
+      it 'releases the requested locker_assignment' do
+        locker_assignment = LockerAssignment.create! valid_attributes
+        expect do
+          get release_locker_assignment_url(locker_assignment)
+        end.to change(LockerAssignment, :count).by(0)
+        expect(locker_assignment.reload.released_date).to eq(DateTime.now.to_date)
+      end
+
+      it 'redirects to the locker_assignments list' do
+        locker_assignment = LockerAssignment.create! valid_attributes
+        get release_locker_assignment_url(locker_assignment)
         expect(response).to redirect_to(locker_assignments_url)
       end
     end

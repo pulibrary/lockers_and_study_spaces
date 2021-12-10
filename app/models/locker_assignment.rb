@@ -56,6 +56,11 @@ class LockerAssignment < ApplicationRecord
     prepare_locker_choices_for_lux(available)
   end
 
+  def release
+    self.released_date = DateTime.now.to_date
+    save!
+  end
+
   private
 
   def prepare_locker_choices_for_lux(choices)
