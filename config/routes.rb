@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get 'occupancy_report', on: :collection, defaults: { format: :csv }
     member do
       get 'card'
+      get 'release'
     end
   end
   resources :lockers do

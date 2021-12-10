@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LockerAssignmentsController < ApplicationController
-  before_action :set_locker_assignment, only: %i[show edit update destroy card]
+  before_action :set_locker_assignment, only: %i[show edit update destroy card release]
   before_action :force_admin
 
   # GET /locker_assignments or /locker_assignments.json
@@ -64,6 +64,14 @@ class LockerAssignmentsController < ApplicationController
 
   def card
     render layout: 'mailer'
+  end
+
+  def release
+    @locker_assignment.release
+    respond_to do |format|
+      format.html { redirect_to locker_assignments_url, notice: 'Locker assignment was successfully released.' }
+      format.json { head :no_content }
+    end
   end
 
   private
