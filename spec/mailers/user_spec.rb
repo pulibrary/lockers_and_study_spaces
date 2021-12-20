@@ -34,6 +34,7 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.html_part.body.to_s).to have_content('Firestone Library Locker Violation')
       expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your locker #{locker_violation.location}"\
                                                        ' that were not checked out and we returned them to Circulation')
+      expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Locker Space Agreement.pdf"')
     end
   end
 
