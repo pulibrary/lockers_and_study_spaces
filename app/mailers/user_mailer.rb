@@ -10,6 +10,7 @@ class UserMailer < ApplicationMailer
 
   def locker_violation
     @locker_violation = params[:locker_violation]
+    attachments['Locker Space Agreement.pdf'] = File.read(Rails.root.join('locker_agreement.pdf'))
 
     email = @locker_violation.email
     mail(to: email, subject: 'Uncharged Materials in Locker')
