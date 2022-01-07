@@ -14,7 +14,7 @@ RSpec.describe 'Locker Application Assign', type: :feature, js: true do
     locker
   end
 
-  it 'enables me to search by userid' do
+  it 'enables me to select a locker and assign it' do
     visit assign_locker_application_path(locker_application)
     expect(page).to have_text('Preferred general area: A floor')
     select locker.location, from: 'locker_assignment_locker_id'

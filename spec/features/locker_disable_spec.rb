@@ -13,7 +13,7 @@ RSpec.describe 'Locker disable/enable', type: :feature, js: true do
     locker2
   end
 
-  it 'enables me to search by userid' do
+  it 'allows me to disable and enable a locker' do
     visit '/lockers'
     expect(page).to have_text(locker1.location)
     expect(page).to have_text(locker2.location)

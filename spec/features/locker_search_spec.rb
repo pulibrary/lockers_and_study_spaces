@@ -13,7 +13,7 @@ RSpec.describe 'Locker Search', type: :feature, js: true do
     locker2
   end
 
-  it 'enables me to search by userid' do
+  it 'enables me to search by location' do
     visit '/lockers'
     expect(page).to have_text(locker1.location)
     expect(page).to have_text(locker2.location)
