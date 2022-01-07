@@ -14,7 +14,7 @@ RSpec.describe 'Locker Violation', type: :feature, js: true do
   it 'enables me to record a locker violation' do
     visit lockers_path
     expect(page).to have_text(locker_assignment.locker.location)
-    click_on 'Record LockerViolation'
+    click_on 'Record Violation'
     fill_in :locker_violation_number_of_books, with: 2
     expect { click_button 'Record Locker Violation' }.to change { ActionMailer::Base.deliveries.count }.by(1)
   end

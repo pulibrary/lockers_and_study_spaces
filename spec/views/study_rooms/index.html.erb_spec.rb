@@ -4,25 +4,31 @@ require 'rails_helper'
 
 RSpec.describe 'study_rooms/index', type: :view do
   before(:each) do
-    assign(:study_rooms, [
-             StudyRoom.create!(
-               location: 'Location',
-               general_area: 'General Area',
-               notes: 'Notes'
-             ),
-             StudyRoom.create!(
-               location: 'Location',
-               general_area: 'General Area',
-               notes: 'Notes'
-             )
-           ])
+    @study_rooms = assign(:study_rooms, [
+                            StudyRoom.create!(
+                              location: 'Location',
+                              general_area: 'General Area',
+                              notes: 'Notes'
+                            ),
+                            StudyRoom.create!(
+                              location: 'Location',
+                              general_area: 'General Area',
+                              notes: 'Notes'
+                            )
+                          ])
     assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
   end
 
-  it 'renders a list of study_rooms' do
+  it 'renders a list of study rooms' do
     render
-    assert_select 'tr>td', text: 'Location'.to_s, count: 2
-    assert_select 'tr>td', text: 'General Area'.to_s, count: 2
-    assert_select 'tr>td', text: 'Notes'.to_s, count: 2
+
+    assert_select 'grid-item>strong', text: 'Location:'
+    assert_select 'grid-item>strong', text: 'General Area:'
+    assert_select 'grid-item>span', text: 'Location'.to_s, count: 2
+    assert_select 'grid-item>span', text: 'General Area'.to_s, count: 2
+    expect(rendered).to match(/#{study_room_path(@study_rooms[0])}/)
+    expect(rendered).to match(/#{edit_study_room_path(@study_rooms[0])}/)
+    expect(rendered).to match(/#{study_room_path(@study_rooms[1])}/)
+    expect(rendered).to match(/#{edit_study_room_path(@study_rooms[1])}/)
   end
 end

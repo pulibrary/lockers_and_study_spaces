@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @study_room_violation.user_id %>
+</p>
+
+<p>
+  <strong>Study room:</strong>
+  <%= @study_room_violation.study_room_id %>
+</p>
+
+<p>
+  <strong>Number of books:</strong>
+  <%= @study_room_violation.number_of_books %>
+</p>
+
+<%= link_to 'Edit', edit_study_room_violation_path(@study_room_violation) %> |
+<%= link_to 'Back', study_room_violations_path %>

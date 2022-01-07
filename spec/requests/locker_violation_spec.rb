@@ -36,7 +36,7 @@ RSpec.describe '/locker_violations', type: :request do
   end
 
   describe 'GET /index' do
-    it 'renders a successful response' do
+    it 'renders a redirect response' do
       LockerViolation.create! valid_attributes
       get locker_violations_url
       expect(response).to be_redirect
@@ -44,7 +44,7 @@ RSpec.describe '/locker_violations', type: :request do
   end
 
   describe 'GET /show' do
-    it 'renders a successful response' do
+    it 'renders a redirect response' do
       violation = LockerViolation.create! valid_attributes
       get locker_violation_url(violation)
       expect(response).to be_redirect
@@ -52,14 +52,14 @@ RSpec.describe '/locker_violations', type: :request do
   end
 
   describe 'GET /new' do
-    it 'renders a successful response' do
+    it 'renders a redirect response' do
       get new_locker_violation_url(locker_violation: { locker_id: locker.id })
       expect(response).to be_redirect
     end
   end
 
   describe 'GET /edit' do
-    it 'render a successful response' do
+    it 'renders a redirect response' do
       violation = LockerViolation.create! valid_attributes
       get edit_locker_violation_url(violation)
       expect(response).to be_redirect
