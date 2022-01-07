@@ -52,4 +52,21 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Study Room Agreement.pdf"')
     end
   end
+
+  describe '#study_room_violation' do
+    let(:study_room_assignment) { FactoryBot.create :study_room_assignment }
+    it 'sends an email to the assignee' do
+      study_room_violation = StudyRoomViolation.new(study_room: study_room_assignment.study_room, user: study_room_assignment.user, number_of_books: 8)
+      expect { described_class.with(study_room_violation: study_room_violation).study_room_violation.deliver }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq 'Uncharged Materials in Study Room'
+      expect(mail.to).to eq [study_room_violation.email]
+      expect(mail.from).to eq ['access@princeton.edu']
+      expect(mail.html_part.body.to_s).to have_content('Firestone Library Study Room Violation')
+      expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your study room area #{study_room_violation.location}"\
+                                                       ' that were not checked out and we returned them to Circulation')
+      expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Study Room Agreement.pdf"')
+    end
+  end
 end

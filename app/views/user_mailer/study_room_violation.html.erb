@@ -1,0 +1,47 @@
+<tr>
+  <td style="background-color: #ffffff; box-shadow: 0 0 0 1px rgba(92,106,196,.1);">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tr>
+        <td style="padding: 20px 20px 0; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <h1 style="margin: 0 0 10px 0; font-family: sans-serif; font-size: 25px; line-height: 30px; font-weight: normal;">Firestone Library Study Room Violation</h1>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;">
+          Dear <%= @study_room_violation.name %>,
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;">
+ 
+              Today <%= @study_room_violation.number_of_books %> books were found in your study room area <%= @study_room_violation.location %> that were not checked out and we returned them to Circulation to be re-shelved. Please note that this is a serious violation of the study room agreement and that further violations may result in the termination of your study room assignment.
+              As a reminder, I have attached the study room agreement which is also posted at your study room.
+              <% if @study_room_violation.number_of_violations > 1 %>                
+                  <tr><td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+                    <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;">
+                        This is the <%= @study_room_violation.number_of_violations.ordinalize %> occurrence.
+                  </p></td> </tr>
+              
+              <%end %>
+      </p></td> </tr>
+      <tr>
+        <td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;">
+              If you have any questions, please contact me.
+      </p></td> </tr>
+      <tr>
+        <td style="padding: 5px 20px 0 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #001123;">
+          <p style="margin: 0 0 5px 0; font-family: sans-serif; font-size: 18px; line-height: 22px; color: #333333;">
+
+              April Miller
+              Supervisor, Library Access
+
+          </p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

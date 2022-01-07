@@ -4,12 +4,13 @@ class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[cas]
 
   has_many :locker_violations
+  has_many :study_room_violations
   attr_writer :applicant
 
   delegate :email, :name, :department, :status, :junior?, to: :applicant
 
   def number_of_violations
-    locker_violations.count
+    locker_violations.count + study_room_violations.count
   end
 
   def self.from_cas(access_token)

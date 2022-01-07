@@ -3,7 +3,7 @@ Dear <%= @locker_violation.name %>,
 Today <%= @locker_violation.number_of_books %> books were found in your locker <%= @locker_violation.location %> that were not checked out and we returned them to Circulation to be re-shelved. Please note that this is a serious violation of the locker agreement and that further violations may result in the termination of your locker assignment.
 As a reminder, I have attached the locker agreement which is also posted on the inside of your locker.
 <% if @locker_violation.number_of_violations > 1 %>
-This is the 2nd occurrence.
+This is the <%= @locker_violation.number_of_violations.ordinalize %> occurrence.
 <%end %>
 If you have any questions, please contact me.
 

@@ -9,9 +9,9 @@ RSpec.describe LockerViolation, type: :model do
       expect(locker_violation.number_of_violations).to eq(1)
     end
 
-    it "returns the user's number of violations" do
+    it "returns the user's number of violations either locker or study room" do
       locker_violation = FactoryBot.create(:locker_violation)
-      FactoryBot.create(:locker_violation, user: locker_violation.user)
+      FactoryBot.create(:study_room_violation, user: locker_violation.user)
       expect(locker_violation.number_of_violations).to eq(2)
     end
   end

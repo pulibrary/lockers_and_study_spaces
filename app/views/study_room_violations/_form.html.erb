@@ -1,0 +1,44 @@
+<%= form_with(model: study_room_violation, local: true) do |form| %>
+ <% if study_room_violation.errors.any? %>
+    <card id="error_explanation" size="full-width">
+      <h2><%= pluralize(study_room_violation.errors.count, "error") %> prohibited this study_room_violation from being saved:</h2>
+
+      <ul>
+      <% study_room_violation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </card>
+  <% end %>
+  <card size="full-width">
+    <grid-container>
+      <grid-item columns="lg-2 md-4 sm-12">
+        <strong>Study Room:</strong>
+        <span><%= study_room_violation.study_room.location %></span>
+      </grid-item>
+      <grid-item columns="lg-1 md-4 sm-12">
+        <strong>User:</strong>
+        <span><%= study_room_violation.current_user %></span>
+      </grid-item>
+    </grid-container>
+  </card>
+  <card size="full-width">
+   <% if study_room_violation.current_user.present? %>
+    <%= form.hidden_field :user_id , value: study_room_violation.current_user.id %>
+    <%= form.hidden_field :study_room_id , value: study_room_violation.study_room.id %>
+    <grid-container>
+      <grid-item columns="lg-6 md-12 sm-12">
+        <input-text id="study_room_violation_number_of_books" 
+                    name="study_room_violation[number_of_books]" 
+                    value="<%= study_room_violation.number_of_books %>" 
+                    label="Number of Books" width="expand"></input-text>
+      </grid-item>
+      <grid-item columns="lg-6 md-12 sm-12">
+        <input-button type="submit" variation="solid">Record Violation</input-button>
+      </grid-item>
+    </grid-container>
+    <% else %>
+      There is no user currently assigned to the study room!
+    <% end %>
+ </card>
+<% end %>

@@ -1,0 +1,17 @@
+
+  <card size="full-width">
+   <grid-container>
+    <grid-item columns="lg-4 md-6 sm-12">
+      <strong>Location:</strong>
+      <span><%= study_room.location %></span>
+    </grid-item>
+    <grid-item columns="lg-4 md-6 sm-12">
+      <strong>General Area:</strong>
+      <span><%= study_room.general_area %></span>
+    </grid-item>
+    <grid-item columns="lg-4 md-6 sm-12">
+      <%= link_to 'Record Violation', new_study_room_violation_path(study_room_violation: {study_room_id: study_room.id}) %>
+      <%= link_to 'Edit', edit_study_room_path(study_room) %>
+    </grid-item>
+   </grid-container>
+</card>

@@ -1,0 +1,11 @@
+Dear <%= @study_room_violation.name %>,
+ 
+Today <%= @study_room_violation.number_of_books %> books were found in your study room area <%= @study_room_violation.location %> that were not checked out and we returned them to Circulation to be re-shelved. Please note that this is a serious violation of the study room agreement and that further violations may result in the termination of your study room assignment.
+As a reminder, I have attached the study room agreement which is also posted at your study room.
+<% if @study_room_violation.number_of_violations > 1 %>
+This is the <%= @study_room_violation.number_of_violations.ordinalize %> occurrence.
+<%end %>
+If you have any questions, please contact me.
+
+April Miller
+Supervisor, Library Access
