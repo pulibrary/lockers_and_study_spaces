@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Application Assign', type: :feature, js: true do
+RSpec.describe 'Locker Violation', type: :feature, js: true do
   let(:user) { FactoryBot.create :user, :admin }
   let(:locker_assignment) { FactoryBot.create(:locker_assignment) }
 
@@ -11,7 +11,7 @@ RSpec.describe 'Locker Application Assign', type: :feature, js: true do
     locker_assignment
   end
 
-  it 'enables me to search by userid' do
+  it 'enables me to record a locker violation' do
     visit lockers_path
     expect(page).to have_text(locker_assignment.locker.location)
     click_on 'Record LockerViolation'
