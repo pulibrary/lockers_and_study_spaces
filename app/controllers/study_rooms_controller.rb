@@ -6,7 +6,7 @@ class StudyRoomsController < ApplicationController
 
   # GET /study_rooms or /study_rooms.json
   def index
-    @pagy, @study_rooms = pagy(StudyRoom.order(:location).all)
+    @pagy, @study_rooms = pagy(StudyRoom.search(field: :location, term: params[:search]).order(:location))
   end
 
   # GET /study_rooms/1 or /study_rooms/1.json

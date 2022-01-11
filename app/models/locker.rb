@@ -30,12 +30,6 @@ class Locker < ApplicationRecord
     @current_assignment ||= LockerAssignment.where(locker_id: id, released_date: nil).first
   end
 
-  def self.search(location:)
-    return all if location.blank?
-
-    where("location like '#{location}%'")
-  end
-
   def space_totals
     @space_totals ||= self.class.group(:size).group(:floor).order(:floor).count.transform_keys { |key| key.join("\' ") }
   end
