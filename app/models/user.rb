@@ -28,12 +28,13 @@ class User < ApplicationRecord
   def self.from_email(email)
     attributes = Ldap.find_by_email(email)
     if attributes.empty?
-      User.create(provider: 'migration', uid: email)
+      user = User.find_by(uid: email.downcase)
+      user = User.create(provider: 'migration', uid: email) if user.blank?
     else
       user = User.find_by(provider: 'cas', uid: attributes[:netid])
       user = User.create(provider: 'cas', uid: attributes[:netid], admin: false) if user.blank?
-      user
     end
+    user
   end
 
   def applicant
