@@ -5,7 +5,7 @@ An application to manage and reserve locker and study spaces for the library.  T
 
 ## Ruby version
 
-  2.6.6
+  2.7.5
 
 ## System dependencies
 
@@ -24,10 +24,14 @@ An application to manage and reserve locker and study spaces for the library.  T
      ```
 
 ## Database creation
-
+   * Ensure you have a local Postgres instance running
+   * You may need to get the csv seed files from a teammate or from the production server (must have your keys on the server)
+   ```
+   scp deploy@lockers-and-study-spaces-prod1.princeton.edu:*.cvs .
+   ```
    * create, migrate and seed the database
      ```
-     rake db:create 
+     rake db:create
      rake db:migrate
      rake db:seed
      ```
@@ -39,7 +43,7 @@ An application to manage and reserve locker and study spaces for the library.  T
      bundle exec foreman start
      ```
    * run mail catcher
-     run once 
+     run once
      ```
      gem install mailcatcher
      ```
@@ -47,16 +51,20 @@ An application to manage and reserve locker and study spaces for the library.  T
      ```
      mailcatcher
      ```
-   
+
      [you can see the mail that has been sent here]( http://localhost:1080/)
 
 ## Staging Mail Catcher
-  To See mail that has been sent on the staging server you must ssh tunnel into the server
+  To see mail that has been sent on the staging server you must ssh tunnel into the server
   ```
   ssh -L 1082:localhost:1080 pulsys@lockers-and-study-spaces-staging1
   ```
   Once the tunnel is open [you can see the mail that has been sent on staging here]( http://localhost:1082/)
-     
+
+## Running the tests
+* The feature tests require Firefox to be installed locally
+* To run all the tests, run `bundle exec rspec`
+* To run a specific test, run `bundle exec rspec path/to/some_spec.rb:line_number`
 
 ## Deployment instructions
 
