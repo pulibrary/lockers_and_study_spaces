@@ -22,6 +22,10 @@ An application to manage and reserve locker and study spaces for the library.  T
      bundle install
      yarn install
      ```
+   * Compile assets
+     ```
+     rails webpacker:compile
+     ```
 
 ## Database creation
 
