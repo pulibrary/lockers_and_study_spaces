@@ -7,7 +7,7 @@ set :application, 'lockers_and_study_spaces'
 set :repo_url, 'https://github.com/pulibrary/locker_and_study_spaces.git'
 
 # Default branch is :main
-set :branch, ENV.fetch('BRANCH', 'main')
+set :branch, ENV['BRANCH'] || 'main'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/opt/lockers_and_study_spaces'
