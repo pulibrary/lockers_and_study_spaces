@@ -56,9 +56,15 @@ RSpec.describe LockerAssignment, type: :model do
     let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }
     let(:locker2) { FactoryBot.create(:locker, floor: 'B floor') }
     let(:locker3) { FactoryBot.create(:locker, floor: 'B floor') }
-    let!(:locker_assignment1) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
-    let!(:locker_assignment2) { FactoryBot.create :locker_assignment, locker_application: locker_application2, locker: locker2 }
-    let!(:locker_assignment3) { FactoryBot.create :locker_assignment, locker_application: locker_application3, locker: locker3 }
+    let!(:locker_assignment1) do
+      FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1, expiration_date: DateTime.now.to_date
+    end
+    let!(:locker_assignment2) do
+      FactoryBot.create :locker_assignment, locker_application: locker_application2, locker: locker2, expiration_date: (DateTime.now + 1.day).to_date
+    end
+    let!(:locker_assignment3) do
+      FactoryBot.create :locker_assignment, locker_application: locker_application3, locker: locker3, expiration_date: (DateTime.now + 5.days).to_date
+    end
     let!(:locker_assignment4) do
       FactoryBot.create :locker_assignment, locker_application: locker_application4, locker: locker1, expiration_date: DateTime.yesterday.to_date
     end
@@ -91,6 +97,20 @@ RSpec.describe LockerAssignment, type: :model do
 
     it 'filters by active (non expired)' do
       expect(described_class.search(queries: { active: true })).to contain_exactly(locker_assignment1, locker_assignment2, locker_assignment3)
+    end
+
+    it 'filters by a start of expiration dates)' do
+      expect(described_class.search(queries: { expiration_date_start: DateTime.now })).to contain_exactly(locker_assignment1, locker_assignment2,
+                                                                                                          locker_assignment3)
+    end
+
+    it 'filters by an end of expiration dates)' do
+      expect(described_class.search(queries: { expiration_date_end: DateTime.now })).to contain_exactly(locker_assignment1, locker_assignment4)
+    end
+
+    it 'filters by a range of expiration dates)' do
+      expect(described_class.search(queries: { expiration_date_start: DateTime.now,
+                                               expiration_date_end: DateTime.tomorrow })).to contain_exactly(locker_assignment1, locker_assignment2)
     end
 
     it 'ignores invalid queries' do
