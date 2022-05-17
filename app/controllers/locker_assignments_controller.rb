@@ -95,8 +95,19 @@ class LockerAssignmentsController < ApplicationController
   end
 
   def query_params
-    query_params = params[:query]&.permit(:uid, :status_at_application, :general_area, :floor, :department_at_application, :active)
+    query_params = params[:query]&.permit(:uid, :status_at_application, :general_area, :floor, :department_at_application, :active, :daterange)
+
     query_params.delete(:active) if query_params && query_params[:active] == '0'
+    parse_expiration_date(query_params)
+  end
+
+  def parse_expiration_date(query_params)
+    return query_params if query_params.blank? || query_params[:daterange].blank?
+    daterange = query_params.delete(:daterange)
+    date = daterange.split(" - ")
+    query_params[:expiration_date_start] = Date.strptime(date[0],"%m/%d/%Y")
+    query_params[:expiration_date_end] = Date.strptime(date[1],"%m/%d/%Y")
+    byebug
     query_params
   end
 

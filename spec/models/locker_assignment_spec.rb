@@ -113,6 +113,11 @@ RSpec.describe LockerAssignment, type: :model do
                                                expiration_date_end: DateTime.tomorrow })).to contain_exactly(locker_assignment1, locker_assignment2)
     end
 
+    it 'filters by a range with one day of expiration dates)' do
+      expect(described_class.search(queries: { expiration_date_start: DateTime.now,
+                                               expiration_date_end: DateTime.now })).to contain_exactly(locker_assignment1)
+    end
+
     it 'ignores invalid queries' do
       expect(described_class.search(queries: { foo: 'bar', uid: locker_assignment1.uid, floor: 'A floor',
                                                status_at_application: 'junior' })).to contain_exactly(locker_assignment1)
