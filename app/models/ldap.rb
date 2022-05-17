@@ -5,7 +5,7 @@ require 'net/ldap'
 class Ldap
   class << self
     def find_by_netid(net_id, ldap_connection: default_connection)
-      attempts ||= 1
+      attempts ||= 0
 
       filter = Net::LDAP::Filter.eq('uid', net_id)
       result = ldap_connection.search(filter: filter).first
@@ -13,7 +13,8 @@ class Ldap
 
       attributes(result)
     rescue Net::LDAP::Error => e
-      if (attempts += 1) < 5 # go back to begin block if condition ok
+      # Tries 3 times, then moves on
+      if (attempts += 1) < 4 # go back to begin block if condition ok
         Rails.logger.warn("LDAP error from find_by_netid: #{e}, re-trying")
         retry
       end
@@ -22,7 +23,7 @@ class Ldap
 
     # rubocop:disable Metrics/AbcSize
     def find_by_email(email, ldap_connection: default_connection)
-      attempts ||= 1
+      attempts ||= 0
 
       email = clean_email(email)
       filter = Net::LDAP::Filter.eq('mail', email)
@@ -35,7 +36,8 @@ class Ldap
 
       attributes(result)
     rescue Net::LDAP::Error => e
-      if (attempts += 1) < 5 # go back to begin block if condition ok
+      # Tries 3 times, then moves on
+      if (attempts += 1) < 4 # go back to begin block if condition ok
         Rails.logger.warn("LDAP error from find_by_email: #{e}, re-trying")
         retry
       end
