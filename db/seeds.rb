@@ -105,7 +105,10 @@ end
 # file was generate using `SELECT TOP * FROM [Admins]` query
 CSV.parse(File.open(Rails.root.join('space_admins.csv'), encoding: 'ISO-8859-1'), headers: true) do |row|
   attributes = Ldap.find_by_netid(row['admin'])
-  User.create(uid: row['admin'], admin: true, provider: 'cas') if attributes[:status] == 'staff'
+
+  u = User.find_or_create_by(uid: row['admin'])
+  u.update(admin: true, provider: 'cas') if attributes[:status] == 'staff'
+  u.save if u.changed?
 end
 Rails.logger.warn("Created #{User.count} Administrative Users")
 

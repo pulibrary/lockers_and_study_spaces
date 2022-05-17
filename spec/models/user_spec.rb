@@ -32,4 +32,13 @@ RSpec.describe User, type: :model do
       end.to change { User.count }.by(1)
     end
   end
+
+  describe '#from_email' do
+    it 'finds an existing user' do
+      user1 = FactoryBot.create(:user)
+      expect do
+        User.from_email(user1.uid)
+      end.to change { User.count }.by(0)
+    end
+  end
 end
