@@ -56,8 +56,10 @@ RSpec.describe LockerAssignment, type: :model do
     let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }
     let(:locker2) { FactoryBot.create(:locker, floor: 'B floor') }
     let(:locker3) { FactoryBot.create(:locker, floor: 'B floor') }
+    let(:yesterday) { DateTime.yesterday.to_date }
+    let(:today) { DateTime.now.to_date }
     let!(:locker_assignment1) do
-      FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1, expiration_date: DateTime.now.to_date
+      FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1, expiration_date: today
     end
     let!(:locker_assignment2) do
       FactoryBot.create :locker_assignment, locker_application: locker_application2, locker: locker2, expiration_date: (DateTime.now + 1.day).to_date
@@ -114,8 +116,8 @@ RSpec.describe LockerAssignment, type: :model do
     end
 
     it 'filters by a range with one day of expiration dates)' do
-      expect(described_class.search(queries: { expiration_date_start: DateTime.now,
-                                               expiration_date_end: DateTime.now })).to contain_exactly(locker_assignment1)
+      expect(described_class.search(queries: { expiration_date_start: today,
+                                               expiration_date_end: today })).to contain_exactly(locker_assignment1)
     end
 
     it 'ignores invalid queries' do

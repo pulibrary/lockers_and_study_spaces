@@ -9,11 +9,13 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
   let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }
   let(:locker2) { FactoryBot.create(:locker) }
 
+  let(:yesterday) { DateTime.yesterday.to_date }
+  let(:next_year) { DateTime.now.to_date.next_year }
   let(:locker_assignment1) do
-    FactoryBot.create(:locker_assignment, locker_application: locker_application1, locker: locker1, expiration_date: DateTime.yesterday.to_date)
+    FactoryBot.create(:locker_assignment, locker_application: locker_application1, locker: locker1, expiration_date: yesterday)
   end
   let(:locker_assignment2) do
-    FactoryBot.create(:locker_assignment, locker_application: locker_application2, locker: locker2, expiration_date: DateTime.now.to_date.next_year)
+    FactoryBot.create(:locker_assignment, locker_application: locker_application2, locker: locker2, expiration_date: next_year)
   end
 
   before do
@@ -97,21 +99,32 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
   it 'enables me to filter by expiration date' do
     visit '/locker_assignments'
     expect(page).to have_text(locker_assignment1.uid)
+    expect(locker_assignment1.expiration_date).to eq(yesterday)
     expect(page).to have_text(locker_assignment2.uid)
     js_date_format = '%m/%d/%Y'
     fill_in 'query_daterange',
-            with: "#{locker_assignment2.expiration_date.strftime(js_date_format)} - #{locker_assignment2.expiration_date.strftime(js_date_format)}"
+            with: "#{(next_year - 1.day).strftime(js_date_format)} - #{(next_year + 1.day).strftime(js_date_format)}"
 
-    check :query_active
+    # check :query_active
     click_button 'filter_submit'
 
     expect(page).not_to have_text(locker_assignment1.uid)
     expect(page).to have_text(locker_assignment2.uid)
 
     fill_in 'query_daterange',
-            with: "#{locker_assignment1.expiration_date.strftime(js_date_format)} - #{locker_assignment1.expiration_date.strftime(js_date_format)}"
+            with: "#{(yesterday - 1.day).strftime(js_date_format)} - #{(yesterday + 1.day).strftime(js_date_format)}"
+
+    click_button 'filter_submit'
 
     expect(page).to have_text(locker_assignment1.uid)
     expect(page).not_to have_text(locker_assignment2.uid)
+
+    # fill_in 'query_daterange',
+    #         with: "#{(yesterday).strftime(js_date_format)} - #{(yesterday).strftime(js_date_format)}"
+    #
+    # click_button 'filter_submit'
+    #
+    # expect(page).to have_text(locker_assignment1.uid)
+    # expect(page).not_to have_text(locker_assignment2.uid)
   end
 end
