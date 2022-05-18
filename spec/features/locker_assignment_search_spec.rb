@@ -96,12 +96,14 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
     expect(page).to have_text(locker_assignment2.uid)
   end
 
+  # We are testing a range of dates because Lux has a bug with typing in dates - see https://github.com/pulibrary/lux/issues/395
   it 'enables me to filter by expiration date' do
+    js_date_format = '%m/%d/%Y'
+
     visit '/locker_assignments'
     expect(page).to have_text(locker_assignment1.uid)
     expect(locker_assignment1.expiration_date).to eq(yesterday)
     expect(page).to have_text(locker_assignment2.uid)
-    js_date_format = '%m/%d/%Y'
     fill_in 'query_daterange',
             with: "#{(next_year - 1.day).strftime(js_date_format)} - #{(next_year + 1.day).strftime(js_date_format)}"
 
@@ -118,13 +120,5 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
 
     expect(page).to have_text(locker_assignment1.uid)
     expect(page).not_to have_text(locker_assignment2.uid)
-
-    # fill_in 'query_daterange',
-    #         with: "#{(yesterday).strftime(js_date_format)} - #{(yesterday).strftime(js_date_format)}"
-    #
-    # click_button 'filter_submit'
-    #
-    # expect(page).to have_text(locker_assignment1.uid)
-    # expect(page).not_to have_text(locker_assignment2.uid)
   end
 end
