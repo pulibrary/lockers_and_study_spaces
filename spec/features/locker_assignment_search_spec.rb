@@ -12,7 +12,9 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
   let(:locker_assignment1) do
     FactoryBot.create(:locker_assignment, locker_application: locker_application1, locker: locker1, expiration_date: DateTime.yesterday.to_date)
   end
-  let(:locker_assignment2) { FactoryBot.create(:locker_assignment, locker_application: locker_application2, locker: locker2, expiration_date: DateTime.now.to_date.next_year) }
+  let(:locker_assignment2) do
+    FactoryBot.create(:locker_assignment, locker_application: locker_application2, locker: locker2, expiration_date: DateTime.now.to_date.next_year)
+  end
 
   before do
     sign_in user
@@ -96,9 +98,9 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
     visit '/locker_assignments'
     expect(page).to have_text(locker_assignment1.uid)
     expect(page).to have_text(locker_assignment2.uid)
-    next_year = DateTime.now.to_date.next_year
-    js_date_format = "%m/%d/%Y"
-    fill_in "query_daterange", with: "#{locker_assignment2.expiration_date.strftime(js_date_format)} - #{locker_assignment2.expiration_date.strftime(js_date_format)}"
+    js_date_format = '%m/%d/%Y'
+    fill_in 'query_daterange',
+            with: "#{locker_assignment2.expiration_date.strftime(js_date_format)} - #{locker_assignment2.expiration_date.strftime(js_date_format)}"
 
     check :query_active
     click_button 'filter_submit'
@@ -106,10 +108,10 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
     expect(page).not_to have_text(locker_assignment1.uid)
     expect(page).to have_text(locker_assignment2.uid)
 
-    fill_in "query_daterange", with: "#{locker_assignment1.expiration_date.strftime(js_date_format)} - #{locker_assignment1.expiration_date.strftime(js_date_format)}"
+    fill_in 'query_daterange',
+            with: "#{locker_assignment1.expiration_date.strftime(js_date_format)} - #{locker_assignment1.expiration_date.strftime(js_date_format)}"
 
     expect(page).to have_text(locker_assignment1.uid)
     expect(page).not_to have_text(locker_assignment2.uid)
-
   end
 end
