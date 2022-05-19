@@ -93,8 +93,6 @@ jobs:
       - run:
           command: |
             google-chrome --version
-            firefox --version
-            geckodriver --version
             chromedriver --version
             java -jar /usr/local/bin/selenium.jar --version
           name: Check install
