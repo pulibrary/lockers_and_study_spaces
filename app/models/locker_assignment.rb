@@ -21,8 +21,8 @@ class LockerAssignment < ApplicationRecord
           memo.search_by_relation(relation: :locker_application, field: field, value: val)
         when :general_area, 'general_area', :floor, 'floor'
           memo.search_by_relation(relation: :locker, field: field, value: val)
-        when :active, 'active'
-          memo.where('expiration_date >= ?', DateTime.now.to_date)
+        when :expiration_date_start, 'expiration_date_start', :expiration_date_end, 'expiration_date_end', :active, 'active'
+          memo.search_by_date(field: field.to_sym, value: val)
         else
           memo
         end
@@ -39,6 +39,15 @@ class LockerAssignment < ApplicationRecord
       return all if value.blank?
 
       joins(relation.to_sym).where("#{relation.to_s.pluralize}.#{field} = '#{value}'")
+    end
+
+    def search_by_date(field:, value:)
+      value = DateTime.now.to_date if field == :active
+      if %i[expiration_date_start active].include?(field)
+        where('expiration_date >= ?', value)
+      else
+        where('expiration_date <= ?', value)
+      end
     end
   end
 
