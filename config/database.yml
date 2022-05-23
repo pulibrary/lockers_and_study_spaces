@@ -23,7 +23,11 @@ default: &default
 
 development:
   <<: *default
-  database: locker_and_study_spaces_development
+  database: <%= ENV["lando_lockers_dev_database_creds_database"] %>
+  host: <%= ENV["lando_lockers_dev_database_conn_host"] %>
+  port: <%= ENV["lando_lockers_dev_database_conn_port"] %>
+  username: <%= ENV["lando_lockers_dev_database_creds_user"] %>
+  password: <%= ENV["lando_lockers_dev_database_creds_password"] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -57,7 +61,11 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: locker_and_study_spaces_test
+  database: <%= ENV["lando_lockers_test_database_creds_database"] || "locker_and_study_spaces_test" %>
+  host: <%= ENV["lando_lockers_test_database_conn_host"] %>
+  port: <%= ENV["lando_lockers_test_database_conn_port"] %>
+  username: <%= ENV["lando_lockers_test_database_creds_user"] %>
+  password: <%= ENV["lando_lockers_test_database_creds_password"] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
