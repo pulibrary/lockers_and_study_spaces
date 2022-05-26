@@ -30,4 +30,29 @@ class UserMailer < ApplicationMailer
     email = @study_room_violation.email
     mail(to: email, subject: 'Uncharged Materials in Study Room')
   end
+
+  def renewal_email
+    @assignment = params[:assignment]
+    mail(
+      bcc: @assignment.email,
+      subject: 'Locker Renewal',
+      template_name: params[:template_name]
+    )
+  end
+
+  def scheduled_messages
+    ScheduledMessage.today.not_yet_sent.each do |message|
+      assignments = relevant_assignments(message)
+      assignments.each do |assignment|
+        @assignment = assignment
+        mail(
+          bcc: assignment.email,
+          subject: 'Locker Renewal',
+          template_name: message.template
+        )
+      end
+      message.results = { success: assignments.map(&:email) }
+      message.save!
+    end
+  end
 end

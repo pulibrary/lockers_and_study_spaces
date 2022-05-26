@@ -125,4 +125,22 @@ RSpec.describe LockerAssignment, type: :model do
                                                status_at_application: 'junior' })).to contain_exactly(locker_assignment1)
     end
   end
+
+  describe '#not_a_senior_or_faculty' do
+    let(:user) { FactoryBot.create :user }
+    let(:locker_application2) { FactoryBot.create :locker_application, user: user }
+    context 'for juniors' do
+      it 'returns true' do
+        allow(user).to receive(:status).and_return('junior')
+        expect(locker_assignment2.not_a_senior_or_faculty).to be true
+      end
+    end
+    context 'for seniors' do
+      let(:status) { 'senior' }
+      it 'returns false' do
+        allow(user).to receive(:status).and_return('senior')
+        expect(locker_assignment2.not_a_senior_or_faculty).to be false
+      end
+    end
+  end
 end
