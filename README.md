@@ -26,7 +26,7 @@ An application to manage and reserve locker and study spaces for the library.  T
    * `bundle exec rake servers:start`
    * You may need to get the csv seed files from a teammate or from the production server (must have your keys on the server)
    ```
-   scp deploy@lockers-and-study-spaces-prod1.princeton.edu:*.cvs .
+   scp deploy@lockers-and-study-spaces-prod1.princeton.edu:\*.csv .
    ```
    * create, migrate and seed the database
      ```
