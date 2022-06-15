@@ -1,0 +1,8 @@
+name: lockers
+services:
+  lockers_dev_database:
+    type: postgres:13
+    portforward: true
+  lockers_test_database:
+    type: postgres:13
+    portforward: true
