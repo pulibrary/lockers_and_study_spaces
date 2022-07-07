@@ -1,0 +1,14 @@
+<h1>Editing Scheduled Message</h1>
+
+<%= render 'form', scheduled_message: @scheduled_message %>
+
+<grid-container>
+<grid-item columns="sm-2">
+<%= link_to 'Back', scheduled_messages_path %>
+</grid-item>
+<grid-item columns="sm-2">
+<%= link_to "Remove from schedule", {:controller => controller_name,
+      :action => 'destroy', :id => @scheduled_message.id }, :method => :delete %>
+</grid-item>
+<grid-item columns="sm-8"></grid-item>
+</grid-container>

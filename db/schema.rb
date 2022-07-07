@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_107_145_828) do
+ActiveRecord::Schema.define(version: 20_220_526_161_349) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -67,6 +67,17 @@ ActiveRecord::Schema.define(version: 20_220_107_145_828) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.boolean 'disabled'
+  end
+
+  create_table 'scheduled_messages', force: :cascade do |t|
+    t.date 'schedule'
+    t.daterange 'applicable_range'
+    t.string 'template'
+    t.string 'user_filter'
+    t.string 'type'
+    t.json 'results'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
   create_table 'study_room_assignments', force: :cascade do |t|

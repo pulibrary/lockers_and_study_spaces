@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1> <%= controller_name.humanize.titleize %> </h1>
+
+<data-table caption="Upcoming messages"
+  :columns="[
+    { 'name': 'schedule', 'display_name': 'Date scheduled', 'datatype': 'date', 'sortable': true },
+    { 'name': 'applicable_range', 'display_name': 'Range covered' },
+    { 'name': 'show', 'display_name': 'Show'},
+    { 'name': 'edit', 'display_name': 'Edit'}
+  ]"
+  :json-data="[
+    <% @upcoming_messages.each do |scheduled_message| %>
+      {
+        'schedule': '<%= scheduled_message.schedule %>',
+        'applicable_range': '<%= daterange_to_string(scheduled_message.applicable_range) %>',
+        'results': '<%= scheduled_message.results %>',
+        'show': { 'value': 'Show', link: '<%= url_for scheduled_message %>'},
+        'edit': { 'value': 'Edit', link: '<%= edit_scheduled_message_path(scheduled_message) %>'}
+      },
+    <% end %>]"/>
+</data-table>
+
+
+<grid-container>
+  <grid-item columns="sm-2">
+    <%= link_to 'Schedule a new message', new_scheduled_message_path %>
+  </grid-item>
+</grid-container>
+
+
+<data-table caption="Sent messages"
+    :columns="[
+      { 'name': 'schedule', 'display_name': 'Date scheduled', 'datatype': 'date', 'sortable': true },
+      { 'name': 'applicable_range', 'display_name': 'Range covered' },
+      { 'name': 'template', 'display_name': 'Email template' },
+      { 'name': 'user_filter', 'display_name': 'User filter' },
+      { 'name': 'results', 'display_name': 'Results' },
+      { 'name': 'show', 'display_name': 'Show'}
+    ]"
+    :json-data="[
+    <% @sent_messages.each do |scheduled_message| %>
+      {
+        'schedule': '<%= scheduled_message.schedule %>',
+        'applicable_range': '<%= daterange_to_string(scheduled_message.applicable_range) %>',
+        'template': '<%= scheduled_message.template %>',
+        'user_filter': '<%= scheduled_message.user_filter %>',
+        'results': '<%= scheduled_message.results %>',
+        'show': { 'value': 'Show', link: '<%= url_for scheduled_message %>'}
+
+      },
+    <% end %>]"/>
+</data-table>

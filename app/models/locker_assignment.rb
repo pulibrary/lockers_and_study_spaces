@@ -70,6 +70,10 @@ class LockerAssignment < ApplicationRecord
     save!
   end
 
+  def not_a_senior_or_faculty
+    user.status != 'senior' && user.status != 'faculty'
+  end
+
   private
 
   def prepare_locker_choices_for_lux(choices)

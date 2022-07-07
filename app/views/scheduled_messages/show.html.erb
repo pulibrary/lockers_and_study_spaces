@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Schedule:</strong>
+  <%= @scheduled_message.schedule %>
+</p>
+
+<p>
+  <strong>Applicable range:</strong>
+  <%= daterange_to_string(@scheduled_message.applicable_range) %>
+</p>
+
+<p>
+  <strong>Template:</strong>
+  <%= @scheduled_message.template %>
+</p>
+
+<p>
+  <strong>User filter:</strong>
+  <%= @scheduled_message.user_filter %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @scheduled_message.type %>
+</p>
+
+<p>
+  <strong>Results:</strong>
+  <%= @scheduled_message.results %>
+</p>
+
+<%= link_to 'Edit', edit_scheduled_message_path(@scheduled_message) %> |
+<%= link_to 'Back', scheduled_messages_path %>
