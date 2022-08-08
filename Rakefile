@@ -5,4 +5,6 @@
 
 require_relative 'config/application'
 
+require 'honeybadger/init/ruby'
+
 Rails.application.load_tasks
