@@ -7,6 +7,7 @@ class Locker < ApplicationRecord
 
   def self.available_lockers
     where.not(id: LockerAssignment.where(released_date: nil).pluck(:locker_id))
+         .where(disabled: [false, nil])
   end
 
   def size_choices
