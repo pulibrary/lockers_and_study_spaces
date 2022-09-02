@@ -9,15 +9,26 @@ RSpec.describe Locker, type: :model do
     let(:locker1) {  FactoryBot.create :locker }
     let(:locker2) {  FactoryBot.create :locker }
     let(:locker3) {  FactoryBot.create :locker }
+    let(:locker4) {  FactoryBot.create :locker }
 
     before do
       locker_assignment
       locker2
       locker3
+      locker4
     end
 
     it 'to only returns unassigned lockers in area' do
-      expect(described_class.available_lockers).to contain_exactly(locker2, locker3)
+      expect(described_class.available_lockers).to contain_exactly(locker2, locker3, locker4)
+    end
+
+    context 'disabled lockers' do
+      let(:locker2) { FactoryBot.create :locker, disabled: true }
+      let(:locker3) { FactoryBot.create :locker, disabled: false }
+      let(:locker4) { FactoryBot.create :locker, disabled: nil }
+      it 'does not include lockers that have been disabled' do
+        expect(described_class.available_lockers).to contain_exactly(locker3, locker4)
+      end
     end
   end
 

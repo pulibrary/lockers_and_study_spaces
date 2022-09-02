@@ -43,6 +43,14 @@ RSpec.describe LockerApplication, type: :model do
         expect(locker_application.available_lockers_in_area_and_size).to contain_exactly(locker4)
       end
     end
+
+    context 'disabled locker' do
+      let(:locker3) { FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 4, disabled: true }
+
+      it 'does not return a disabled locker, even if it otherwise meets the criteria' do
+        expect(locker_application.available_lockers_in_area_and_size).not_to include(locker3)
+      end
+    end
   end
 
   describe '##awaiting_assignment' do
