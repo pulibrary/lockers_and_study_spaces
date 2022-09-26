@@ -46,6 +46,11 @@ RSpec.describe LockerAssignment, type: :model do
       locker_assignment1.release
       expect(locker_assignment1.released_date).to eq(DateTime.now.to_date)
     end
+    it 'sets the expired date' do
+      expect(locker_assignment1.expiration_date.year).to eq(DateTime.now.next_year.year)
+      locker_assignment1.release
+      expect(locker_assignment1.expiration_date).to eq(locker_assignment1.released_date)
+    end
   end
 
   describe '##search' do
@@ -98,7 +103,7 @@ RSpec.describe LockerAssignment, type: :model do
     end
 
     it 'filters by active (non expired)' do
-      expect(described_class.search(queries: { active: true })).to contain_exactly(locker_assignment1, locker_assignment2, locker_assignment3)
+      expect(described_class.search(queries: { active: true })).to contain_exactly(locker_assignment2, locker_assignment3)
     end
 
     it 'filters by a start of expiration dates)' do
