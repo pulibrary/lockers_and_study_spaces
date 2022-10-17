@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[cas]
 
+  belongs_to :building, optional: true
   has_many :locker_violations
   has_many :study_room_violations
   attr_writer :applicant
