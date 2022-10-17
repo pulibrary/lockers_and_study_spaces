@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'lockers/edit', type: :view do
-  before(:each) do
+  before do
     @locker = assign(:locker, Locker.create!(
                                 location: 'MyString',
                                 size: 1,

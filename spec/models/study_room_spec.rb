@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe StudyRoom, type: :model do
   let(:study_room) { FactoryBot.create :study_room }
+
   describe '#current_assignment' do
     it 'returns nil if no assignment exists' do
       expect(study_room.current_assignment).to be_nil

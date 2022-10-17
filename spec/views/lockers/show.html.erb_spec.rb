@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'lockers/show', type: :view do
-  before(:each) do
+  before do
     @locker = assign(:locker, Locker.create!(
                                 location: 'Location',
                                 size: 2,
@@ -40,6 +40,7 @@ RSpec.describe 'lockers/show', type: :view do
 
   context 'An assigned locker' do
     let(:locker_assignment) { FactoryBot.create :locker_assignment, locker: @locker }
+
     it 'renders a link to the assignment' do
       locker_assignment
       render

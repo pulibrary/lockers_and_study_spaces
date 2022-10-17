@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'study_rooms/index', type: :view do
-  before(:each) do
+  before do
     @study_rooms = assign(:study_rooms, [
                             StudyRoom.create!(
                               location: 'Location',
@@ -16,7 +16,7 @@ RSpec.describe 'study_rooms/index', type: :view do
                               notes: 'Notes'
                             )
                           ])
-    assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
   end
 
   it 'renders a list of study rooms' do

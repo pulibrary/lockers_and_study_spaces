@@ -6,7 +6,7 @@ RSpec.describe 'study_room_assignments/show', type: :view do
   let(:user) { FactoryBot.create :user }
   let(:study_room) { FactoryBot.create :study_room }
 
-  before(:each) do
+  before do
     @study_room_assignment = assign(:study_room_assignment, StudyRoomAssignment.create!(
                                                               user: user,
                                                               study_room: study_room

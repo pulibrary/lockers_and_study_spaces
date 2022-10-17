@@ -16,10 +16,6 @@ require 'rails_helper'
 
 RSpec.describe '/locker_applications', type: :request do
   let(:user) { FactoryBot.create :user }
-  before do
-    sign_in user
-  end
-
   # LockerApplication. As you add validations to LockerApplication, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
@@ -33,7 +29,6 @@ RSpec.describe '/locker_applications', type: :request do
       user_id: user.id
     }
   end
-
   let(:valid_form_attributes) do
     {
       preferred_size: 2,
@@ -45,7 +40,6 @@ RSpec.describe '/locker_applications', type: :request do
       user_uid: user.uid
     }
   end
-
   let(:invalid_attributes) do
     {
       preferred_size: 2,
@@ -57,7 +51,6 @@ RSpec.describe '/locker_applications', type: :request do
       user_id: nil
     }
   end
-
   let(:invalid_form_attributes) do
     {
       preferred_size: 2,
@@ -68,6 +61,10 @@ RSpec.describe '/locker_applications', type: :request do
       department_at_application: 'Department At Application',
       user_uid: nil
     }
+  end
+
+  before do
+    sign_in user
   end
 
   describe 'GET /index' do
@@ -89,6 +86,7 @@ RSpec.describe '/locker_applications', type: :request do
       before do
         valid_attributes[:user_id] = FactoryBot.create(:user).id
       end
+
       it 'redirects to root' do
         locker_application = LockerApplication.create! valid_attributes
         get locker_application_url(locker_application)
@@ -137,10 +135,11 @@ RSpec.describe '/locker_applications', type: :request do
         before do
           valid_form_attributes[:user_uid] = FactoryBot.create(:user).uid
         end
+
         it 'redirects to root' do
           expect do
             post locker_applications_url, params: { locker_application: valid_form_attributes }
-          end.to change(LockerApplication, :count).by(0)
+          end.not_to change(LockerApplication, :count)
           expect(response).to redirect_to(root_path)
         end
       end
@@ -150,7 +149,7 @@ RSpec.describe '/locker_applications', type: :request do
       it 'redirects to root' do
         expect do
           post locker_applications_url, params: { locker_application: invalid_form_attributes }
-        end.to change(LockerApplication, :count).by(0)
+        end.not_to change(LockerApplication, :count)
         expect(response).to redirect_to(root_path)
       end
 
@@ -205,7 +204,7 @@ RSpec.describe '/locker_applications', type: :request do
       locker_application = LockerApplication.create! valid_attributes
       expect do
         delete locker_application_url(locker_application)
-      end.to change(LockerApplication, :count).by(0)
+      end.not_to change(LockerApplication, :count)
       expect(response).to redirect_to(root_path)
     end
 
@@ -267,6 +266,7 @@ RSpec.describe '/locker_applications', type: :request do
           before do
             valid_form_attributes[:user_uid] = FactoryBot.create(:user).uid
           end
+
           it 'creates a new LockerApplication' do
             expect do
               post locker_applications_url, params: { locker_application: valid_form_attributes }
@@ -279,7 +279,7 @@ RSpec.describe '/locker_applications', type: :request do
         it 'does not create a new LockerApplication' do
           expect do
             post locker_applications_url, params: { locker_application: invalid_form_attributes }
-          end.to change(LockerApplication, :count).by(0)
+          end.not_to change(LockerApplication, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do

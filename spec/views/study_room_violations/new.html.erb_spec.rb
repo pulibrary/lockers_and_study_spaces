@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'study_room_violations/new', type: :view do
-  before(:each) do
+  before do
     assign(:study_room_violation, FactoryBot.build(:study_room_violation))
   end
 

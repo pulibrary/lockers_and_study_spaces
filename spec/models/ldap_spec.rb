@@ -12,6 +12,7 @@ RSpec.describe Ldap, type: :model do
        loginshell: ['/bin/no login'], mail: ['sally.smith@princeton.edu'], edupersonentitlement: ['urn:mace:dir:entitlement:common-lib-terms'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], title: ['Staff, Library - Information Technology.'], street: ['B-1H-1 Firestone Library'] }]
   end
   # rubocop:enable Layout/LineLength
+
   before do
     allow(Ldap).to receive(:default_connection).and_return(ldap_connection)
   end
@@ -31,6 +32,7 @@ RSpec.describe Ldap, type: :model do
         expect(described_class.find_by_email('abc123')).to eq(expected_attributes)
       end
     end
+
     describe '#find_by_netid' do
       before do
         allow(ldap_connection).to receive(:search).with(filter: Net::LDAP::Filter.eq('uid', 'abc123')).and_return(valid_ldap_response)
@@ -54,6 +56,7 @@ RSpec.describe Ldap, type: :model do
         expect(Rails.logger).to have_received(:warn).exactly(4).times
       end
     end
+
     describe '#find_by_netid' do
       before do
         allow(ldap_connection).to receive(:search).with(filter: Net::LDAP::Filter.eq('uid', 'abc123')).and_raise(Net::LDAP::Error)

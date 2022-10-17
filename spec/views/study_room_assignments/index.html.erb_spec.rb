@@ -6,7 +6,7 @@ RSpec.describe 'study_room_assignments/index', type: :view do
   let(:user) { FactoryBot.create :user }
   let(:study_room) { FactoryBot.create :study_room }
 
-  before(:each) do
+  before do
     assign(:study_room_assignments, [
              StudyRoomAssignment.create!(
                user: user,
@@ -17,7 +17,7 @@ RSpec.describe 'study_room_assignments/index', type: :view do
                study_room: study_room
              )
            ])
-    assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
   end
 
   it 'renders a list of study_room_assignments' do

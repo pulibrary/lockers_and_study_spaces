@@ -4,16 +4,17 @@ require 'rails_helper'
 
 RSpec.describe LockerApplication, type: :model do
   subject(:locker_application) { described_class.new(user: user) }
+
   let(:user) { nil }
 
   it 'responds to the attributes' do
-    expect(locker_application.user).to eq(nil)
-    expect(locker_application.preferred_size).to eq(nil)
-    expect(locker_application.accessible).to eq(nil)
-    expect(locker_application.semester).to eq(nil)
-    expect(locker_application.status_at_application).to eq(nil)
-    expect(locker_application.department_at_application).to eq(nil)
-    expect(locker_application.locker_assignment).to eq(nil)
+    expect(locker_application.user).to be_nil
+    expect(locker_application.preferred_size).to be_nil
+    expect(locker_application.accessible).to be_nil
+    expect(locker_application.semester).to be_nil
+    expect(locker_application.status_at_application).to be_nil
+    expect(locker_application.department_at_application).to be_nil
+    expect(locker_application.locker_assignment).to be_nil
   end
 
   describe '#available_lockers_in_area_and_size' do
@@ -65,6 +66,7 @@ RSpec.describe LockerApplication, type: :model do
       locker_application1
       locker_application2
     end
+
     it 'contains applications awaiting assignment' do
       expect(described_class.awaiting_assignment).to contain_exactly(locker_application2, locker_application3)
     end
@@ -76,7 +78,7 @@ RSpec.describe LockerApplication, type: :model do
 
   context 'a user is present' do
     let(:user) { FactoryBot.create(:user, applicant: applicant) }
-    let(:applicant) { instance_double('Applicant', department: 'department', status: 'senior', junior?: false) }
+    let(:applicant) { instance_double(Applicant, department: 'department', status: 'senior', junior?: false) }
 
     it 'knows the user is a senior' do
       expect(locker_application.status).to eq('senior')
@@ -89,7 +91,7 @@ RSpec.describe LockerApplication, type: :model do
 
   context 'a junior user is present' do
     let(:user) { FactoryBot.create(:user, applicant: applicant) }
-    let(:applicant) { instance_double('Applicant', department: 'department', status: 'junior', junior?: true) }
+    let(:applicant) { instance_double(Applicant, department: 'department', status: 'junior', junior?: true) }
 
     it 'knows the user is a junior' do
       expect(locker_application.status).to eq('junior')

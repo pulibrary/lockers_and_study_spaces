@@ -16,6 +16,14 @@ require 'rails_helper'
 
 RSpec.describe '/study_room_violations', type: :request do
   let(:user) { FactoryBot.create :user }
+  # StudyRoomViolation. As you add validations to StudyRoomViolation, be sure to
+  # adjust the attributes here as well.
+  let(:valid_attributes) do
+    { study_room_id: study_room.id, user_id: violation_user.id, number_of_books: 8 }
+  end
+  let(:invalid_attributes) do
+    { study_room_id: study_room.id, user_id: 123_456, number_of_books: 8 }
+  end
   let(:study_room) { FactoryBot.create(:study_room) }
   let(:violation_user) { FactoryBot.create(:user) }
   let(:study_room_assignment) { FactoryBot.create(:study_room_assignment, user: violation_user) }
@@ -23,16 +31,6 @@ RSpec.describe '/study_room_violations', type: :request do
   before do
     sign_in user
     study_room_assignment
-  end
-
-  # StudyRoomViolation. As you add validations to StudyRoomViolation, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) do
-    { study_room_id: study_room.id, user_id: violation_user.id, number_of_books: 8 }
-  end
-
-  let(:invalid_attributes) do
-    { study_room_id: study_room.id, user_id: 123_456, number_of_books: 8 }
   end
 
   describe 'GET /index' do
@@ -71,7 +69,7 @@ RSpec.describe '/study_room_violations', type: :request do
       it 'creates a new StudyRoomViolation' do
         expect do
           post study_room_violations_url, params: { study_room_violation: valid_attributes }
-        end.to change(StudyRoomViolation, :count).by(0)
+        end.not_to change(StudyRoomViolation, :count)
       end
 
       it 'redirects to the created study_room_violation' do
@@ -84,7 +82,7 @@ RSpec.describe '/study_room_violations', type: :request do
       it 'does not create a new StudyRoomViolation' do
         expect do
           post study_room_violations_url, params: { study_room_violation: invalid_attributes }
-        end.to change(StudyRoomViolation, :count).by(0)
+        end.not_to change(StudyRoomViolation, :count)
       end
 
       it "renders a redirect response (i.e. to display the 'new' template)" do
@@ -129,7 +127,7 @@ RSpec.describe '/study_room_violations', type: :request do
       study_room_violation = StudyRoomViolation.create! valid_attributes
       expect do
         delete study_room_violation_url(study_room_violation)
-      end.to change(StudyRoomViolation, :count).by(0)
+      end.not_to change(StudyRoomViolation, :count)
     end
 
     it 'redirects to the root path' do
@@ -191,7 +189,7 @@ RSpec.describe '/study_room_violations', type: :request do
         it 'does not create a new StudyRoomViolation' do
           expect do
             post study_room_violations_url, params: { study_room_violation: invalid_attributes }
-          end.to change(StudyRoomViolation, :count).by(0)
+          end.not_to change(StudyRoomViolation, :count)
         end
 
         it "renders a unprocessable response (i.e. to display the 'new' template)" do
