@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'study_rooms/show', type: :view do
-  before(:each) do
+  before do
     @study_room = assign(:study_room, StudyRoom.create!(
                                         location: 'Location',
                                         general_area: 'General Area',

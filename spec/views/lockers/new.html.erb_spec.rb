@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'lockers/new', type: :view do
-  before(:each) do
+  before do
     assign(:locker, Locker.new(
                       location: 'location',
                       size: 4,

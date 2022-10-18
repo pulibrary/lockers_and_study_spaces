@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
       user1 = FactoryBot.create(:user)
       expect do
         User.from_uid(user1.uid)
-      end.to change { User.count }.by(0)
+      end.not_to change { User.count }
     end
 
     it 'creates a new user' do
@@ -38,38 +38,46 @@ RSpec.describe User, type: :model do
       user1 = FactoryBot.create(:user)
       expect do
         User.from_email(user1.uid)
-      end.to change { User.count }.by(0)
+      end.not_to change { User.count }
     end
   end
 
   describe '#from_cas' do
     let(:access_token) { OmniAuth::AuthHash.new(provider: 'cas', uid: 'myuid') }
 
-    before(:each) do
+    before do
       user.save!
     end
+
     context 'with existing cas user' do
       let(:user) { FactoryBot.create :user, uid: 'myuid', provider: 'cas' }
+
       it 'returns the existing user' do
         expect(User.from_cas(access_token).uid).to eq('myuid')
       end
     end
+
     context 'with existing migration user' do
       let(:user) { FactoryBot.create :user, uid: 'myuid', provider: 'migration' }
+
       it 'returns the existing user' do
         expect(User.from_cas(access_token).uid).to eq('myuid')
       end
+
       it 'does not add any additional users to the database' do
         expect(User.all.count).to eq(1)
         User.from_cas(access_token)
         expect(User.all.count).to eq(1)
       end
+
       it "does not modify the existing user's provider" do
         expect(User.from_cas(access_token).provider).to eq('migration')
       end
     end
+
     context 'user does not yet exist in the database' do
       let(:access_token) { OmniAuth::AuthHash.new(provider: 'cas', uid: 'aNewUser') }
+
       it 'creates a new user in the database' do
         expect(User.all.count).to eq(1)
         User.from_cas(access_token)

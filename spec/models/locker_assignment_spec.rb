@@ -46,6 +46,7 @@ RSpec.describe LockerAssignment, type: :model do
       locker_assignment1.release
       expect(locker_assignment1.released_date).to eq(DateTime.now.to_date)
     end
+
     it 'sets the expired date' do
       expect(locker_assignment1.expiration_date.year).to eq(DateTime.now.next_year.year)
       locker_assignment1.release
@@ -134,14 +135,17 @@ RSpec.describe LockerAssignment, type: :model do
   describe '#not_a_senior_or_faculty' do
     let(:user) { FactoryBot.create :user }
     let(:locker_application2) { FactoryBot.create :locker_application, user: user }
+
     context 'for juniors' do
       it 'returns true' do
         allow(user).to receive(:status).and_return('junior')
         expect(locker_assignment2.not_a_senior_or_faculty).to be true
       end
     end
+
     context 'for seniors' do
       let(:status) { 'senior' }
+
       it 'returns false' do
         allow(user).to receive(:status).and_return('senior')
         expect(locker_assignment2.not_a_senior_or_faculty).to be false

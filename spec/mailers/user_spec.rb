@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe UserMailer, type: :mailer do
   describe '#locker_assignment_confirmation' do
     let(:locker_assignment) { FactoryBot.create :locker_assignment }
+
     it 'sends an email to the assignee' do
       expect { described_class.with(locker_assignment: locker_assignment).locker_assignment_confirmation.deliver }
         .to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -23,6 +24,7 @@ RSpec.describe UserMailer, type: :mailer do
 
   describe '#locker_violation' do
     let(:locker_assignment) { FactoryBot.create :locker_assignment }
+
     it 'sends an email to the assignee' do
       locker_violation = LockerViolation.new(locker: locker_assignment.locker, user: locker_assignment.user, number_of_books: 8)
       expect { described_class.with(locker_violation: locker_violation).locker_violation.deliver }
@@ -40,6 +42,7 @@ RSpec.describe UserMailer, type: :mailer do
 
   describe '#study_room_assignment_confirmation' do
     let(:study_room_assignment) { FactoryBot.create :study_room_assignment }
+
     it 'sends an email to the assignee' do
       expect { described_class.with(study_room_assignment: study_room_assignment).study_room_assignment_confirmation.deliver }
         .to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -55,6 +58,7 @@ RSpec.describe UserMailer, type: :mailer do
 
   describe '#study_room_violation' do
     let(:study_room_assignment) { FactoryBot.create :study_room_assignment }
+
     it 'sends an email to the assignee' do
       study_room_violation = StudyRoomViolation.new(study_room: study_room_assignment.study_room, user: study_room_assignment.user, number_of_books: 8)
       expect { described_class.with(study_room_violation: study_room_violation).study_room_violation.deliver }

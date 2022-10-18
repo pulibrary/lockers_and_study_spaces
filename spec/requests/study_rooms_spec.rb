@@ -63,7 +63,7 @@ RSpec.describe '/study_rooms', type: :request do
       it 'does not create a new StudyRoom' do
         expect do
           post study_rooms_url, params: { study_room: valid_attributes }
-        end.to change(StudyRoom, :count).by(0)
+        end.not_to change(StudyRoom, :count)
       end
 
       it 'redirects to root' do
@@ -76,7 +76,7 @@ RSpec.describe '/study_rooms', type: :request do
       it 'does not create a new StudyRoom' do
         expect do
           post study_rooms_url, params: { study_room: invalid_attributes }
-        end.to change(StudyRoom, :count).by(0)
+        end.not_to change(StudyRoom, :count)
       end
 
       it 'redirects to root' do
@@ -121,7 +121,7 @@ RSpec.describe '/study_rooms', type: :request do
       study_room = StudyRoom.create! valid_attributes
       expect do
         delete study_room_url(study_room)
-      end.to change(StudyRoom, :count).by(0)
+      end.not_to change(StudyRoom, :count)
     end
 
     it 'redirects to root' do
@@ -183,7 +183,7 @@ RSpec.describe '/study_rooms', type: :request do
         it 'does not create a new StudyRoom' do
           expect do
             post study_rooms_url, params: { study_room: invalid_attributes }
-          end.to change(StudyRoom, :count).by(0)
+          end.not_to change(StudyRoom, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'study_room_violations/edit', type: :view do
-  before(:each) do
+  before do
     @study_room_violation = assign(:study_room_violation, FactoryBot.create(:study_room_violation))
   end
 
@@ -21,6 +21,7 @@ RSpec.describe 'study_room_violations/edit', type: :view do
     before do
       FactoryBot.create :study_room_assignment, study_room: @study_room_violation.study_room, user: @study_room_violation.user
     end
+
     it 'renders the edit violation form' do
       render
       assert_select 'form[action=?][method=?]', study_room_violation_path(@study_room_violation), 'post' do

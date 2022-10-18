@@ -26,6 +26,7 @@ RSpec.describe Locker, type: :model do
       let(:locker2) { FactoryBot.create :locker, disabled: true }
       let(:locker3) { FactoryBot.create :locker, disabled: false }
       let(:locker4) { FactoryBot.create :locker, disabled: nil }
+
       it 'does not include lockers that have been disabled' do
         expect(described_class.available_lockers).to contain_exactly(locker3, locker4)
       end

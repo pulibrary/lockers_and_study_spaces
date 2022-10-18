@@ -75,7 +75,7 @@ RSpec.describe '/study_room_assignments', type: :request do
       it 'redirects to the root path' do
         expect do
           post study_room_assignments_url, params: { study_room_assignment: valid_attributes }
-        end.to change(StudyRoomAssignment, :count).by(0)
+        end.not_to change(StudyRoomAssignment, :count)
       end
 
       it 'redirects to the created study_room_assignment' do
@@ -88,7 +88,7 @@ RSpec.describe '/study_room_assignments', type: :request do
       it 'does not create a new StudyRoomAssignment' do
         expect do
           post study_room_assignments_url, params: { study_room_assignment: invalid_attributes }
-        end.to change(StudyRoomAssignment, :count).by(0)
+        end.not_to change(StudyRoomAssignment, :count)
         expect(response).to redirect_to(root_path)
       end
 
@@ -134,7 +134,7 @@ RSpec.describe '/study_room_assignments', type: :request do
       study_room_assignment = StudyRoomAssignment.create! valid_attributes
       expect do
         delete study_room_assignment_url(study_room_assignment)
-      end.to change(StudyRoomAssignment, :count).by(0)
+      end.not_to change(StudyRoomAssignment, :count)
     end
 
     it 'redirects to the root path' do
@@ -196,7 +196,7 @@ RSpec.describe '/study_room_assignments', type: :request do
         it 'does not create a new StudyRoomAssignment' do
           expect do
             post study_room_assignments_url, params: { study_room_assignment: invalid_attributes }
-          end.to change(StudyRoomAssignment, :count).by(0)
+          end.not_to change(StudyRoomAssignment, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do
