@@ -16,8 +16,8 @@
     </card>
   <% end %>
   <card size="full-width">
-   <grid-container>
-   <grid-item columns="lg-3 md-6 sm-12">
+   <grid-container class="locker-form">
+   <grid-item columns="lg-4 md-6 sm-12">
      <input-select label="Preferred Size" name="locker_application[preferred_size]"
                       id="locker_application_preferred_size"
                       width="expand"
@@ -25,28 +25,26 @@
                       :options="<%= locker_application.size_choices.to_json %>"
         ></input-select>
    </grid-item>
-   <grid-item columns="lg-3 md-6 sm-12">
-     <input-select label="Preferred General Area" name="locker_application[preferred_general_area]"
+   <grid-item columns="lg-4 md-6 sm-12">
+     <input-select label="Preferred Floor" name="locker_application[preferred_general_area]"
                       id="locker_application_preferred_general_area"
                       width="expand"
                       value="<%= locker_application.preferred_general_area %>"
                       :options="<%= locker_application.floor_choices.to_json %>"
         ></input-select>
    </grid-item>
-   <grid-item columns="lg-3 md-6 sm-12">
-
-    <%= check_box :locker_application, :accessible, {}, "true", "false" %>
-    <%= label(:locker_application, :accessible, "Accessible") %>
-  
-   </grid-item>
-   <grid-item columns="lg-3 md-6 sm-12">
+   <grid-item columns="lg-4 md-6 sm-12">
      <input-select label="Semester of Occupancy" name="locker_application[semester]"
                       id="locker_semester"
                       width="expand"
                       value="<%= locker_application.semester %>"
                       :options="<%= locker_application.semester_choices.to_json %>"
         ></input-select>
-
+   </grid-item>
+   <grid-item columns="lg-12 md-12 sm-12">
+     <%= check_box :locker_application, :accessible, {}, "true", "false" %>
+     <%= label(:locker_application, :accessible, "Accessible") %>
+     <div>For example, near an elevator or keyed entry as opposed to a combination lock</div>
    </grid-item>
    <grid-item columns="lg-6 md-6 sm-12">
      <input-select label="Student/Staff/Faculty Status" name="locker_application[status_at_application]"
@@ -72,7 +70,7 @@
   <% end %>
 
   <grid-item columns="lg-12 md-12 sm-12">
-    Lockers are assigned based on your eligibility by department, application date, and applicant’s status. First priority will be given to seniors and graduate students in their final year of study. You will be notified by email when your locker is assigned. After you receive notification, it is very important that you visit the Access Office to complete the process.
+    Lockers are assigned based on your eligibility by department, application date, and applicant’s status. First priority will be given to seniors and graduate students in their final year of study. You will be notified by email when your locker is assigned.
   </grid-item>
   <grid-item columns="lg-12 md-12 sm-12">
     <input-button type="submit" variation="solid">Submit Locker Application</input-button>
