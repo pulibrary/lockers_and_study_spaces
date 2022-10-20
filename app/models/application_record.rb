@@ -20,9 +20,9 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def prepare_semester_choices_for_lux(choices)
-    choices.map do | val |
+    choices.map do |val|
       puts val
-      label = (val == "Fall") ? "Fall & Spring" : "Spring Only"
+      label = val == 'Fall' ? 'Fall & Spring' : 'Spring Only'
       { label: label, value: val }
     end
   end
