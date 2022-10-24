@@ -17,8 +17,7 @@ RSpec.describe 'Navigation menu', type: :feature, js: true do
 
     it 'can see locker management navbar item' do
       visit '/'
-      # Should pass
-      expect(page).to have_text('Locker Management')
+      expect(page).to have_content('Locker Management')
     end
   end
 
@@ -28,8 +27,8 @@ RSpec.describe 'Navigation menu', type: :feature, js: true do
     end
 
     it 'cannot see locker management navbar item' do
+      pending('Implementing flipflop')
       visit '/'
-      # Should fail, not yet implemented
       expect(page).not_to have_text('Locker Management')
     end
 
@@ -38,16 +37,15 @@ RSpec.describe 'Navigation menu', type: :feature, js: true do
 
       it 'can see locker management navbar item' do
         visit '/'
-        # Should pass
         expect(page).to have_text('Locker Management')
       end
     end
   end
 
   context 'when user is not an admin' do
+    let(:user) { FactoryBot.create :user, admin: false }
     it 'cannot see locker management navbar item' do
       visit '/'
-      # Should pass
       expect(page).not_to have_text('Locker Management')
     end
   end
