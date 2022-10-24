@@ -87,4 +87,4 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'honeybadger', '~> 4.0'
 
-gem "flipflop", "~> 2.7"
+gem 'flipflop', '~> 2.7'

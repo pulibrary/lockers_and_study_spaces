@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount Flipflop::Engine => "/flipflop"
+  mount Flipflop::Engine => '/flipflop'
   resources :locker_renewal_messages
   resources :study_room_violations
   resources :locker_violations
