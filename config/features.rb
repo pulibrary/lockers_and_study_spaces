@@ -4,21 +4,9 @@ Flipflop.configure do
   strategy :active_record
   strategy :default
 
-  # Other strategies:
-  #
-  # strategy :sequel
-  # strategy :redis
-  #
-  # strategy :query_string
-  # strategy :session
-  #
-  # strategy :my_strategy do |feature|
-  #   # ... your custom code here; return true/false/nil.
-  # end
+  group :lewis_library do
+    feature :staff, title: 'Staff features', description: 'Allow Lewis staff members to administer Lewis lockers and applications'
+    feature :patrons, title: 'Patron features', description: 'Allow Lewis patrons to submit locker applications'
+  end
 
-  # Declare your features, e.g:
-  #
-  # feature :world_domination,
-  #   default: true,
-  #   description: "Take over the world."
 end
