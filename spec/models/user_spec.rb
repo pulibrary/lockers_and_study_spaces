@@ -86,7 +86,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#works_at_open_branch?' do
+  describe '#works_at_open_building?' do
     let(:building) { FactoryBot.create :building, name: 'Lewis Library' }
     let(:user) { FactoryBot.create :user, admin: true, building: building }
 
@@ -94,7 +94,7 @@ RSpec.describe User, type: :model do
       let(:building) { FactoryBot.create :building, name: 'Firestone Library' }
 
       it 'is true' do
-        expect(user.works_at_open_branch?).to_be true
+        expect(user.works_at_open_building?).to_be true
       end
     end
 
@@ -105,7 +105,7 @@ RSpec.describe User, type: :model do
         end
 
         it 'is true' do
-          expect(user.works_at_open_branch?).to_be true
+          expect(user.works_at_open_building?).to_be true
         end
       end
 
@@ -115,7 +115,7 @@ RSpec.describe User, type: :model do
         end
 
         it 'is false' do
-          expect(user.works_at_open_branch?).to_be false
+          expect(user.works_at_open_building?).to_be false
         end
       end
     end
@@ -124,7 +124,7 @@ RSpec.describe User, type: :model do
       let(:user) { FactoryBot.create :user, admin: true, building: nil }
 
       it 'is false' do
-        expect(user.works_at_open_branch?).to_be false
+        expect(user.works_at_open_building?).to_be false
       end
     end
   end

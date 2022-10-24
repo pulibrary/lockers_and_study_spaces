@@ -65,4 +65,31 @@ RSpec.describe LockerAssignmentsController do
     expect(response.body).to include("4' 2nd floor, 189, 189, 189, 0")
     expect(response.body).to include("6' 2nd floor, 171, 171, 171, 0")
   end
+
+  context 'when admin is at the Lewis Library' do
+    let(:building) { FactoryBot.create :building, name: 'Lewis Library' }
+    let(:user) { FactoryBot.create :user, :admin, building: building }
+
+    context 'when Lewis staff features are turned on' do
+      before do
+        allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+      end
+
+      it 'can access the index screen' do
+        get :index
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when Lewis staff features are turned off' do
+      before do
+        allow(Flipflop).to receive(:lewis_staff?).and_return(false)
+      end
+
+      it 'cannot access the index screen' do
+        get :index
+        expect(response).to redirect_to('/')
+      end
+    end
+  end
 end

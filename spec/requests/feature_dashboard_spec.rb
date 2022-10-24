@@ -16,6 +16,18 @@ RSpec.describe 'Feature dashboard', type: :request do
       expect(response.status).to be 200
       expect(response.body).to include('Locker And Study Spaces Features')
     end
+
+    context 'when Lewis is not enabled' do
+      before do
+        allow(Flipflop).to receive(:lewis_staff?).and_return(false)
+      end
+
+      it 'can access the dashboard' do
+        get '/flipflop'
+        expect(response.status).to be 200
+        expect(response.body).to include('Locker And Study Spaces Features')
+      end
+    end
   end
 
   context 'when user is not an admin' do
