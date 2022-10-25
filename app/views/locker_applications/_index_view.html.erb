@@ -20,6 +20,9 @@
     <grid-item columns="lg-2 md-4 sm-12">
       <%= link_to 'Edit', edit_locker_application_path(locker_application) %>
       <%= link_to 'Assign Locker', assign_locker_application_path(locker_application) %>
+      <% if current_page?(awaiting_assignment_locker_applications_path) %>
+        <%= link_to toggle_link_text(locker_application.archived), toggle_archived_locker_application_path(locker_application), method: :put %>
+      <% end %>
     </grid-item>
    </grid-container>
 </card>

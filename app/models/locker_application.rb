@@ -53,9 +53,10 @@ class LockerApplication < ApplicationRecord
     context.order(:location)
   end
 
-  def self.search(uid:)
-    return all if uid.blank?
-
-    joins(:user).where("users.uid = '#{uid}'")
+  def self.search(uid:, archived:)
+    results = all
+    results = results.where("locker_applications.archived = '#{archived}'") unless ActiveModel::Type::Boolean.new.cast(archived)
+    results = joins(:user).where("users.uid = '#{uid}' AND locker_applications.archived = false") if uid.present?
+    results
   end
 end
