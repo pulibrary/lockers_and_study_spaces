@@ -89,6 +89,7 @@ RSpec.describe LockerAssignmentsController do
       it 'cannot access the index screen' do
         get :index
         expect(response).to redirect_to('/')
+        expect(flash[:alert]).to eq('Only administrators have access to Locker Assignments!')
       end
     end
   end

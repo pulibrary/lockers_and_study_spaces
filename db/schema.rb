@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_24_190158) do
+ActiveRecord::Schema.define(version: 2022_10_24_172402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2022_10_24_190158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "disabled"
-    t.bigint "building_id", default: 1
+    t.bigint "building_id"
   end
 
   create_table "scheduled_messages", force: :cascade do |t|
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 2022_10_24_190158) do
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "building_id", default: 1
+    t.bigint "building_id"
     t.index ["provider"], name: "index_users_on_provider"
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true

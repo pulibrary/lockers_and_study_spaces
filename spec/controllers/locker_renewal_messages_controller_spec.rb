@@ -30,6 +30,7 @@ RSpec.describe LockerRenewalMessagesController do
     it 'a Lewis admin cannot access the index screen' do
       get :index
       expect(response).to redirect_to('/')
+      expect(flash[:alert]).to eq('Only administrators have access to modify scheduled messages')
     end
   end
 end

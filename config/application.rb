@@ -12,8 +12,6 @@ Bundler.require(*Rails.groups)
 
 module LockerAndStudySpaces
   class Application < Rails::Application
-    # Before filter for Flipflop dashboard. Replace with a lambda or method name
-    # defined in ApplicationController to implement access control.
     config.flipflop.dashboard_access_filter = -> { head :forbidden unless current_user.admin? }
 
     # By default, when set to `nil`, strategy loading errors are suppressed in test

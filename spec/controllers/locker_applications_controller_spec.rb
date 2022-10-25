@@ -30,6 +30,7 @@ RSpec.describe LockerApplicationsController do
     it 'a Lewis admin cannot access the awaiting_assignment screen' do
       get :awaiting_assignment
       expect(response).to redirect_to('/')
+      expect(flash[:alert]).to eq('Only administrators have access to the everyone\'s Locker Applications!')
     end
   end
 end
