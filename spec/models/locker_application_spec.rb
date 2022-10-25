@@ -110,7 +110,7 @@ RSpec.describe LockerApplication, type: :model do
     end
 
     it 'searches returns all if search term is empty' do
-      expect(described_class.search(uid: nil, archived: nil)).to contain_exactly(locker_application1, locker_application2, locker_application3)
+      expect(described_class.search(uid: nil, archived: false)).to contain_exactly(locker_application1, locker_application2, locker_application3)
     end
   end
 
