@@ -12,6 +12,12 @@ Bundler.require(*Rails.groups)
 
 module LockerAndStudySpaces
   class Application < Rails::Application
+    config.flipflop.dashboard_access_filter = -> { head :forbidden unless current_user.admin? }
+
+    # By default, when set to `nil`, strategy loading errors are suppressed in test
+    # mode. Set to `true` to always raise errors, or `false` to always warn.
+    config.flipflop.raise_strategy_errors = nil
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 

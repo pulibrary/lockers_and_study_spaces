@@ -45,4 +45,15 @@ class User < ApplicationRecord
   def to_s
     uid
   end
+
+  def works_at_enabled_building?
+    case building&.name
+    when 'Firestone Library'
+      true
+    when 'Lewis Library'
+      Flipflop.lewis_staff?
+    else
+      false
+    end
+  end
 end

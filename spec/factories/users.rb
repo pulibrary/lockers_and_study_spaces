@@ -8,6 +8,6 @@ FactoryBot.define do
     trait :admin do
       admin { true }
     end
-    building { Building.new(name: 'My Library Building') }
+    building { FactoryBot.create(:building) }
   end
 end

@@ -82,7 +82,7 @@ class LockerApplicationsController < ApplicationController
   end
 
   def force_admin
-    return if current_user.admin?
+    return if current_user.admin? && current_user.works_at_enabled_building?
 
     redirect_to :root, alert: 'Only administrators have access to the everyone\'s Locker Applications!'
   end

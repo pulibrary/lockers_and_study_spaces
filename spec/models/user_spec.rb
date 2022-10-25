@@ -85,4 +85,47 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#works_at_enabled_building?' do
+    let(:building) { FactoryBot.create :building, name: 'Lewis Library' }
+    let(:user) { FactoryBot.create :user, admin: true, building: building }
+
+    context 'when user is at Firestone' do
+      let(:building) { FactoryBot.create :building, name: 'Firestone Library' }
+
+      it 'is true' do
+        expect(user.works_at_enabled_building?).to be(true)
+      end
+    end
+
+    context 'when user is at Lewis' do
+      context 'when Lewis staff feature is turned on' do
+        before do
+          allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+        end
+
+        it 'is true' do
+          expect(user.works_at_enabled_building?).to be(true)
+        end
+      end
+
+      context 'when Lewis staff feature is turned off' do
+        before do
+          allow(Flipflop).to receive(:lewis_staff?).and_return(false)
+        end
+
+        it 'is false' do
+          expect(user.works_at_enabled_building?).to be(false)
+        end
+      end
+    end
+
+    context 'when user has no building' do
+      let(:user) { FactoryBot.create :user, admin: true, building: nil }
+
+      it 'is false' do
+        expect(user.works_at_enabled_building?).to be(false)
+      end
+    end
+  end
 end
