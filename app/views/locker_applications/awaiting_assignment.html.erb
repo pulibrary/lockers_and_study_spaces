@@ -7,6 +7,10 @@
 
 <h1>Locker Applications</h1>
 
+<card size="full-width">
+  <%= button_to archive_display_text(@archived), awaiting_assignment_locker_applications_path, params: { archived: !@archived }, method: :get %>
+</card>
+
 <%= render partial: "index_view", collection: @locker_applications, as: :locker_application %>
 
 <br>
