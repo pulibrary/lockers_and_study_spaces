@@ -63,7 +63,7 @@ class ScheduledMessagesController < ApplicationController
   private
 
   def force_admin
-    return if current_user.admin? && current_user.works_at_open_building?
+    return if current_user.admin? && current_user.works_at_enabled_building?
 
     redirect_to :root, alert: 'Only administrators have access to modify scheduled messages'
   end

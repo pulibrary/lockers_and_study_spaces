@@ -46,7 +46,7 @@ class User < ApplicationRecord
     uid
   end
 
-  def works_at_open_building?
+  def works_at_enabled_building?
     case building&.name
     when 'Firestone Library'
       true
