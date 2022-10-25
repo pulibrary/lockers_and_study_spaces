@@ -7,7 +7,7 @@ Flipflop.configure do
   strategy :default
 
   group :lewis_library do
-    feature :lewis_staff, title: 'Staff features', description: 'Allow Lewis staff members to administer Lewis lockers and applications'
+    feature :lewis_staff, title: 'Staff features', description: 'Allow Lewis staff members to administer Lewis lockers and applications', default: false
     feature :lewis_patrons, title: 'Patron features', description: 'Allow Lewis patrons to submit locker applications'
   end
 end
