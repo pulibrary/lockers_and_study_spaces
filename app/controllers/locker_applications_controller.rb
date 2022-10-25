@@ -110,6 +110,7 @@ class LockerApplicationsController < ApplicationController
 
   def archived_param
     return false if params[:archived].blank?
+
     ActiveModel::Type::Boolean.new.cast(params[:archived])
   end
 end
