@@ -70,6 +70,19 @@ RSpec.describe '/locker_applications', type: :request do
     }
   end
 
+  let(:archived_attributes) do
+    {
+      preferred_size: 2,
+      preferred_general_area: 'Preferred General Area',
+      accessible: false,
+      semester: 'Semester',
+      status_at_application: 'Status At Application',
+      department_at_application: 'Department At Application',
+      user_id: user.id,
+      archived: true
+    }
+  end
+
   describe 'GET /index' do
     it 'redirects to root' do
       LockerApplication.create! valid_attributes
@@ -356,6 +369,24 @@ RSpec.describe '/locker_applications', type: :request do
         LockerApplication.create! valid_attributes
         get awaiting_assignment_locker_applications_url
         expect(response).to be_successful
+      end
+    end
+
+    describe 'PUT /toggle_archived' do
+      it 'allows an admin to archive an application' do
+        locker_application = LockerApplication.create! valid_attributes
+        put toggle_archived_locker_application_url(locker_application)
+        locker_application.reload
+        expect(response).to have_http_status(302)
+        expect(locker_application.archived).to eq(true)
+      end
+
+      it 'allows an admin to unachive an application' do
+        locker_application = LockerApplication.create! archived_attributes
+        put toggle_archived_locker_application_url(locker_application)
+        locker_application.reload
+        expect(response).to have_http_status(302)
+        expect(locker_application.archived).to eq(false)
       end
     end
   end

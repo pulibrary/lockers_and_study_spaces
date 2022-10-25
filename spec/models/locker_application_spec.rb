@@ -14,6 +14,7 @@ RSpec.describe LockerApplication, type: :model do
     expect(locker_application.status_at_application).to eq(nil)
     expect(locker_application.department_at_application).to eq(nil)
     expect(locker_application.locker_assignment).to eq(nil)
+    expect(locker_application.archived).to eq(false)
   end
 
   describe '#available_lockers_in_area_and_size' do
@@ -57,6 +58,7 @@ RSpec.describe LockerApplication, type: :model do
     let(:locker_application1) { FactoryBot.create :locker_application }
     let(:locker_application2) { FactoryBot.create :locker_application }
     let(:locker_application3) { FactoryBot.create :locker_application }
+    let(:locker_application4) { FactoryBot.create :locker_application, archived: true }
     let(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
     let(:locker1) { FactoryBot.create :locker }
 
