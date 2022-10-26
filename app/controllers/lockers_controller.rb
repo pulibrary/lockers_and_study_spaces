@@ -22,7 +22,7 @@ class LockersController < ApplicationController
 
   # POST /lockers or /lockers.json
   def create
-    @locker = Locker.new(locker_params)
+    @locker = Locker.new(locker_params.with_defaults(building: current_user&.building))
 
     respond_to do |format|
       if @locker.save
