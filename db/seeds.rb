@@ -23,6 +23,7 @@ def locker_attributes(row)
   attributes[:floor] = row['floor_str']
   attributes['size'] = locker_size(row['type'])
   attributes[:disabled] = row['maxOccupancy'] == '0'
+  attributes[:building] = default_building
   attributes
 end
 
@@ -100,6 +101,10 @@ def setup_locker(row, user)
   else
     setup_study_room(row, user)
   end
+end
+
+def default_building
+  Building.find_by_name('Firestone Library')
 end
 
 # file was generate using `SELECT TOP * FROM [Admins]` query

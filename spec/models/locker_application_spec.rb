@@ -6,6 +6,7 @@ RSpec.describe LockerApplication, type: :model do
   subject(:locker_application) { described_class.new(user: user) }
 
   let(:user) { nil }
+  let(:building) { FactoryBot.create(:building) }
 
   it 'responds to the attributes' do
     expect(locker_application.user).to be_nil
@@ -26,14 +27,14 @@ RSpec.describe LockerApplication, type: :model do
     let!(:locker4) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 4 }
 
     it 'to only returns unassigned lockers in area of the right size' do
-      expect(locker_application.available_lockers_in_area_and_size).to contain_exactly(locker4)
+      expect(locker_application.available_lockers_in_area_and_size(building: building)).to contain_exactly(locker4)
     end
 
     context 'no size preference shows any' do
       let(:locker_application) { FactoryBot.create :locker_application, preferred_size: nil }
 
       it 'to only returns unassigned lockers in area' do
-        expect(locker_application.available_lockers_in_area_and_size).to contain_exactly(locker3, locker4)
+        expect(locker_application.available_lockers_in_area_and_size(building: building)).to contain_exactly(locker3, locker4)
       end
     end
 
@@ -41,7 +42,7 @@ RSpec.describe LockerApplication, type: :model do
       let(:locker_application) { FactoryBot.create :locker_application, preferred_size: 4, preferred_general_area: 'No preference' }
 
       it 'to only returns unassigned lockers in area' do
-        expect(locker_application.available_lockers_in_area_and_size).to contain_exactly(locker4)
+        expect(locker_application.available_lockers_in_area_and_size(building: building)).to contain_exactly(locker4)
       end
     end
 
@@ -49,7 +50,7 @@ RSpec.describe LockerApplication, type: :model do
       let(:locker3) { FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 4, disabled: true }
 
       it 'does not return a disabled locker, even if it otherwise meets the criteria' do
-        expect(locker_application.available_lockers_in_area_and_size).not_to include(locker3)
+        expect(locker_application.available_lockers_in_area_and_size(building: building)).not_to include(locker3)
       end
     end
   end

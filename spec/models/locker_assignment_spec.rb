@@ -15,6 +15,8 @@ RSpec.describe LockerAssignment, type: :model do
   let(:locker2) {  FactoryBot.create :locker }
   let(:locker3) {  FactoryBot.create :locker, floor: locker_application1.preferred_general_area }
   let(:locker4) {  FactoryBot.create :locker, floor: locker_application1.preferred_general_area }
+  let(:our_building) { FactoryBot.create :building }
+  let(:other_building) { FactoryBot.create :building, name: 'Other library' }
 
   before do
     locker_assignment1
@@ -26,17 +28,32 @@ RSpec.describe LockerAssignment, type: :model do
   describe '#locker_choices' do
     it 'has available lockers' do
       # contains locker 1 because that is assigned to this Assignment
-      expect(locker_assignment1.locker_choices).to contain_exactly({ label: "#{locker1.location} (#{locker1.size}')", value: locker1.id },
-                                                                   { label: "#{locker2.location} (#{locker2.size}')", value: locker2.id },
-                                                                   { label: "#{locker3.location} (#{locker3.size}')", value: locker3.id })
+      expect(locker_assignment1.locker_choices(building: our_building)).to contain_exactly(
+        { label: "#{locker1.location} (#{locker1.size}')", value: locker1.id },
+        { label: "#{locker2.location} (#{locker2.size}')", value: locker2.id },
+        { label: "#{locker3.location} (#{locker3.size}')", value: locker3.id }
+      )
+    end
+
+    context 'when a locker is owned by another building' do
+      let(:locker2) { FactoryBot.create :locker, building: other_building }
+
+      it "does not include the other building's locker" do
+        expect(locker_assignment1.locker_choices(building: our_building)).to contain_exactly(
+          { label: "#{locker1.location} (#{locker1.size}')", value: locker1.id },
+          { label: "#{locker3.location} (#{locker3.size}')", value: locker3.id }
+        )
+      end
     end
   end
 
   describe '#preferred_locker_choices' do
     it 'has available lockers' do
       # contains locker 1 because that is assigned to this Assignment
-      expect(locker_assignment1.preferred_locker_choices).to contain_exactly({ label: "#{locker1.location} (#{locker1.size}')", value: locker1.id },
-                                                                             { label: "#{locker3.location} (#{locker3.size}')", value: locker3.id })
+      expect(locker_assignment1.preferred_locker_choices(building: our_building)).to contain_exactly(
+        { label: "#{locker1.location} (#{locker1.size}')", value: locker1.id },
+        { label: "#{locker3.location} (#{locker3.size}')", value: locker3.id }
+      )
     end
   end
 
@@ -54,7 +71,8 @@ RSpec.describe LockerAssignment, type: :model do
     end
   end
 
-  describe '##search' do
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
+  describe '#search' do
     let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior', department_at_application: 'History Department') }
     let(:locker_application2) { FactoryBot.create(:locker_application, status_at_application: 'senior', department_at_application: 'Math Department') }
     let(:locker_application3) { FactoryBot.create(:locker_application, status_at_application: 'junior', department_at_application: 'History Department') }
@@ -131,6 +149,7 @@ RSpec.describe LockerAssignment, type: :model do
                                                status_at_application: 'junior' })).to contain_exactly(locker_assignment1)
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   describe '#not_a_senior_or_faculty' do
     let(:user) { FactoryBot.create :user }

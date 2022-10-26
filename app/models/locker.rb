@@ -7,9 +7,10 @@ class Locker < ApplicationRecord
 
   belongs_to :building, optional: true
 
-  def self.available_lockers
+  def self.available_lockers(building:)
     where.not(id: LockerAssignment.where(released_date: nil).pluck(:locker_id))
          .where(disabled: [false, nil])
+         .where(building: building)
   end
 
   def size_choices

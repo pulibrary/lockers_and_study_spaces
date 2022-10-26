@@ -51,16 +51,17 @@ class LockerAssignment < ApplicationRecord
     end
   end
 
-  def locker_choices
-    available = Locker.available_lockers.pluck(:id, :location, :size)
+  def locker_choices(building:)
+    available = Locker.available_lockers(building: building).pluck(:id, :location, :size)
     prepare_locker_choices_for_lux(available)
   end
 
-  def preferred_locker_choices
+  def preferred_locker_choices(building:)
     available = if locker_application.blank?
                   []
                 else
-                  locker_application.available_lockers_in_area_and_size.pluck(:id, :location, :size)
+                  locker_application.available_lockers_in_area_and_size(building: building)
+                                    .pluck(:id, :location, :size)
                 end
     prepare_locker_choices_for_lux(available)
   end

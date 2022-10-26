@@ -40,7 +40,7 @@
                       id="locker_assignment_locker_id"
                       width="expand"
                       value="<%= locker_assignment.locker %>"
-                      :options="<%= locker_assignment.preferred_locker_choices.to_json %>"
+                      :options="<%= locker_assignment.preferred_locker_choices(building: current_user&.building).to_json %>"
         ></input-select>
    </grid-item>
 
@@ -48,7 +48,7 @@
      <input-select label="Lockers Available in Any Area" name="locker_assignment[any_locker_id]"
                       id="any_locker_assignment_locker_id"
                       width="expand"
-                      :options="<%= locker_assignment.locker_choices.to_json %>"
+                      :options="<%= locker_assignment.locker_choices(building: current_user&.building).to_json %>"
         ></input-select>
    </grid-item>
 

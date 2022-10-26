@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'lockers/index', type: :view do
+  let(:building) { FactoryBot.create :building, name: 'My Excellent Library' }
+  let(:user) { FactoryBot.create :user, building: building }
+
   before do
     @lockers = assign(:lockers, [
                         Locker.create!(
@@ -37,6 +40,7 @@ RSpec.describe 'lockers/index', type: :view do
                         )
                       ])
     assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    allow(view).to receive(:current_user).and_return(user)
   end
 
   it 'renders a list of lockers' do
@@ -53,5 +57,10 @@ RSpec.describe 'lockers/index', type: :view do
     expect(rendered).to match(/#{edit_locker_path(@lockers[0])}/)
     expect(rendered).to match(/#{locker_path(@lockers[1])}/)
     expect(rendered).to match(/#{edit_locker_path(@lockers[1])}/)
+  end
+
+  it "has a header containing the name of the admin user's library" do
+    render
+    assert_select 'heading', text: 'My Excellent Library Lockers'
   end
 end

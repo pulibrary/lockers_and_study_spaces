@@ -6,7 +6,7 @@ class LockersController < ApplicationController
 
   # GET /lockers or /lockers.json
   def index
-    @pagy, @lockers = pagy(Locker.search(field: :location, term: params[:search]).order(:location))
+    @pagy, @lockers = pagy(Locker.search(field: :location, term: params[:search]).where(building: current_user.building).order(:location))
   end
 
   # GET /lockers/1 or /lockers/1.json
@@ -22,7 +22,7 @@ class LockersController < ApplicationController
 
   # POST /lockers or /lockers.json
   def create
-    @locker = Locker.new(locker_params)
+    @locker = Locker.new(locker_params.with_defaults(building: current_user&.building))
 
     respond_to do |format|
       if @locker.save
