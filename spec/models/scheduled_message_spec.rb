@@ -12,6 +12,7 @@ RSpec.describe ScheduledMessage, type: :model do
       it 'includes messages scheduled for yesterday' do
         expect(described_class.past).to include(yesterday)
       end
+
       it 'does not include messages for today or later' do
         expect(described_class.past).not_to include(today)
         expect(described_class.past).not_to include(tomorrow)
@@ -22,6 +23,7 @@ RSpec.describe ScheduledMessage, type: :model do
       it 'includes messages scheduled for today' do
         expect(described_class.today).to include(today)
       end
+
       it 'does not include messages for past or future days' do
         expect(described_class.today).not_to include(yesterday)
         expect(described_class.today).not_to include(tomorrow)
@@ -32,6 +34,7 @@ RSpec.describe ScheduledMessage, type: :model do
       it 'includes messages scheduled for tomorrow' do
         expect(described_class.future).to include(tomorrow)
       end
+
       it 'does not include messages for today or earlier' do
         expect(described_class.future).not_to include(yesterday)
         expect(described_class.future).not_to include(today)
@@ -56,6 +59,7 @@ RSpec.describe ScheduledMessage, type: :model do
                              applicable_range: Date.today..2.years.from_now)
     end
     let!(:assignment) { FactoryBot.create :locker_assignment }
+
     it 'sends messages for today' do
       FactoryBot.create_list :locker_assignment, 2
       expect { message_to_send.send_emails }
@@ -70,6 +74,7 @@ RSpec.describe ScheduledMessage, type: :model do
         described_class.new(schedule: Date.today,
                             results: { success: ['netid@princeton.edu'] })
       end
+
       it 'does not send scheduled messages' do
         expect { message_to_send.send_emails }
           .not_to(change { ActionMailer::Base.deliveries.count })
@@ -84,6 +89,7 @@ RSpec.describe ScheduledMessage, type: :model do
                                template: 'locker_renewal',
                                applicable_range: Date.today..2.years.from_now)
       end
+
       it 'does not send scheduled messages' do
         expect { message_to_send.send_emails }
           .not_to(change { ActionMailer::Base.deliveries.count })

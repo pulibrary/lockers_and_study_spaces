@@ -5,6 +5,7 @@ require 'rails_helper'
 # rubocop:disable Layout/LineLength
 RSpec.describe Applicant, type: :model do
   subject(:applicant) { described_class.new(user) }
+
   let(:current_academic_year) do
     now = DateTime.now
     year = now.year

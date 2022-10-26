@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'study_room_violations/index', type: :view do
-  before(:each) do
+  before do
     assign(:study_room_violations,
            [FactoryBot.create(:study_room_violation, number_of_books: 5), FactoryBot.create(:study_room_violation, number_of_books: 7)])
   end

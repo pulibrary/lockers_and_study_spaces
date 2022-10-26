@@ -7,7 +7,8 @@ RSpec.describe 'locker_assignments/index', type: :view do
   let(:locker_application1) { FactoryBot.create :locker_application }
   let(:locker2) { FactoryBot.create :locker }
   let(:locker_application2) { FactoryBot.create :locker_application }
-  before(:each) do
+
+  before do
     assign(:locker_assignments, [
              FactoryBot.create(:locker_assignment,
                                locker_application: locker_application1,
@@ -16,7 +17,7 @@ RSpec.describe 'locker_assignments/index', type: :view do
                                locker_application: locker_application2,
                                locker: locker2)
            ])
-    assign(:pagy, instance_double('Pagy', prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
   end
 
   it 'renders a list of locker_assignments' do

@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe 'locker_assignments/edit', type: :view do
   let(:locker) { FactoryBot.create :locker }
   let(:locker_application) { FactoryBot.create :locker_application }
-  before(:each) do
+
+  before do
     @locker_assignment = assign(:locker_assignment, FactoryBot.create(:locker_assignment,
                                                                       locker_application: locker_application,
                                                                       locker: locker))

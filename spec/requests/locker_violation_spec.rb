@@ -16,23 +16,22 @@ require 'rails_helper'
 
 RSpec.describe '/locker_violations', type: :request do
   let(:user) { FactoryBot.create :user }
-  let(:locker) { FactoryBot.create(:locker) }
-  let(:violation_user) { FactoryBot.create(:user) }
-  let(:locker_application) { FactoryBot.create(:locker_application, user: violation_user) }
-  let(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application: locker_application, locker: locker) }
-  before do
-    sign_in user
-    locker_assignment
-  end
-
   # LockerViolation. As you add validations to LockerViolation, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
     { locker_id: locker.id, user_id: violation_user.id, number_of_books: 8 }
   end
-
   let(:invalid_attributes) do
     { locker_id: locker.id, user_id: 123_456, number_of_books: 8 }
+  end
+  let(:locker) { FactoryBot.create(:locker) }
+  let(:violation_user) { FactoryBot.create(:user) }
+  let(:locker_application) { FactoryBot.create(:locker_application, user: violation_user) }
+  let(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application: locker_application, locker: locker) }
+
+  before do
+    sign_in user
+    locker_assignment
   end
 
   describe 'GET /index' do
@@ -71,7 +70,7 @@ RSpec.describe '/locker_violations', type: :request do
       it 'creates a new LockerViolation' do
         expect do
           post locker_violations_url, params: { violation: valid_attributes }
-        end.to change(LockerViolation, :count).by(0)
+        end.not_to change(LockerViolation, :count)
       end
 
       it 'redirects to the created violation' do
@@ -84,7 +83,7 @@ RSpec.describe '/locker_violations', type: :request do
       it 'does not create a new LockerViolation' do
         expect do
           post locker_violations_url, params: { violation: invalid_attributes }
-        end.to change(LockerViolation, :count).by(0)
+        end.not_to change(LockerViolation, :count)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
@@ -129,7 +128,7 @@ RSpec.describe '/locker_violations', type: :request do
       violation = LockerViolation.create! valid_attributes
       expect do
         delete locker_violation_url(violation)
-      end.to change(LockerViolation, :count).by(0)
+      end.not_to change(LockerViolation, :count)
     end
 
     it 'redirects to the violations list' do
@@ -141,6 +140,7 @@ RSpec.describe '/locker_violations', type: :request do
 
   context 'an admin user' do
     let(:user) { FactoryBot.create :user, :admin }
+
     describe 'GET /index' do
       it 'renders a successful response' do
         LockerViolation.create! valid_attributes
@@ -190,7 +190,7 @@ RSpec.describe '/locker_violations', type: :request do
         it 'does not create a new LockerViolation' do
           expect do
             post locker_violations_url, params: { locker_violation: invalid_attributes }
-          end.to change(LockerViolation, :count).by(0)
+          end.not_to change(LockerViolation, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do

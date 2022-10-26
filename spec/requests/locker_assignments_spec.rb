@@ -16,10 +16,6 @@ require 'rails_helper'
 
 RSpec.describe '/locker_assignments', type: :request do
   let(:user) { FactoryBot.create :user }
-  before do
-    sign_in user
-  end
-
   # LockerAssignment. As you add validations to LockerAssignment, be sure to
   # adjust the attributes here as well.
   let(:locker) { FactoryBot.create :locker }
@@ -32,11 +28,14 @@ RSpec.describe '/locker_assignments', type: :request do
       expiration_date: DateTime.current.to_date.next_year
     }
   end
-
   let(:invalid_attributes) do
     {
       start_date: DateTime.current.to_date
     }
+  end
+
+  before do
+    sign_in user
   end
 
   describe 'GET /index' do
@@ -68,7 +67,7 @@ RSpec.describe '/locker_assignments', type: :request do
       it 'redirects to root' do
         expect do
           post locker_assignments_url, params: { locker_assignment: valid_attributes }
-        end.to change(LockerAssignment, :count).by(0)
+        end.not_to change(LockerAssignment, :count)
         expect(response).to redirect_to(root_path)
       end
 
@@ -82,7 +81,7 @@ RSpec.describe '/locker_assignments', type: :request do
       it 'does not create a new LockerAssignment' do
         expect do
           post locker_assignments_url, params: { locker_assignment: invalid_attributes }
-        end.to change(LockerAssignment, :count).by(0)
+        end.not_to change(LockerAssignment, :count)
         expect(response).to redirect_to(root_path)
       end
 
@@ -148,7 +147,7 @@ RSpec.describe '/locker_assignments', type: :request do
       locker_assignment = LockerAssignment.create! valid_attributes
       expect do
         delete locker_assignment_url(locker_assignment)
-      end.to change(LockerAssignment, :count).by(0)
+      end.not_to change(LockerAssignment, :count)
       expect(response).to redirect_to(root_path)
     end
 
@@ -175,6 +174,7 @@ RSpec.describe '/locker_assignments', type: :request do
 
   context 'with an admin user' do
     let(:user) { FactoryBot.create :user, :admin }
+
     describe 'GET /index' do
       it 'renders a successful response' do
         LockerAssignment.create! valid_attributes
@@ -217,7 +217,7 @@ RSpec.describe '/locker_assignments', type: :request do
         it 'does not create a new LockerAssignment' do
           expect do
             post locker_assignments_url, params: { locker_assignment: invalid_attributes }
-          end.to change(LockerAssignment, :count).by(0)
+          end.not_to change(LockerAssignment, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do
@@ -297,7 +297,7 @@ RSpec.describe '/locker_assignments', type: :request do
         locker_assignment = LockerAssignment.create! valid_attributes
         expect do
           get release_locker_assignment_url(locker_assignment)
-        end.to change(LockerAssignment, :count).by(0)
+        end.not_to change(LockerAssignment, :count)
         expect(locker_assignment.reload.released_date).to eq(DateTime.now.to_date)
       end
 

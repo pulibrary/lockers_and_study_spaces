@@ -20,7 +20,7 @@ class LockerApplication < ApplicationRecord
   def size_choices
     choices = LockerAndStudySpaces.config.fetch(:locker_sizes, [])
     choices = [choices.first] if user.blank? || user.junior?
-    prepare_choices_for_lux(choices)
+    prepare_size_choices_for_lux(choices)
   end
 
   def floor_choices
@@ -30,7 +30,7 @@ class LockerApplication < ApplicationRecord
 
   def semester_choices
     choices = LockerAndStudySpaces.config.fetch(:semesters, [])
-    prepare_choices_for_lux(choices)
+    prepare_semester_choices_for_lux(choices)
   end
 
   def status_choices

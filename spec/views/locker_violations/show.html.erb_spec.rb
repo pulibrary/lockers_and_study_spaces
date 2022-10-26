@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'locker_violations/show', type: :view do
-  before(:each) do
+  before do
     @locker_violation = assign(:locker_violations, FactoryBot.create(:locker_violation, number_of_books: 5))
   end
 

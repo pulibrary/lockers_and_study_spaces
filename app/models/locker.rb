@@ -5,6 +5,8 @@ class Locker < ApplicationRecord
   validates :general_area, presence: true
   validates :combination, presence: true
 
+  belongs_to :building, optional: true
+
   def self.available_lockers
     where.not(id: LockerAssignment.where(released_date: nil).pluck(:locker_id))
          .where(disabled: [false, nil])

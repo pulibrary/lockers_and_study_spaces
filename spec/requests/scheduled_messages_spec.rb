@@ -68,7 +68,7 @@ RSpec.describe '/locker_renewal_messages', type: :request do
       it 'does not create a new ScheduledMessage' do
         expect do
           post new_locker_renewal_message_url, params: { locker_renewal_message: invalid_attributes }
-        end.to change(ScheduledMessage, :count).by(0)
+        end.not_to change(ScheduledMessage, :count)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do

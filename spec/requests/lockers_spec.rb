@@ -16,10 +16,6 @@ require 'rails_helper'
 
 RSpec.describe '/lockers', type: :request do
   let(:user) { FactoryBot.create :user }
-  before do
-    sign_in user
-  end
-
   # Locker. As you add validations to Locker, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
@@ -27,11 +23,14 @@ RSpec.describe '/lockers', type: :request do
       combination: '11-22-33', code: 'code', tag: 'tag', discs: 'disc', clutch: 'clutch',
       hubpos: 'hub', key_number: 'key', floor: 1 }
   end
-
   let(:invalid_attributes) do
     { size: 4, location: nil, general_area: nil, accessible: false, notes: 'MyString',
       combination: '11-22-33', code: 'code', tag: 'tag', discs: 'disc', clutch: 'clutch',
       hubpos: 'hub', key_number: 'key', floor: 1 }
+  end
+
+  before do
+    sign_in user
   end
 
   describe 'GET /index' do
@@ -70,7 +69,7 @@ RSpec.describe '/lockers', type: :request do
       it 'redirects to root' do
         expect do
           post lockers_url, params: { locker: valid_attributes }
-        end.to change(Locker, :count).by(0)
+        end.not_to change(Locker, :count)
         expect(response).to be_redirect
       end
 
@@ -84,7 +83,7 @@ RSpec.describe '/lockers', type: :request do
       it 'does not create a new Locker' do
         expect do
           post lockers_url, params: { locker: invalid_attributes }
-        end.to change(Locker, :count).by(0)
+        end.not_to change(Locker, :count)
       end
 
       it 'redirects to root path' do
@@ -131,7 +130,7 @@ RSpec.describe '/lockers', type: :request do
       locker = Locker.create! valid_attributes
       expect do
         delete locker_url(locker)
-      end.to change(Locker, :count).by(0)
+      end.not_to change(Locker, :count)
     end
 
     it 'redirects to the root' do
@@ -221,7 +220,7 @@ RSpec.describe '/lockers', type: :request do
         it 'does not create a new Locker' do
           expect do
             post lockers_url, params: { locker: invalid_attributes }
-          end.to change(Locker, :count).by(0)
+          end.not_to change(Locker, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do

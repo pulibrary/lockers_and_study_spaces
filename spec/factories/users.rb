@@ -8,5 +8,6 @@ FactoryBot.define do
     trait :admin do
       admin { true }
     end
+    building { FactoryBot.create(:building) }
   end
 end

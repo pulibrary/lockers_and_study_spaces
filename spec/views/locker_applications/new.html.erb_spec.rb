@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'locker_applications/new', type: :view do
   let(:user) { FactoryBot.create :user }
-  before(:each) do
+
+  before do
     sign_in user
     assign(:locker_application, LockerApplication.new(
                                   preferred_size: 1,

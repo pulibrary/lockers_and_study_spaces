@@ -9,5 +9,6 @@ FactoryBot.define do
     disabled { false }
     floor { '2nd floor' }
     combination { '11-22-33' }
+    building { FactoryBot.create(:building) }
   end
 end
