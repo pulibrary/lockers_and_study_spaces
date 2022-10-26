@@ -15,7 +15,7 @@ RSpec.describe LockerApplication, type: :model do
     expect(locker_application.status_at_application).to be_nil
     expect(locker_application.department_at_application).to be_nil
     expect(locker_application.locker_assignment).to be_nil
-    expect(locker_application.archived).to eq(false)
+    expect(locker_application.archived).to be(false)
   end
 
   describe '#available_lockers_in_area_and_size' do

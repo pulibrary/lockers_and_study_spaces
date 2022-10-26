@@ -377,16 +377,16 @@ RSpec.describe '/locker_applications', type: :request do
         locker_application = LockerApplication.create! valid_attributes
         put toggle_archived_locker_application_url(locker_application)
         locker_application.reload
-        expect(response).to have_http_status(302)
-        expect(locker_application.archived).to eq(true)
+        expect(response).to have_http_status(:found)
+        expect(locker_application.archived).to be(true)
       end
 
       it 'allows an admin to unachive an application' do
         locker_application = LockerApplication.create! archived_attributes
         put toggle_archived_locker_application_url(locker_application)
         locker_application.reload
-        expect(response).to have_http_status(302)
-        expect(locker_application.archived).to eq(false)
+        expect(response).to have_http_status(:found)
+        expect(locker_application.archived).to be(false)
       end
     end
   end

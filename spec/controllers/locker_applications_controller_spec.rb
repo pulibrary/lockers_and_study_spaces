@@ -25,19 +25,19 @@ RSpec.describe LockerApplicationsController do
     it 'archived_param should return false for nil param' do
       allow(controller).to receive(:params).and_return(nil_mock)
       controller.awaiting_assignment
-      expect(controller.instance_variable_get('@archived')).to eq(false)
+      expect(controller.instance_variable_get('@archived')).to be(false)
     end
 
     it 'archived_param should return false for false param' do
       allow(controller).to receive(:params).and_return(false_mock)
       controller.awaiting_assignment
-      expect(controller.instance_variable_get('@archived')).to eq(false)
+      expect(controller.instance_variable_get('@archived')).to be(false)
     end
 
     it 'archived_param should return true for true param' do
       allow(controller).to receive(:params).and_return(true_mock)
       controller.awaiting_assignment
-      expect(controller.instance_variable_get('@archived')).to eq(true)
+      expect(controller.instance_variable_get('@archived')).to be(true)
     end
   end
 
