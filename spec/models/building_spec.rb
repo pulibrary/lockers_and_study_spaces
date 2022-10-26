@@ -60,6 +60,37 @@ RSpec.describe Building, type: :model do
       end
     end
   end
+
+  describe '#seed_applications' do
+    before do
+      described_class.seed
+    end
+
+    context 'when applications do not have buildings in the database' do
+      let(:locker_application) { FactoryBot.create(:locker_application, building: nil) }
+
+      before do
+        locker_application.save && locker_application.reload
+      end
+
+      it 'attaches all unattached locker_applications to Firestone' do
+        described_class.seed_applications
+        expect(locker_application.reload.building).to eq firestone
+      end
+    end
+
+    context 'when a locker application is already assigned to Lewis' do
+      let(:locker_application) { FactoryBot.create(:locker_application, building: lewis) }
+
+      it 'keeps it at lewis' do
+        expect(locker_application.building).to eq(lewis)
+        expect do
+          locker_application
+          described_class.seed_applications
+        end.not_to(change { locker_application.reload.building })
+      end
+    end
+  end
 end
 
 def firestone
