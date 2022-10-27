@@ -1,0 +1,17 @@
+// Makes home page vertically centered
+.stretch-height {
+    height: calc(100vh - 88px);
+    text-align: center;
+}
+
+.stretch-height p.lux-text-style {
+    border: solid 2px #41464e;
+    padding: 20% 20px 20% 20px;
+    line-height: 250%;
+}
+
+.lux-link.button {
+    white-space: nowrap;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
