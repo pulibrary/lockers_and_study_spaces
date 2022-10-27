@@ -7,6 +7,8 @@ RSpec.describe 'locker_assignments/index', type: :view do
   let(:locker_application1) { FactoryBot.create :locker_application }
   let(:locker2) { FactoryBot.create :locker }
   let(:locker_application2) { FactoryBot.create :locker_application }
+  let(:building) { FactoryBot.create :building, name: 'Library of Alexandria' }
+  let(:user) { FactoryBot.create :user, building: building }
 
   before do
     assign(:locker_assignments, [
@@ -18,6 +20,7 @@ RSpec.describe 'locker_assignments/index', type: :view do
                                locker: locker2)
            ])
     assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    allow(view).to receive(:current_user).and_return(user)
   end
 
   it 'renders a list of locker_assignments' do
@@ -31,5 +34,10 @@ RSpec.describe 'locker_assignments/index', type: :view do
     assert_select 'grid-item>span', text: locker_application2.uid
     assert_select 'grid-item>span', text: locker1.location
     assert_select 'grid-item>span', text: locker2.location
+  end
+
+  it "has a header containing the name of the admin user's library" do
+    render
+    assert_select 'heading', text: 'Library of Alexandria Locker Assignments'
   end
 end
