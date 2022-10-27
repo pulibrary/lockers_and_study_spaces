@@ -1,1 +1,13 @@
-You must <%= button_to "Login", user_cas_omniauth_authorize_path %> to view the requested resource.
+<wrapper>
+  <grid-container class="stretch-height">
+    <grid-item columns="sm-2 lg-2"></grid-item>
+    <grid-item vertical="center" columns="sm-8 lg-8">
+      <text-style variation="default">
+        You must
+        <hyperlink href="<%= user_cas_omniauth_authorize_path %>" variation="button solid" data-method="post" size="large">Login with NetID</hyperlink>
+        to view the requested resource.
+      </text-style>
+    </grid-item>
+    <grid-item columns="sm-2 lg-2"></grid-item>
+  </grid-container>
+</wrapper>
