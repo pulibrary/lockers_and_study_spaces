@@ -9,6 +9,7 @@ RSpec.describe '/locker_applications', type: :request do
 
   let(:valid_attributes) do
     {
+      building_id: building_one.id,
       preferred_size: 2,
       preferred_general_area: 'Preferred General Area',
       accessible: false,
@@ -20,6 +21,7 @@ RSpec.describe '/locker_applications', type: :request do
   end
   let(:valid_form_attributes) do
     {
+      building_id: building_one.id,
       preferred_size: 2,
       preferred_general_area: 'Preferred General Area',
       accessible: false,
@@ -125,13 +127,13 @@ RSpec.describe '/locker_applications', type: :request do
       end
 
       context 'creates an application for the user' do
-        it 'redirects to root' do
+        it 'creates a locker application' do
           expect do
             post locker_applications_url, params: { locker_application: valid_form_attributes }
           end.to change(LockerApplication, :count).by(1)
         end
 
-        it 'Shows the user their application' do
+        it 'brings the user to the second step of the locker application' do
           post locker_applications_url, params: { locker_application: valid_form_attributes }
           expect(response).to redirect_to(edit_locker_application_url(LockerApplication.last))
         end
@@ -149,6 +151,35 @@ RSpec.describe '/locker_applications', type: :request do
           end
         end
       end
+
+      context 'with missing building parameter' do
+        let(:invalid_form_attributes) do
+          {
+            building_id: nil,
+            preferred_size: 2,
+            preferred_general_area: 'Preferred General Area',
+            accessible: false,
+            semester: 'Semester',
+            status_at_application: 'Status At Application',
+            department_at_application: 'Department At Application',
+            user_uid: user.uid
+          }
+        end
+
+        it 'redirects to the new locker application url' do
+          expect do
+            post locker_applications_url, params: { locker_application: invalid_form_attributes }
+          end.not_to change(LockerApplication, :count)
+          # expect(response.status).to eq(422)
+          # expect(current_url).to eq(new_locker_application_url)
+          expect(response).to redirect_to(root_path)
+        end
+
+        it 'redirects to the new locker application url' do
+          post locker_applications_url, params: { locker_application: invalid_form_attributes }
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
 
     context 'with lewis_patrons off' do
@@ -157,7 +188,7 @@ RSpec.describe '/locker_applications', type: :request do
       end
 
       context 'creates an application for the user' do
-        it 'redirects to root' do
+        it 'creates a new locker application' do
           expect do
             post locker_applications_url, params: { locker_application: valid_form_attributes }
           end.to change(LockerApplication, :count).by(1)
@@ -181,19 +212,19 @@ RSpec.describe '/locker_applications', type: :request do
           end
         end
       end
-    end
 
-    context 'with invalid parameters' do
-      it 'redirects to root' do
-        expect do
+      context 'with invalid parameters' do
+        it 'redirects to root' do
+          expect do
+            post locker_applications_url, params: { locker_application: invalid_form_attributes }
+          end.not_to change(LockerApplication, :count)
+          expect(response).to redirect_to(root_path)
+        end
+
+        it 'redirects to root' do
           post locker_applications_url, params: { locker_application: invalid_form_attributes }
-        end.not_to change(LockerApplication, :count)
-        expect(response).to redirect_to(root_path)
-      end
-
-      it 'redirects to root' do
-        post locker_applications_url, params: { locker_application: invalid_form_attributes }
-        expect(response).to redirect_to(root_path)
+          expect(response).to redirect_to(root_path)
+        end
       end
     end
   end
@@ -322,7 +353,7 @@ RSpec.describe '/locker_applications', type: :request do
 
         it "renders a successful response (i.e. to display the 'new' template)" do
           post locker_applications_url, params: { locker_application: invalid_form_attributes }
-          expect(response).to be_unprocessable
+          expect(response).to redirect_to(root_path)
         end
       end
     end
@@ -361,7 +392,7 @@ RSpec.describe '/locker_applications', type: :request do
         it "renders a successful response (i.e. to display the 'edit' template)" do
           locker_application = LockerApplication.create! valid_attributes
           patch locker_application_url(locker_application), params: { locker_application: invalid_form_attributes }
-          expect(response).to be_unprocessable
+          expect(response).to redirect_to(edit_locker_application_path)
         end
       end
     end

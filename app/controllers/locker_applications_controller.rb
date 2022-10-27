@@ -73,7 +73,7 @@ class LockerApplicationsController < ApplicationController
                                                                :status_at_application, :department_at_application, :user_uid, :building_id)
 
     locker_params = lookup_user_from_params(locker_params)
-    locker_params = lookup_building_from_params(locker_params) if Flipflop.lewis_patrons?
+    locker_params = lookup_building_from_params(locker_params) if Flipflop.lewis_patrons? && locker_params[:building_id].present?
     locker_params
   end
 
@@ -114,7 +114,7 @@ class LockerApplicationsController < ApplicationController
         format.json { render :show, status: :ok, location: @locker_application }
       else
         @locker_application.user ||= User.new
-        format.html { render method, status: :unprocessable_entity }
+        format.html { redirect_to(action: method, id: @locker_application.id) }
         format.json { render json: @locker_application.errors, status: :unprocessable_entity }
       end
     end

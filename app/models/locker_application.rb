@@ -3,7 +3,7 @@
 class LockerApplication < ApplicationRecord
   belongs_to :user
   has_one :locker_assignment
-  belongs_to :building, optional: true
+  belongs_to :building
 
   delegate :uid, :email, :name, :department, :status, to: :user
 
