@@ -132,4 +132,30 @@ RSpec.describe LockerApplication, type: :model do
                                                                           value: locker_application3.department_at_application })
     end
   end
+
+  describe '#building_choices' do
+    let!(:building_one) { FactoryBot.create(:building) }
+    let!(:building_two) { FactoryBot.create(:building, name: 'Lewis Library') }
+    let(:expected_building_choices) do
+      [
+        {
+          label: 'Select Library',
+          value: 'placeholder',
+          disabled: true
+        },
+        {
+          label: 'Firestone Library',
+          value: building_one.id
+        },
+        {
+          label: 'Lewis Library',
+          value: building_two.id
+        }
+      ]
+    end
+
+    it 'shows all the buildings' do
+      expect(locker_application.building_choices).to eq(expected_building_choices)
+    end
+  end
 end
