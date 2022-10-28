@@ -43,8 +43,9 @@ class LockerApplicationsController < ApplicationController
 
   # PATCH/PUT /locker_applications/1 or /locker_applications/1.json
   def update
-    locker_application_params[:complete] = true
-    update_or_create(@locker_application.update(locker_application_params))
+    valid = @locker_application.update(locker_application_params)
+    @locker_application.update(complete: true) if valid
+    update_or_create(valid)
   end
 
   # DELETE /locker_applications/1 or /locker_applications/1.json
