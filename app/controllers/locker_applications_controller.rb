@@ -2,7 +2,7 @@
 
 class LockerApplicationsController < ApplicationController
   before_action :set_locker_application, only: %i[show edit update destroy assign]
-  before_action :force_admin, except: %i[new create show edit]
+  before_action :force_admin, except: %i[new create show]
 
   # GET /locker_applications or /locker_applications.json
   def index
@@ -43,6 +43,7 @@ class LockerApplicationsController < ApplicationController
 
   # PATCH/PUT /locker_applications/1 or /locker_applications/1.json
   def update
+    locker_application_params[:complete] = true
     update_or_create(@locker_application.update(locker_application_params))
   end
 
@@ -70,7 +71,7 @@ class LockerApplicationsController < ApplicationController
 
   def lookup_objects_from_params
     locker_params = params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
-                                                               :status_at_application, :department_at_application, :user_uid, :building_id)
+                                                               :status_at_application, :department_at_application, :user_uid, :building_id, :complete)
 
     locker_params = lookup_user_from_params(locker_params)
     locker_params = lookup_building_from_params(locker_params) if Flipflop.lewis_patrons? && locker_params[:building_id].present?
@@ -97,6 +98,9 @@ class LockerApplicationsController < ApplicationController
 
   def force_admin
     return if current_user.admin? && current_user.works_at_enabled_building?
+
+    # Once the application is complete, non-admin users can no longer edit or update the application
+    return if (action_name == 'update' || action_name == 'edit') && !@locker_application.complete? && @locker_application.user == current_user
 
     redirect_to :root, alert: 'Only administrators have access to the everyone\'s Locker Applications!'
   end

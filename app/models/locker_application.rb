@@ -11,6 +11,10 @@ class LockerApplication < ApplicationRecord
     left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
   end
 
+  def self.mark_applications_complete
+    LockerApplication.where(complete: nil).find_each { |application| application.update(complete: true) }
+  end
+
   after_initialize do |_locker_application|
     if user.present?
       self.department_at_application ||= department

@@ -16,7 +16,8 @@ RSpec.describe '/locker_applications', type: :request do
       semester: 'Semester',
       status_at_application: 'Status At Application',
       department_at_application: 'Department At Application',
-      user_id: user.id
+      user_id: user.id,
+      complete: true
     }
   end
   let(:valid_form_attributes) do
@@ -106,10 +107,34 @@ RSpec.describe '/locker_applications', type: :request do
   end
 
   describe 'GET /edit' do
-    it 'redirects to root' do
-      locker_application = LockerApplication.create! valid_attributes
-      get edit_locker_application_url(locker_application)
-      expect(response).to be_successful
+    context 'with a complete application' do
+      it 'redirects to root' do
+        locker_application = LockerApplication.create! valid_attributes
+        get edit_locker_application_url(locker_application)
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'with an incomplete application' do
+      let(:valid_attributes) do
+        {
+          building_id: building_one.id,
+          preferred_size: 2,
+          preferred_general_area: 'Preferred General Area',
+          accessible: false,
+          semester: 'Semester',
+          status_at_application: 'Status At Application',
+          department_at_application: 'Department At Application',
+          user_id: user.id,
+          complete: false
+        }
+      end
+
+      it 'allows the user to edit' do
+        locker_application = LockerApplication.create! valid_attributes
+        get edit_locker_application_url(locker_application)
+        expect(response).to be_successful
+      end
     end
   end
 

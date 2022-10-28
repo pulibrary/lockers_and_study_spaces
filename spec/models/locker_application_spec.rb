@@ -5,8 +5,16 @@ require 'rails_helper'
 RSpec.describe LockerApplication, type: :model do
   subject(:locker_application) { described_class.new(user: user) }
 
+  let(:building_one) { FactoryBot.create(:building, id: 1) }
+  let(:building_two) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
+
   let(:user) { nil }
   let(:building) { FactoryBot.create(:building) }
+
+  before do
+    building_one
+    building_two
+  end
 
   it 'responds to the attributes' do
     expect(locker_application.user).to be_nil
@@ -16,7 +24,21 @@ RSpec.describe LockerApplication, type: :model do
     expect(locker_application.status_at_application).to be_nil
     expect(locker_application.department_at_application).to be_nil
     expect(locker_application.locker_assignment).to be_nil
-    expect(locker_application.building).to be_nil
+    expect(locker_application.building).to eq(building_one)
+    expect(locker_application.complete).to be false
+  end
+
+  context 'with an application created prior to having complete in the database' do
+    subject(:locker_application) { described_class.new(user: user, complete: nil) }
+
+    let(:user) { FactoryBot.create(:user) }
+
+    it 'can mark the locker application as complete' do
+      locker_application.save!
+      expect(locker_application.reload.complete).to be_nil
+      described_class.mark_applications_complete
+      expect(locker_application.reload.complete).to be true
+    end
   end
 
   describe '#available_lockers_in_area_and_size' do
