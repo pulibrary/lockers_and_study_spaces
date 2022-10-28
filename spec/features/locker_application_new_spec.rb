@@ -86,8 +86,8 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
     it 'redirects the user to the sign in' do
       visit root_path
       expect(page).to have_current_path(new_user_session_path, ignore_query: true)
-      expect(page).to have_button('Login')
-      click_button('Login')
+      expect(page).to have_link('Login with NetID')
+      click_link('Login with NetID')
       expect(page).to have_current_path(root_path, ignore_query: true)
     end
   end
