@@ -100,7 +100,7 @@ class LockerApplicationsController < ApplicationController
   def force_admin
     return if current_user.admin? && current_user.works_at_enabled_building?
 
-    # Once the application is complete, non-admin users can no longer edit or update the application
+    # Non-admins can only edit or update their application if it is not yet complete
     return if (action_name == 'update' || action_name == 'edit') && !@locker_application.complete? && @locker_application.user == current_user
 
     redirect_to :root, alert: 'Only administrators have access to the everyone\'s Locker Applications!'
