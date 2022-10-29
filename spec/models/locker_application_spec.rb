@@ -79,9 +79,9 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   describe '##awaiting_assignment' do
-    let(:locker_application1) { FactoryBot.create :locker_application }
-    let(:locker_application2) { FactoryBot.create :locker_application }
-    let(:locker_application3) { FactoryBot.create :locker_application }
+    let(:locker_application1) { FactoryBot.create :locker_application, complete: true }
+    let(:locker_application2) { FactoryBot.create :locker_application, complete: true }
+    let(:locker_application3) { FactoryBot.create :locker_application, complete: true }
     let(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
     let(:locker1) { FactoryBot.create :locker }
 
@@ -127,9 +127,9 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   describe '##search' do
-    let!(:locker_application1) { FactoryBot.create :locker_application }
-    let!(:locker_application2) { FactoryBot.create :locker_application }
-    let!(:locker_application3) { FactoryBot.create :locker_application }
+    let!(:locker_application1) { FactoryBot.create :locker_application, complete: true }
+    let!(:locker_application2) { FactoryBot.create :locker_application, complete: true }
+    let!(:locker_application3) { FactoryBot.create :locker_application, complete: true }
 
     it 'searches by user netid' do
       expect(described_class.search(uid: locker_application1.user.uid)).to contain_exactly(locker_application1)
@@ -141,9 +141,9 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   describe '##department_choices' do
-    let!(:locker_application1) { FactoryBot.create :locker_application }
-    let!(:locker_application2) { FactoryBot.create :locker_application }
-    let!(:locker_application3) { FactoryBot.create :locker_application }
+    let!(:locker_application1) { FactoryBot.create :locker_application, complete: true }
+    let!(:locker_application2) { FactoryBot.create :locker_application, complete: true }
+    let!(:locker_application3) { FactoryBot.create :locker_application, complete: true }
 
     it 'shows all the departments' do
       expect(locker_application1.department_choices).to contain_exactly({ label: locker_application1.department_at_application,
@@ -152,32 +152,6 @@ RSpec.describe LockerApplication, type: :model do
                                                                           value: locker_application2.department_at_application },
                                                                         { label: locker_application3.department_at_application,
                                                                           value: locker_application3.department_at_application })
-    end
-  end
-
-  describe '#building_choices' do
-    let!(:building_one) { FactoryBot.create(:building) }
-    let!(:building_two) { FactoryBot.create(:building, name: 'Lewis Library') }
-    let(:expected_building_choices) do
-      [
-        {
-          label: 'Select Library',
-          value: 'placeholder',
-          disabled: true
-        },
-        {
-          label: 'Firestone Library',
-          value: building_one.id
-        },
-        {
-          label: 'Lewis Library',
-          value: building_two.id
-        }
-      ]
-    end
-
-    it 'shows all the buildings' do
-      expect(locker_application.building_choices).to eq(expected_building_choices)
     end
   end
 end

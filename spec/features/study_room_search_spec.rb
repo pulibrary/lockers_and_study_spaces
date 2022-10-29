@@ -20,7 +20,7 @@ RSpec.describe 'Study Room Search', type: :feature, js: true do
     expect(page).to have_text('Search by location')
 
     fill_in 'search', with: study_room1.location
-    click_button 'search_sumbit'
+    click_button 'search_submit'
 
     expect(page).to have_text(study_room1.location)
     expect(page).not_to have_text(study_room2.location)

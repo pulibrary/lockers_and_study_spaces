@@ -8,7 +8,7 @@ class LockerApplication < ApplicationRecord
   delegate :uid, :email, :name, :department, :status, to: :user
 
   def self.awaiting_assignment
-    left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
+    where(complete: true).left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
   end
 
   def self.mark_applications_complete
@@ -20,12 +20,6 @@ class LockerApplication < ApplicationRecord
       self.department_at_application ||= department
       self.status_at_application ||= status
     end
-  end
-
-  def building_choices
-    placeholder = { label: 'Select Library', value: 'placeholder', disabled: true }
-    choices = [placeholder]
-    choices.concat(Building.all.map { |building| { label: building.name, value: building.id } })
   end
 
   def size_choices
@@ -65,8 +59,8 @@ class LockerApplication < ApplicationRecord
   end
 
   def self.search(uid:)
-    return all if uid.blank?
+    return where(complete: true) if uid.blank?
 
-    joins(:user).where("users.uid = '#{uid}'")
+    where(complete: true).joins(:user).where("users.uid = '#{uid}'")
   end
 end

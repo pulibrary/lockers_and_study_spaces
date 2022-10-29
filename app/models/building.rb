@@ -3,6 +3,12 @@
 class Building < ApplicationRecord
   validates :name, uniqueness: true
 
+  def self.building_choices
+    placeholder = { label: 'Select Library', value: 'placeholder', disabled: true }
+    choices = [placeholder]
+    choices.concat(Building.all.map { |building| { label: building.name, value: building.id } })
+  end
+
   def self.seed
     Building.new(name: 'Firestone Library').save
     Building.new(name: 'Lewis Library').save

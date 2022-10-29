@@ -195,8 +195,6 @@ RSpec.describe '/locker_applications', type: :request do
           expect do
             post locker_applications_url, params: { locker_application: invalid_form_attributes }
           end.not_to change(LockerApplication, :count)
-          # expect(response.status).to eq(422)
-          # expect(current_url).to eq(new_locker_application_url)
           expect(response).to redirect_to(root_path)
         end
 
