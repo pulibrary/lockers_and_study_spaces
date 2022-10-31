@@ -3831,7 +3831,7 @@ jest-worker@^26.5.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-js-tokens@^4.0.0:
+"js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
@@ -4018,6 +4018,13 @@ loglevel@^1.6.8:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.7.1.tgz#005fde2f5e6e47068f935ff28573e125ef72f197"
   integrity sha512-Hesni4s5UkWkwCGJMQGAh71PaLUmKFM60dHvq0zi/vDhhrzuk+4GgNbTXJ12YYQJn6ZKBDNIjYcuQGKudvqrIw==
 
+loose-envify@^1.2.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
+  integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
+  dependencies:
+    js-tokens "^3.0.0 || ^4.0.0"
+
 lru-cache@^4.1.2:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
@@ -4040,10 +4047,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-lux-design-system@^2.0.4:
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/lux-design-system/-/lux-design-system-2.17.0.tgz#2635ebe64ca16ee01423bc1e360b5834f5ba0216"
-  integrity sha512-OY1Qdh4rckYtbpa8G4PSnBGzV7t1JY7Sxkok214nlO9B+cp55cz7DcRkOntrFrahzClXWnQ0/I2BXcyivnsSGw==
+lux-design-system@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/lux-design-system/-/lux-design-system-4.0.2.tgz#5f104bd3f09e2b772112ce643a5739204606c606"
+  integrity sha512-C0SBB4Dbc1/DNmuYidyt4SPTgumAhms0XLNa4VH04KW9W1pCISJjWVLYXUhwbJJ6iJjGv4544aqYFf3ZtpridA==
   dependencies:
     lodash "^4.17.11"
     mini-css-extract-plugin "^0.4.5"
@@ -4055,6 +4062,8 @@ lux-design-system@^2.0.4:
     tinycolor2 "^1.4.1"
     v-calendar "^0.9.7"
     vue "^2.5.18"
+    vue-cookies "^1.7.4"
+    vue-focus "^2.1.0"
     vue-lodash "^2.0.0"
     vue-meta "^1.5.6"
     vue-router "^3.0.2"
@@ -6822,6 +6831,18 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-cookies@^1.7.4:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/vue-cookies/-/vue-cookies-1.8.2.tgz#39515fa09ebb585a50ac86c0e182a6b9307dc6ad"
+  integrity sha512-+NfoC5l+7ybuVwpnqsf52qndnoYMjEb4EFhX4/j9RzzQP00dNzuJELsWuW2p8omNUzNlSgWGVyyWoOeJr347tw==
+
+vue-focus@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/vue-focus/-/vue-focus-2.1.0.tgz#7a0337ce9074d5ef03d15a4b5b862cf45e5e04e3"
+  integrity sha512-4eUqO1fPEpzXyNlyjFvDbwZ3lU28k24vURbx90mG0VlQGuk2CdXdWxxjAR8nmOVb8oWbm0xX+968BpbRy2qzCw==
+  dependencies:
+    loose-envify "^1.2.0"
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
