@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
   let(:user) { FactoryBot.create :user, :admin }
-  let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior') }
-  let(:locker_application2) { FactoryBot.create(:locker_application) }
+  let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior', complete: true) }
+  let(:locker_application2) { FactoryBot.create(:locker_application, complete: true) }
   let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }
   let(:locker2) { FactoryBot.create(:locker) }
 
@@ -31,7 +31,7 @@ RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
     expect(page).to have_text('Search by user netid')
 
     fill_in 'query_uid', with: locker_assignment1.uid
-    click_button 'search_sumbit'
+    click_button 'search_submit'
 
     expect(page).to have_text(locker_assignment1.uid)
     expect(page).not_to have_text(locker_assignment2.uid)

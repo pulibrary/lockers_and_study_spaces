@@ -5,8 +5,12 @@ require 'rails_helper'
 RSpec.describe 'locker_applications/index', type: :view do
   let(:user1) { FactoryBot.create :user }
   let(:user2) { FactoryBot.create :user }
+  let(:building_one) { FactoryBot.create(:building, id: 1) }
+  let(:building_two) { FactoryBot.create(:building, id: 2, name: 'Lewis Library') }
 
   before do
+    building_one
+    building_two
     assign(:locker_applications, [
              LockerApplication.create!(
                preferred_size: 2,

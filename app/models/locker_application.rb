@@ -3,11 +3,16 @@
 class LockerApplication < ApplicationRecord
   belongs_to :user
   has_one :locker_assignment
+  belongs_to :building
 
   delegate :uid, :email, :name, :department, :status, to: :user
 
   def self.awaiting_assignment
-    left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
+    where(complete: true).left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
+  end
+
+  def self.mark_applications_complete
+    LockerApplication.where(complete: nil).find_each { |application| application.update(complete: true) }
   end
 
   after_initialize do |_locker_application|
@@ -54,8 +59,8 @@ class LockerApplication < ApplicationRecord
   end
 
   def self.search(uid:)
-    return all if uid.blank?
+    return where(complete: true) if uid.blank?
 
-    joins(:user).where("users.uid = '#{uid}'")
+    where(complete: true).joins(:user).where("users.uid = '#{uid}'")
   end
 end

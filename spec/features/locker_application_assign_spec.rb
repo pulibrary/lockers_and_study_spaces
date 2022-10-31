@@ -5,13 +5,22 @@ require 'rails_helper'
 RSpec.describe 'Locker Application Assign', type: :feature, js: true do
   let(:user) { FactoryBot.create :user, :admin }
   let(:user1) { FactoryBot.create :user }
-  let(:locker_application) { FactoryBot.create(:locker_application, user: user1, preferred_general_area: 'A floor') }
+  let(:user2) { FactoryBot.create :user }
+  let(:locker_application) { FactoryBot.create(:locker_application, user: user1, preferred_general_area: 'A floor', complete: true) }
+  let(:incomplete_application) { FactoryBot.create(:locker_application, user: user2, complete: false) }
   let(:locker) { FactoryBot.create(:locker, floor: 'A floor') }
 
   before do
     sign_in user
     locker_application
+    incomplete_application
     locker
+  end
+
+  it 'does not show incomplete locker applications' do
+    visit awaiting_assignment_locker_applications_path
+    expect(page).to have_text(user1.uid)
+    expect(page).not_to have_text(user2.uid)
   end
 
   it 'enables me to select a locker and assign it' do

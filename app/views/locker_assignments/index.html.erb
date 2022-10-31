@@ -17,7 +17,7 @@
   <card-content class="row">
     <search-box >
       <input-text id="query_uid" name="query[uid]" label="Search by user netid" :hide-label="true" placeholder="Search by user netid" size="large" value="<%= params.fetch(:query,{})[:uid]%>"></input-text>
-      <input-button id="search_sumbit" type="submit" variation="icon" size="medium" icon="search"></input-button>
+      <input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></input-button>
     </search-box> 
     <%= link_to locker_assignments_path do %>
       <lux-icon-base icon-name="clear - return to all results"> <lux-icon-denied></lux-icon-denied> </lux-icon-base>   

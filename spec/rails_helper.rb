@@ -68,6 +68,16 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # Configuring for testing login in feature specs
+  config.before(:each, type: :feature) do
+    Warden.test_mode!
+    OmniAuth.config.test_mode = true
+  end
+
+  config.after(:each, type: :feature) do
+    Warden.test_reset!
+  end
+
   Capybara.register_driver :chrome_headless do |app|
     options = ::Selenium::WebDriver::Chrome::Options.new
     options.args << '--headless'

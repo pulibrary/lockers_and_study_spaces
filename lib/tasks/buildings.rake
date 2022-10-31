@@ -5,4 +5,9 @@ namespace :buildings do
   task seed: :environment do
     Building.seed
   end
+
+  desc 'Associate all locker applications with the default building'
+  task seed_applications: :environment do
+    Building.seed_applications
+  end
 end
