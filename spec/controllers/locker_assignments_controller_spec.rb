@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe LockerAssignmentsController do
   render_views
-  let(:user) { FactoryBot.create :user, :admin }
+  let(:firestone) { FactoryBot.create :building, name: 'Firestone Library' }
+  let(:lewis) { FactoryBot.create :building, name: 'Lewis Library' }
+  let(:user) { FactoryBot.create :user, :admin, building: firestone }
   let(:departments) do
     ['African American Studies', 'Anthropology', 'Classics', 'Comparative Literature', 'Economics', 'English',
      'French and Italian', 'Germanic Languages and Literatures', 'History', 'Near Eastern Studies', 'Other',
@@ -90,6 +92,36 @@ RSpec.describe LockerAssignmentsController do
         get :index
         expect(response).to redirect_to('/')
         expect(flash[:alert]).to eq('Only administrators have access to Locker Assignments!')
+      end
+    end
+  end
+
+  describe '#index' do
+    let(:firestone_application) { FactoryBot.create(:locker_application, building: firestone) }
+    let(:firestone_assignment) { FactoryBot.create(:locker_assignment, locker_application: firestone_application) }
+    let(:lewis_application) { FactoryBot.create(:locker_application, building: lewis) }
+    let(:lewis_assignment) { FactoryBot.create(:locker_assignment, locker_application: lewis_application) }
+
+    before do
+      firestone_assignment
+      lewis_assignment
+    end
+
+    context 'when Lewis admin views the index' do
+      let(:user) { FactoryBot.create(:user, building: lewis) }
+
+      it "only includes lockers for the admin's building" do
+        controller.index
+        expect(controller.instance_variable_get('@locker_assignments')).to include(lewis_assignment)
+        expect(controller.instance_variable_get('@locker_assignments')).not_to include(firestone_assignment)
+      end
+    end
+
+    context 'when Firestone admin views the index' do
+      it "only includes lockers for the admin's building" do
+        controller.index
+        expect(controller.instance_variable_get('@locker_assignments')).to include(firestone_assignment)
+        expect(controller.instance_variable_get('@locker_assignments')).not_to include(lewis_assignment)
       end
     end
   end

@@ -6,7 +6,10 @@ class LockerAssignmentsController < ApplicationController
 
   # GET /locker_assignments or /locker_assignments.json
   def index
-    @pagy, @locker_assignments = pagy(LockerAssignment.order(expiration_date: :desc).order(start_date: :desc).search(queries: query_params))
+    @pagy, @locker_assignments = pagy(LockerAssignment.order(expiration_date: :desc)
+                                                      .order(start_date: :desc)
+                                                      .search(queries: query_params)
+                                                      .at_building(current_user.building))
   end
 
   # GET /locker_assignments/1 or /locker_assignments/1.json

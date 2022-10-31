@@ -12,7 +12,7 @@
 <%= form_tag(locker_assignments_path, method: :get) do %>
 <card id="locker-form-header" size="full-width">
   <card-header>
-    <heading level="h1">Locker Assignments</heading>
+    <heading level="h1"><%= current_user&.building&.name %> Locker Assignments</heading>
   </card-header>
   <card-content class="row">
     <search-box >
