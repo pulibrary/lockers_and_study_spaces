@@ -20,7 +20,7 @@ RSpec.describe 'Locker Search', type: :feature, js: true do
     expect(page).to have_text('Search by location')
 
     fill_in 'search', with: locker1.location
-    click_button 'search_sumbit'
+    click_button 'search_submit'
 
     expect(page).to have_text(locker1.location)
     expect(page).not_to have_text(locker2.location)

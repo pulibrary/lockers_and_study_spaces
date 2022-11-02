@@ -8,5 +8,6 @@ FactoryBot.define do
     accessible { false }
     status_at_application { 'senior' }
     sequence(:department_at_application) { |n| "department-#{n}" }
+    building { FactoryBot.create(:building) }
   end
 end

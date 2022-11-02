@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_24_172402) do
+ActiveRecord::Schema.define(version: 2022_10_28_135241) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,7 +39,10 @@ ActiveRecord::Schema.define(version: 2022_10_24_172402) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean 'archived', default: false
+    t.boolean "archived", default: false
+    t.bigint "building_id", default: 1
+    t.boolean "complete", default: false
+    t.index ["building_id"], name: "index_locker_applications_on_building_id"
     t.index ["user_id"], name: "index_locker_applications_on_user_id"
   end
 
@@ -132,10 +136,11 @@ ActiveRecord::Schema.define(version: 2022_10_24_172402) do
     t.datetime "updated_at", null: false
     t.bigint "building_id"
     t.index ["provider"], name: "index_users_on_provider"
-    t.index %w[uid provider], name: 'index_users_on_uid_and_provider', unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "locker_applications", "buildings"
   add_foreign_key "locker_applications", "users"
   add_foreign_key "locker_assignments", "lockers"
   add_foreign_key "study_room_assignments", "study_rooms"

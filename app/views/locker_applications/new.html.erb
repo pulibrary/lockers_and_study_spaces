@@ -1,1 +1,5 @@
-<%= render 'form', locker_application: @locker_application %>
+<% if Flipflop.lewis_patrons? %>
+  <%= render 'building_select_form', locker_application: @locker_application %>
+<% else %>
+  <%= render 'form', locker_application: @locker_application %>
+<% end %>

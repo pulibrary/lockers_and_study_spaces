@@ -8,7 +8,7 @@
   <%= form_tag(lockers_path, method: :get) do %>
   <search-box >
     <input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></input-text>
-    <input-button id="search_sumbit" type="submit" variation="icon" size="medium" icon="search"></input-button>
+    <input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></input-button>
   </search-box>    
   <% end %>
   <%= link_to 'Clear Search', lockers_path %>

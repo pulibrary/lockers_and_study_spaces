@@ -51,7 +51,9 @@ class LockerApplicationsController < ApplicationController
 
   # PATCH/PUT /locker_applications/1 or /locker_applications/1.json
   def update
-    update_or_create(@locker_application.update(locker_application_params))
+    valid = @locker_application.update(locker_application_params)
+    @locker_application.update(complete: true) if valid
+    update_or_create(valid)
   end
 
   # DELETE /locker_applications/1 or /locker_applications/1.json
@@ -72,13 +74,27 @@ class LockerApplicationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def locker_application_params
-    @locker_params ||= lookup_user_from_params
+    @locker_params ||= lookup_objects_from_params
     @locker_params
   end
 
-  def lookup_user_from_params
+  def lookup_objects_from_params
     locker_params = params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
-                                                               :status_at_application, :department_at_application, :user_uid)
+                                                               :status_at_application, :department_at_application, :user_uid, :building_id, :complete)
+
+    locker_params = lookup_user_from_params(locker_params)
+    locker_params = lookup_building_from_params(locker_params) if Flipflop.lewis_patrons? && locker_params[:building_id].present?
+    locker_params
+  end
+
+  def lookup_building_from_params(locker_params)
+    building_id = locker_params.delete(:building_id)
+    building = Building.find(building_id)
+    locker_params[:building] = building
+    locker_params
+  end
+
+  def lookup_user_from_params(locker_params)
     uid = locker_params.delete(:user_uid)
     user = if current_user.uid == uid
              current_user
@@ -92,21 +108,31 @@ class LockerApplicationsController < ApplicationController
   def force_admin
     return if current_user.admin? && current_user.works_at_enabled_building?
 
+    # Non-admins can only edit or update their application if it is not yet complete
+    return if (action_name == 'update' || action_name == 'edit') && !@locker_application.complete? && @locker_application.user == current_user
+
     redirect_to :root, alert: 'Only administrators have access to the everyone\'s Locker Applications!'
   end
 
+  # TODO: Address rubocop error
+  # rubocop:disable Metrics/AbcSize
   def update_or_create(valid, message: 'Locker application was successfully updated.', method: :edit)
     respond_to do |format|
       if valid
-        format.html { redirect_to @locker_application, notice: message }
+        if method == :new && Flipflop.lewis_patrons?
+          format.html { redirect_to edit_locker_application_url(@locker_application) }
+        else
+          format.html { redirect_to @locker_application, notice: message }
+        end
         format.json { render :show, status: :ok, location: @locker_application }
       else
         @locker_application.user ||= User.new
-        format.html { render method, status: :unprocessable_entity }
+        format.html { redirect_to(action: method, id: @locker_application.id) }
         format.json { render json: @locker_application.errors, status: :unprocessable_entity }
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def archived_param
     return false if params[:archived].blank?

@@ -4,8 +4,12 @@ require 'rails_helper'
 
 RSpec.describe 'locker_applications/edit', type: :view do
   let(:user) { FactoryBot.create :user }
+  let(:building_one) { FactoryBot.create(:building, id: 1) }
+  let(:building_two) { FactoryBot.create(:building, id: 2, name: 'Lewis Library') }
 
   before do
+    building_one
+    building_two
     sign_in user
     @locker_application = assign(:locker_application, LockerApplication.create!(
                                                         preferred_size: 1,

@@ -3,6 +3,32 @@
 require 'rails_helper'
 
 RSpec.describe Building, type: :model do
+  describe '#building_choices' do
+    let!(:building_one) { FactoryBot.create(:building) }
+    let!(:building_two) { FactoryBot.create(:building, name: 'Lewis Library') }
+    let(:expected_building_choices) do
+      [
+        {
+          label: 'Select Library',
+          value: 'placeholder',
+          disabled: true
+        },
+        {
+          label: 'Firestone Library',
+          value: building_one.id
+        },
+        {
+          label: 'Lewis Library',
+          value: building_two.id
+        }
+      ]
+    end
+
+    it 'shows all the buildings' do
+      expect(described_class.building_choices).to eq(expected_building_choices)
+    end
+  end
+
   describe '#seed' do
     context 'when no buildings exist yet in the database' do
       let(:user) { FactoryBot.create :user, :admin, building: nil }
@@ -57,6 +83,24 @@ RSpec.describe Building, type: :model do
       it 'does not add any additional buildings' do
         described_class.seed
         expect(described_class.all.count).to eq(2)
+      end
+    end
+  end
+
+  describe '#seed_applications' do
+    before do
+      described_class.seed
+    end
+
+    context 'when a locker application is already assigned to Lewis' do
+      let(:locker_application) { FactoryBot.create(:locker_application, building: lewis) }
+
+      it 'keeps it at lewis' do
+        expect(locker_application.building).to eq(lewis)
+        expect do
+          locker_application
+          described_class.seed_applications
+        end.not_to(change { locker_application.reload.building })
       end
     end
   end
