@@ -132,6 +132,8 @@ RSpec.describe LockerApplication, type: :model do
     let!(:locker_application1) { FactoryBot.create :locker_application, complete: true }
     let!(:locker_application2) { FactoryBot.create :locker_application, complete: true }
     let!(:locker_application3) { FactoryBot.create :locker_application, complete: true }
+    let!(:locker_application4) { FactoryBot.create :locker_application, complete: false }
+    let!(:locker_application5) { FactoryBot.create :locker_application, complete: true, archived: true }
 
     it 'searches by user netid' do
       expect(described_class.search(uid: locker_application1.user.uid, archived: nil)).to contain_exactly(locker_application1)
@@ -139,6 +141,11 @@ RSpec.describe LockerApplication, type: :model do
 
     it 'searches returns all if search term is empty' do
       expect(described_class.search(uid: nil, archived: false)).to contain_exactly(locker_application1, locker_application2, locker_application3)
+    end
+
+    it 'searches returns archived results if archived is true' do
+      expect(described_class.search(uid: nil, archived: true)).to contain_exactly(locker_application1, locker_application2,
+                                                                                  locker_application3, locker_application5)
     end
   end
 

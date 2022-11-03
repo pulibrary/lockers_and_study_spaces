@@ -59,9 +59,9 @@ class LockerApplication < ApplicationRecord
   end
 
   def self.search(uid:, archived:)
-    results = where(complete: true)
-    results = results.where("locker_applications.archived = '#{archived}'") unless ActiveModel::Type::Boolean.new.cast(archived)
-    results = joins(:user).where("users.uid = '#{uid}'").where('locker_applications.archived = false').where(complete: true) if uid.present?
-    results
+    return joins(:user).where("users.uid = '#{uid}'").where('locker_applications.archived = false').where(complete: true) if uid.present?
+    return where(complete: true).where(archived: archived) unless archived
+
+    where(complete: true)
   end
 end
