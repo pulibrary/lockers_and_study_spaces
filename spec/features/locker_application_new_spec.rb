@@ -142,7 +142,7 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
         allow(Flipflop).to receive(:lewis_patrons?).and_return(false)
       end
 
-      it 'runs a test' do
+      it 'cannot assign an application to a non-existent user' do
         visit root_path
         expect(page).to have_content('Firestone Locker Application')
         expect(page).to have_field('Applicant Netid',  with: admin.uid)
