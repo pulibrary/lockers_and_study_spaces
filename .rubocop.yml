@@ -11,3 +11,4 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
     - 'db/*.rb'
+    - 'config/*.rb'

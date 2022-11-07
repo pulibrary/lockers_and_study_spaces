@@ -58,9 +58,10 @@ class LockerApplication < ApplicationRecord
     context.order(:location)
   end
 
-  def self.search(uid:)
-    return where(complete: true) if uid.blank?
+  def self.search(uid:, archived:)
+    return joins(:user).where("users.uid = '#{uid}'").where('locker_applications.archived = false').where(complete: true) if uid.present?
+    return where(complete: true).where(archived: archived) unless archived
 
-    where(complete: true).joins(:user).where("users.uid = '#{uid}'")
+    where(complete: true)
   end
 end

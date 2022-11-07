@@ -6,7 +6,7 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications or /locker_applications.json
   def index
-    @pagy, @locker_applications = pagy(LockerApplication.search(uid: params[:search]).order(:created_at))
+    @pagy, @locker_applications = pagy(LockerApplication.search(uid: params[:search], archived: false).order(:created_at))
   end
 
   # GET /locker_applications/1 or /locker_applications/1.json
@@ -24,12 +24,20 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications/awaiting_assignment
   def awaiting_assignment
-    @pagy, @locker_applications = pagy(LockerApplication.awaiting_assignment)
+    @archived = archived_param
+    @pagy, @locker_applications = pagy(LockerApplication.awaiting_assignment.search(uid: nil, archived: @archived))
   end
 
   # GET /locker_applications/1/assign
   def assign
     @locker_assignment = @locker_application.locker_assignment || LockerAssignment.new(locker_application: @locker_application)
+  end
+
+  # PUT /locker_applications/1/toggle_archived
+  def toggle_archived
+    @locker_application = LockerApplication.find(params[:id])
+    @locker_application.update(archived: !@locker_application.archived)
+    redirect_back(fallback_location: awaiting_assignment_locker_applications_path)
   end
 
   # POST /locker_applications or /locker_applications.json
@@ -125,4 +133,10 @@ class LockerApplicationsController < ApplicationController
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  def archived_param
+    return false if params[:archived].blank?
+
+    ActiveModel::Type::Boolean.new.cast(params[:archived])
+  end
 end

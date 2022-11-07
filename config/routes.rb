@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     get 'awaiting_assignment', on: :collection
     member do
       get 'assign'
+      put 'toggle_archived'
     end
   end
   resources :locker_assignments, except: :new do

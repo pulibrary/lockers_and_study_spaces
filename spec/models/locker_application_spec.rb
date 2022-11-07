@@ -24,6 +24,7 @@ RSpec.describe LockerApplication, type: :model do
     expect(locker_application.status_at_application).to be_nil
     expect(locker_application.department_at_application).to be_nil
     expect(locker_application.locker_assignment).to be_nil
+    expect(locker_application.archived).to be(false)
     expect(locker_application.building).to eq(building_one)
     expect(locker_application.complete).to be false
   end
@@ -82,6 +83,7 @@ RSpec.describe LockerApplication, type: :model do
     let(:locker_application1) { FactoryBot.create :locker_application, complete: true }
     let(:locker_application2) { FactoryBot.create :locker_application, complete: true }
     let(:locker_application3) { FactoryBot.create :locker_application, complete: true }
+    let(:locker_application4) { FactoryBot.create :locker_application, complete: true, archived: true }
     let(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
     let(:locker1) { FactoryBot.create :locker }
 
@@ -130,13 +132,20 @@ RSpec.describe LockerApplication, type: :model do
     let!(:locker_application1) { FactoryBot.create :locker_application, complete: true }
     let!(:locker_application2) { FactoryBot.create :locker_application, complete: true }
     let!(:locker_application3) { FactoryBot.create :locker_application, complete: true }
+    let!(:locker_application4) { FactoryBot.create :locker_application, complete: false }
+    let!(:locker_application5) { FactoryBot.create :locker_application, complete: true, archived: true }
 
     it 'searches by user netid' do
-      expect(described_class.search(uid: locker_application1.user.uid)).to contain_exactly(locker_application1)
+      expect(described_class.search(uid: locker_application1.user.uid, archived: nil)).to contain_exactly(locker_application1)
     end
 
     it 'searches returns all if search term is empty' do
-      expect(described_class.search(uid: nil)).to contain_exactly(locker_application1, locker_application2, locker_application3)
+      expect(described_class.search(uid: nil, archived: false)).to contain_exactly(locker_application1, locker_application2, locker_application3)
+    end
+
+    it 'searches returns archived results if archived is true' do
+      expect(described_class.search(uid: nil, archived: true)).to contain_exactly(locker_application1, locker_application2,
+                                                                                  locker_application3, locker_application5)
     end
   end
 
