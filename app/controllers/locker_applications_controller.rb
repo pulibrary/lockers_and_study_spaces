@@ -127,7 +127,7 @@ class LockerApplicationsController < ApplicationController
         format.json { render :show, status: :ok, location: @locker_application }
       else
         @locker_application.user ||= User.new
-        format.html { redirect_to(action: method, id: @locker_application.id) }
+        format.html { render method, status: :unprocessable_entity }
         format.json { render json: @locker_application.errors, status: :unprocessable_entity }
       end
     end

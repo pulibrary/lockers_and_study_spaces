@@ -82,6 +82,79 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
     end
   end
 
+  context 'with an administrator' do
+    let(:admin) { FactoryBot.create(:user, admin: true) }
+
+    before do
+      sign_in admin
+    end
+
+    context 'with lewis_patrons on' do
+      before do
+        allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
+      end
+
+      context 'with an existing user' do
+        before do
+          user
+        end
+
+        it 'can assign the application to an existing user' do
+          visit root_path
+          select('Firestone Library', from: :locker_application_building_id)
+          click_button('Next')
+          new_application = LockerApplication.last
+          expect(new_application.user).to eq(admin)
+          expect(page).to have_content('Firestone Locker Application')
+          expect(page).to have_field('Applicant Netid', with: admin.uid)
+          fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
+          check('Accessible')
+          expect(page).to have_field('Applicant Netid', with: user.uid)
+          click_button('Submit Locker Application')
+          expect(page).not_to have_content('User must exist')
+          expect(page).to have_current_path(locker_application_path(new_application))
+          expect(new_application.reload.user).to eq(user)
+        end
+      end
+
+      context 'with a user that does not exist yet' do
+        it 'cannot assign an application to a non-existent user' do
+          visit root_path
+          select('Firestone Library', from: :locker_application_building_id)
+          click_button('Next')
+          new_application = LockerApplication.last
+          expect(new_application.user).to eq(admin)
+          expect(page).to have_content('Firestone Locker Application')
+          expect(page).to have_field('Applicant Netid', with: admin.uid)
+          fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
+          check('Accessible')
+          expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
+          click_button('Submit Locker Application')
+          expect(page).to have_content('User must exist')
+          expect(page).to have_current_path(locker_application_path(new_application))
+          expect(new_application.reload.user).to eq(admin)
+        end
+      end
+    end
+
+    context 'with lewis_patrons off' do
+      before do
+        allow(Flipflop).to receive(:lewis_patrons?).and_return(false)
+      end
+
+      it 'cannot assign an application to a non-existent user' do
+        visit root_path
+        expect(page).to have_content('Firestone Locker Application')
+        expect(page).to have_field('Applicant Netid',  with: admin.uid)
+        fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
+        check('Accessible')
+        expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
+        click_button('Submit Locker Application')
+        expect(page).to have_content('User must exist')
+      end
+    end
+  end
+
   context 'with an unauthenticated user' do
     it 'redirects the user to the sign in' do
       visit root_path

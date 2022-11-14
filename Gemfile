@@ -56,6 +56,7 @@ group :development, :test do
   gem 'capistrano-passenger'
   gem 'capistrano-rails', '~> 1.6', require: false
   gem 'factory_bot'
+  gem 'rails-controller-testing'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
