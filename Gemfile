@@ -45,8 +45,6 @@ gem 'omniauth-rails_csrf_protection'
 gem 'net-ldap'
 gem 'pagy', '~> 3.5'
 
-gem 'webpacker', '>= 4.0.x', '~> 5'
-
 gem 'whenever'
 
 group :development, :test do
@@ -90,3 +88,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'honeybadger', '~> 4.0'
 
 gem 'flipflop', '~> 2.7'
+
+gem 'vite_rails', '~> 3.0'
