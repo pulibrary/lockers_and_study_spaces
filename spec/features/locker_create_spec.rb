@@ -25,4 +25,12 @@ RSpec.describe 'Locker Create', type: :feature, js: true do
 
     expect(Locker.order('created_at').last.building).to eq(building)
   end
+
+  it 'indicates the required fields' do
+    visit '/lockers/new'
+    required_fields = ['Location', 'General Area', 'Combination']
+    required_fields.each do |field|
+      expect(page.find_field(field)[:required]).to eq 'true'
+    end
+  end
 end
