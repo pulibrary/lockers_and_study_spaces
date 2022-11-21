@@ -5,10 +5,11 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= vite_javascript_tag 'application' %>
+    <%= vite_stylesheet_tag 'application' %><!-- these are styles from lux -->
+    <%= stylesheet_link_tag 'application', media: 'all' %><!-- these are styles from our app -->
     <%= javascript_include_tag 'application' %>
     <%= vite_client_tag %>
-    <%= vite_javascript_tag 'application' %>
   </head>
 
   <body>
