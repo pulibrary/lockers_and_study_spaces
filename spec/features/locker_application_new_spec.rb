@@ -77,7 +77,9 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
         expect do
           click_button('Submit Locker Application')
         end.to change(LockerApplication, :count)
-        expect(page).to have_current_path(locker_application_path(id: LockerApplication.last.id))
+        new_application = LockerApplication.last
+        expect(page).to have_current_path(locker_application_path(id: new_application.id))
+        expect(new_application.reload.complete).to be true
       end
     end
   end
@@ -113,6 +115,7 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
           click_button('Submit Locker Application')
           expect(page).not_to have_content('User must exist')
           expect(page).to have_current_path(locker_application_path(new_application))
+          expect(new_application.reload.complete).to be true
           expect(new_application.reload.user).to eq(user)
         end
       end
