@@ -46,6 +46,7 @@ class LockerApplicationsController < ApplicationController
     force_admin if @locker_application.user != current_user
     return if !current_user.admin? && @locker_application.user != current_user
 
+    @locker_application.complete = true unless Flipflop.lewis_patrons?
     update_or_create(@locker_application.save, message: 'Locker application was successfully created.', method: :new)
   end
 
