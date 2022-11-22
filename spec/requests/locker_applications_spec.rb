@@ -32,19 +32,9 @@ RSpec.describe '/locker_applications', type: :request do
       user_uid: user.uid
     }
   end
-  let(:invalid_attributes) do
+  let(:invalid_no_user_attributes) do
     {
-      preferred_size: 2,
-      preferred_general_area: 'Preferred General Area',
-      accessible: false,
-      semester: 'Semester',
-      status_at_application: 'Status At Application',
-      department_at_application: 'Department At Application',
-      user_id: nil
-    }
-  end
-  let(:invalid_form_attributes) do
-    {
+      building_id: building_one.id,
       preferred_size: 2,
       preferred_general_area: 'Preferred General Area',
       accessible: false,
@@ -54,6 +44,40 @@ RSpec.describe '/locker_applications', type: :request do
       user_uid: nil
     }
   end
+  let(:invalid_no_building_attributes) do
+    {
+      building_id: nil,
+      preferred_size: 2,
+      preferred_general_area: 'Preferred General Area',
+      accessible: false,
+      semester: 'Semester',
+      status_at_application: 'Status At Application',
+      department_at_application: 'Department At Application',
+      user_uid: user.uid
+    }
+  end
+  # let(:invalid_attributes) do
+  #   {
+  #     preferred_size: 2,
+  #     preferred_general_area: 'Preferred General Area',
+  #     accessible: false,
+  #     semester: 'Semester',
+  #     status_at_application: 'Status At Application',
+  #     department_at_application: 'Department At Application',
+  #     user_id: nil
+  #   }
+  # end
+  # let(:invalid_form_attributes) do
+  #   {
+  #     preferred_size: 2,
+  #     preferred_general_area: 'Preferred General Area',
+  #     accessible: false,
+  #     semester: 'Semester',
+  #     status_at_application: 'Status At Application',
+  #     department_at_application: 'Department At Application',
+  #     user_uid: nil
+  #   }
+  # end
   let(:archived_attributes) do
     {
       building_id: building_one.id,
@@ -249,17 +273,25 @@ RSpec.describe '/locker_applications', type: :request do
         end
       end
 
-      context 'with invalid parameters' do
-        it 'redirects to root' do
+      context 'with invalid building attributes' do
+        it 'does not create a new application' do
           expect do
-            post locker_applications_url, params: { locker_application: invalid_form_attributes }
+            post locker_applications_url, params: { locker_application: invalid_no_building_attributes }
           end.not_to change(LockerApplication, :count)
-          expect(response).to redirect_to(root_path)
         end
 
-        it 'redirects to root' do
-          post locker_applications_url, params: { locker_application: invalid_form_attributes }
-          expect(response).to redirect_to(root_path)
+        it 'is unprocessable' do
+          post locker_applications_url, params: { locker_application: invalid_no_building_attributes }
+          expect(response).to be_unprocessable
+          expect(response).to render_template(:new)
+        end
+      end
+
+      context 'with no user passed in' do
+        it 'raises an error do' do
+          expect do
+            post locker_applications_url, params: { locker_application: invalid_no_user_attributes }
+          end.to raise_error(ActionController::ParameterMissing)
         end
       end
     end
@@ -298,7 +330,7 @@ RSpec.describe '/locker_applications', type: :request do
     context 'with invalid parameters' do
       it 'redirects to root' do
         locker_application = LockerApplication.create! valid_attributes
-        patch locker_application_url(locker_application), params: { locker_application: invalid_form_attributes }
+        patch locker_application_url(locker_application), params: { locker_application: invalid_no_user_attributes }
         expect(response).to redirect_to(root_path)
       end
     end
@@ -399,17 +431,25 @@ RSpec.describe '/locker_applications', type: :request do
         end
       end
 
-      context 'with invalid parameters' do
+      context 'with no building passed in' do
         it 'does not create a new LockerApplication' do
           expect do
-            post locker_applications_url, params: { locker_application: invalid_form_attributes }
+            post locker_applications_url, params: { locker_application: invalid_no_building_attributes }
           end.not_to change(LockerApplication, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do
-          post locker_applications_url, params: { locker_application: invalid_form_attributes }
+          post locker_applications_url, params: { locker_application: invalid_no_building_attributes }
           expect(response).to be_unprocessable
           expect(response).to render_template(:new)
+        end
+      end
+
+      context 'with no user passed in' do
+        it 'raises an error' do
+          expect do
+            post locker_applications_url, params: { locker_application: invalid_no_user_attributes }
+          end.to raise_error(ActionController::ParameterMissing)
         end
       end
     end
@@ -445,11 +485,22 @@ RSpec.describe '/locker_applications', type: :request do
       end
 
       context 'with invalid parameters' do
-        it "renders a successful response (i.e. to display the 'edit' template)" do
-          locker_application = LockerApplication.create! valid_attributes
-          patch locker_application_url(locker_application), params: { locker_application: invalid_form_attributes }
-          expect(response).to be_unprocessable
-          expect(response).to render_template(:edit)
+        context 'with no user_uid' do
+          it 'raises an error' do
+            locker_application = LockerApplication.create! valid_attributes
+            expect do
+              patch locker_application_url(locker_application), params: { locker_application: invalid_no_user_attributes }
+            end.to raise_error(ActionController::ParameterMissing)
+          end
+        end
+
+        context 'with no building id' do
+          it "renders a successful response (i.e. to display the 'edit' template)" do
+            locker_application = LockerApplication.create! valid_attributes
+            patch locker_application_url(locker_application), params: { locker_application: invalid_no_building_attributes }
+            expect(response).to be_unprocessable
+            expect(response).to render_template(:edit)
+          end
         end
       end
     end
