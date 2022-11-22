@@ -4,7 +4,7 @@ class Building < ApplicationRecord
   validates :name, uniqueness: true
 
   def self.building_choices
-    placeholder = { label: 'Select Library', value: 'placeholder', disabled: true }
+    placeholder = { label: 'Select Library', value: '', disabled: true }
     choices = [placeholder]
     choices.concat(Building.all.map { |building| { label: building.name, value: building.id } })
   end

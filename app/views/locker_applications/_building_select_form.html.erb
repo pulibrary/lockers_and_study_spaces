@@ -9,7 +9,8 @@
             name="locker_application[building_id]"
             id="locker_application_building_id"
             width="expand"
-            value="placeholder"
+            value=""
+            required
             :options="<%= Building.building_choices.to_json %>"
           ></input-select>
           <input-button type="submit" variation="solid">Next</input-button>
