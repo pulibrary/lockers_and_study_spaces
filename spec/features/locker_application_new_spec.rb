@@ -22,6 +22,13 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
         allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
       end
 
+      it 'requires users to choose a library' do
+        visit root_path
+        expect(page.find_field('locker_application_building_id')[:required]).to eq 'true'
+        click_button('Next')
+        expect(page).to have_current_path('/')
+      end
+
       it 'has a two step application process' do
         visit root_path
         expect(page).to have_select('Library', options: ['Select Library', 'Firestone Library', 'Lewis Library'])

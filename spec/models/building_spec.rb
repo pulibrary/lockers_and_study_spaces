@@ -10,7 +10,7 @@ RSpec.describe Building, type: :model do
       [
         {
           label: 'Select Library',
-          value: 'placeholder',
+          value: '',
           disabled: true
         },
         {
