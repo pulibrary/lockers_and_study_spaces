@@ -56,28 +56,6 @@ RSpec.describe '/locker_applications', type: :request do
       user_uid: user.uid
     }
   end
-  # let(:invalid_attributes) do
-  #   {
-  #     preferred_size: 2,
-  #     preferred_general_area: 'Preferred General Area',
-  #     accessible: false,
-  #     semester: 'Semester',
-  #     status_at_application: 'Status At Application',
-  #     department_at_application: 'Department At Application',
-  #     user_id: nil
-  #   }
-  # end
-  # let(:invalid_form_attributes) do
-  #   {
-  #     preferred_size: 2,
-  #     preferred_general_area: 'Preferred General Area',
-  #     accessible: false,
-  #     semester: 'Semester',
-  #     status_at_application: 'Status At Application',
-  #     department_at_application: 'Department At Application',
-  #     user_uid: nil
-  #   }
-  # end
   let(:archived_attributes) do
     {
       building_id: building_one.id,
