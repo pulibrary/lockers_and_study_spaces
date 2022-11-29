@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe '/locker_applications', type: :request do
-  let(:user) { FactoryBot.create :user }
+  let(:user) { FactoryBot.create :user, admin: false }
   # LockerApplication. As you add validations to LockerApplication, be sure to
   # adjust the attributes here as well.
 
@@ -166,6 +166,62 @@ RSpec.describe '/locker_applications', type: :request do
         allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
       end
 
+      context "another existing user's application" do
+        before do
+          valid_form_attributes[:user_uid] = FactoryBot.create(:user).uid
+        end
+
+        context 'as an admin' do
+          let(:user) { FactoryBot.create(:user, :admin) }
+
+          it 'redirects to the edit form' do
+            expect do
+              post locker_applications_url, params: { locker_application: valid_form_attributes }
+            end.to change(LockerApplication, :count).by(1)
+            expect(response).to redirect_to(edit_locker_application_url(LockerApplication.last))
+          end
+        end
+
+        context 'as a regular user' do
+          let(:user) { FactoryBot.create(:user, admin: false) }
+
+          it 'redirects to root' do
+            expect do
+              post locker_applications_url, params: { locker_application: valid_form_attributes }
+            end.not_to change(LockerApplication, :count)
+            expect(response).to redirect_to(root_path)
+          end
+        end
+      end
+
+      context "another non-existent user's application" do
+        before do
+          valid_form_attributes[:user_uid] = 'arbitrarystring'
+        end
+
+        context 'as an admin' do
+          let(:user) { FactoryBot.create(:user, :admin) }
+
+          it 'creates the user' do
+            expect(user.admin?).to be true
+            expect do
+              post locker_applications_url, params: { locker_application: valid_form_attributes }
+            end.to change(User, :count).by(1)
+          end
+        end
+
+        context 'as a regular user' do
+          let(:user) { FactoryBot.create(:user, admin: false) }
+
+          it 'does not create the user' do
+            expect(user.admin?).to be false
+            expect do
+              post locker_applications_url, params: { locker_application: valid_form_attributes }
+            end.not_to change(User, :count)
+          end
+        end
+      end
+
       context 'creates an application for the user' do
         it 'creates a locker application' do
           expect do
@@ -176,19 +232,6 @@ RSpec.describe '/locker_applications', type: :request do
         it 'brings the user to the second step of the locker application' do
           post locker_applications_url, params: { locker_application: valid_form_attributes }
           expect(response).to redirect_to(edit_locker_application_url(LockerApplication.last))
-        end
-
-        context "another's application" do
-          before do
-            valid_form_attributes[:user_uid] = FactoryBot.create(:user).uid
-          end
-
-          it 'redirects to root' do
-            expect do
-              post locker_applications_url, params: { locker_application: valid_form_attributes }
-            end.not_to change(LockerApplication, :count)
-            expect(response).to redirect_to(root_path)
-          end
         end
       end
 
