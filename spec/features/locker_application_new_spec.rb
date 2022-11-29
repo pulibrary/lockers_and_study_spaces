@@ -127,8 +127,8 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
         end
       end
 
-      context 'with a user that does not exist yet' do
-        it 'cannot assign an application to a non-existent user' do
+      context 'with a valid user that does not exist yet' do
+        it 'can create and assign an application to a new user' do
           visit root_path
           select('Firestone Library', from: :locker_application_building_id)
           click_button('Next')
@@ -140,9 +140,8 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
           check('Accessible')
           expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
           click_button('Submit Locker Application')
-          expect(page).to have_content('User must exist')
+          expect(page).not_to have_content('User must exist')
           expect(page).to have_current_path(locker_application_path(new_application))
-          expect(new_application.reload.user).to eq(admin)
         end
       end
     end
@@ -152,7 +151,7 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
         allow(Flipflop).to receive(:lewis_patrons?).and_return(false)
       end
 
-      it 'cannot assign an application to a non-existent user' do
+      it 'can create and assign an application to a new user' do
         visit root_path
         expect(page).to have_content('Firestone Locker Application')
         expect(page).to have_field('Applicant Netid',  with: admin.uid)
@@ -160,7 +159,11 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
         check('Accessible')
         expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
         click_button('Submit Locker Application')
-        expect(page).to have_content('User must exist')
+        new_application = LockerApplication.last
+        expect(page).not_to have_content('User must exist')
+        expect(page).to have_current_path(locker_application_path(new_application))
+        new_user = User.last
+        expect(new_application.user).to eq(new_user)
       end
     end
   end

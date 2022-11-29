@@ -80,6 +80,8 @@ class LockerApplicationsController < ApplicationController
   end
 
   def lookup_objects_from_params
+    # If a user_uid is not passed in, something suspicious is going on and should raise an error
+    params.require(:locker_application).require(:user_uid)
     locker_params = params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
                                                                :status_at_application, :department_at_application, :user_uid, :building_id, :complete)
 
@@ -99,8 +101,8 @@ class LockerApplicationsController < ApplicationController
     uid = locker_params.delete(:user_uid)
     user = if current_user.uid == uid
              current_user
-           else
-             User.find_by(uid: uid)
+           elsif current_user.admin?
+             User.from_uid(uid)
            end
     locker_params[:user] = user
     locker_params
