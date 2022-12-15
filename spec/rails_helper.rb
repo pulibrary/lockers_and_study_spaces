@@ -38,7 +38,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = "#{Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -79,7 +79,7 @@ RSpec.configure do |config|
   end
 
   Capybara.register_driver :chrome_headless do |app|
-    options = ::Selenium::WebDriver::Chrome::Options.new
+    options = Selenium::WebDriver::Chrome::Options.new
     options.args << '--headless'
     options.args << '--window-size=1500,850'
     caps = [Selenium::WebDriver::Remote::Capabilities.chrome, options]

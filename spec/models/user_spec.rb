@@ -2,18 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.create :user }
+RSpec.describe User do
+  let(:user) { FactoryBot.create(:user) }
 
   describe '#number_of_violations' do
     it "returns the user's number of violations" do
-      FactoryBot.create(:locker_violation, user: user)
+      FactoryBot.create(:locker_violation, user:)
       expect(user.number_of_violations).to eq(1)
     end
 
     it "returns the user's number of violations" do
-      FactoryBot.create(:locker_violation, user: user)
-      FactoryBot.create(:locker_violation, user: user)
+      FactoryBot.create(:locker_violation, user:)
+      FactoryBot.create(:locker_violation, user:)
       expect(user.number_of_violations).to eq(2)
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'with existing cas user' do
-      let(:user) { FactoryBot.create :user, uid: 'myuid', provider: 'cas' }
+      let(:user) { FactoryBot.create(:user, uid: 'myuid', provider: 'cas') }
 
       it 'returns the existing user' do
         expect(User.from_cas(access_token).uid).to eq('myuid')
@@ -58,7 +58,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'with existing migration user' do
-      let(:user) { FactoryBot.create :user, uid: 'myuid', provider: 'migration' }
+      let(:user) { FactoryBot.create(:user, uid: 'myuid', provider: 'migration') }
 
       it 'returns the existing user' do
         expect(User.from_cas(access_token).uid).to eq('myuid')
@@ -87,11 +87,11 @@ RSpec.describe User, type: :model do
   end
 
   describe '#works_at_enabled_building?' do
-    let(:building) { FactoryBot.create :building, name: 'Lewis Library' }
-    let(:user) { FactoryBot.create :user, admin: true, building: building }
+    let(:building) { FactoryBot.create(:building, name: 'Lewis Library') }
+    let(:user) { FactoryBot.create(:user, admin: true, building:) }
 
     context 'when user is at Firestone' do
-      let(:building) { FactoryBot.create :building, name: 'Firestone Library' }
+      let(:building) { FactoryBot.create(:building, name: 'Firestone Library') }
 
       it 'is true' do
         expect(user.works_at_enabled_building?).to be(true)
@@ -121,7 +121,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when user has no building' do
-      let(:user) { FactoryBot.create :user, admin: true, building: nil }
+      let(:user) { FactoryBot.create(:user, admin: true, building: nil) }
 
       it 'is false' do
         expect(user.works_at_enabled_building?).to be(false)

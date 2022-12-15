@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe LockerRenewalMessagesController do
   render_views
-  let(:building) { FactoryBot.create :building, name: 'Lewis Library' }
-  let(:user) { FactoryBot.create :user, :admin, building: building }
+  let(:building) { FactoryBot.create(:building, name: 'Lewis Library') }
+  let(:user) { FactoryBot.create(:user, :admin, building:) }
 
   before do
     sign_in user

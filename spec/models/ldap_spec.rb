@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Ldap, type: :model do
+RSpec.describe Ldap do
   let(:ldap_connection) { Net::LDAP.new }
   # rubocop:disable Layout/LineLength
   let(:valid_ldap_response) do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_violations/new', type: :view do
+RSpec.describe 'locker_violations/new' do
   before do
     assign(:locker_violation, FactoryBot.build(:locker_violation))
   end

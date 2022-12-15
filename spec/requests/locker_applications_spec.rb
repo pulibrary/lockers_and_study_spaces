@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe '/locker_applications', type: :request do
-  let(:user) { FactoryBot.create :user, admin: false }
+RSpec.describe '/locker_applications' do
+  let(:user) { FactoryBot.create(:user, admin: false) }
   # LockerApplication. As you add validations to LockerApplication, be sure to
   # adjust the attributes here as well.
 
@@ -374,7 +374,7 @@ RSpec.describe '/locker_applications', type: :request do
   end
 
   context 'with an admin user' do
-    let(:user) { FactoryBot.create :user, :admin }
+    let(:user) { FactoryBot.create(:user, :admin) }
 
     describe 'GET /index' do
       it 'renders a successful response' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ScheduledMessagesController, type: :routing do
+RSpec.describe ScheduledMessagesController do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/locker_renewal_messages').to route_to('locker_renewal_messages#index')

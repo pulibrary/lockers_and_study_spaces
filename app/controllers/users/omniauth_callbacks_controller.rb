@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# frozen_string_literal: true
-
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def cas
@@ -10,7 +8,7 @@ module Users
 
       sign_in_and_redirect @user, event: :authentication # this will throw if @user is not activated
       if is_navigational_format?
-        set_flash_message(:success, :success, kind: 'from Princeton Central Authentication '\
+        set_flash_message(:success, :success, kind: 'from Princeton Central Authentication ' \
                                                     'Service')
       end
     end

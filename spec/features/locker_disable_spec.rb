@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker disable/enable', type: :feature, js: true do
-  let(:user) { FactoryBot.create :user, :admin }
+RSpec.describe 'Locker disable/enable', js: true do
+  let(:user) { FactoryBot.create(:user, :admin) }
   let(:locker1) { FactoryBot.create(:locker) }
   let(:locker2) { FactoryBot.create(:locker) }
 

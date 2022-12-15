@@ -12,6 +12,6 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe LockerAssignmentsHelper, type: :helper do
+RSpec.describe LockerAssignmentsHelper do
   pending "add some examples to (or delete) #{__FILE__}"
 end

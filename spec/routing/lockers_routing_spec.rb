@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LockersController, type: :routing do
+RSpec.describe LockersController do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/lockers').to route_to('lockers#index')

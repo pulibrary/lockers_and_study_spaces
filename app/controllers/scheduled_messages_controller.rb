@@ -80,11 +80,11 @@ class ScheduledMessagesController < ApplicationController
 
   # Allow all the route helper methods from subclassed controllers (e.g. new_scheduled_message_path) to
   # use the methods from this controller instead
-  def method_missing(method_name, *args, &block)
+  def method_missing(method_name, *args, &)
     if method_name =~ /scheduled_message.*(path|url)/
       case controller_name
       when 'locker_renewal_messages'
-        send(method_name.to_s.gsub('scheduled_message', 'locker_renewal_message'), *args, &block)
+        send(method_name.to_s.gsub('scheduled_message', 'locker_renewal_message'), *args, &)
       end
     else
       super

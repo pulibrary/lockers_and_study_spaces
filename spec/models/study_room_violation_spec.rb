@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe StudyRoomViolation, type: :model do
+RSpec.describe StudyRoomViolation do
   describe '#number_of_violations' do
     it "returns the user's number of violations" do
       study_room_violation = FactoryBot.create(:study_room_violation)

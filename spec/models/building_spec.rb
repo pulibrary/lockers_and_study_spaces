@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Building, type: :model do
+RSpec.describe Building do
   describe '#building_choices' do
     let!(:building_one) { FactoryBot.create(:building) }
     let!(:building_two) { FactoryBot.create(:building, name: 'Lewis Library') }
@@ -31,8 +31,8 @@ RSpec.describe Building, type: :model do
 
   describe '#seed' do
     context 'when no buildings exist yet in the database' do
-      let(:user) { FactoryBot.create :user, :admin, building: nil }
-      let(:locker) { FactoryBot.create :locker, building: nil }
+      let(:user) { FactoryBot.create(:user, :admin, building: nil) }
+      let(:locker) { FactoryBot.create(:locker, building: nil) }
 
       before do
         described_class.destroy_all
@@ -59,7 +59,7 @@ RSpec.describe Building, type: :model do
       context 'when locker already assigned to Lewis' do
         let(:locker) do
           described_class.seed
-          FactoryBot.create :locker, building: lewis
+          FactoryBot.create(:locker, building: lewis)
         end
 
         it 'keeps it at lewis' do
@@ -70,7 +70,7 @@ RSpec.describe Building, type: :model do
       context 'when an admin user already attached to Lewis' do
         let(:user) do
           described_class.seed
-          FactoryBot.create :user, :admin, building: lewis
+          FactoryBot.create(:user, :admin, building: lewis)
         end
 
         it 'keeps them at lewis' do

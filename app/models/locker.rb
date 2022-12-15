@@ -10,7 +10,7 @@ class Locker < ApplicationRecord
   def self.available_lockers(building:)
     where.not(id: LockerAssignment.where(released_date: nil).pluck(:locker_id))
          .where(disabled: [false, nil])
-         .where(building: building)
+         .where(building:)
   end
 
   def size_choices
@@ -27,7 +27,7 @@ class Locker < ApplicationRecord
   end
 
   def size_floor_list
-    size_list.product(floor_list).map { |pair| pair.join("\' ") }
+    size_list.product(floor_list).map { |pair| pair.join("' ") }
   end
 
   def current_assignment
@@ -35,16 +35,16 @@ class Locker < ApplicationRecord
   end
 
   def space_totals
-    @space_totals ||= self.class.group(:size).group(:floor).order(:floor).count.transform_keys { |key| key.join("\' ") }
+    @space_totals ||= self.class.group(:size).group(:floor).order(:floor).count.transform_keys { |key| key.join("' ") }
   end
 
   def assignable_space_totals
-    @assignable_space_totals ||= self.class.where(disabled: false).group(:size).group(:floor).count.transform_keys { |key| key.join("\' ") }
+    @assignable_space_totals ||= self.class.where(disabled: false).group(:size).group(:floor).count.transform_keys { |key| key.join("' ") }
   end
 
   def space_assigned_totals
     @space_assigned_totals ||= LockerAssignment.search(queries: { active: true }).joins(:locker).group(:size).group(:floor).count.transform_keys do |key|
-      key.join("\' ")
+      key.join("' ")
     end
   end
 

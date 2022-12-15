@@ -8,7 +8,7 @@ class Ldap
       attempts ||= 0
 
       filter = Net::LDAP::Filter.eq('uid', net_id)
-      result = ldap_connection.search(filter: filter).first
+      result = ldap_connection.search(filter:).first
       return {} if result.blank?
 
       attributes(result)
@@ -27,12 +27,12 @@ class Ldap
 
       email = clean_email(email)
       filter = Net::LDAP::Filter.eq('mail', email)
-      result = ldap_connection.search(filter: filter).first
+      result = ldap_connection.search(filter:).first
       if result.blank?
         filter = Net::LDAP::Filter.eq('edupersonprincipalname', email)
-        result = ldap_connection.search(filter: filter).first
+        result = ldap_connection.search(filter:).first
       end
-      return find_by_netid(email.split('@').first, ldap_connection: ldap_connection) if result.blank?
+      return find_by_netid(email.split('@').first, ldap_connection:) if result.blank?
 
       attributes(result)
     rescue Net::LDAP::Error => e
@@ -82,7 +82,7 @@ class Ldap
 
     def find_eqaul(field, value)
       filter = Net::LDAP::Filter.eq(field, value)
-      ldap_connection.search(filter: filter).first
+      ldap_connection.search(filter:).first
     end
   end
 end

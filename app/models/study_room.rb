@@ -12,15 +12,15 @@ class StudyRoom < ApplicationRecord
     return clear_assignments if uid.blank?
 
     user = User.from_uid(uid)
-    study_room_assignment = StudyRoomAssignment.find_by(user: user, study_room: self)
+    study_room_assignment = StudyRoomAssignment.find_by(user:, study_room: self)
     return if study_room_assignment.present? # assignment already exists, no changes needed
 
     # release any existing assignment
     current_assignment.release if current_assignment.present?
-    study_room_assignment = StudyRoomAssignment.create(user: user, study_room: self)
+    study_room_assignment = StudyRoomAssignment.create(user:, study_room: self)
 
     # send mail
-    UserMailer.with(study_room_assignment: study_room_assignment).study_room_assignment_confirmation.deliver
+    UserMailer.with(study_room_assignment:).study_room_assignment_confirmation.deliver
   end
 
   def current_uid

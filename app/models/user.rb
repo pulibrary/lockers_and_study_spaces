@@ -21,8 +21,8 @@ class User < ApplicationRecord
   end
 
   def self.from_uid(uid)
-    user = User.find_by(uid: uid)
-    user = User.create(provider: 'cas', uid: uid, admin: false) if user.blank?
+    user = User.find_by(uid:)
+    user = User.create(provider: 'cas', uid:, admin: false) if user.blank?
     user
   end
 

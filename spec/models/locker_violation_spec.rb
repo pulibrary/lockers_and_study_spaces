@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LockerViolation, type: :model do
+RSpec.describe LockerViolation do
   describe '#number_of_violations' do
     it "returns the user's number of violations" do
       locker_violation = FactoryBot.create(:locker_violation)

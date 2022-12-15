@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Study Room Violation', type: :feature, js: true do
-  let(:user) { FactoryBot.create :user, :admin }
+RSpec.describe 'Study Room Violation', js: true do
+  let(:user) { FactoryBot.create(:user, :admin) }
   let(:study_room_assignment) { FactoryBot.create(:study_room_assignment) }
 
   before do

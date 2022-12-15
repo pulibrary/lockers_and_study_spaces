@@ -7,7 +7,7 @@ class SimpleCovHelper
     SimpleCov.configure do
       minimum_coverage(96)
     end
-    new(base_dir: base_dir).inspect_results
+    new(base_dir:).inspect_results
   end
 
   attr_reader :base_dir

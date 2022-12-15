@@ -2,13 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Study Room Assign', type: :feature, js: true do
-  let(:user) { FactoryBot.create :user, :admin }
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
+RSpec.describe 'Study Room Assign', js: true do
+  let(:user) { FactoryBot.create(:user, :admin) }
   let!(:study_room1) { FactoryBot.create(:study_room, general_area: 'Classic Reading Room') }
   let!(:study_room2) { FactoryBot.create(:study_room, general_area: 'Classic Reading Room') }
   let!(:study_room3) { FactoryBot.create(:study_room) }
-  let(:user1) { FactoryBot.create :user }
-  let(:user2) { FactoryBot.create :user }
+  let(:user1) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
 
   before do
     sign_in user
@@ -27,10 +29,10 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
 
     expect { click_button 'Update Assignments' }
       .to change { StudyRoomAssignment.count }.by(2)
-                                              .and change { User.count }.by(0)
-                                                                        .and change {
-                                                                               ActionMailer::Base.deliveries.count
-                                                                             }.by(2)
+                                              .and not_change { User.count }
+      .and change {
+             ActionMailer::Base.deliveries.count
+           }.by(2)
   end
 
   it 'assigns study room locations by userid and only creates assignments if needed' do
@@ -47,10 +49,10 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
 
     expect { click_button 'Update Assignments' }
       .to change { StudyRoomAssignment.count }.by(1)
-                                              .and change { User.count }.by(0)
-                                                                        .and change {
-                                                                               ActionMailer::Base.deliveries.count
-                                                                             }.by(1)
+                                              .and not_change { User.count }
+      .and change {
+             ActionMailer::Base.deliveries.count
+           }.by(1)
   end
 
   it 'creates a user if needed' do
@@ -86,11 +88,9 @@ RSpec.describe 'Study Room Assign', type: :feature, js: true do
     fill_in "study_room_assignment_#{study_room1.id}_user_netid", with: ''
 
     expect { click_button 'Update Assignments' }
-      .to change { StudyRoomAssignment.count }.by(0)
-                                              .and change { User.count }.by(0)
-                                                                        .and change {
-                                                                               ActionMailer::Base.deliveries.count
-                                                                             }.by(0)
+      .to not_change { StudyRoomAssignment.count }
+      .and not_change { User.count }
+      .and(not_change { ActionMailer::Base.deliveries.count })
     expect(study_room_assignment.reload.released_date).to eq(DateTime.now.to_date)
   end
 end

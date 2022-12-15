@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe LockerApplication, type: :model do
-  subject(:locker_application) { described_class.new(user: user) }
+RSpec.describe LockerApplication do
+  subject(:locker_application) { described_class.new(user:) }
 
   let(:building_one) { FactoryBot.create(:building, id: 1) }
   let(:building_two) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
@@ -30,7 +30,7 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   context 'with an application created prior to having complete in the database' do
-    subject(:locker_application) { described_class.new(user: user, complete: nil) }
+    subject(:locker_application) { described_class.new(user:, complete: nil) }
 
     let(:user) { FactoryBot.create(:user) }
 
@@ -43,49 +43,49 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   describe '#available_lockers_in_area_and_size' do
-    let(:locker_application) { FactoryBot.create :locker_application, preferred_size: 4 }
-    let!(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application, locker: locker1 }
-    let!(:locker1) {  FactoryBot.create :locker, size: 4 }
-    let!(:locker2) {  FactoryBot.create :locker, size: 6 }
-    let!(:locker3) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 6 }
-    let!(:locker4) {  FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 4 }
+    let(:locker_application) { FactoryBot.create(:locker_application, preferred_size: 4) }
+    let!(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application:, locker: locker1) }
+    let!(:locker1) {  FactoryBot.create(:locker, size: 4) }
+    let!(:locker2) {  FactoryBot.create(:locker, size: 6) }
+    let!(:locker3) {  FactoryBot.create(:locker, floor: locker_application.preferred_general_area, size: 6) }
+    let!(:locker4) {  FactoryBot.create(:locker, floor: locker_application.preferred_general_area, size: 4) }
 
     it 'to only returns unassigned lockers in area of the right size' do
-      expect(locker_application.available_lockers_in_area_and_size(building: building)).to contain_exactly(locker4)
+      expect(locker_application.available_lockers_in_area_and_size(building:)).to contain_exactly(locker4)
     end
 
     context 'no size preference shows any' do
-      let(:locker_application) { FactoryBot.create :locker_application, preferred_size: nil }
+      let(:locker_application) { FactoryBot.create(:locker_application, preferred_size: nil) }
 
       it 'to only returns unassigned lockers in area' do
-        expect(locker_application.available_lockers_in_area_and_size(building: building)).to contain_exactly(locker3, locker4)
+        expect(locker_application.available_lockers_in_area_and_size(building:)).to contain_exactly(locker3, locker4)
       end
     end
 
     context 'no area preference shows any in size' do
-      let(:locker_application) { FactoryBot.create :locker_application, preferred_size: 4, preferred_general_area: 'No preference' }
+      let(:locker_application) { FactoryBot.create(:locker_application, preferred_size: 4, preferred_general_area: 'No preference') }
 
       it 'to only returns unassigned lockers in area' do
-        expect(locker_application.available_lockers_in_area_and_size(building: building)).to contain_exactly(locker4)
+        expect(locker_application.available_lockers_in_area_and_size(building:)).to contain_exactly(locker4)
       end
     end
 
     context 'disabled locker' do
-      let(:locker3) { FactoryBot.create :locker, floor: locker_application.preferred_general_area, size: 4, disabled: true }
+      let(:locker3) { FactoryBot.create(:locker, floor: locker_application.preferred_general_area, size: 4, disabled: true) }
 
       it 'does not return a disabled locker, even if it otherwise meets the criteria' do
-        expect(locker_application.available_lockers_in_area_and_size(building: building)).not_to include(locker3)
+        expect(locker_application.available_lockers_in_area_and_size(building:)).not_to include(locker3)
       end
     end
   end
 
   describe '##awaiting_assignment' do
-    let(:locker_application1) { FactoryBot.create :locker_application, complete: true }
-    let(:locker_application2) { FactoryBot.create :locker_application, complete: true }
-    let(:locker_application3) { FactoryBot.create :locker_application, complete: true }
-    let(:locker_application4) { FactoryBot.create :locker_application, complete: true, archived: true }
-    let(:locker_assignment) { FactoryBot.create :locker_assignment, locker_application: locker_application1, locker: locker1 }
-    let(:locker1) { FactoryBot.create :locker }
+    let(:locker_application1) { FactoryBot.create(:locker_application, complete: true) }
+    let(:locker_application2) { FactoryBot.create(:locker_application, complete: true) }
+    let(:locker_application3) { FactoryBot.create(:locker_application, complete: true) }
+    let(:locker_application4) { FactoryBot.create(:locker_application, complete: true, archived: true) }
+    let(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application: locker_application1, locker: locker1) }
+    let(:locker1) { FactoryBot.create(:locker) }
 
     before do
       locker_assignment
@@ -103,7 +103,7 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   context 'a user is present' do
-    let(:user) { FactoryBot.create(:user, applicant: applicant) }
+    let(:user) { FactoryBot.create(:user, applicant:) }
     let(:applicant) { instance_double(Applicant, department: 'department', status: 'senior', junior?: false) }
 
     it 'knows the user is a senior' do
@@ -116,7 +116,7 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   context 'a junior user is present' do
-    let(:user) { FactoryBot.create(:user, applicant: applicant) }
+    let(:user) { FactoryBot.create(:user, applicant:) }
     let(:applicant) { instance_double(Applicant, department: 'department', status: 'junior', junior?: true) }
 
     it 'knows the user is a junior' do
@@ -129,11 +129,11 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   describe '##search' do
-    let!(:locker_application1) { FactoryBot.create :locker_application, complete: true }
-    let!(:locker_application2) { FactoryBot.create :locker_application, complete: true }
-    let!(:locker_application3) { FactoryBot.create :locker_application, complete: true }
-    let!(:locker_application4) { FactoryBot.create :locker_application, complete: false }
-    let!(:locker_application5) { FactoryBot.create :locker_application, complete: true, archived: true }
+    let!(:locker_application1) { FactoryBot.create(:locker_application, complete: true) }
+    let!(:locker_application2) { FactoryBot.create(:locker_application, complete: true) }
+    let!(:locker_application3) { FactoryBot.create(:locker_application, complete: true) }
+    let!(:locker_application4) { FactoryBot.create(:locker_application, complete: false) }
+    let!(:locker_application5) { FactoryBot.create(:locker_application, complete: true, archived: true) }
 
     it 'searches by user netid' do
       expect(described_class.search(uid: locker_application1.user.uid, archived: nil)).to contain_exactly(locker_application1)
@@ -150,9 +150,9 @@ RSpec.describe LockerApplication, type: :model do
   end
 
   describe '##department_choices' do
-    let!(:locker_application1) { FactoryBot.create :locker_application, complete: true }
-    let!(:locker_application2) { FactoryBot.create :locker_application, complete: true }
-    let!(:locker_application3) { FactoryBot.create :locker_application, complete: true }
+    let!(:locker_application1) { FactoryBot.create(:locker_application, complete: true) }
+    let!(:locker_application2) { FactoryBot.create(:locker_application, complete: true) }
+    let!(:locker_application3) { FactoryBot.create(:locker_application, complete: true) }
 
     it 'shows all the departments' do
       expect(locker_application1.department_choices).to contain_exactly({ label: locker_application1.department_at_application,

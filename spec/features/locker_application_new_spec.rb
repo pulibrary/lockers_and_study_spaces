@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Application New', type: :feature, js: true do
+RSpec.describe 'Locker Application New', js: true do
   let(:user) { FactoryBot.create(:user) }
   let(:building_one) { FactoryBot.create(:building, id: 1) }
   let(:building_two) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
@@ -53,7 +53,7 @@ RSpec.describe 'Locker Application New', type: :feature, js: true do
         expect(page).to have_unchecked_field('Accessible')
         expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
         expect(page).to have_field('Department')
-        uid_field = page.find('#locker_application_user_uid', visible: false)
+        uid_field = page.find_by_id('locker_application_user_uid', visible: false)
         expect(uid_field.value).to eq(user.uid)
         expect(page).to have_button('Submit Locker Application')
         # Add some values to form

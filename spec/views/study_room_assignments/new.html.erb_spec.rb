@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'study_room_assignments/new', type: :view do
+RSpec.describe 'study_room_assignments/new' do
   before do
     assign(:study_room_assignment, StudyRoomAssignment.new(
                                      user: nil,
