@@ -5,7 +5,7 @@ An application to manage and reserve locker and study spaces for the library.  T
 
 ## Ruby version
 
-  2.7.5
+  3.1.3
 
 ## System dependencies
 
