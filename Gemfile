@@ -41,7 +41,7 @@ gem 'omniauth-rails_csrf_protection'
 
 # ldap
 gem 'net-ldap'
-gem 'pagy', '~> 3.5'
+gem 'pagy', '< 5.0.0'
 
 gem 'whenever'
 
@@ -60,7 +60,7 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen'
   gem 'rspec-rails'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
