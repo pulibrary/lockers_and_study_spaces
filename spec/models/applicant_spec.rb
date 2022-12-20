@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # rubocop:disable Layout/LineLength
-RSpec.describe Applicant, type: :model do
+RSpec.describe Applicant do
   subject(:applicant) { described_class.new(user) }
 
   let(:current_academic_year) do
@@ -12,7 +12,7 @@ RSpec.describe Applicant, type: :model do
     year += 1 if now.month > 6
     year
   end
-  let(:user) { FactoryBot.create :user, uid: 'abc123' }
+  let(:user) { FactoryBot.create(:user, uid: 'abc123') }
   let(:ldap_connection) { Net::LDAP.new }
   let(:valid_ldap_response) do
     [{ dn: ['uid=abc123,o=princeton university,c=us'], telephonenumber: ['111-222-3333'], edupersonaffiliation: %w[member staff employee], puhomedepartmentnumber: ['99999'], sn: ['Smith'],

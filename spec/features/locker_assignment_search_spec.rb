@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Assignment Search', type: :feature, js: true do
-  let(:user) { FactoryBot.create :user, :admin }
+RSpec.describe 'Locker Assignment Search', js: true do
+  let(:user) { FactoryBot.create(:user, :admin) }
   let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior', complete: true) }
   let(:locker_application2) { FactoryBot.create(:locker_application, complete: true) }
   let(:locker1) { FactoryBot.create(:locker, floor: 'A floor') }

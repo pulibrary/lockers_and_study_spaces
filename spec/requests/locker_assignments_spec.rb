@@ -14,12 +14,12 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe '/locker_assignments', type: :request do
-  let(:user) { FactoryBot.create :user }
+RSpec.describe '/locker_assignments' do
+  let(:user) { FactoryBot.create(:user) }
   # LockerAssignment. As you add validations to LockerAssignment, be sure to
   # adjust the attributes here as well.
-  let(:locker) { FactoryBot.create :locker }
-  let(:locker_application) { FactoryBot.create :locker_application }
+  let(:locker) { FactoryBot.create(:locker) }
+  let(:locker_application) { FactoryBot.create(:locker_application) }
   let(:valid_attributes) do
     {
       locker_application_id: locker_application.id,
@@ -173,7 +173,7 @@ RSpec.describe '/locker_assignments', type: :request do
   end
 
   context 'with an admin user' do
-    let(:user) { FactoryBot.create :user, :admin }
+    let(:user) { FactoryBot.create(:user, :admin) }
 
     describe 'GET /index' do
       it 'renders a successful response' do

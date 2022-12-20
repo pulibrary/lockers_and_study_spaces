@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'lockers/edit', type: :view do
+RSpec.describe 'lockers/edit' do
   before do
     @locker = assign(:locker, Locker.create!(
                                 location: 'MyString',

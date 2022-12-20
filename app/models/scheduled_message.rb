@@ -42,7 +42,7 @@ class ScheduledMessage < ApplicationRecord
     return unless results.nil?
 
     relevant_assignments.each do |assignment|
-      UserMailer.with(assignment: assignment, template_name: template)
+      UserMailer.with(assignment:, template_name: template)
                 .renewal_email
                 .deliver_now
     end

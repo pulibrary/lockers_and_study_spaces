@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'study_room_violations/edit', type: :view do
+RSpec.describe 'study_room_violations/edit' do
   before do
     @study_room_violation = assign(:study_room_violation, FactoryBot.create(:study_room_violation))
   end
@@ -19,7 +19,7 @@ RSpec.describe 'study_room_violations/edit', type: :view do
 
   context 'with an assigned user' do
     before do
-      FactoryBot.create :study_room_assignment, study_room: @study_room_violation.study_room, user: @study_room_violation.user
+      FactoryBot.create(:study_room_assignment, study_room: @study_room_violation.study_room, user: @study_room_violation.user)
     end
 
     it 'renders the edit violation form' do

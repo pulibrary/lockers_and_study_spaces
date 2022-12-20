@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'study_rooms/show', type: :view do
+RSpec.describe 'study_rooms/show' do
   before do
     @study_room = assign(:study_room, StudyRoom.create!(
                                         location: 'Location',

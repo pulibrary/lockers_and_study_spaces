@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'lockers/new', type: :view do
+RSpec.describe 'lockers/new' do
   before do
     assign(:locker, Locker.new(
                       location: 'location',

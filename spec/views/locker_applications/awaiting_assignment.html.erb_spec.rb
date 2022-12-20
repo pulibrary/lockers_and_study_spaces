@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_applications/awaiting_assignment', type: :view do
-  let(:user1) { FactoryBot.create :user }
-  let(:user2) { FactoryBot.create :user }
+RSpec.describe 'locker_applications/awaiting_assignment' do
+  let(:user1) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
   let(:building_one) { FactoryBot.create(:building, id: 1) }
   let(:building_two) { FactoryBot.create(:building, id: 2, name: 'Lewis Library') }
 

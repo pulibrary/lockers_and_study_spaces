@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe UserMailer, type: :mailer do
+RSpec.describe UserMailer do
   describe '#locker_assignment_confirmation' do
-    let(:locker_assignment) { FactoryBot.create :locker_assignment }
+    let(:locker_assignment) { FactoryBot.create(:locker_assignment) }
 
     it 'sends an email to the assignee' do
-      expect { described_class.with(locker_assignment: locker_assignment).locker_assignment_confirmation.deliver }
+      expect { described_class.with(locker_assignment:).locker_assignment_confirmation.deliver }
         .to change { ActionMailer::Base.deliveries.count }.by(1)
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq 'Your Locker has been assigned'
@@ -23,28 +23,28 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   describe '#locker_violation' do
-    let(:locker_assignment) { FactoryBot.create :locker_assignment }
+    let(:locker_assignment) { FactoryBot.create(:locker_assignment) }
 
     it 'sends an email to the assignee' do
       locker_violation = LockerViolation.new(locker: locker_assignment.locker, user: locker_assignment.user, number_of_books: 8)
-      expect { described_class.with(locker_violation: locker_violation).locker_violation.deliver }
+      expect { described_class.with(locker_violation:).locker_violation.deliver }
         .to change { ActionMailer::Base.deliveries.count }.by(1)
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq 'Uncharged Materials in Locker'
       expect(mail.to).to eq [locker_violation.email]
       expect(mail.from).to eq ['access@princeton.edu']
       expect(mail.html_part.body.to_s).to have_content('Firestone Library Locker Violation')
-      expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your locker #{locker_violation.location}"\
-                                                       ' that were not checked out and we returned them to Circulation')
+      expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your locker #{locker_violation.location} " \
+                                                       'that were not checked out and we returned them to Circulation')
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Locker Space Agreement.pdf"')
     end
   end
 
   describe '#study_room_assignment_confirmation' do
-    let(:study_room_assignment) { FactoryBot.create :study_room_assignment }
+    let(:study_room_assignment) { FactoryBot.create(:study_room_assignment) }
 
     it 'sends an email to the assignee' do
-      expect { described_class.with(study_room_assignment: study_room_assignment).study_room_assignment_confirmation.deliver }
+      expect { described_class.with(study_room_assignment:).study_room_assignment_confirmation.deliver }
         .to change { ActionMailer::Base.deliveries.count }.by(1)
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq 'Your study room location has been assigned'
@@ -57,19 +57,19 @@ RSpec.describe UserMailer, type: :mailer do
   end
 
   describe '#study_room_violation' do
-    let(:study_room_assignment) { FactoryBot.create :study_room_assignment }
+    let(:study_room_assignment) { FactoryBot.create(:study_room_assignment) }
 
     it 'sends an email to the assignee' do
       study_room_violation = StudyRoomViolation.new(study_room: study_room_assignment.study_room, user: study_room_assignment.user, number_of_books: 8)
-      expect { described_class.with(study_room_violation: study_room_violation).study_room_violation.deliver }
+      expect { described_class.with(study_room_violation:).study_room_violation.deliver }
         .to change { ActionMailer::Base.deliveries.count }.by(1)
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq 'Uncharged Materials in Study Room'
       expect(mail.to).to eq [study_room_violation.email]
       expect(mail.from).to eq ['access@princeton.edu']
       expect(mail.html_part.body.to_s).to have_content('Firestone Library Study Room Violation')
-      expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your study room area #{study_room_violation.location}"\
-                                                       ' that were not checked out and we returned them to Circulation')
+      expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your study room area #{study_room_violation.location} " \
+                                                       'that were not checked out and we returned them to Circulation')
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Study Room Agreement.pdf"')
     end
   end

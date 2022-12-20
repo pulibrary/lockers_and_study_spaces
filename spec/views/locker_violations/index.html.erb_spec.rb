@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_violations/index', type: :view do
+RSpec.describe 'locker_violations/index' do
   before do
     assign(:locker_violations, [FactoryBot.create(:locker_violation, number_of_books: 5), FactoryBot.create(:locker_violation, number_of_books: 7)])
   end

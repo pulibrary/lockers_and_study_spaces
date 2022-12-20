@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_applications/show', type: :view do
-  let(:user) { FactoryBot.create :user }
+RSpec.describe 'locker_applications/show' do
+  let(:user) { FactoryBot.create(:user) }
   let(:building_one) { FactoryBot.create(:building, id: 1) }
   let(:building_two) { FactoryBot.create(:building, id: 2, name: 'Lewis Library') }
 
@@ -17,7 +17,7 @@ RSpec.describe 'locker_applications/show', type: :view do
                                                         semester: 'Semester',
                                                         status_at_application: 'Stauts At Application',
                                                         department_at_application: 'Department At Application',
-                                                        user: user
+                                                        user:
                                                       ))
   end
 

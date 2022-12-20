@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe LockersController do
   render_views
-  let(:firestone) { FactoryBot.create :building, name: 'Firestone Library' }
-  let(:lewis) { FactoryBot.create :building, name: 'Lewis Library' }
-  let(:user) { FactoryBot.create :user, :admin, building: lewis }
-  let(:firestone_locker) { FactoryBot.create :locker, building: firestone }
-  let(:lewis_locker) { FactoryBot.create :locker, building: lewis }
+  let(:firestone) { FactoryBot.create(:building, name: 'Firestone Library') }
+  let(:lewis) { FactoryBot.create(:building, name: 'Lewis Library') }
+  let(:user) { FactoryBot.create(:user, :admin, building: lewis) }
+  let(:firestone_locker) { FactoryBot.create(:locker, building: firestone) }
+  let(:lewis_locker) { FactoryBot.create(:locker, building: lewis) }
 
   before do
     sign_in user

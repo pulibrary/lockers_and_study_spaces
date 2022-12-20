@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_violations/edit', type: :view do
+RSpec.describe 'locker_violations/edit' do
   before do
     @locker_violation = assign(:locker_violation, FactoryBot.create(:locker_violation))
   end
@@ -19,8 +19,8 @@ RSpec.describe 'locker_violations/edit', type: :view do
 
   context 'with an assigned user' do
     before do
-      application = FactoryBot.create :locker_application, user: @locker_violation.user
-      FactoryBot.create :locker_assignment, locker: @locker_violation.locker, locker_application: application
+      application = FactoryBot.create(:locker_application, user: @locker_violation.user)
+      FactoryBot.create(:locker_assignment, locker: @locker_violation.locker, locker_application: application)
     end
 
     it 'renders the edit violation form' do

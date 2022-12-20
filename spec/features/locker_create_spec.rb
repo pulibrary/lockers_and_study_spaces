@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'securerandom'
 
-RSpec.describe 'Locker Create', type: :feature, js: true do
+RSpec.describe 'Locker Create', js: true do
   let(:building) { FactoryBot.create(:building, name: 'Firestone Library') }
-  let(:user) { FactoryBot.create(:user, :admin, building: building) }
+  let(:user) { FactoryBot.create(:user, :admin, building:) }
 
   before do
     sign_in user

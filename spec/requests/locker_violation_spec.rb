@@ -14,8 +14,8 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe '/locker_violations', type: :request do
-  let(:user) { FactoryBot.create :user }
+RSpec.describe '/locker_violations' do
+  let(:user) { FactoryBot.create(:user) }
   # LockerViolation. As you add validations to LockerViolation, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
@@ -27,7 +27,7 @@ RSpec.describe '/locker_violations', type: :request do
   let(:locker) { FactoryBot.create(:locker) }
   let(:violation_user) { FactoryBot.create(:user) }
   let(:locker_application) { FactoryBot.create(:locker_application, user: violation_user) }
-  let(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application: locker_application, locker: locker) }
+  let(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application:, locker:) }
 
   before do
     sign_in user
@@ -139,7 +139,7 @@ RSpec.describe '/locker_violations', type: :request do
   end
 
   context 'an admin user' do
-    let(:user) { FactoryBot.create :user, :admin }
+    let(:user) { FactoryBot.create(:user, :admin) }
 
     describe 'GET /index' do
       it 'renders a successful response' do

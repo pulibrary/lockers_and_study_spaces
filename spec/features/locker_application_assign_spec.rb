@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Application Assign', type: :feature, js: true do
-  let(:user) { FactoryBot.create :user, :admin }
-  let(:user1) { FactoryBot.create :user }
-  let(:user2) { FactoryBot.create :user }
+RSpec.describe 'Locker Application Assign', js: true do
+  let(:user) { FactoryBot.create(:user, :admin) }
+  let(:user1) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
   let(:locker_application) { FactoryBot.create(:locker_application, user: user1, preferred_general_area: 'A floor', complete: true) }
   let(:incomplete_application) { FactoryBot.create(:locker_application, user: user2, complete: false) }
   let(:locker) { FactoryBot.create(:locker, floor: 'A floor') }

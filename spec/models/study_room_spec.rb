@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe StudyRoom, type: :model do
-  let(:study_room) { FactoryBot.create :study_room }
+RSpec.describe StudyRoom do
+  let(:study_room) { FactoryBot.create(:study_room) }
 
   describe '#current_assignment' do
     it 'returns nil if no assignment exists' do
@@ -11,7 +11,7 @@ RSpec.describe StudyRoom, type: :model do
     end
 
     it 'returns the assignment if it exists' do
-      assignment = FactoryBot.create :study_room_assignment
+      assignment = FactoryBot.create(:study_room_assignment)
       expect(assignment.study_room.current_assignment).to eq(assignment)
     end
   end
@@ -22,18 +22,18 @@ RSpec.describe StudyRoom, type: :model do
     end
 
     it 'returns the assignment if it exists' do
-      assignment = FactoryBot.create :study_room_assignment
+      assignment = FactoryBot.create(:study_room_assignment)
       expect(assignment.study_room.current_uid).to eq(assignment.uid)
     end
   end
 
   describe '#assign_user' do
     it 'noop if assignment already exists' do
-      assignment = FactoryBot.create :study_room_assignment
+      assignment = FactoryBot.create(:study_room_assignment)
       expect do
         assignment.study_room.assign_user(assignment.study_room.current_uid)
-      end.to change { StudyRoomAssignment.count }.by(0)
-                                                 .and change { User.count }.by(0)
+      end.to not_change { StudyRoomAssignment.count }
+        .and(not_change { User.count })
     end
 
     it 'create a user if needed' do
@@ -44,7 +44,7 @@ RSpec.describe StudyRoom, type: :model do
     end
 
     it 'release a previous assignment if needed' do
-      assignment = FactoryBot.create :study_room_assignment
+      assignment = FactoryBot.create(:study_room_assignment)
       expect do
         assignment.study_room.assign_user('abc123')
       end.to change { StudyRoomAssignment.count }.by(1)
@@ -56,7 +56,7 @@ RSpec.describe StudyRoom, type: :model do
   describe '#space_totals' do
     it 'returns all the spaces divided size and floor' do
       described_class.general_areas.each do |general_area|
-        FactoryBot.create(:study_room, general_area: general_area)
+        FactoryBot.create(:study_room, general_area:)
       end
       expect(described_class.new.space_totals).to eq({ 'Classics Graduate Study Room' => 1,
                                                        'History Graduate Study Room' => 1 })
@@ -66,7 +66,7 @@ RSpec.describe StudyRoom, type: :model do
   describe '#space_totals' do
     it 'returns all the spaces divided size and floor' do
       described_class.general_areas.each do |general_area|
-        FactoryBot.create(:study_room_assignment, study_room: FactoryBot.create(:study_room, general_area: general_area))
+        FactoryBot.create(:study_room_assignment, study_room: FactoryBot.create(:study_room, general_area:))
       end
       expect(described_class.new.space_assigned_totals).to eq({ 'Classics Graduate Study Room' => 1,
                                                                 'History Graduate Study Room' => 1 })
@@ -76,7 +76,7 @@ RSpec.describe StudyRoom, type: :model do
   describe '#space_report' do
     it 'returns all the spaces divided size and floor' do
       described_class.general_areas.each do |general_area|
-        FactoryBot.create(:study_room_assignment, study_room: FactoryBot.create(:study_room, general_area: general_area))
+        FactoryBot.create(:study_room_assignment, study_room: FactoryBot.create(:study_room, general_area:))
       end
       expect(described_class.new.space_report).to eq({ 'Classics Graduate Study Room' => [1, 1, 1, 0],
                                                        'History Graduate Study Room' => [1, 1, 1, 0] })

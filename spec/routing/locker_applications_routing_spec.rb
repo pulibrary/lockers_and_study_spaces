@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LockerApplicationsController, type: :routing do
+RSpec.describe LockerApplicationsController do
   describe 'routing' do
     it 'routes the root of the application to the LockerApplications controller' do
       expect(get: '/').to route_to('locker_applications#new')

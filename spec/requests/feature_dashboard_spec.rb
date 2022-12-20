@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Feature dashboard', type: :request do
-  let(:building) { FactoryBot.create :building, name: 'Lewis Library' }
-  let(:user) { FactoryBot.create :user, :admin, building: building }
+RSpec.describe 'Feature dashboard' do
+  let(:building) { FactoryBot.create(:building, name: 'Lewis Library') }
+  let(:user) { FactoryBot.create(:user, :admin, building:) }
 
   context 'when user is an admin' do
     before do
@@ -13,7 +13,7 @@ RSpec.describe 'Feature dashboard', type: :request do
 
     it 'can access the dashboard' do
       get '/flipflop'
-      expect(response.status).to be 200
+      expect(response).to have_http_status :ok
       expect(response.body).to include('Locker And Study Spaces Features')
     end
 
@@ -24,14 +24,14 @@ RSpec.describe 'Feature dashboard', type: :request do
 
       it 'can access the dashboard' do
         get '/flipflop'
-        expect(response.status).to be 200
+        expect(response).to have_http_status :ok
         expect(response.body).to include('Locker And Study Spaces Features')
       end
     end
   end
 
   context 'when user is not an admin' do
-    let(:user) { FactoryBot.create :user, admin: false, building: building }
+    let(:user) { FactoryBot.create(:user, admin: false, building:) }
 
     before do
       sign_in user
@@ -39,7 +39,7 @@ RSpec.describe 'Feature dashboard', type: :request do
 
     it 'cannot access the dashboard' do
       get '/flipflop'
-      expect(response.status).to be 403
+      expect(response).to have_http_status :forbidden
     end
   end
 

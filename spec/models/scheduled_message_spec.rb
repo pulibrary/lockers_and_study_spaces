@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ScheduledMessage, type: :model do
+RSpec.describe ScheduledMessage do
   describe 'scopes' do
     let(:yesterday) { described_class.create!(schedule: Date.yesterday) }
     let(:today) { described_class.create!(schedule: Date.today) }
@@ -58,10 +58,10 @@ RSpec.describe ScheduledMessage, type: :model do
                              template: 'locker_renewal',
                              applicable_range: Date.today..2.years.from_now)
     end
-    let!(:assignment) { FactoryBot.create :locker_assignment }
+    let!(:assignment) { FactoryBot.create(:locker_assignment) }
 
     it 'sends messages for today' do
-      FactoryBot.create_list :locker_assignment, 2
+      FactoryBot.create_list(:locker_assignment, 2)
       expect { message_to_send.send_emails }
         .to change { ActionMailer::Base.deliveries.count }.by(3)
       mail = ActionMailer::Base.deliveries.last

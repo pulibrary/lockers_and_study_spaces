@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_applications/new', type: :view do
-  let(:user) { FactoryBot.create :user }
+RSpec.describe 'locker_applications/new' do
+  let(:user) { FactoryBot.create(:user) }
 
   before do
     sign_in user
@@ -14,7 +14,7 @@ RSpec.describe 'locker_applications/new', type: :view do
                                   semester: 'Fall',
                                   status_at_application: 'junior',
                                   department_at_application: 'department',
-                                  user: user
+                                  user:
                                 ))
   end
 
@@ -32,7 +32,7 @@ RSpec.describe 'locker_applications/new', type: :view do
     end
 
     context 'with an administrative user' do
-      let(:user) { FactoryBot.create :user, :admin }
+      let(:user) { FactoryBot.create(:user, :admin) }
 
       it 'renders new locker_application form and allows the user netid to be edited' do
         render
@@ -70,7 +70,7 @@ RSpec.describe 'locker_applications/new', type: :view do
     end
 
     context 'with an administrative user' do
-      let(:user) { FactoryBot.create :user, :admin }
+      let(:user) { FactoryBot.create(:user, :admin) }
 
       it 'renders new locker_application form and allows the user netid to be edited' do
         render

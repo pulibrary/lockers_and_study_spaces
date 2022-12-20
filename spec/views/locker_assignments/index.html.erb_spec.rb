@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_assignments/index', type: :view do
-  let(:locker1) { FactoryBot.create :locker }
-  let(:locker_application1) { FactoryBot.create :locker_application }
-  let(:locker2) { FactoryBot.create :locker }
-  let(:locker_application2) { FactoryBot.create :locker_application }
-  let(:building) { FactoryBot.create :building, name: 'Library of Alexandria' }
-  let(:user) { FactoryBot.create :user, building: building }
+RSpec.describe 'locker_assignments/index' do
+  let(:locker1) { FactoryBot.create(:locker) }
+  let(:locker_application1) { FactoryBot.create(:locker_application) }
+  let(:locker2) { FactoryBot.create(:locker) }
+  let(:locker_application2) { FactoryBot.create(:locker_application) }
+  let(:building) { FactoryBot.create(:building, name: 'Library of Alexandria') }
+  let(:user) { FactoryBot.create(:user, building:) }
 
   before do
     assign(:locker_assignments, [

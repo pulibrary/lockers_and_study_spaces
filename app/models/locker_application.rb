@@ -52,7 +52,7 @@ class LockerApplication < ApplicationRecord
   end
 
   def available_lockers_in_area_and_size(building:)
-    context = Locker.available_lockers(building: building)
+    context = Locker.available_lockers(building:)
     context = context.where(floor: preferred_general_area) if preferred_general_area.present? && preferred_general_area != 'No preference'
     context = context.where(size: preferred_size) if preferred_size.present?
     context.order(:location)
@@ -60,7 +60,7 @@ class LockerApplication < ApplicationRecord
 
   def self.search(uid:, archived:)
     return joins(:user).where("users.uid = '#{uid}'").where('locker_applications.archived = false').where(complete: true) if uid.present?
-    return where(complete: true).where(archived: archived) unless archived
+    return where(complete: true).where(archived:) unless archived
 
     where(complete: true)
   end

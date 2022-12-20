@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe StudyRoomsController, type: :routing do
+RSpec.describe StudyRoomsController do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/study_rooms').to route_to('study_rooms#index')

@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_applications/edit', type: :view do
-  let(:user) { FactoryBot.create :user }
+RSpec.describe 'locker_applications/edit' do
+  let(:user) { FactoryBot.create(:user) }
   let(:building_one) { FactoryBot.create(:building, id: 1) }
   let(:building_two) { FactoryBot.create(:building, id: 2, name: 'Lewis Library') }
 
@@ -18,7 +18,7 @@ RSpec.describe 'locker_applications/edit', type: :view do
                                                         semester: 'MyString',
                                                         status_at_application: 'MyString',
                                                         department_at_application: 'MyString',
-                                                        user: user
+                                                        user:
                                                       ))
   end
 
@@ -43,7 +43,7 @@ RSpec.describe 'locker_applications/edit', type: :view do
   end
 
   context 'with an administrative user' do
-    let(:user) { FactoryBot.create :user, :admin }
+    let(:user) { FactoryBot.create(:user, :admin) }
 
     it 'renders the edit locker_application form and allows the user netid to be edited' do
       render

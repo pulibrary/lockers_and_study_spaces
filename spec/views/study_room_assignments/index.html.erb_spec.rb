@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-RSpec.describe 'study_room_assignments/index', type: :view do
-  let(:user) { FactoryBot.create :user }
-  let(:study_room) { FactoryBot.create :study_room }
+RSpec.describe 'study_room_assignments/index' do
+  let(:user) { FactoryBot.create(:user) }
+  let(:study_room) { FactoryBot.create(:study_room) }
 
   before do
     assign(:study_room_assignments, [
              StudyRoomAssignment.create!(
-               user: user,
-               study_room: study_room
+               user:,
+               study_room:
              ),
              StudyRoomAssignment.create!(
-               user: user,
-               study_room: study_room
+               user:,
+               study_room:
              )
            ])
     assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))

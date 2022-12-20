@@ -20,9 +20,9 @@ class LockerAssignment < ApplicationRecord
         when :uid, 'uid'
           memo.search_by_user(uid: val)
         when :status_at_application, 'status_at_application', :department_at_application, 'department_at_application'
-          memo.search_by_relation(relation: :locker_application, field: field, value: val)
+          memo.search_by_relation(relation: :locker_application, field:, value: val)
         when :general_area, 'general_area', :floor, 'floor'
-          memo.search_by_relation(relation: :locker, field: field, value: val)
+          memo.search_by_relation(relation: :locker, field:, value: val)
         when :expiration_date_start, 'expiration_date_start', :expiration_date_end, 'expiration_date_end', :active, 'active'
           memo.search_by_date(field: field.to_sym, value: val)
         else
@@ -54,7 +54,7 @@ class LockerAssignment < ApplicationRecord
   end
 
   def locker_choices(building:)
-    available = Locker.available_lockers(building: building).pluck(:id, :location, :size)
+    available = Locker.available_lockers(building:).pluck(:id, :location, :size)
     prepare_locker_choices_for_lux(available)
   end
 
@@ -62,7 +62,7 @@ class LockerAssignment < ApplicationRecord
     available = if locker_application.blank?
                   []
                 else
-                  locker_application.available_lockers_in_area_and_size(building: building)
+                  locker_application.available_lockers_in_area_and_size(building:)
                                     .pluck(:id, :location, :size)
                 end
     prepare_locker_choices_for_lux(available)

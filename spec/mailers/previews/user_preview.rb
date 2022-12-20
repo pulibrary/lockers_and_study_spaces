@@ -6,10 +6,10 @@ class UserPreview < ActionMailer::Preview
     user = User.new(applicant: Applicant.new(user,
                                              ldap: { email: 'sally.smith@example.com', name: 'Sally Smith', pustatus: 'stf',
                                                      status: 'staff', department: 'History' }))
-    application = LockerApplication.new(user: user)
+    application = LockerApplication.new(user:)
     locker_assignment = LockerAssignment.new(locker_application: application, locker: Locker.new(location: '2-9-G-2', combination: '11-22-33'),
                                              expiration_date: DateTime.now.to_date)
-    UserMailer.with(locker_assignment: locker_assignment).locker_assignment_confirmation
+    UserMailer.with(locker_assignment:).locker_assignment_confirmation
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -20,16 +20,16 @@ class UserPreview < ActionMailer::Preview
     locker = Locker.find_by(location: '2-9-G-2')
     if locker.nil?
       locker = Locker.create(location: '2-9-G-2', general_area: 'General Area', combination: 'combination')
-      application = LockerApplication.create(user: user,
+      application = LockerApplication.create(user:,
                                              applicant: Applicant.new(user,
                                                                       ldap: { email: 'sally.smith@example.com', name: 'Sally Smith', pustatus: 'stf',
                                                                               status: 'staff', department: 'History' }))
-      LockerAssignment.create(locker_application: application, locker: locker,
+      LockerAssignment.create(locker_application: application, locker:,
                               expiration_date: DateTime.tomorrow.to_date, start_date: DateTime.now.to_date)
     end
-    LockerViolation.where(locker: locker).destroy_all
-    locker_violation = LockerViolation.create(locker: locker, user: user)
-    UserMailer.with(locker_violation: locker_violation).locker_violation
+    LockerViolation.where(locker:).destroy_all
+    locker_violation = LockerViolation.create(locker:, user:)
+    UserMailer.with(locker_violation:).locker_violation
   end
   # rubocop:enable Metrics/AbcSize
 end

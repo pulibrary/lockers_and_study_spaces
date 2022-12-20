@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'lockers/index', type: :view do
-  let(:building) { FactoryBot.create :building, name: 'My Excellent Library' }
-  let(:user) { FactoryBot.create :user, building: building }
+RSpec.describe 'lockers/index' do
+  let(:building) { FactoryBot.create(:building, name: 'My Excellent Library') }
+  let(:user) { FactoryBot.create(:user, building:) }
 
   before do
     @lockers = assign(:lockers, [

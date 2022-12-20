@@ -14,8 +14,8 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe '/study_rooms', type: :request do
-  let(:user) { FactoryBot.create :user }
+RSpec.describe '/study_rooms' do
+  let(:user) { FactoryBot.create(:user) }
 
   # StudyRoom. As you add validations to StudyRoom, be sure to
   # adjust the attributes here as well.
@@ -132,7 +132,7 @@ RSpec.describe '/study_rooms', type: :request do
   end
 
   context 'with an admin user' do
-    let(:user) { FactoryBot.create :user, :admin }
+    let(:user) { FactoryBot.create(:user, :admin) }
 
     describe 'GET /index' do
       it 'renders a successful response' do

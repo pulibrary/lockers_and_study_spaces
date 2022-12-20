@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'locker_applications/assign', type: :view do
-  let(:locker_application) { FactoryBot.create :locker_application }
+RSpec.describe 'locker_applications/assign' do
+  let(:locker_application) { FactoryBot.create(:locker_application) }
 
   before do
     assign(:locker_application, locker_application)
     assign(:locker_assignment, LockerAssignment.new(
-                                 locker_application: locker_application,
+                                 locker_application:,
                                  locker: nil,
                                  start_date: DateTime.current.to_date
                                ))
