@@ -9,8 +9,6 @@ gem 'rails', '~> 7.0'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
 gem 'terser'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
