@@ -6,11 +6,14 @@ import system from "lux-design-system"
 Vue.use(system)
 
 // create the LUX app and mount it to wrappers with class="lux"
-document.addEventListener("DOMContentLoaded", () => {
-  var elements = document.getElementsByClassName("lux")
-  for (var i = 0; i < elements.length; i++) {
-    new Vue({
-      el: elements[i],
-    })
+//document.addEventListener("DOMContentLoaded", () => {
+document.onreadystatechange = () => {
+  if (document.readyState == "complete") {
+    var elements = document.getElementsByClassName("lux")
+    for (var i = 0; i < elements.length; i++) {
+      new Vue({
+        el: elements[i],
+      })
+    }  
   }
-})
+}
