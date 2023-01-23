@@ -139,6 +139,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@rails/ujs@^7.0.4-1":
+  version "7.0.4-1"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.4-1.tgz#1efc6fdf62bfe812d9ee65796b904b9680f9f0b4"
+  integrity sha512-EIB/lHe9Jk5hTo5XG5KQznBCk0jEtb6dVaaUpOrk3mmsH68gavPSs3Sx6ovdBmyWdeoyh30kxOymPj5afPmcBg==
+
 "@vue/component-compiler-utils@^3.1.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@vue/component-compiler-utils/-/component-compiler-utils-3.3.0.tgz#f9f5fb53464b0c37b2c8d2f3fbfe44df60f61dc9"
