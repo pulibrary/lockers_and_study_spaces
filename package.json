@@ -2,6 +2,7 @@
   "name": "locker_and_study_spaces",
   "private": true,
   "dependencies": {
+    "@rails/ujs": "^7.0.4-1",
     "lux-design-system": "^2.0.4",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",

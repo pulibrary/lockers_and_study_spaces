@@ -6,8 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= vite_stylesheet_tag '/app/assets/stylesheets/application.scss', media: 'all' %>
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'application' %>
   </head>
