@@ -41,6 +41,15 @@
                       :options="<%= locker_application.semester_choices.to_json %>"
         ></input-select>
    </grid-item>
+   <grid-item columns="lg-6 md-6 sm-12">
+     <input-select label="Accessibility Needs" name="locker_application[accessibility_needs][]"
+                      id="accessibility_needs"
+                      width="expand"
+                      value="<%= locker_application.accessibility_needs %>"
+                      :multiple=true
+                      :options="<%= locker_application.accessibility_needs_choices.to_json %>"
+        ></input-select>
+   </grid-item>
    <grid-item columns="lg-12 md-12 sm-12">
      <%= check_box :locker_application, :accessible, {}, "true", "false" %>
      <%= label(:locker_application, :accessible, "Accessible") %>

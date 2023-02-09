@@ -60,9 +60,23 @@ RSpec.describe 'Locker Application New', js: true do
         select('4-foot', from: :locker_application_preferred_size)
         expect(new_application.reload.complete).to be false
         click_button('Submit Locker Application')
-        expect(new_application.reload.preferred_size).to eq(4)
-        expect(new_application.reload.complete).to be true
+        new_application.reload
+        expect(new_application.preferred_size).to eq(4)
+        expect(new_application.complete).to be true
         expect(page).to have_current_path(locker_application_path(new_application))
+      end
+
+      it 'can indicate Accessibility Needs' do
+        visit root_path
+        select('Firestone Library', from: :locker_application_building_id)
+        click_button('Next')
+        new_application = LockerApplication.last
+        expect(page).to have_select('Accessibility Needs', options: ['Keyed entry (rather than combination)', 'Near an elevator'], multiple: true)
+        select('Keyed entry (rather than combination)', from: 'Accessibility Needs')
+        select('Near an elevator', from: 'Accessibility Needs')
+        click_button('Submit Locker Application')
+        new_application.reload
+        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)', 'Near an elevator'])
       end
     end
 

@@ -10,23 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_28_135241) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "buildings", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_buildings_on_name", unique: true
   end
 
   create_table "flipflop_features", force: :cascade do |t|
     t.string "key", null: false
     t.boolean "enabled", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "locker_applications", force: :cascade do |t|
@@ -42,6 +41,7 @@ ActiveRecord::Schema.define(version: 2022_10_28_135241) do
     t.boolean "archived", default: false
     t.bigint "building_id", default: 1
     t.boolean "complete", default: false
+    t.text "accessibility_needs", default: [], array: true
     t.index ["building_id"], name: "index_locker_applications_on_building_id"
     t.index ["user_id"], name: "index_locker_applications_on_user_id"
   end
@@ -94,8 +94,8 @@ ActiveRecord::Schema.define(version: 2022_10_28_135241) do
     t.string "user_filter"
     t.string "type"
     t.json "results"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "study_room_assignments", force: :cascade do |t|

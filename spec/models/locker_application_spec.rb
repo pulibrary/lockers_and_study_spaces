@@ -27,6 +27,7 @@ RSpec.describe LockerApplication do
     expect(locker_application.archived).to be(false)
     expect(locker_application.building).to eq(building_one)
     expect(locker_application.complete).to be false
+    expect(locker_application.accessibility_needs).to be_empty
   end
 
   context 'with an application created prior to having complete in the database' do
@@ -39,6 +40,14 @@ RSpec.describe LockerApplication do
       expect(locker_application.reload.complete).to be_nil
       described_class.mark_applications_complete
       expect(locker_application.reload.complete).to be true
+    end
+  end
+
+  describe '#accessibility_needs_choices' do
+    it 'can list accessiblity choices' do
+      expect(locker_application.accessibility_needs_choices).to be_an_instance_of(Array)
+      expect(locker_application.accessibility_needs_choices.first).to be_an_instance_of(Hash)
+      expect(locker_application.accessibility_needs_choices.first.keys).to match_array(%i[label value])
     end
   end
 

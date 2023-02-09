@@ -13,9 +13,10 @@ RSpec.describe 'locker_applications/show' do
     @locker_application = assign(:locker_application, LockerApplication.create!(
                                                         preferred_size: 2,
                                                         preferred_general_area: 'Preferred General Area',
+                                                        accessibility_needs: ['Need one', 'Need two'],
                                                         accessible: false,
                                                         semester: 'Semester',
-                                                        status_at_application: 'Stauts At Application',
+                                                        status_at_application: 'Status At Application',
                                                         department_at_application: 'Department At Application',
                                                         user:
                                                       ))
@@ -27,8 +28,10 @@ RSpec.describe 'locker_applications/show' do
     expect(rendered).to match(/Preferred General Area/)
     expect(rendered).to match(/false/)
     expect(rendered).to match(/Semester/)
-    expect(rendered).to match(/Stauts At Application/)
+    expect(rendered).to match(/Status At Application/)
     expect(rendered).to match(/Department At Application/)
+    expect(rendered).to match(/Need one/)
+    expect(rendered).to match(/Need two/)
     expect(rendered).to match(/#{user.uid}/)
   end
 end

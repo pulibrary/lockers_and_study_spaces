@@ -22,6 +22,11 @@ class LockerApplication < ApplicationRecord
     end
   end
 
+  def accessibility_needs_choices
+    choices = LockerAndStudySpaces.config.fetch(:accessibility_needs_choices, [])
+    prepare_choices_for_lux(choices)
+  end
+
   def size_choices
     choices = LockerAndStudySpaces.config.fetch(:locker_sizes, [])
     choices = [choices.first] if user.blank? || user.junior?

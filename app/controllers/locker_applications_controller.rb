@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class LockerApplicationsController < ApplicationController
   before_action :set_locker_application, only: %i[show edit update destroy assign]
   before_action :force_admin, except: %i[new create show]
@@ -83,8 +84,8 @@ class LockerApplicationsController < ApplicationController
     # If a user_uid is not passed in, something suspicious is going on and should raise an error
     params.require(:locker_application).require(:user_uid)
     locker_params = params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
-                                                               :status_at_application, :department_at_application, :user_uid, :building_id, :complete)
-
+                                                               :status_at_application, :department_at_application, :user_uid,
+                                                               :building_id, :complete, accessibility_needs: [])
     locker_params = lookup_user_from_params(locker_params)
     locker_params = lookup_building_from_params(locker_params) if Flipflop.lewis_patrons? && locker_params[:building_id].present?
     locker_params
@@ -143,3 +144,4 @@ class LockerApplicationsController < ApplicationController
     ActiveModel::Type::Boolean.new.cast(params[:archived])
   end
 end
+# rubocop:enable Metrics/ClassLength
