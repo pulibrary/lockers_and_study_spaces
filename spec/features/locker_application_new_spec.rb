@@ -50,7 +50,6 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
         expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
-        expect(page).to have_unchecked_field('Accessible')
         expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
         expect(page).to have_field('Department')
         uid_field = page.find_by_id('locker_application_user_uid', visible: false)
@@ -71,12 +70,18 @@ RSpec.describe 'Locker Application New', js: true do
         select('Firestone Library', from: :locker_application_building_id)
         click_button('Next')
         new_application = LockerApplication.last
-        expect(page).to have_select('Accessibility Needs', options: ['Keyed entry (rather than combination)', 'Near an elevator'], multiple: true)
-        select('Keyed entry (rather than combination)', from: 'Accessibility Needs')
-        select('Near an elevator', from: 'Accessibility Needs')
+        expect(page).to have_unchecked_field('Keyed entry (rather than combination)')
+        check('Keyed entry (rather than combination)')
+        expect(page).to have_unchecked_field('Near an elevator')
+        check('Near an elevator')
+        expect(page).to have_field('Additional accessibility needs')
+        fill_in('Additional accessibility needs', with: 'Not low to the ground')
+        # expect(page).to have_select('Accessibility Needs', options: ['Keyed entry (rather than combination)', 'Near an elevator'], multiple: true)
+        # select('Keyed entry (rather than combination)', from: 'Accessibility Needs')
+        # select('Near an elevator', from: 'Accessibility Needs')
         click_button('Submit Locker Application')
         new_application.reload
-        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)', 'Near an elevator'])
+        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)', 'Near an elevator', 'Not low to the ground'])
       end
     end
 
@@ -91,7 +96,6 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
         expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
-        expect(page).to have_unchecked_field('Accessible')
         expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
         expect(page).to have_field('Department')
         expect(page).to have_button('Submit Locker Application')
@@ -131,7 +135,6 @@ RSpec.describe 'Locker Application New', js: true do
           expect(page).to have_content('Firestone Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
           fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
-          check('Accessible')
           expect(page).to have_field('Applicant Netid', with: user.uid)
           click_button('Submit Locker Application')
           expect(page).not_to have_content('User must exist')
@@ -151,7 +154,6 @@ RSpec.describe 'Locker Application New', js: true do
           expect(page).to have_content('Firestone Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
           fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
-          check('Accessible')
           expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
           click_button('Submit Locker Application')
           expect(page).not_to have_content('User must exist')
@@ -170,7 +172,6 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_content('Firestone Locker Application')
         expect(page).to have_field('Applicant Netid',  with: admin.uid)
         fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
-        check('Accessible')
         expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
         click_button('Submit Locker Application')
         new_application = LockerApplication.last

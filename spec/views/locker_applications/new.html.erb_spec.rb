@@ -57,9 +57,7 @@ RSpec.describe 'locker_applications/new' do
 
         assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
 
-        assert_select 'input-select[name=?]', 'locker_application[accessibility_needs][]', value: ['need one', 'need two']
-
-        assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessible]', value: false
+        assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessibility_needs][]'
 
         assert_select 'input-select[name=?]', 'locker_application[semester]', value: 'Fall'
 
@@ -82,7 +80,7 @@ RSpec.describe 'locker_applications/new' do
 
           assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
 
-          assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessible]', value: false
+          assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessibility_needs][]'
 
           assert_select 'input-select[name=?]', 'locker_application[semester]', value: 'Fall'
 

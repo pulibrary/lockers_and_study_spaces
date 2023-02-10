@@ -41,20 +41,19 @@
                       :options="<%= locker_application.semester_choices.to_json %>"
         ></input-select>
    </grid-item>
-   <grid-item columns="lg-6 md-6 sm-12">
-     <input-select label="Accessibility Needs" name="locker_application[accessibility_needs][]"
-                      id="accessibility_needs"
-                      width="expand"
-                      value="<%= locker_application.accessibility_needs %>"
-                      :multiple=true
-                      :options="<%= locker_application.accessibility_needs_choices.to_json %>"
-        ></input-select>
-   </grid-item>
-   <grid-item columns="lg-12 md-12 sm-12">
-     <%= check_box :locker_application, :accessible, {}, "true", "false" %>
-     <%= label(:locker_application, :accessible, "Accessible") %>
-     <div>For example, near an elevator or keyed entry as opposed to a combination lock</div>
-   </grid-item>
+  <grid-item columns="lg-6 md-6 sm-12">
+    <%= field_set_tag('Accessibility Needs', class: 'lux-select') do %>
+      <%= check_box_tag('locker_application[accessibility_needs][]', 'Keyed entry (rather than combination)', false, { id: 'keyed_entry' }) %>
+      <%= label_tag('keyed_entry', 'Keyed entry (rather than combination)') %><br>
+      <%= check_box_tag('locker_application[accessibility_needs][]', 'Near an elevator', false, { id: 'near_elevator' }) %>
+      <%= label_tag('near_elevator', 'Near an elevator') %>
+      <input-text id='locker_application_accessibility_needs'
+                    name='locker_application[accessibility_needs][]'
+                    label="Additional accessibility needs"
+                    width="expand"
+      ></input-text>
+    <% end %>
+  </grid-item>
    <grid-item columns="lg-6 md-6 sm-12">
      <input-select label="Student/Staff/Faculty Status" name="locker_application[status_at_application]"
                       id="locker_application_status_at_application"
