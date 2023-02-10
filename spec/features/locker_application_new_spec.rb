@@ -76,9 +76,6 @@ RSpec.describe 'Locker Application New', js: true do
         check('Near an elevator')
         expect(page).to have_field('Additional accessibility needs')
         fill_in('Additional accessibility needs', with: 'Not low to the ground')
-        # expect(page).to have_select('Accessibility Needs', options: ['Keyed entry (rather than combination)', 'Near an elevator'], multiple: true)
-        # select('Keyed entry (rather than combination)', from: 'Accessibility Needs')
-        # select('Near an elevator', from: 'Accessibility Needs')
         click_button('Submit Locker Application')
         new_application.reload
         expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)', 'Near an elevator', 'Not low to the ground'])
