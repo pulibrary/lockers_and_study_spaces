@@ -24,7 +24,7 @@ class LockerApplication < ApplicationRecord
 
   def accessibility_needs_choices
     choices = LockerAndStudySpaces.config.fetch(:accessibility_needs_choices, [])
-    prepare_choices_for_lux(choices)
+    choices.map { |key, val| { id: key, description: val } }
   end
 
   def size_choices

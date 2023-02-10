@@ -47,7 +47,9 @@ RSpec.describe LockerApplication do
     it 'can list accessiblity choices' do
       expect(locker_application.accessibility_needs_choices).to be_an_instance_of(Array)
       expect(locker_application.accessibility_needs_choices.first).to be_an_instance_of(Hash)
-      expect(locker_application.accessibility_needs_choices.first.keys).to match_array(%i[label value])
+      expect(locker_application.accessibility_needs_choices.first.keys).to match_array(%i[id description])
+      expect(locker_application.accessibility_needs_choices.first[:id]).to eq('keyed_entry')
+      expect(locker_application.accessibility_needs_choices.first[:description]).to eq('Keyed entry (rather than combination)')
     end
   end
 
