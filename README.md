@@ -76,8 +76,9 @@ An application to manage and reserve locker and study spaces for the library.  T
   Once the tunnel is open [you can see the mail that has been sent on staging here]( http://localhost:1082/)
 
 ## Running the tests
-* To run all the tests, run `bundle exec rspec`
+* To run all the ruby tests, run `bundle exec rspec`
 * To run a specific test, run `bundle exec rspec path/to/some_spec.rb:line_number`
+* To run the js tests, run `yarn test`
 
 ## Running eslint
 

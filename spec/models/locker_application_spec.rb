@@ -225,4 +225,59 @@ RSpec.describe LockerApplication do
                                                                           value: locker_application3.department_at_application })
     end
   end
+
+  describe '#duplicate_applications' do
+    let(:user) { FactoryBot.create(:user) }
+    let(:locker_application1) { FactoryBot.create(:locker_application, complete: true, user:) }
+    let(:locker_application2) { FactoryBot.create(:locker_application, complete: true, user:) }
+
+    before { locker_application1 && locker_application2 }
+
+    it 'provides a list of applications that appear to be its duplicates' do
+      expect(locker_application1.duplicates).to contain_exactly(locker_application2)
+    end
+
+    context 'when one application is not yet complete' do
+      let(:locker_application2) { FactoryBot.create(:locker_application, complete: false, user:) }
+
+      it 'is not considered a duplicate' do
+        expect(locker_application1.duplicates).to be_empty
+      end
+    end
+
+    context 'when one application is archived' do
+      let(:locker_application2) { FactoryBot.create(:locker_application, complete: true, archived: true, user:) }
+
+      it 'is not considered a duplicate' do
+        expect(locker_application1.duplicates).to be_empty
+      end
+    end
+
+    context 'when application is attached to an assignment' do
+      let(:locker) { FactoryBot.create(:locker) }
+      let(:locker_assignment) do
+        LockerAssignment.create(locker_application: locker_application2, locker:, start_date: 1.year.ago, expiration_date: 1.day.ago)
+      end
+
+      it 'is considered a duplicate' do
+        expect(locker_application1.duplicates).to contain_exactly(locker_application2)
+      end
+
+      context 'when the assignment is released' do
+        before { locker_assignment.release }
+
+        it 'is not considered a duplicate' do
+          expect(locker_application1.duplicates).to be_empty
+        end
+      end
+    end
+
+    context 'when one application is at a different building' do
+      let(:locker_application2) { FactoryBot.create(:locker_application, complete: true, user:, building: building_two) }
+
+      it 'is considered a duplicate' do
+        expect(locker_application1.duplicates).to contain_exactly(locker_application2)
+      end
+    end
+  end
 end

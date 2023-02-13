@@ -79,4 +79,15 @@ class LockerApplication < ApplicationRecord
       application.update(accessibility_needs: needs)
     end
   end
+
+  def duplicates
+    LockerApplication.where(user:)
+                     .where(complete: true)
+                     .where(archived: false)
+                     .where('NOT EXISTS (:locker_assignments)',
+                            locker_assignments: LockerAssignment.select('1')
+                                                                .where('locker_assignments.locker_application_id = locker_applications.id')
+                                                                .where.not(released_date: nil))
+                     .where.not(id:) # don't include this Application as a duplicate of itself!
+  end
 end

@@ -5,3 +5,19 @@
 .locker-form .lux-col {
   padding-bottom: 1rem;
 }
+
+summary.duplicate-applications {
+  text-align: right;
+  margin-right: 35px;
+}
+
+.lux-wrapper.duplicate-applications-detail {
+  border: $color-bleu-de-france-dark 2px solid;
+  padding: 5px;
+  margin-right: 35px !important;
+}
+
+.duplicate-email {
+  padding: 5px;
+  border: 1px solid;
+}

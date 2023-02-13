@@ -7,5 +7,7 @@
 
 <%= render 'view', locker_application: @locker_application %>
 
-<%= link_to 'Edit', edit_locker_application_path(@locker_application) %> |
+<% if @locker_application.building == current_user&.building %>
+  <%= link_to 'Edit', edit_locker_application_path(@locker_application) %> |
+<% end %>
 <%= link_to 'Back', locker_applications_path %>
