@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_13_203839) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,8 +36,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
     t.string "status_at_application"
     t.string "department_at_application"
     t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "archived", default: false
     t.bigint "building_id", default: 1
     t.boolean "complete", default: false
@@ -53,8 +53,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
     t.string "notes"
     t.bigint "locker_application_id"
     t.bigint "locker_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["locker_application_id"], name: "index_locker_assignments_on_locker_application_id"
     t.index ["locker_id"], name: "index_locker_assignments_on_locker_id"
   end
@@ -63,8 +63,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
     t.integer "locker_id"
     t.integer "user_id"
     t.integer "number_of_books"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "lockers", force: :cascade do |t|
@@ -81,8 +81,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
     t.string "hubpos"
     t.string "key_number"
     t.string "floor"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "disabled"
     t.bigint "building_id"
   end
@@ -105,8 +105,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
     t.string "notes"
     t.bigint "user_id"
     t.bigint "study_room_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["study_room_id"], name: "index_study_room_assignments_on_study_room_id"
     t.index ["user_id"], name: "index_study_room_assignments_on_user_id"
   end
@@ -115,25 +115,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_165919) do
     t.integer "user_id"
     t.integer "study_room_id"
     t.integer "number_of_books"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "study_rooms", force: :cascade do |t|
     t.string "location"
     t.string "general_area"
     t.string "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "cas", null: false
     t.string "uid", null: false
-    t.datetime "remember_created_at"
+    t.datetime "remember_created_at", precision: nil
     t.boolean "admin", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "building_id"
     t.index ["provider"], name: "index_users_on_provider"
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true

@@ -69,4 +69,12 @@ class LockerApplication < ApplicationRecord
 
     where(complete: true)
   end
+
+  def self.migrate_accessible_field
+    LockerApplication.where(accessible: true).find_each do |application|
+      needs = application.accessibility_needs
+      needs << 'Unspecified accessibility need'
+      application.update(accessibility_needs: needs)
+    end
+  end
 end

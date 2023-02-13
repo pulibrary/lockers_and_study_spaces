@@ -43,6 +43,32 @@ RSpec.describe LockerApplication do
     end
   end
 
+  context 'with an application with an unspecified accessibility need' do
+    subject(:locker_application) { described_class.new(user:, accessible: true) }
+
+    let(:user) { FactoryBot.create(:user) }
+
+    it 'can add the info to the accessibility_needs field' do
+      locker_application.save!
+      expect(locker_application.accessible).to be true
+      expect(locker_application.accessibility_needs).to be_empty
+      described_class.migrate_accessible_field
+      expect(locker_application.reload.accessibility_needs.first).to eq('Unspecified accessibility need')
+    end
+
+    context 'with both unspecific and specific accessibility needs' do
+      subject(:locker_application) { described_class.new(user:, accessible: true, accessibility_needs: ['Near an elevator']) }
+
+      it 'can add the info to the accessibility_needs field' do
+        locker_application.save!
+        expect(locker_application.accessible).to be true
+        expect(locker_application.accessibility_needs).to match_array(['Near an elevator'])
+        described_class.migrate_accessible_field
+        expect(locker_application.reload.accessibility_needs).to match_array(['Unspecified accessibility need', 'Near an elevator'])
+      end
+    end
+  end
+
   describe '#accessibility_needs_choices' do
     it 'can list accessiblity choices' do
       expect(locker_application.accessibility_needs_choices).to be_an_instance_of(Array)
