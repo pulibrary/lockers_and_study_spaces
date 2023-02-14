@@ -86,6 +86,7 @@ class LockerApplicationsController < ApplicationController
     locker_params = params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
                                                                :status_at_application, :department_at_application, :user_uid,
                                                                :building_id, :complete, accessibility_needs: [])
+    locker_params[:accessibility_needs]&.compact_blank!
     locker_params = lookup_user_from_params(locker_params)
     locker_params = lookup_building_from_params(locker_params) if Flipflop.lewis_patrons? && locker_params[:building_id].present?
     locker_params

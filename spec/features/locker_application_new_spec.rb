@@ -80,6 +80,18 @@ RSpec.describe 'Locker Application New', js: true do
         new_application.reload
         expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)', 'Near an elevator', 'Not low to the ground'])
       end
+
+      it 'does not create an additional empty accessibility need' do
+        visit root_path
+        select('Firestone Library', from: :locker_application_building_id)
+        click_button('Next')
+        new_application = LockerApplication.last
+        expect(page).to have_field('Additional accessibility needs')
+        check('Keyed entry (rather than combination)')
+        click_button('Submit Locker Application')
+        new_application.reload
+        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)'])
+      end
     end
 
     context 'with lewis_patrons off' do
@@ -179,6 +191,22 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_current_path(locker_application_path(new_application))
         new_user = User.last
         expect(new_application.user).to eq(new_user)
+      end
+    end
+
+    describe 'editing a completed application' do
+      let(:locker_application) do
+        FactoryBot.create(:locker_application, complete: true, accessibility_needs: ['Keyed entry (rather than combination)', 'Another need'])
+      end
+
+      it 'displays selected accessibility needs' do
+        visit edit_locker_application_path(id: locker_application.id)
+        expect(page).to have_content('Accessibility Needs')
+        expect(page).to have_checked_field('Keyed entry (rather than combination)')
+        expect(page).to have_field('Additional accessibility needs', with: 'Another need')
+        uncheck('Keyed entry (rather than combination)')
+        click_button('Submit Locker Application')
+        expect(locker_application.reload.accessibility_needs).to match_array(['Another need'])
       end
     end
   end
