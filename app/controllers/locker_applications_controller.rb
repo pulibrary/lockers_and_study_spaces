@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+
 class LockerApplicationsController < ApplicationController
   before_action :set_locker_application, only: %i[show edit update destroy assign]
   before_action :force_admin, except: %i[new create show]
 
   # GET /locker_applications or /locker_applications.json
   def index
-    @pagy, @locker_applications = pagy(LockerApplication.search(uid: params[:search], archived: false).order(:created_at))
+    @pagy, @locker_applications = pagy(LockerApplication.search(uid: params[:search], archived: false,
+                                                                building_id: current_user.building_id).order(:created_at))
   end
 
   # GET /locker_applications/1 or /locker_applications/1.json
@@ -25,7 +28,7 @@ class LockerApplicationsController < ApplicationController
   # GET /locker_applications/awaiting_assignment
   def awaiting_assignment
     @archived = archived_param
-    @pagy, @locker_applications = pagy(LockerApplication.awaiting_assignment.search(uid: nil, archived: @archived))
+    @pagy, @locker_applications = pagy(LockerApplication.awaiting_assignment.search(uid: nil, archived: @archived, building_id: current_user.building_id))
   end
 
   # GET /locker_applications/1/assign
@@ -143,3 +146,5 @@ class LockerApplicationsController < ApplicationController
     ActiveModel::Type::Boolean.new.cast(params[:archived])
   end
 end
+
+# rubocop:enable Metrics/ClassLength

@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <library-header app-name="Firestone Locker and Study Rooms" abbr-name="Lockers" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
+    <library-header app-name="<%= current_user&.building&.name %> Locker and Study Rooms" abbr-name="Lockers" app-url="<%= root_path %>" class="lux" :max-width=1440 theme="dark">
       <menu-bar type="main-menu" :menu-items="[
         <% if current_user&.admin && current_user&.works_at_enabled_building? %>
           {name: 'Reporting', component: 'Reporting', children: [
