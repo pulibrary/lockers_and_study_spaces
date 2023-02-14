@@ -64,6 +64,10 @@ An application to manage and reserve locker and study spaces for the library.  T
 * To run all the tests, run `bundle exec rspec`
 * To run a specific test, run `bundle exec rspec path/to/some_spec.rb:line_number`
 
+## Running eslint
+
+`yarn run lint`
+
 ## Deployment instructions
 
 We us capistrano for deployment.  Run `cap staging deploy` to deploy the main branch to staging.  Run `BRANCH=mine cap staging deploy` to deploy the min branch to staging
