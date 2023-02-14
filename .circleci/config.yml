@@ -14,7 +14,7 @@ executors:
           PGHOST: 127.0.0.1
           PGUSER: lockers_and_study_spaces
           RAILS_ENV: test
-      - image: postgres:10
+      - image: postgres:13
         environment:
           POSTGRES_USER: lockers_and_study_spaces
           POSTGRES_DB: lockers_and_study_spaces_test
