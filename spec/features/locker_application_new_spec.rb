@@ -50,7 +50,6 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
         expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
-        expect(page).to have_unchecked_field('Accessible')
         expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
         expect(page).to have_field('Department')
         uid_field = page.find_by_id('locker_application_user_uid', visible: false)
@@ -60,9 +59,38 @@ RSpec.describe 'Locker Application New', js: true do
         select('4-foot', from: :locker_application_preferred_size)
         expect(new_application.reload.complete).to be false
         click_button('Submit Locker Application')
-        expect(new_application.reload.preferred_size).to eq(4)
-        expect(new_application.reload.complete).to be true
+        new_application.reload
+        expect(new_application.preferred_size).to eq(4)
+        expect(new_application.complete).to be true
         expect(page).to have_current_path(locker_application_path(new_application))
+      end
+
+      it 'can indicate Accessibility Needs' do
+        visit root_path
+        select('Firestone Library', from: :locker_application_building_id)
+        click_button('Next')
+        new_application = LockerApplication.last
+        expect(page).to have_unchecked_field('Keyed entry (rather than combination)')
+        check('Keyed entry (rather than combination)')
+        expect(page).to have_unchecked_field('Near an elevator')
+        check('Near an elevator')
+        expect(page).to have_field('Additional accessibility needs')
+        fill_in('Additional accessibility needs', with: 'Not low to the ground')
+        click_button('Submit Locker Application')
+        new_application.reload
+        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)', 'Near an elevator', 'Not low to the ground'])
+      end
+
+      it 'does not create an additional empty accessibility need' do
+        visit root_path
+        select('Firestone Library', from: :locker_application_building_id)
+        click_button('Next')
+        new_application = LockerApplication.last
+        expect(page).to have_field('Additional accessibility needs')
+        check('Keyed entry (rather than combination)')
+        click_button('Submit Locker Application')
+        new_application.reload
+        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)'])
       end
     end
 
@@ -77,7 +105,7 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
         expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
-        expect(page).to have_unchecked_field('Accessible')
+        expect(page).to have_unchecked_field('Near an elevator')
         expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
         expect(page).to have_field('Department')
         expect(page).to have_button('Submit Locker Application')
@@ -116,8 +144,8 @@ RSpec.describe 'Locker Application New', js: true do
           expect(new_application.user).to eq(admin)
           expect(page).to have_content('Firestone Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
+          check('Keyed entry (rather than combination)')
           fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
-          check('Accessible')
           expect(page).to have_field('Applicant Netid', with: user.uid)
           click_button('Submit Locker Application')
           expect(page).not_to have_content('User must exist')
@@ -137,7 +165,7 @@ RSpec.describe 'Locker Application New', js: true do
           expect(page).to have_content('Firestone Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
           fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
-          check('Accessible')
+          fill_in('Additional accessibility needs', with: 'Lower row')
           expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
           click_button('Submit Locker Application')
           expect(page).not_to have_content('User must exist')
@@ -156,7 +184,6 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_content('Firestone Locker Application')
         expect(page).to have_field('Applicant Netid',  with: admin.uid)
         fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
-        check('Accessible')
         expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
         click_button('Submit Locker Application')
         new_application = LockerApplication.last
@@ -164,6 +191,22 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_current_path(locker_application_path(new_application))
         new_user = User.last
         expect(new_application.user).to eq(new_user)
+      end
+    end
+
+    describe 'editing a completed application' do
+      let(:locker_application) do
+        FactoryBot.create(:locker_application, complete: true, accessibility_needs: ['Keyed entry (rather than combination)', 'Another need'])
+      end
+
+      it 'displays selected accessibility needs' do
+        visit edit_locker_application_path(id: locker_application.id)
+        expect(page).to have_content('Accessibility Needs')
+        expect(page).to have_checked_field('Keyed entry (rather than combination)')
+        expect(page).to have_field('Additional accessibility needs', with: 'Another need')
+        uncheck('Keyed entry (rather than combination)')
+        click_button('Submit Locker Application')
+        expect(locker_application.reload.accessibility_needs).to match_array(['Another need'])
       end
     end
   end

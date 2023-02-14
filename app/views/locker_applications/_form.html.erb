@@ -41,11 +41,21 @@
                       :options="<%= locker_application.semester_choices.to_json %>"
         ></input-select>
    </grid-item>
-   <grid-item columns="lg-12 md-12 sm-12">
-     <%= check_box :locker_application, :accessible, {}, "true", "false" %>
-     <%= label(:locker_application, :accessible, "Accessible") %>
-     <div>For example, near an elevator or keyed entry as opposed to a combination lock</div>
-   </grid-item>
+  <grid-item columns="lg-6 md-6 sm-12">
+    <%= field_set_tag('Accessibility Needs') do %>
+      <% locker_application.accessibility_needs_choices.each do |choice| %>
+        <%= check_box_tag('locker_application[accessibility_needs][]', choice[:description], @locker_application.accessibility_needs.include?(choice[:description]), { id: choice[:id] }) %>
+        <%= label_tag(choice[:id], choice[:description]) %><br>
+      <% end %>
+      <% uncontrolled_values = @locker_application.accessibility_needs - locker_application.accessibility_needs_choices.map { |choice| choice[:description] } %>
+      <input-text id='locker_application_accessibility_needs'
+                    name='locker_application[accessibility_needs][]'
+                    label="Additional accessibility needs"
+                    width="expand"
+                    value="<%= uncontrolled_values.join(', ') %>"
+      ></input-text>
+    <% end %>
+  </grid-item>
    <grid-item columns="lg-6 md-6 sm-12">
      <input-select label="Student/Staff/Faculty Status" name="locker_application[status_at_application]"
                       id="locker_application_status_at_application"
