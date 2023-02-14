@@ -133,6 +133,13 @@ jobs:
           root: '~/project'
           paths: '*'
 
+  eslint:
+    executor: lockers_and_study_spaces-executor
+    steps:
+      - attach_workspace:
+          at: '~/project'
+      - run: yarn run lint
+
   rubocop:
     executor: lockers_and_study_spaces-executor
     steps:
@@ -159,6 +166,9 @@ workflows:
   build_accept:
     jobs:
       - build
+      - eslint:
+         requires:
+          - build
       - rubocop:
          requires:
           - build
