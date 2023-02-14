@@ -44,27 +44,45 @@ RSpec.describe LockerApplication do
   end
 
   context 'with an application with an unspecified accessibility need' do
-    subject(:locker_application) { described_class.new(user:, accessible: true) }
+    subject(:locker_application) { described_class.new(user:, accessible: true, complete: true) }
 
     let(:user) { FactoryBot.create(:user) }
 
-    it 'can add the info to the accessibility_needs field' do
-      locker_application.save!
-      expect(locker_application.accessible).to be true
-      expect(locker_application.accessibility_needs).to be_empty
-      described_class.migrate_accessible_field
-      expect(locker_application.reload.accessibility_needs.first).to eq('Unspecified accessibility need')
-    end
-
-    context 'with both unspecific and specific accessibility needs' do
-      subject(:locker_application) { described_class.new(user:, accessible: true, accessibility_needs: ['Near an elevator']) }
-
+    context 'with an unassigned locker' do
       it 'can add the info to the accessibility_needs field' do
         locker_application.save!
+        expect(described_class.awaiting_assignment).not_to be_empty
         expect(locker_application.accessible).to be true
-        expect(locker_application.accessibility_needs).to match_array(['Near an elevator'])
+        expect(locker_application.accessibility_needs).to be_empty
         described_class.migrate_accessible_field
-        expect(locker_application.reload.accessibility_needs).to match_array(['Unspecified accessibility need', 'Near an elevator'])
+        expect(locker_application.reload.accessibility_needs.first).to eq('Unspecified accessibility need')
+      end
+
+      context 'with both unspecific and specific accessibility needs' do
+        subject(:locker_application) { described_class.new(user:, accessible: true, accessibility_needs: ['Near an elevator'], complete: true) }
+
+        it 'can add the info to the accessibility_needs field' do
+          locker_application.save!
+          expect(described_class.awaiting_assignment).not_to be_empty
+          expect(locker_application.accessible).to be true
+          expect(locker_application.accessibility_needs).to match_array(['Near an elevator'])
+          described_class.migrate_accessible_field
+          expect(locker_application.reload.accessibility_needs).to match_array(['Unspecified accessibility need', 'Near an elevator'])
+        end
+      end
+    end
+
+    context 'with an assigned locker' do
+      let!(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application:, locker: locker1) }
+      let!(:locker1) { FactoryBot.create(:locker, size: 4) }
+
+      it 'does not change the accessibility_needs' do
+        locker_application.save!
+        expect(described_class.awaiting_assignment).to be_empty
+        expect(locker_application.accessible).to be true
+        expect(locker_application.accessibility_needs).to be_empty
+        described_class.migrate_accessible_field
+        expect(locker_application.reload.accessibility_needs).to be_empty
       end
     end
   end

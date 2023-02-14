@@ -8,7 +8,7 @@ class LockerApplication < ApplicationRecord
   delegate :uid, :email, :name, :department, :status, to: :user
 
   def self.awaiting_assignment
-    where(complete: true).left_joins(:locker_assignment).where('locker_assignments.id is null').order('locker_applications.created_at')
+    where(complete: true).where.missing(:locker_assignment).order('locker_applications.created_at')
   end
 
   def self.mark_applications_complete
@@ -71,7 +71,7 @@ class LockerApplication < ApplicationRecord
   end
 
   def self.migrate_accessible_field
-    LockerApplication.where(accessible: true).find_each do |application|
+    LockerApplication.where(accessible: true).where.missing(:locker_assignment).find_each do |application|
       needs = application.accessibility_needs
       needs << 'Unspecified accessibility need'
       application.update(accessibility_needs: needs)
