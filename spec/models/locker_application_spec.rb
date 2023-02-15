@@ -27,6 +27,7 @@ RSpec.describe LockerApplication do
     expect(locker_application.archived).to be(false)
     expect(locker_application.building).to eq(building_one)
     expect(locker_application.complete).to be false
+    expect(locker_application.accessibility_needs).to be_empty
   end
 
   context 'with an application created prior to having complete in the database' do
@@ -39,6 +40,60 @@ RSpec.describe LockerApplication do
       expect(locker_application.reload.complete).to be_nil
       described_class.mark_applications_complete
       expect(locker_application.reload.complete).to be true
+    end
+  end
+
+  context 'with an application with an unspecified accessibility need' do
+    subject(:locker_application) { described_class.new(user:, accessible: true, complete: true) }
+
+    let(:user) { FactoryBot.create(:user) }
+
+    context 'with an unassigned locker' do
+      it 'can add the info to the accessibility_needs field' do
+        locker_application.save!
+        expect(described_class.awaiting_assignment).not_to be_empty
+        expect(locker_application.accessible).to be true
+        expect(locker_application.accessibility_needs).to be_empty
+        described_class.migrate_accessible_field
+        expect(locker_application.reload.accessibility_needs.first).to eq('Unspecified accessibility need')
+      end
+
+      context 'with both unspecific and specific accessibility needs' do
+        subject(:locker_application) { described_class.new(user:, accessible: true, accessibility_needs: ['Near an elevator'], complete: true) }
+
+        it 'can add the info to the accessibility_needs field' do
+          locker_application.save!
+          expect(described_class.awaiting_assignment).not_to be_empty
+          expect(locker_application.accessible).to be true
+          expect(locker_application.accessibility_needs).to match_array(['Near an elevator'])
+          described_class.migrate_accessible_field
+          expect(locker_application.reload.accessibility_needs).to match_array(['Unspecified accessibility need', 'Near an elevator'])
+        end
+      end
+    end
+
+    context 'with an assigned locker' do
+      let!(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application:, locker: locker1) }
+      let!(:locker1) { FactoryBot.create(:locker, size: 4) }
+
+      it 'does not change the accessibility_needs' do
+        locker_application.save!
+        expect(described_class.awaiting_assignment).to be_empty
+        expect(locker_application.accessible).to be true
+        expect(locker_application.accessibility_needs).to be_empty
+        described_class.migrate_accessible_field
+        expect(locker_application.reload.accessibility_needs).to be_empty
+      end
+    end
+  end
+
+  describe '#accessibility_needs_choices' do
+    it 'can list accessiblity choices' do
+      expect(locker_application.accessibility_needs_choices).to be_an_instance_of(Array)
+      expect(locker_application.accessibility_needs_choices.first).to be_an_instance_of(Hash)
+      expect(locker_application.accessibility_needs_choices.first.keys).to match_array(%i[id description])
+      expect(locker_application.accessibility_needs_choices.first[:id]).to eq('keyed_entry')
+      expect(locker_application.accessibility_needs_choices.first[:description]).to eq('Keyed entry (rather than combination)')
     end
   end
 

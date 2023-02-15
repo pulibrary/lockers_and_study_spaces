@@ -9,10 +9,18 @@
     "vue-template-compiler": "^2.6.14"
   },
   "devDependencies": {
+    "eslint": "8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.9.0",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^7.8.3",
+    "prettier": "2.8.4",
     "sass": "^1.56.1",
     "vite": "^3.2.0",
     "vite-plugin-ruby": "^3.1.2"
+  },
+  "scripts": {
+    "lint": "eslint app/javascript"
   }
 }
