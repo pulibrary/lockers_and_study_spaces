@@ -3,7 +3,7 @@
 class Locker < ApplicationRecord
   validates :location, presence: true
   validates :general_area, presence: true
-  validates :combination, presence: true
+  validates :combination, presence: true, unless: -> { building&.name == 'Lewis Library' }
 
   belongs_to :building, optional: true
 
