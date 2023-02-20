@@ -77,7 +77,7 @@ An application to manage and reserve locker and study spaces for the library.  T
 
 ## Running the tests
 * To run all the ruby tests, run `bundle exec rspec`
-* To run a specific test, run `bundle exec rspec path/to/some_spec.rb:line_number`
+* To run a specific ruby test, run `bundle exec rspec path/to/some_spec.rb:line_number`
 * To run the js tests, run `yarn test`
 
 ## Running eslint
