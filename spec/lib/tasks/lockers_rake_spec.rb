@@ -30,6 +30,11 @@ RSpec.describe 'lockers rake tasks' do
       expect(Locker.find_by(location: '435').general_area).to eq('4th floor')
     end
 
+    it 'sets the size of new Lewis lockers to 2 feet' do
+      run_described_task
+      expect(Locker.find_by(location: '316').size).to eq(2)
+    end
+
     it 'does not add a Lewis locker if it already exists' do
       Locker.create! location: '401', general_area: '4th floor', building: Building.find_or_create_by(name: 'Lewis Library')
       expect do
