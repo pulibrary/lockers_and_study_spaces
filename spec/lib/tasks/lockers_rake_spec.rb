@@ -37,14 +37,16 @@ RSpec.describe 'lockers rake tasks' do
       end.to change(Locker, :count).by(103)
     end
 
-    before do
-      run_described_task
-    end
-    
-    it 'is idempotent' do
-      expect do
+    context 'when the task has already been run' do
+      before do
         run_described_task
-      end.not_to change(Locker, :count)
+      end
+
+      it 'is idempotent' do
+        expect do
+          run_described_task
+        end.not_to change(Locker, :count)
+      end
     end
   end
 
