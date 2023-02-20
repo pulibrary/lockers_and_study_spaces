@@ -5,7 +5,10 @@ class UserMailer < ApplicationMailer
     @locker_assignment = params[:locker_assignment]
     attachments['Locker Space Agreement.pdf'] = Rails.root.join('locker_agreement.pdf').read
     email = @locker_assignment.email
-    mail(to: email, subject: 'Your Locker has been assigned')
+    mail(to: email,
+         template_name: template_for_building(@locker_assignment&.locker&.building),
+         from: @locker_assignment&.locker&.building&.email || 'access@princeton.edu',
+         subject: 'Your Locker has been assigned')
   end
 
   def locker_violation
@@ -54,5 +57,18 @@ class UserMailer < ApplicationMailer
       message.results = { success: assignments.map(&:email) }
       message.save!
     end
+  end
+
+  private
+
+  # Allow library-specific templates, by placing them at, for example,
+  # app/views/user_mailer/lewis_locker_assignment_confirmation.html.erb
+  def template_for_building(building)
+    calling_method = caller_locations.first.label
+    prefix = building&.name&.split&.first&.downcase
+    template_name = "#{prefix}_#{calling_method}"
+    return template_name if lookup_context.find_all(template_name, Array(self.class.mailer_name)).any?
+
+    calling_method
   end
 end
