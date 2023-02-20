@@ -35,6 +35,21 @@ An application to manage and reserve locker and study spaces for the library.  T
      rake db:seed
      ```
 
+## Re-creating CSV files for database seeding
+  * Go to the environment you want to use as the database source
+  * To write the CSVs in the user's home directory, run 
+  ```bash
+  bundle exec rake csv:all
+  ```
+  * To write the CSVs to a different directory, run
+  ```bash
+  DESTINATION_DIRECTORY=DIRECTORY_PATH bundle exec rake csv:all
+  ```
+  e.g.
+  ```bash
+  DESTINATION_DIRECTORY=/opt/projects/ bundle exec rake csv:all
+  ```
+
 ## Development
 
    * run foreman
