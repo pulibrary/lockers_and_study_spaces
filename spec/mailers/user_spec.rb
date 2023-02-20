@@ -20,6 +20,29 @@ RSpec.describe UserMailer do
       expect(mail.html_part.body.to_s).to have_content('To Lock')
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Locker Space Agreement.pdf"')
     end
+
+    context 'when assignment is for a Lewis Locker' do
+      let(:locker_assignment) do
+        building = FactoryBot.create(:building, email: 'lewislib@princeton.edu', name: 'Lewis Library')
+        lewis_locker = FactoryBot.create(:locker, building:)
+        FactoryBot.create(:locker_assignment,
+                          locker: lewis_locker)
+      end
+
+      it 'comes from the lewis email address' do
+        expect { described_class.with(locker_assignment:).locker_assignment_confirmation.deliver }
+          .to change { ActionMailer::Base.deliveries.count }.by(1)
+        mail = ActionMailer::Base.deliveries.last
+        expect(mail.from).to eq ['lewislib@princeton.edu']
+      end
+
+      it 'includes Lewis text' do
+        expect { described_class.with(locker_assignment:).locker_assignment_confirmation.deliver }
+          .to change { ActionMailer::Base.deliveries.count }.by(1)
+        mail = ActionMailer::Base.deliveries.last
+        expect(mail.html_part.body.to_s).to have_content('Lewis Library Locker Assignment')
+      end
+    end
   end
 
   describe '#locker_violation' do
