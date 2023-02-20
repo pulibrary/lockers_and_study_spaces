@@ -53,17 +53,64 @@ RSpec.describe 'Duplicate Locker Applications', js: true do
       end
       expect(page).to have_field('locker_application_department_at_application', with: 'My duplicate department')
     end
+
+    it 'allows the admin to archive the duplicate application at Firestone' do
+      sign_in admin
+      visit awaiting_assignment_locker_applications_path
+      within("#application_#{first_application.id}") do
+        find('summary.duplicate-applications').click
+        within('.duplicate-applications-detail') { click_link 'Archive' }
+        expect(page).not_to have_selector('summary.duplicate-applications')
+      end
+    end
+
+    context 'when the duplicate Firestone application has been assigned' do
+      let(:locker_assignment) do
+        LockerAssignment.create(locker_application: second_application, locker:, start_date: 1.year.ago, expiration_date: 1.day.ago)
+      end
+
+      before do
+        locker
+        locker_assignment
+      end
+
+      it 'does not give the option to archive the duplicate' do
+        sign_in admin
+        visit awaiting_assignment_locker_applications_path
+        within("#application_#{first_application.id}") do
+          find('summary.duplicate-applications').click
+          within('.duplicate-applications-detail') do
+            expect(page).to have_text(locker.location)
+            expect(page).not_to have_link('Archive')
+          end
+        end
+      end
+    end
   end
 
-  context 'when the duplicate application has been assigned' do
+  context 'when the duplicate Lewis application has been assigned' do
     let(:locker_assignment) do
       LockerAssignment.create(locker_application: second_application, locker:, start_date: 1.year.ago, expiration_date: 1.day.ago)
+    end
+
+    before do
+      locker
+      locker_assignment
     end
 
     it 'shows the admin an alert on duplicate applications' do
       sign_in admin
       visit awaiting_assignment_locker_applications_path
       expect(page).to have_text('There is one duplicate application')
+    end
+
+    it 'shows the admin the locker info' do
+      sign_in admin
+      visit awaiting_assignment_locker_applications_path
+      within("#application_#{first_application.id}") do
+        find('summary.duplicate-applications').click
+        expect(page).to have_text(locker.location)
+      end
     end
 
     context 'when the assignment has been released' do

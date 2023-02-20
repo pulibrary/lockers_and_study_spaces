@@ -7,6 +7,13 @@ class LockerApplication < ApplicationRecord
 
   delegate :uid, :email, :name, :department, :status, to: :user
 
+  scope :active, -> { where(complete: true, archived: false) }
+  scope :without_current_assignment, lambda {
+    where('NOT EXISTS (:locker_assignments)',
+          locker_assignments: LockerAssignment.active
+                                              .where('locker_assignments.locker_application_id = locker_applications.id'))
+  }
+
   def self.awaiting_assignment
     where(complete: true).where.missing(:locker_assignment).order('locker_applications.created_at')
   end
@@ -81,13 +88,10 @@ class LockerApplication < ApplicationRecord
   end
 
   def duplicates
-    LockerApplication.where(user:)
-                     .where(complete: true)
-                     .where(archived: false)
-                     .where('NOT EXISTS (:locker_assignments)',
-                            locker_assignments: LockerAssignment.select('1')
-                                                                .where('locker_assignments.locker_application_id = locker_applications.id')
-                                                                .where.not(released_date: nil))
-                     .where.not(id:) # don't include this Application as a duplicate of itself!
+    LockerApplication.includes(:user, :building)
+                     .active                      # Disregard incomplete and archived applications
+                     .without_current_assignment  # Disregard applications that have already gone through the whole cycle of assignment and release
+                     .where(user:)                # Include only applications made by the same user as this one
+                     .where.not(id:)              # Don't include this specific application as a duplicate of itself
   end
 end

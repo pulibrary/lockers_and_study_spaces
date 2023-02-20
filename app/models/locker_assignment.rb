@@ -10,6 +10,7 @@ class LockerAssignment < ApplicationRecord
   validates :start_date, :expiration_date, presence: true
 
   scope :at_building, ->(building) { joins(:locker_application).where('locker_applications.building': building) }
+  scope :active, -> { where.not released_date: nil }
 
   class << self
     def search(queries:)
