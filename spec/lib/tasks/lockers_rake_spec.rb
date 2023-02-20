@@ -36,6 +36,16 @@ RSpec.describe 'lockers rake tasks' do
         run_described_task
       end.to change(Locker, :count).by(103)
     end
+
+    before do
+      run_described_task
+    end
+    
+    it 'is idempotent' do
+      expect do
+        run_described_task
+      end.not_to change(Locker, :count)
+    end
   end
 
   def run_described_task
