@@ -205,7 +205,7 @@ RSpec.describe 'Locker Application New', js: true do
       it 'can create and assign an application to a new user' do
         visit root_path
         expect(page).to have_content('Firestone Library Locker Application')
-        expect(page).to have_field('Applicant Netid',  with: admin.uid)
+        expect(page).to have_field('Applicant Netid', with: admin.uid)
         fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
         expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
         click_button('Submit Locker Application')
