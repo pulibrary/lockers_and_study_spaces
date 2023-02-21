@@ -1,7 +1,7 @@
 <card id="locker-form-header" size="full-width">
   <card-header>
     <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
-    <heading level="h2" size="h3"><hyperlink href="#">Firestone Locker Application</hyperlink></heading>
+    <heading level="h2" size="h3"><hyperlink href="#"><%= locker_application&.building&.name %> Locker Application</hyperlink></heading>
   </card-header>
 </card>
 <%= form_with(model: locker_application, local: true) do |form| %>
@@ -21,8 +21,11 @@
      <input-select label="Preferred Size" name="locker_application[preferred_size]"
                       id="locker_application_preferred_size"
                       width="expand"
-                      value="<%= locker_application.preferred_size %>"
-                      :options="<%= locker_application.size_choices.to_json %>"
+                      value="<%= locker_application.preferred_size.to_s %>"
+                      <% if locker_application&.building&.name == 'Lewis Library' %>
+                        disabled=true
+                      <% end %>
+                      :options="<%= locker_application.size_choices(locker_application&.building&.name).to_json %>"
         ></input-select>
    </grid-item>
    <grid-item columns="lg-4 md-6 sm-12">
@@ -30,7 +33,7 @@
                       id="locker_application_preferred_general_area"
                       width="expand"
                       value="<%= locker_application.preferred_general_area %>"
-                      :options="<%= locker_application.floor_choices.to_json %>"
+                      :options="<%= locker_application.floor_choices(locker_application&.building&.name).to_json %>"
         ></input-select>
    </grid-item>
    <grid-item columns="lg-4 md-6 sm-12">

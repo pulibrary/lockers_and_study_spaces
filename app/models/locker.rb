@@ -59,10 +59,24 @@ class Locker < ApplicationRecord
   end
 
   def floor_list
-    @floor_list ||= LockerAndStudySpaces.config.fetch(:locker_floors, []).keys
+    firestone_floor_list = LockerAndStudySpaces.config.fetch(:firestone_locker_floors, []).keys
+    lewis_floor_list = LockerAndStudySpaces.config.fetch(:lewis_locker_floors, []).keys
+    
+    @floor_list ||= if Flipflop.lewis_patrons? then
+      firestone_floor_list.concat(lewis_floor_list)
+    else
+      firestone_floor_list
+    end
   end
 
   def size_list
-    @size_list ||= LockerAndStudySpaces.config.fetch(:locker_sizes, [])
+    firestone_locker_sizes = LockerAndStudySpaces.config.fetch(:locker_sizes, [])['Firestone Library']
+    lewis_locker_sizes = LockerAndStudySpaces.config.fetch(:locker_sizes, [])['Firestone Library']
+
+    @size_list ||= if Flipflop.lewis_patrons? then
+      firestone_locker_sizes.concat(lewis_locker_sizes)
+    else
+      firestone_locker_sizes
+    end
   end
 end

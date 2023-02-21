@@ -46,7 +46,7 @@ RSpec.describe 'Locker Application New', js: true do
         select('Firestone Library', from: :locker_application_building_id)
         click_button('Next')
         new_application = LockerApplication.last
-        expect(page).to have_content('Firestone Locker Application')
+        expect(page).to have_content('Firestone Library Locker Application')
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
         expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
@@ -61,6 +61,29 @@ RSpec.describe 'Locker Application New', js: true do
         click_button('Submit Locker Application')
         new_application.reload
         expect(new_application.preferred_size).to eq(4)
+        expect(new_application.complete).to be true
+        expect(page).to have_current_path(locker_application_path(new_application))
+      end
+
+      it 'can apply for a new Lewis locker' do
+        visit root_path
+        select('Lewis Library', from: :locker_application_building_id)
+        click_button('Next')
+        new_application = LockerApplication.last
+        expect(page).to have_content('Lewis Library Locker Application')
+        expect(page).to have_select('Preferred Size', options: ['25" x 12"'], disabled: true)
+        expect(page).to have_select('Preferred Floor', options: ['No preference', '3rd Floor', '4th Floor'])
+        expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
+        expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
+        expect(page).to have_field('Department')
+        uid_field = page.find_by_id('locker_application_user_uid', visible: false)
+        expect(uid_field.value).to eq(user.uid)
+        expect(page).to have_button('Submit Locker Application')
+        # Add some values to form
+        expect(new_application.reload.complete).to be false
+        click_button('Submit Locker Application')
+        new_application.reload
+        expect(new_application.preferred_size).to eq(2)
         expect(new_application.complete).to be true
         expect(page).to have_current_path(locker_application_path(new_application))
       end
@@ -101,7 +124,7 @@ RSpec.describe 'Locker Application New', js: true do
 
       it 'has a single step application process' do
         visit root_path
-        expect(page).to have_content('Firestone Locker Application')
+        expect(page).to have_content('Firestone Library Locker Application')
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
         expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
@@ -142,7 +165,7 @@ RSpec.describe 'Locker Application New', js: true do
           click_button('Next')
           new_application = LockerApplication.last
           expect(new_application.user).to eq(admin)
-          expect(page).to have_content('Firestone Locker Application')
+          expect(page).to have_content('Firestone Library Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
           check('Keyed entry (rather than combination)')
           fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
@@ -162,7 +185,7 @@ RSpec.describe 'Locker Application New', js: true do
           click_button('Next')
           new_application = LockerApplication.last
           expect(new_application.user).to eq(admin)
-          expect(page).to have_content('Firestone Locker Application')
+          expect(page).to have_content('Firestone Library Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
           fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
           fill_in('Additional accessibility needs', with: 'Lower row')
@@ -181,7 +204,7 @@ RSpec.describe 'Locker Application New', js: true do
 
       it 'can create and assign an application to a new user' do
         visit root_path
-        expect(page).to have_content('Firestone Locker Application')
+        expect(page).to have_content('Firestone Library Locker Application')
         expect(page).to have_field('Applicant Netid',  with: admin.uid)
         fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
         expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
