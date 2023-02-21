@@ -92,4 +92,17 @@ RSpec.describe Locker do
                                                        "4' 2nd floor" => [2, 1, 1, 0], "6' 2nd floor" => [1, 1, 1, 0] })
     end
   end
+
+  describe 'validation' do
+    let(:firestone) { FactoryBot.create(:building, name: 'Firestone Library') }
+    let(:lewis) { FactoryBot.create(:building, name: 'Lewis Library') }
+
+    it 'cannot create a Firestone Locker without a combination' do
+      expect { Locker.create! building: firestone, location: '123', general_area: 'by the staircase' }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it 'can create a Lewis Locker without a combination' do
+      expect { Locker.create! building: lewis, location: '123', general_area: 'by the staircase' }.not_to raise_error(ActiveRecord::RecordInvalid)
+    end
+  end
 end
