@@ -1,0 +1,35 @@
+<details>
+  <summary class="duplicate-applications">
+    <lux-icon-base width="12" height="12" icon-name="alert" icon-color="blue">
+      <lux-icon-alert></lux-icon-alert>
+    </lux-icon-base>
+    <%= I18n.translate 'lockers.applications.duplicate_alert', count: duplicates.count %>
+  </summary>
+  <div class="duplicate-applications-detail">
+    <ul>
+      <% duplicates.each do |duplicate| %>
+        <li>
+          <%= duplicate.building.name %> application,
+          <% if duplicate.locker_assignment.present? %>
+            currently assigned to <%= duplicate.locker_assignment.location %>
+          <% else %>
+            submitted on <%= duplicate.created_at.to_date %>
+          <% end%>
+          <% if duplicate.building == current_user.building %>
+            <%= link_to 'Edit', edit_locker_application_path(duplicate) %>
+            <% unless duplicate.locker_assignment.present? %>
+              <%= link_to toggle_link_text(duplicate.archived), toggle_archived_locker_application_path(duplicate), method: :put %>
+            <% end%>
+          <% else %>
+            <%= link_to 'View', locker_application_path(duplicate) %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    Applicant email address:
+    <span id="duplicate-email-<%= partial_id %>" class="duplicate-email">
+        <%= duplicates.first.user.email%>
+    </span>
+    <input-button class="copy-to-clipboard" data-text-element="duplicate-email-<%= partial_id %>" aria-live="assertive" variation="solid" size="small">Copy</input-button>
+  </div>
+</details>

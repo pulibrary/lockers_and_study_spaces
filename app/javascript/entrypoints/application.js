@@ -4,6 +4,7 @@ import "lux-design-system/dist/system/system.css";
 import "lux-design-system/dist/system/tokens/tokens.scss";
 // eslint-disable-next-line no-unused-vars
 import Rails from "@rails/ujs"; // we need to import Rails so vite adds it to the module
+import CopyToClipboard from "../components/copy_to_clipboard";
 
 Vue.use(system);
 
@@ -16,4 +17,5 @@ document.addEventListener("DOMContentLoaded", () => {
       el: elements[i],
     });
   }
+  new CopyToClipboard();
 });

@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  lockers:
+    applications:
+      duplicate_alert:
+        one: There is one duplicate application
+        other: There are %{count} duplicate applications
