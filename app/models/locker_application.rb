@@ -27,14 +27,18 @@ class LockerApplication < ApplicationRecord
     choices.map { |key, val| { id: key, description: val } }
   end
 
-  def size_choices
-    choices = LockerAndStudySpaces.config.fetch(:locker_sizes, [])
+  def size_choices(building_name)
+    choices = LockerAndStudySpaces.config.fetch(:locker_sizes, [])[building_name]
     choices = [choices.first] if user.blank? || user.junior?
-    prepare_size_choices_for_lux(choices)
+    prepare_size_choices_for_lux(choices, building_name)
   end
 
-  def floor_choices
-    choices = LockerAndStudySpaces.config.fetch(:locker_floor_choices, []).keys
+  def floor_choices(building_name)
+    choices = if building_name == 'Firestone Library'
+                LockerAndStudySpaces.config.fetch(:firestone_locker_floor_choices, []).keys
+              else
+                LockerAndStudySpaces.config.fetch(:lewis_locker_floor_choices, []).keys
+              end
     prepare_choices_for_lux(choices)
   end
 

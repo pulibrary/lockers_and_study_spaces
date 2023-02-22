@@ -2,15 +2,21 @@ development: &default
   accessibility_needs_choices:
     keyed_entry: Keyed entry (rather than combination)
     near_elevator: Near an elevator
-  locker_floors: &locker_floors
+  firestone_locker_floors: &firestone_locker_floors
     ? A floor
     ? B floor
     ? C floor
     ? 2nd floor
     ? 3rd floor
-  locker_floor_choices:
+  lewis_locker_floors: &lewis_locker_floors
+    ? 3rd Floor
+    ? 4th Floor
+  firestone_locker_floor_choices:
     ? No preference
-    << : *locker_floors
+    << : *firestone_locker_floors
+  lewis_locker_floor_choices:
+    ? No preference
+    << : *lewis_locker_floors
   study_room_locations:
     - Classics Graduate Study Room
     - History Graduate Study Room
@@ -18,8 +24,11 @@ development: &default
     # - German Graduate Study Room
     # - Religion Graduate Study Room
   locker_sizes:
-    - 4
-    - 6
+    "Firestone Library": &firestone_locker_sizes
+      - 4
+      - 6
+    "Lewis Library": &lewis_locker_sizes
+      - 2
   semesters:
     - Fall
     - Spring

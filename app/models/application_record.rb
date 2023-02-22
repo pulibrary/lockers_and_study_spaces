@@ -15,8 +15,13 @@ class ApplicationRecord < ActiveRecord::Base
     choices.map { |val| { label: val, value: val } }
   end
 
-  def prepare_size_choices_for_lux(choices)
-    choices.map { |val| { label: "#{val}-foot", value: val } }
+  def prepare_size_choices_for_lux(choices, building_name)
+    case building_name
+    when 'Firestone Library'
+      choices.map { |val| { label: "#{val}-foot", value: val } }
+    when 'Lewis Library'
+      choices.map { |val| { label: '25" x 12"', value: val } }
+    end
   end
 
   def prepare_semester_choices_for_lux(choices)
