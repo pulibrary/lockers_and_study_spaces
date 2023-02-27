@@ -1,3 +1,6 @@
+<% content_for :title do %>
+Locker application
+<% end %>
 <% if Flipflop.lewis_patrons? %>
   <%= render 'building_select_form', locker_application: @locker_application %>
 <% else %>

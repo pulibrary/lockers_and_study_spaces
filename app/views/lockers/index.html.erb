@@ -1,3 +1,6 @@
+<% content_for :title do %>
+<%= current_user&.building&.name %> Lockers
+<% end %>
 
 <card id="locker-form-header" size="full-width">
   <card-header>

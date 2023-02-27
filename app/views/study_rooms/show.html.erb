@@ -1,3 +1,6 @@
+<% content_for :title do %>
+  <%= @study_room&.location %>
+<% end %>
 <% if notice.present? %>
 <card id="notice" size="full-width">
   <%= notice %>

@@ -31,4 +31,9 @@ RSpec.describe 'Locker Application Assign', js: true do
     expect { click_button 'Submit Locker Assignment' }.to change { ActionMailer::Base.deliveries.count }.by(1)
     click_on 'Card for printing'
   end
+
+  it 'has a unique <title>' do
+    visit awaiting_assignment_locker_applications_path
+    expect(page).to have_title('Applications awaiting assignment - Lockers and Study Spaces')
+  end
 end
