@@ -13,8 +13,8 @@ class Locker < ApplicationRecord
          .where(building:)
   end
 
-  def size_choices
-    prepare_choices_for_lux(size_list)
+  def size_choices(building: nil)
+    prepare_choices_for_lux(size_list(building:))
   end
 
   def floor_choices(building: nil)
@@ -69,12 +69,12 @@ class Locker < ApplicationRecord
                     end
   end
 
-  def size_list
+  def size_list(building: nil)
     firestone_locker_sizes = LockerAndStudySpaces.config.fetch(:locker_sizes, [])['Firestone Library']
     lewis_locker_sizes = LockerAndStudySpaces.config.fetch(:locker_sizes, [])['Firestone Library']
 
-    @size_list ||= if Flipflop.lewis_patrons?
-                     firestone_locker_sizes.concat(lewis_locker_sizes)
+    @size_list ||= if Flipflop.lewis_patrons? && building&.name == 'Lewis Library'
+                     lewis_locker_sizes
                    else
                      firestone_locker_sizes
                    end

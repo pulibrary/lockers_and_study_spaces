@@ -25,7 +25,7 @@
                       id="locker_size"
                       width="expand"
                       value="<%= locker.size %>"
-                      :options="<%= locker.size_choices.to_json %>"
+                      :options="<%= locker.size_choices(building: current_user&.building).to_json %>"
         ></input-select>
    </grid-item>
 
