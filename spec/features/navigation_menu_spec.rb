@@ -19,6 +19,44 @@ RSpec.describe 'Navigation menu', js: true do
       visit '/'
       expect(page).to have_content('Locker Management')
     end
+
+    context 'when user is Firestone admin' do
+      let(:building) { FactoryBot.create(:building, name: 'Firestone Library') }
+
+      it 'shows study room admin options' do
+        visit '/'
+        expect(page).to have_content('Study Room Management')
+      end
+
+      it 'shows reports options' do
+        visit '/'
+        expect(page).to have_content('Reporting')
+      end
+
+      it 'shows renewal email admin options' do
+        visit '/'
+        click_button 'Locker Management'
+        expect(page).to have_content('Renewal Emails')
+      end
+    end
+
+    context 'when user is Lewis admin' do
+      it 'does not show study room admin options' do
+        visit '/'
+        expect(page).to have_no_content('Study Room Management')
+      end
+
+      it 'does not show reports options' do
+        visit '/'
+        expect(page).to have_no_content('Reporting')
+      end
+
+      it 'does not show renewal email admin options' do
+        visit '/'
+        click_button 'Locker Management'
+        expect(page).to have_no_content('Renewal Emails')
+      end
+    end
   end
 
   context 'when Lewis Library staff features are turned off' do
