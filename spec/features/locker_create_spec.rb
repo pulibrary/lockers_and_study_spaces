@@ -33,4 +33,25 @@ RSpec.describe 'Locker Create', js: true do
       expect(page.find_field(field)[:required]).to eq 'true'
     end
   end
+
+  context 'when Lewis patron feature is on' do
+    before do
+      allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
+      allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+    end
+
+    it 'shows the Firestone floor options' do
+      visit '/lockers/new'
+      expect(page).to have_select('locker_floor', options: ['A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
+    end
+
+    context 'when Lewis admin is logged in' do
+      let(:building) { FactoryBot.create(:building, name: 'Lewis Library') }
+
+      it 'shows the Lewis floor options' do
+        visit '/lockers/new'
+        expect(page).to have_select('locker_floor', options: ['3rd Floor', '4th Floor'])
+      end
+    end
+  end
 end
