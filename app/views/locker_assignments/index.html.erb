@@ -37,7 +37,7 @@
     <input-select class="row" label="General Area" id="query_general_area" name="query[general_area]" class="search-select" value="<%= params.fetch(:query,{})[:general_area]%>" :options="<%= Locker.new.general_area_choices.to_json %>"></input-select>
     </grid-item>
     <grid-item columns="lg-3 md-6 sm-12" >
-      <%= check_box :query, :active, { checked: params[:query].present? && params[:query][:active]=="1"} %>
+      <%= check_box :query, :active, { checked: !params[:query].present? || params[:query][:active]=="1"} %>
       <%= label(:query, :active, "Only Active Assignments") %>
     </grid-item>
     <grid-item columns="lg-6 md-8 sm-12">

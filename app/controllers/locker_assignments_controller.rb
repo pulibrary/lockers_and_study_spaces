@@ -99,7 +99,10 @@ class LockerAssignmentsController < ApplicationController
 
   def query_params
     query_params = params[:query]&.permit(:uid, :status_at_application, :general_area, :floor, :department_at_application, :active, :daterange)
-
+    if params[:query].nil?
+      query_params = ActionController::Parameters.new(active: '1').permit(:uid, :status_at_application, :general_area, :floor,
+                                                                          :department_at_application, :active, :daterange)
+    end
     query_params.delete(:active) if query_params && query_params[:active] == '0'
     parse_expiration_date(query_params)
   end
