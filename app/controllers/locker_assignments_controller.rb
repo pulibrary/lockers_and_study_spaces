@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+
 class LockerAssignmentsController < ApplicationController
   before_action :set_locker_assignment, only: %i[show edit update destroy card release]
   before_action :force_admin
@@ -134,3 +136,5 @@ class LockerAssignmentsController < ApplicationController
     end
   end
 end
+
+# rubocop:enable Metrics/ClassLength
