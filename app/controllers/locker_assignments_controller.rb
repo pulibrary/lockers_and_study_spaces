@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+
 class LockerAssignmentsController < ApplicationController
   before_action :set_locker_assignment, only: %i[show edit update destroy card release]
   before_action :force_admin
@@ -99,7 +101,10 @@ class LockerAssignmentsController < ApplicationController
 
   def query_params
     query_params = params[:query]&.permit(:uid, :status_at_application, :general_area, :floor, :department_at_application, :active, :daterange)
-
+    if params[:query].nil?
+      query_params = ActionController::Parameters.new(active: '1').permit(:uid, :status_at_application, :general_area, :floor,
+                                                                          :department_at_application, :active, :daterange)
+    end
     query_params.delete(:active) if query_params && query_params[:active] == '0'
     parse_expiration_date(query_params)
   end
@@ -131,3 +136,5 @@ class LockerAssignmentsController < ApplicationController
     end
   end
 end
+
+# rubocop:enable Metrics/ClassLength
