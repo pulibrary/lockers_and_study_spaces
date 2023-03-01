@@ -43,6 +43,17 @@ RSpec.describe Locker do
     end
   end
 
+  describe '#floor_list' do
+    before do
+      allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
+    end
+
+    it 'accepts an optional building param' do
+      lewis = FactoryBot.create(:building, name: 'Lewis Library')
+      expect(described_class.new.floor_list(building: lewis).count).to eq(2)
+    end
+  end
+
   describe '#size_floor_list' do
     it 'returns all the options combining floors with sizes' do
       expect(described_class.new.size_floor_list).to contain_exactly("4' A floor", "4' B floor", "4' C floor", "4' 2nd floor", "4' 3rd floor",
