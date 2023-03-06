@@ -24,31 +24,25 @@ An application to manage and reserve locker and study spaces for the library.  T
 
 ## Database creation
    * `bundle exec rake servers:start`
-   * You may need to get the csv seed files from a teammate or from the production server (must have your keys on the server)
-   ```
-   scp deploy@lockers-and-study-spaces-prod1.princeton.edu:\*.csv .
-   ```
-   * create, migrate and seed the database
+
+   * create, and migrate the database
      ```
-     rake db:create
-     rake db:migrate
-     rake db:seed
+     bundle exec rails db:create
+     bundle exec rails db:migrate
      ```
 
-## Re-creating CSV files for database seeding
-  * Go to the environment you want to use as the database source
-  * To write the CSVs in the user's home directory, run 
-  ```bash
-  bundle exec rake csv:all
-  ```
-  * To write the CSVs to a different directory, run
-  ```bash
-  DESTINATION_DIRECTORY=DIRECTORY_PATH bundle exec rake csv:all
-  ```
-  e.g.
-  ```bash
-  DESTINATION_DIRECTORY=/opt/projects/ bundle exec rake csv:all
-  ```
+## Database seeding for development
+* If you want a set of example data for development, seed the database. 
+* This data includes *fake* lockers and study spaces for Firestone, and users with fake UIDs. 
+* This seed data should not be used in a production environment. 
+* You can uncomment or comment lines at the beginning of the file depending on whether you want to default to the Lewis features being on or off, and whether you want to be a Lewis admin, a Firestone admin, or have which building you are an admin of be randomly assigned. 
+```
+bundle exec rails db:seed
+```
+* If you want to see what your database will look like from a fresh seed, run
+```
+bundle exec rails db:seed:replant
+```
 
 ## Development
 
