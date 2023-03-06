@@ -9,8 +9,8 @@ development: &default
     ? 2nd floor
     ? 3rd floor
   lewis_locker_floors: &lewis_locker_floors
-    ? 3rd Floor
-    ? 4th Floor
+    ? 3rd floor
+    ? 4th floor
   firestone_locker_floor_choices:
     ? No preference
     << : *firestone_locker_floors

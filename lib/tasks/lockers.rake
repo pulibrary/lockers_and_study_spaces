@@ -8,7 +8,8 @@ namespace :lockers do
       floors = [3, 4]
       lockers = floors.flat_map do |floor|
         (1..52).map do |locker_number|
-          { location: ((floor * 100) + locker_number).to_s, general_area: "#{floor.ordinalize} floor", building: lewis, size: 2 }
+          { location: ((floor * 100) + locker_number).to_s, general_area: "#{floor.ordinalize} floor", building: lewis, size: 2,
+            floor: "#{floor.ordinalize} floor" }
         end
       end
       lockers_to_add = lockers.reject { |locker| Locker.where(locker).exists? }
