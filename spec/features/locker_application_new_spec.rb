@@ -72,7 +72,7 @@ RSpec.describe 'Locker Application New', js: true do
         new_application = LockerApplication.last
         expect(page).to have_content('Lewis Library Locker Application')
         expect(page).to have_select('Preferred Size', options: ['25" x 12"'], disabled: true)
-        expect(page).to have_select('Preferred Floor', options: ['No preference', '3rd Floor', '4th Floor'])
+        expect(page).to have_select('Preferred Floor', options: ['No preference', '3rd floor', '4th floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
         expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
         expect(page).to have_field('Department')

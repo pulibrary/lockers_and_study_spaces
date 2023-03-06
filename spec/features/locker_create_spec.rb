@@ -50,7 +50,7 @@ RSpec.describe 'Locker Create', js: true do
 
       it 'shows the Lewis floor options' do
         visit '/lockers/new'
-        expect(page).to have_select('locker_floor', options: ['3rd Floor', '4th Floor'])
+        expect(page).to have_select('locker_floor', options: ['3rd floor', '4th floor'])
       end
     end
   end

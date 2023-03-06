@@ -36,7 +36,7 @@ RSpec.describe 'lockers rake tasks' do
     end
 
     it 'does not add a Lewis locker if it already exists' do
-      Locker.create! location: '401', general_area: '4th floor', building: Building.find_or_create_by(name: 'Lewis Library'), size: 2
+      Locker.create! location: '401', general_area: '4th floor', building: Building.find_or_create_by(name: 'Lewis Library'), size: 2, floor: '4th floor'
       expect do
         run_described_task
       end.to change(Locker, :count).by(103)
