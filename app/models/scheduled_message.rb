@@ -34,12 +34,12 @@ class ScheduledMessage < ApplicationRecord
   end
 
   def default_values
-    self.template ||= case self.building_id
-    when 1
-      'firestone_locker_renewal'
-    when 2
-      'lewis_locker_renewal'
-    end
+    self.template ||= case building_id
+                      when 1
+                        'firestone_locker_renewal'
+                      when 2
+                        'lewis_locker_renewal'
+                      end
     self.type ||= 'LockerRenewalMessage'
     self.user_filter ||= 'not_a_senior_or_faculty'
   end
@@ -48,13 +48,12 @@ class ScheduledMessage < ApplicationRecord
     return unless schedule == Date.today
     return unless results.nil?
 
-    relevant_assignments(self.building_id).each do |assignment|
-
+    relevant_assignments(building_id).each do |assignment|
       UserMailer.with(assignment:, template_name: template)
                 .renewal_email
                 .deliver_now
     end
-    self.results = { success: relevant_assignments(self.building_id).map(&:email) }
+    self.results = { success: relevant_assignments(building_id).map(&:email) }
     save!
   end
 
@@ -66,7 +65,10 @@ class ScheduledMessage < ApplicationRecord
   private
 
   def relevant_assignments(building_id)
-    @relevant_assignments ||= assignment_model.where(expiration_date: applicable_range).joins(:locker).where(locker: {building_id: building_id}).select do |assignment|
+    @relevant_assignments ||= assignment_model.where(expiration_date: applicable_range)
+                                              .joins(:locker)
+                                              .where(locker: { building_id: })
+                                              .select do |assignment|
       user_filter ? assignment.send(user_filter) : true
     end
   end

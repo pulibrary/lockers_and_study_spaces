@@ -88,7 +88,8 @@ class LockerAssignmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def locker_assignment_params
-    locker_assignment = params.require(:locker_assignment).permit(:start_date, :expiration_date, :locker_application_id, :locker_id, :any_locker_id, :released_date)
+    locker_assignment = params.require(:locker_assignment).permit(:start_date, :expiration_date, :locker_application_id, :locker_id, :any_locker_id,
+                                                                  :released_date)
     locker_assignment[:locker_id] ||= locker_assignment.delete(:any_locker_id) if locker_assignment[:any_locker_id].present?
     locker_assignment
   end
