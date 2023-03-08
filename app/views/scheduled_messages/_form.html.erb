@@ -11,27 +11,29 @@
     </card>
   <% end %>
 
+  <input type="hidden" id="building_id" name="building_id" value="<%= current_user.building_id %>">
   <card size="full-width">
-  <grid-container>
-  <grid-item columns="md-4 sm-12">
-    <date-picker id="schedule" name="schedule" label="Scheduled date"
-      mode="single"
-      :disabled-dates="[{ start: null, end: new Date() }]">
-      </date-picker>
-  </grid-item>
-  <grid-item columns="md-4 sm-12">
-    <date-picker id="applicable_range" name="applicable_range" label="Range covered" mode="range"
-      :disabled-dates="[{ start: null, end: new Date() }]">
-      </date-picker>
-  </grid-item>
-  <grid-item columns="md-4 sm-12"></grid-item>
-  </grid-container>
-  <grid-container>
-  <grid-item columns="lg-2 md-4 sm-12">
-  <div class="actions">
-    <input-button type="submit" variation="solid" block>Submit</input-button>
-  </div>
-  </grid-item>
-  </grid-container>
+    <grid-container>
+    <grid-item columns="md-4 sm-12">
+      <date-picker id="schedule" name="schedule" label="Scheduled date"
+        mode="single"
+        :disabled-dates="[{ start: null, end: new Date() }]">
+        </date-picker>
+    </grid-item>
+    <grid-item columns="md-4 sm-12">
+      <date-picker id="applicable_range" name="applicable_range" label="Range covered" mode="range"
+        :disabled-dates="[{ start: null, end: new Date() }]">
+        </date-picker>
+    </grid-item>
+    <grid-item columns="md-4 sm-12"></grid-item>
+    </grid-container>
+    <grid-container>
+    <grid-item columns="lg-2 md-4 sm-12">
+    <div class="actions">
+      <input-button type="submit" variation="solid" block>Submit</input-button>
+    </div>
+    </grid-item>
+    </grid-container>
+  </card>
 
 <% end %>

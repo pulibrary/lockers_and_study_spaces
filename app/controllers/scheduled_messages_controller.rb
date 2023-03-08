@@ -7,8 +7,8 @@ class ScheduledMessagesController < ApplicationController
 
   # GET /scheduled_messages or /scheduled_messages.json
   def index
-    @sent_messages = ScheduledMessage.already_sent
-    @upcoming_messages = ScheduledMessage.not_yet_sent
+    @sent_messages = ScheduledMessage.already_sent(current_user.building_id)
+    @upcoming_messages = ScheduledMessage.not_yet_sent(current_user.building_id)
   end
 
   # GET /scheduled_messages/1 or /scheduled_messages/1.json
@@ -75,7 +75,7 @@ class ScheduledMessagesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def scheduled_message_params
-    params.permit(:schedule, :applicable_range, :template, :user_filter, :type, :results)
+    params.permit(:schedule, :applicable_range, :template, :user_filter, :type, :results, :building_id)
   end
 
   # Allow all the route helper methods from subclassed controllers (e.g. new_scheduled_message_path) to

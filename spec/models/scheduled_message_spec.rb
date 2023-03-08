@@ -3,10 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe ScheduledMessage do
+  let(:firestone) { FactoryBot.create(:building, id: 1) }
+  let(:lewis) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
+
   describe 'scopes' do
-    let(:yesterday) { described_class.create!(schedule: Date.yesterday) }
-    let(:today) { described_class.create!(schedule: Date.today) }
-    let(:tomorrow) { described_class.create!(schedule: Date.tomorrow) }
+    let(:yesterday) { described_class.create!(schedule: Date.yesterday, building_id: firestone.id) }
+    let(:today) { described_class.create!(schedule: Date.today, building_id: firestone.id) }
+    let(:tomorrow) { described_class.create!(schedule: Date.tomorrow, building_id: firestone.id) }
 
     describe '.past' do
       it 'includes messages scheduled for yesterday' do
@@ -55,17 +58,19 @@ RSpec.describe ScheduledMessage do
       described_class.create(schedule: Date.today,
                              type: 'LockerRenewalMessage',
                              user_filter: 'not_a_senior_or_faculty',
-                             template: 'locker_renewal',
-                             applicable_range: Date.today..2.years.from_now)
+                             template: 'firestone_locker_renewal',
+                             applicable_range: Date.today..2.years.from_now,
+                             building_id: firestone.id)
     end
     let!(:assignment) { FactoryBot.create(:locker_assignment) }
 
-    it 'sends messages for today' do
+    it 'sends Firestone messages for today' do
       FactoryBot.create_list(:locker_assignment, 2)
       expect { message_to_send.send_emails }
         .to change { ActionMailer::Base.deliveries.count }.by(3)
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to eq 'Locker Renewal'
+      expect(mail.text_part.body).to include 'April Miller'
       expect(message_to_send.reload.results['success'].count).to eq(3)
     end
 
@@ -87,12 +92,39 @@ RSpec.describe ScheduledMessage do
                                type: 'LockerRenewalMessage',
                                user_filter: 'not_a_senior_or_faculty',
                                template: 'locker_renewal',
-                               applicable_range: Date.today..2.years.from_now)
+                               applicable_range: Date.today..2.years.from_now,
+                               building_id: firestone.id)
       end
 
       it 'does not send scheduled messages' do
         expect { message_to_send.send_emails }
           .not_to(change { ActionMailer::Base.deliveries.count })
+      end
+    end
+
+    context 'for Lewis locker patrons' do
+      let!(:message_to_send) do
+        described_class.create(schedule: Date.today,
+                               type: 'LockerRenewalMessage',
+                               user_filter: 'not_a_senior_or_faculty',
+                               template: 'lewis_locker_renewal',
+                               applicable_range: Date.today..2.years.from_now,
+                               building_id: lewis.id)
+      end
+      let!(:locker1) { FactoryBot.create(:locker, building_id: 2) }
+      let!(:locker2) { FactoryBot.create(:locker, building_id: 2) }
+      let!(:locker3) { FactoryBot.create(:locker, building_id: 1) }
+      let!(:assignment1) { FactoryBot.create(:locker_assignment, locker: locker1) }
+      let!(:assignment2) { FactoryBot.create(:locker_assignment, locker: locker2) }
+      let!(:assignment3) { FactoryBot.create(:locker_assignment, locker: locker3) }
+
+      it 'sends only Lewis messages for today' do
+        expect { message_to_send.send_emails }
+          .to change { ActionMailer::Base.deliveries.count }.by(2)
+        mail = ActionMailer::Base.deliveries.last
+        expect(mail.subject).to eq 'Locker Renewal'
+        expect(mail.text_part.body).to include 'Sylvia Swain'
+        expect(message_to_send.reload.results['success'].count).to eq(2)
       end
     end
   end

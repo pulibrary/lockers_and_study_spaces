@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class ScheduledMessage < ApplicationRecord
+  validates :building_id, presence: true
+
   scope :past, -> { where('schedule < ?', Date.today) }
   scope :today, -> { where('schedule = ?', Date.today) }
   scope :future, -> { where('schedule > ?', Date.today) }
-  scope :already_sent, -> { where.not(results: nil) }
-  scope :not_yet_sent, -> { where(results: nil) }
+  scope :already_sent, ->(building_id) { where.not(results: nil).where(building_id:) }
+  scope :not_yet_sent, ->(building_id) { where(results: nil).where(building_id:) }
 
   before_save :default_values
 
@@ -32,7 +34,12 @@ class ScheduledMessage < ApplicationRecord
   end
 
   def default_values
-    self.template ||= 'locker_renewal'
+    self.template ||= case self.building_id
+    when 1
+      'firestone_locker_renewal'
+    when 2
+      'lewis_locker_renewal'
+    end
     self.type ||= 'LockerRenewalMessage'
     self.user_filter ||= 'not_a_senior_or_faculty'
   end
@@ -41,12 +48,13 @@ class ScheduledMessage < ApplicationRecord
     return unless schedule == Date.today
     return unless results.nil?
 
-    relevant_assignments.each do |assignment|
+    relevant_assignments(self.building_id).each do |assignment|
+
       UserMailer.with(assignment:, template_name: template)
                 .renewal_email
                 .deliver_now
     end
-    self.results = { success: relevant_assignments.map(&:email) }
+    self.results = { success: relevant_assignments(self.building_id).map(&:email) }
     save!
   end
 
@@ -57,8 +65,8 @@ class ScheduledMessage < ApplicationRecord
 
   private
 
-  def relevant_assignments
-    @relevant_assignments ||= assignment_model.where(expiration_date: applicable_range).select do |assignment|
+  def relevant_assignments(building_id)
+    @relevant_assignments ||= assignment_model.where(expiration_date: applicable_range).joins(:locker).where(locker: {building_id: building_id}).select do |assignment|
       user_filter ? assignment.send(user_filter) : true
     end
   end

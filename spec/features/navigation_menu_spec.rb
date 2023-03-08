@@ -51,10 +51,10 @@ RSpec.describe 'Navigation menu', js: true do
         expect(page).to have_no_content('Reporting')
       end
 
-      it 'does not show renewal email admin options' do
+      it 'does show renewal email admin options' do
         visit '/'
         click_button 'Locker Management'
-        expect(page).to have_no_content('Renewal Emails')
+        expect(page).to have_content('Renewal Emails')
       end
     end
   end
