@@ -15,10 +15,8 @@ Rails.logger.warn('Turned on Lewis features')
 # Create admin users
 team_uids = %w[mk8066 kr2 rl8282 cc62 heberlei js7389]
 team_uids.each do |uid|
-  user = User.find_or_create_by!(
-    uid:,
-    admin: true
-  )
+  user = User.find_or_create_by!(uid:)
+  user.admin = true
   # everyone is a firestone admin
   # user.building = firestone
   # everyone is a lewis admin
