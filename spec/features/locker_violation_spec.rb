@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Locker Violation', js: true do
-  let(:user) { FactoryBot.create(:user, :admin) }
+  let(:firestone) { FactoryBot.create(:building, id: 1) }
+  let(:user) { FactoryBot.create(:user, :admin, building: firestone) }
   let(:locker_assignment) { FactoryBot.create(:locker_assignment) }
 
   before do
