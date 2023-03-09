@@ -10,8 +10,8 @@ m = Object.new
 m.extend Flipflop::Rake::SupportMethods
 
 # Turn Lewis features on
-m.switch_feature!('lewis_staff', 'active_record', true)
-m.switch_feature!('lewis_patrons', 'active_record', true)
+Rake::Task['flipflop:turn_on'].execute(feature: 'lewis_staff', strategy: 'active_record')
+Rake::Task['flipflop:turn_on'].execute(feature: 'lewis_patrons', strategy: 'active_record')
 Rails.logger.warn('Turned on Lewis features')
 
 # Lewis features off
