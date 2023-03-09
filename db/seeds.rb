@@ -1,23 +1,16 @@
 # frozen_string_literal: true
 
-firestone = Building.find_or_create_by(name: 'Firestone Library', email: 'access@princeton.edu')
-lewis = Building.find_or_create_by(name: 'Lewis Library', email: 'lewislib@princeton.edu')
+firestone = Building.find_or_create_by(name: 'Firestone Library')
+firestone.email = 'access@princeton.edu'
+firestone.save
+lewis = Building.find_or_create_by(name: 'Lewis Library')
+lewis.email = 'lewislib@princeton.edu'
 Rails.logger.warn("Created #{Building.count} Buildings")
-
-# Setup flipflop for feature swap - borrowed from https://github.com/voormedia/flipflop/blob/ed1fd56f2f86974004c7af819612dd1622adcf33/lib/tasks/flipflop.rake
-# For some reasone when we use the rake tasks directly, only the first one has an impact
-m = Object.new
-m.extend Flipflop::Rake::SupportMethods
 
 # Turn Lewis features on
 Rake::Task['flipflop:turn_on'].execute(feature: 'lewis_staff', strategy: 'active_record')
 Rake::Task['flipflop:turn_on'].execute(feature: 'lewis_patrons', strategy: 'active_record')
 Rails.logger.warn('Turned on Lewis features')
-
-# Lewis features off
-# m.switch_feature!('lewis_staff', 'active_record', false)
-# m.switch_feature!('lewis_patrons', 'active_record', false)
-# Rails.logger.warn("Turned off Lewis features")
 
 # Create admin users
 team_uids = %w[mk8066 kr2 rl8282 cc62 heberlei js7389]

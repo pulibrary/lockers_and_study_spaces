@@ -10,8 +10,8 @@ class Building < ApplicationRecord
   end
 
   def self.seed
-    Building.new(name: 'Firestone Library', email: 'access@princeton.edu').save
-    Building.new(name: 'Lewis Library', email: 'lewislib@princeton.edu').save
+    Building.new(name: 'Firestone Library').save
+    Building.new(name: 'Lewis Library').save
     firestone = Building.find_by(name: 'Firestone Library')
     Locker.where(building_id: nil).find_each { |locker| locker.update(building_id: firestone.id) }
     User.where(admin: true, building_id: nil).find_each { |user| user.update(building_id: firestone.id) }
