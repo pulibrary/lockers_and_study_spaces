@@ -1,7 +1,10 @@
 development: &default
   accessibility_needs_choices:
-    keyed_entry: Keyed entry (rather than combination)
-    near_elevator: Near an elevator
+    "Firestone Library":
+      keyed_entry: Keyed entry (rather than combination)
+      near_elevator: Near an elevator
+    "Lewis Library":
+      near_elevator: Near an elevator
   firestone_locker_floors: &firestone_locker_floors
     ? A floor
     ? B floor

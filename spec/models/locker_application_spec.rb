@@ -89,11 +89,15 @@ RSpec.describe LockerApplication do
 
   describe '#accessibility_needs_choices' do
     it 'can list accessiblity choices' do
-      expect(locker_application.accessibility_needs_choices).to be_an_instance_of(Array)
-      expect(locker_application.accessibility_needs_choices.first).to be_an_instance_of(Hash)
-      expect(locker_application.accessibility_needs_choices.first.keys).to match_array(%i[id description])
-      expect(locker_application.accessibility_needs_choices.first[:id]).to eq('keyed_entry')
-      expect(locker_application.accessibility_needs_choices.first[:description]).to eq('Keyed entry (rather than combination)')
+      expect(locker_application.accessibility_needs_choices(building_one)).to be_an_instance_of(Array)
+      expect(locker_application.accessibility_needs_choices(building_one).first).to be_an_instance_of(Hash)
+      expect(locker_application.accessibility_needs_choices(building_one).first.keys).to match_array(%i[id description])
+      expect(locker_application.accessibility_needs_choices(building_one).first[:id]).to eq('keyed_entry')
+      expect(locker_application.accessibility_needs_choices(building_one).first[:description]).to eq('Keyed entry (rather than combination)')
+    end
+
+    it 'has specific Lewis options' do
+      expect(locker_application.accessibility_needs_choices(building_two).pluck(:id)).to contain_exactly('near_elevator')
     end
   end
 
