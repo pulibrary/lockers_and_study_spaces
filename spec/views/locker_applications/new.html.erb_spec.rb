@@ -4,9 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'locker_applications/new' do
   let(:user) { FactoryBot.create(:user) }
+  let(:building) { FactoryBot.create(:building) }
 
   before do
     sign_in user
+    building
     assign(:locker_application, LockerApplication.new(
                                   preferred_size: 1,
                                   preferred_general_area: 'area',
@@ -14,7 +16,8 @@ RSpec.describe 'locker_applications/new' do
                                   semester: 'Fall',
                                   status_at_application: 'junior',
                                   department_at_application: 'department',
-                                  user:
+                                  user:,
+                                  building:
                                 ))
   end
 

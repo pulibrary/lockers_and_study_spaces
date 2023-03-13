@@ -29,8 +29,8 @@ class LockerApplication < ApplicationRecord
     end
   end
 
-  def accessibility_needs_choices
-    choices = LockerAndStudySpaces.config.fetch(:accessibility_needs_choices, [])
+  def accessibility_needs_choices(building)
+    choices = LockerAndStudySpaces.config[:accessibility_needs_choices][building&.name] || []
     choices.map { |key, val| { id: key, description: val } }
   end
 
