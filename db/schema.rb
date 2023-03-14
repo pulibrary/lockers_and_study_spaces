@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_20_173801) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_07_153224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_20_173801) do
     t.json "results"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "building_id", default: 1
+    t.index ["building_id"], name: "index_scheduled_messages_on_building_id"
   end
 
   create_table "study_room_assignments", force: :cascade do |t|

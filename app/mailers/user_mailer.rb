@@ -49,6 +49,7 @@ class UserMailer < ApplicationMailer
       assignments.each do |assignment|
         @assignment = assignment
         mail(
+          from: assignment&.locker&.building&.email,
           bcc: assignment.email,
           subject: 'Locker Renewal',
           template_name: message.template

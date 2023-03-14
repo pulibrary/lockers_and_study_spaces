@@ -27,9 +27,7 @@
             {name: 'All Applications', component: 'All Applications', href: '/locker_applications/'},
             {name: 'Assignments', component: 'Assignments', href: '/locker_assignments/'},
             {name: 'New Locker', component: 'New Locker', href: '/lockers/new'},
-            <% if current_user&.building&.name === 'Firestone Library' %>
-              {name: 'Renewal Emails', component: 'Renewal Emails', href: '/locker_renewal_messages'},
-            <% end %>
+            {name: 'Renewal Emails', component: 'Renewal Emails', href: '/locker_renewal_messages'},
           ]},
           <% if current_user&.building&.name === 'Firestone Library' %>
             {name: 'Study Room Management', component: 'Study Room Management', children: [
