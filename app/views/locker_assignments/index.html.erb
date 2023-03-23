@@ -47,7 +47,7 @@
     <input-select class="row" label="Department" id="query_department_at_application" name="query[department_at_application]" class="search-select" value="<%= params.fetch(:query,{})[:department_at_application]%>" :options="<%= LockerApplication.new.department_choices.to_json %>"></input-select>
     </grid-item>
     <grid-item columns="lg-6 md-8 sm-12">
-      <date-picker id="query_daterange" name="query[daterange]" label="Expiration Date" mode="range" />
+      <lux-date-picker id="query_daterange" name="query[daterange]" label="Expiration Date" mode="range" />
     </grid-item>
     <grid-item columns="lg-3 md-4 sm-11">
     <input-button id="filter_submit" type="submit" size="medium">Filter</input-button>
