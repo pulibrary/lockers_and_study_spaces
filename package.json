@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/ujs": "^7.0.4-1",
-    "lux-design-system": "^2.0.4",
+    "lux-design-system": "^4.1.1",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14"
