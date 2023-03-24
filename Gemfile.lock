@@ -293,7 +293,7 @@ GEM
       rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
     rubyzip (2.3.2)
-    selenium-webdriver (4.7.1)
+    selenium-webdriver (4.8.1)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -363,7 +363,7 @@ DEPENDENCIES
   capistrano-passenger
   capistrano-rails (~> 1.6)
   capistrano-yarn (~> 2.0)
-  capybara (>= 2.15)
+  capybara (>= 3.38)
   devise
   factory_bot
   flipflop (~> 2.7)
