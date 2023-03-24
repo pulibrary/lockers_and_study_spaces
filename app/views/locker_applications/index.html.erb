@@ -2,14 +2,7 @@
 Locker Applications
 <% end %>
 <% if notice.present? %>
-<card>
-  <% if notice.present? %>
-<card id="notice" size="full-width">
-  <%= notice %>
-</card>
-<% end %>
-
-</card>
+  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
 <% end %>
 
 <card id="locker-form-header" size="full-width">

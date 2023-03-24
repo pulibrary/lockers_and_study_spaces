@@ -2,11 +2,8 @@
 Locker Violations
 <% end %>
 <% if notice.present? %>
-<card id="notice" size="full-width">
-  <%= notice %>
-</card>
+  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
 <% end %>
-
 
 <h1>Locker Violations</h1>
 

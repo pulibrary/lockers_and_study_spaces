@@ -1,7 +1,9 @@
 <% content_for :title do %>
 Study Room Violation
 <% end %>
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
+<% end %>
 
 <p>
   <strong>User:</strong>

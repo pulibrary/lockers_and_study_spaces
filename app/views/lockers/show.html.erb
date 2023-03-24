@@ -2,11 +2,8 @@
 Locker <%=@locker.location %>
 <% end %>
 <% if notice.present? %>
-<card id="notice" size="full-width">
-  <%= notice %>
-</card>
+  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
 <% end %>
-
 
 <card size="full-width"> 
     <heading level="h1" size="h2">Locker <%=@locker.location %></heading>

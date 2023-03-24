@@ -2,11 +2,8 @@
 Assign application
 <% end %>
 <% if notice.present? %>
-<card id="notice" size="full-width">
-  <%= notice %>
-</card>
+  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
 <% end %>
-
 
 <%= render '/locker_assignments/form', locker_assignment: @locker_assignment %>
 

@@ -28,7 +28,7 @@ class ScheduledMessagesController < ApplicationController
 
     respond_to do |format|
       if @scheduled_message.save
-        format.html { redirect_to @scheduled_message, notice: 'Scheduled message was successfully created.' }
+        format.html { redirect_to @scheduled_message, notice: { message: 'Scheduled message was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @scheduled_message }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +41,7 @@ class ScheduledMessagesController < ApplicationController
   def update
     respond_to do |format|
       if @scheduled_message.update(scheduled_message_params)
-        format.html { redirect_to @scheduled_message, notice: 'Scheduled message was successfully updated.' }
+        format.html { redirect_to @scheduled_message, notice: { message: 'Scheduled message was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @scheduled_message }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class ScheduledMessagesController < ApplicationController
     @scheduled_message.destroy
 
     respond_to do |format|
-      format.html { redirect_to scheduled_messages_url, notice: 'Message was successfully removed from the schedule.' }
+      format.html { redirect_to scheduled_messages_url, notice: { message: 'Message was successfully removed from the schedule.', type: 'success' } }
       format.json { head :no_content }
     end
   end

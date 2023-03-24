@@ -26,7 +26,7 @@ class StudyRoomAssignmentsController < ApplicationController
 
     respond_to do |format|
       if @study_room_assignment.save
-        format.html { redirect_to @study_room_assignment, notice: 'Study room assignment was successfully created.' }
+        format.html { redirect_to @study_room_assignment, notice: { message: 'Study room assignment was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @study_room_assignment }
         UserMailer.with(study_room_assignment: @study_room_assignment).study_room_assignment_confirmation.deliver
       else
@@ -40,7 +40,7 @@ class StudyRoomAssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @study_room_assignment.update(study_room_assignment_params)
-        format.html { redirect_to @study_room_assignment, notice: 'Study room assignment was successfully updated.' }
+        format.html { redirect_to @study_room_assignment, notice: { message: 'Study room assignment was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @study_room_assignment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class StudyRoomAssignmentsController < ApplicationController
   def destroy
     @study_room_assignment.destroy
     respond_to do |format|
-      format.html { redirect_to study_room_assignments_url, notice: 'Study room assignment was successfully destroyed.' }
+      format.html { redirect_to study_room_assignments_url, notice: { message: 'Study room assignment was successfully destroyed.', type: 'success' } }
       format.json { head :no_content }
     end
   end
