@@ -12,7 +12,7 @@ describe 'accessibility', js: true do
     it 'complies with wcag' do
       expect(page).to be_axe_clean
         .according_to(:wcag2a, :wcag2aa)
-        .skipping(:'duplicate-id-aria', :list)
+        .skipping(:list)
     end
   end
 end
