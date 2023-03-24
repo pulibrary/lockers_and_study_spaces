@@ -39,7 +39,7 @@ class LockersController < ApplicationController
   def update
     respond_to do |format|
       if @locker.update(locker_params)
-        format.html { redirect_to @locker, notice:  { message: 'Locker was successfully updated.', type: 'success' } }
+        format.html { redirect_to @locker, notice: { message: 'Locker was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @locker }
       else
         format.html { render :edit, status: :unprocessable_entity }

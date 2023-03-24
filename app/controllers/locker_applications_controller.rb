@@ -133,7 +133,7 @@ class LockerApplicationsController < ApplicationController
         if method == :new && Flipflop.lewis_patrons?
           format.html { redirect_to edit_locker_application_url(@locker_application) }
         else
-          format.html { redirect_to @locker_application, notice: { message: message, type: 'success' } }
+          format.html { redirect_to @locker_application, notice: { message:, type: 'success' } }
         end
         format.json { render :show, status: :ok, location: @locker_application }
       else

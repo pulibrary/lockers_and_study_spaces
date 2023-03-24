@@ -27,7 +27,7 @@ class LockerViolationsController < ApplicationController
     respond_to do |format|
       if @locker_violation.save
         UserMailer.with(locker_violation: @locker_violation).locker_violation.deliver
-        format.html { redirect_to @locker_violation, notice:  { message: 'LockerViolation was successfully created.', type: 'success' } }
+        format.html { redirect_to @locker_violation, notice: { message: 'LockerViolation was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @locker_violation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class LockerViolationsController < ApplicationController
   def destroy
     @locker_violation.destroy
     respond_to do |format|
-      format.html { redirect_to locker_violations_url, notice:  { message: 'LockerViolation was successfully destroyed.', type: 'success' } }
+      format.html { redirect_to locker_violations_url, notice: { message: 'LockerViolation was successfully destroyed.', type: 'success' } }
       format.json { head :no_content }
     end
   end
