@@ -2,7 +2,7 @@
   <%= controller_name.humanize.titleize %>
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
 <% end %>
 
 <h1> <%= controller_name.humanize.titleize %> </h1>

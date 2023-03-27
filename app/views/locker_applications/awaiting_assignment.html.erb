@@ -3,7 +3,7 @@ Applications awaiting assignment
 <% end %>
 
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
 <% end %>
 
 <h1><%= current_user&.building&.name %> Locker Applications</h1>

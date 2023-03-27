@@ -2,7 +2,7 @@
 View application
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
 <% end %>
 
 <%= render 'view', locker_application: @locker_application %>

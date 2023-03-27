@@ -18,7 +18,7 @@
   </card-content>
 </card>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" autoclear dismissible><%= notice['message'] %></alert>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
 <% end %>
 
 <%= render partial: "index_view", collection: @lockers, as: :locker %>
