@@ -26,7 +26,7 @@ class StudyRoomsController < ApplicationController
 
     respond_to do |format|
       if @study_room.save
-        format.html { redirect_to @study_room, notice: 'Study room was successfully created.' }
+        format.html { redirect_to @study_room, notice: { message: 'Study room was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @study_room }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class StudyRoomsController < ApplicationController
   def update
     respond_to do |format|
       if @study_room.update(study_room_params)
-        format.html { redirect_to @study_room, notice: 'Study room was successfully updated.' }
+        format.html { redirect_to @study_room, notice: { message: 'Study room was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @study_room }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class StudyRoomsController < ApplicationController
   def destroy
     @study_room.destroy
     respond_to do |format|
-      format.html { redirect_to study_rooms_url, notice: 'Study room was successfully destroyed.' }
+      format.html { redirect_to study_rooms_url, notice: { message: 'Study room was successfully destroyed.', type: 'success' } }
       format.json { head :no_content }
     end
   end

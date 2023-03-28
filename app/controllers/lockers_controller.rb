@@ -26,7 +26,7 @@ class LockersController < ApplicationController
 
     respond_to do |format|
       if @locker.save
-        format.html { redirect_to @locker, notice: 'Locker was successfully created.' }
+        format.html { redirect_to @locker, notice: { message: 'Locker was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @locker }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class LockersController < ApplicationController
   def update
     respond_to do |format|
       if @locker.update(locker_params)
-        format.html { redirect_to @locker, notice: 'Locker was successfully updated.' }
+        format.html { redirect_to @locker, notice: { message: 'Locker was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @locker }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class LockersController < ApplicationController
   def destroy
     @locker.destroy
     respond_to do |format|
-      format.html { redirect_to lockers_url, notice: 'Locker was successfully destroyed.' }
+      format.html { redirect_to lockers_url, notice: { message: 'Locker was successfully destroyed.', type: 'success' } }
       format.json { head :no_content }
     end
   end
@@ -60,10 +60,10 @@ class LockersController < ApplicationController
   def enable
     respond_to do |format|
       if @locker.update(disabled: false)
-        format.html { redirect_to lockers_url, notice: 'Locker was successfully enabled.' }
+        format.html { redirect_to lockers_url, notice: { message: 'Locker was successfully enabled.', type: 'success' } }
         format.json { head :no_content }
       else
-        format.html { redirect_to lockers_url, notice: 'Unable to enable locker.' }
+        format.html { redirect_to lockers_url, notice: { message: 'Unable to enable locker.', type: 'error' } }
         format.json { render json: ['Unable to enable locker.'], status: :unprocessable_entity }
       end
     end
@@ -72,10 +72,10 @@ class LockersController < ApplicationController
   def disable
     respond_to do |format|
       if @locker.update(disabled: true)
-        format.html { redirect_to lockers_url, notice: 'Locker was successfully disabled.' }
+        format.html { redirect_to lockers_url, notice: { message: 'Locker was successfully disabled.', type: 'success' } }
         format.json { head :no_content }
       else
-        format.html { redirect_to lockers_url, notice: 'Unable to disable locker.' }
+        format.html { redirect_to lockers_url, notice: { message: 'Unable to disable locker.', type: 'error' } }
         format.json { render json: ['Unable to disable locker.'], status: :unprocessable_entity }
       end
     end

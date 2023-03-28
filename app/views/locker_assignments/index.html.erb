@@ -2,14 +2,7 @@
 <%= current_user&.building&.name %> Locker Assignments
 <% end %>
 <% if notice.present? %>
-<card>
-  <% if notice.present? %>
-<card id="notice" size="full-width">
-  <%= notice %>
-</card>
-<% end %>
-
-</card>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
 <% end %>
 
 <%= form_tag(locker_assignments_path, method: :get) do %>

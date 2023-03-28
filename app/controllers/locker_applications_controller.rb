@@ -68,7 +68,7 @@ class LockerApplicationsController < ApplicationController
   def destroy
     @locker_application.destroy
     respond_to do |format|
-      format.html { redirect_to locker_applications_url, notice: 'Locker application was successfully destroyed.' }
+      format.html { redirect_to locker_applications_url, notice: { message: 'Locker application was successfully destroyed.', type: 'success' } }
       format.json { head :no_content }
     end
   end
@@ -133,7 +133,7 @@ class LockerApplicationsController < ApplicationController
         if method == :new && Flipflop.lewis_patrons?
           format.html { redirect_to edit_locker_application_url(@locker_application) }
         else
-          format.html { redirect_to @locker_application, notice: message }
+          format.html { redirect_to @locker_application, notice: { message:, type: 'success' } }
         end
         format.json { render :show, status: :ok, location: @locker_application }
       else

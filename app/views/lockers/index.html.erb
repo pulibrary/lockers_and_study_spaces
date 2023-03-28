@@ -18,11 +18,8 @@
   </card-content>
 </card>
 <% if notice.present? %>
-<card id="notice" size="full-width">
-  <%= notice %>
-</card>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
 <% end %>
-
 
 <%= render partial: "index_view", collection: @lockers, as: :locker %>
 

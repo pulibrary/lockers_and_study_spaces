@@ -38,7 +38,7 @@ class LockerAssignmentsController < ApplicationController
   def destroy
     @locker_assignment.destroy
     respond_to do |format|
-      format.html { redirect_to locker_assignments_url, notice: 'Locker assignment was successfully destroyed.' }
+      format.html { redirect_to locker_assignments_url, notice: { message: 'Locker assignment was successfully destroyed.', type: 'success' } }
       format.json { head :no_content }
     end
   end
@@ -74,7 +74,7 @@ class LockerAssignmentsController < ApplicationController
   def release
     @locker_assignment.release
     respond_to do |format|
-      format.html { redirect_to locker_assignments_url, notice: 'Locker assignment was successfully released.' }
+      format.html { redirect_to locker_assignments_url, notice: { message: 'Locker assignment was successfully released.', type: 'success' } }
       format.json { head :no_content }
     end
   end
@@ -127,7 +127,7 @@ class LockerAssignmentsController < ApplicationController
   def respond_to_create(valid, message: 'Locker assignment was successfully created.', error_location: 'locker_applications/assign')
     respond_to do |format|
       if valid
-        format.html { redirect_to @locker_assignment, notice: message }
+        format.html { redirect_to @locker_assignment, notice: { message:, type: 'success' } }
         format.json { render :show, status: :created, location: @locker_assignment }
       else
         @locker_application = @locker_assignment.locker_application

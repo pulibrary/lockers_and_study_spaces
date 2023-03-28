@@ -1,7 +1,9 @@
 <% content_for :title do %>
 Scheduled Message
 <% end %>
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+<% end %>
 
 <p>
   <strong>Schedule:</strong>

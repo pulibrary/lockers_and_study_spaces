@@ -1,7 +1,9 @@
 <% content_for :title do %>
   <%= controller_name.humanize.titleize %>
 <% end %>
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+<% end %>
 
 <h1> <%= controller_name.humanize.titleize %> </h1>
 

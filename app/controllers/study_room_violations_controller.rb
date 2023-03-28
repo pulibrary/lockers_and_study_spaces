@@ -27,7 +27,7 @@ class StudyRoomViolationsController < ApplicationController
     respond_to do |format|
       if @study_room_violation.save
         UserMailer.with(study_room_violation: @study_room_violation).study_room_violation.deliver
-        format.html { redirect_to @study_room_violation, notice: 'Study room violation was successfully created.' }
+        format.html { redirect_to @study_room_violation, notice: { message: 'Study room violation was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @study_room_violation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class StudyRoomViolationsController < ApplicationController
   def update
     respond_to do |format|
       if @study_room_violation.update(study_room_violation_params)
-        format.html { redirect_to @study_room_violation, notice: 'Study room violation was successfully updated.' }
+        format.html { redirect_to @study_room_violation, notice: { message: 'Study room violation was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @study_room_violation }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class StudyRoomViolationsController < ApplicationController
   def destroy
     @study_room_violation.destroy
     respond_to do |format|
-      format.html { redirect_to study_room_violations_url, notice: 'Study room violation was successfully destroyed.' }
+      format.html { redirect_to study_room_violations_url, notice: { message: 'Study room violation was successfully destroyed.', type: 'success' } }
       format.json { head :no_content }
     end
   end
