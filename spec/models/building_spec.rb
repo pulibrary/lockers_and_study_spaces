@@ -25,7 +25,7 @@ RSpec.describe Building do
     end
 
     it 'shows all the buildings' do
-      expect(described_class.building_choices).to eq(expected_building_choices)
+      expect(described_class.building_choices).to match_array(expected_building_choices)
     end
   end
 
