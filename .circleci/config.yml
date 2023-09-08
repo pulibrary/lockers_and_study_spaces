@@ -64,7 +64,7 @@ jobs:
       - setup-bundler
       - node/install:
           install-yarn: true
-          node-version: '16.14.2'
+          node-version: '18.17.0'
 
       # Only necessary if app uses webpacker or yarn in some other way
       - restore_cache:
