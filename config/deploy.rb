@@ -15,6 +15,8 @@ set :deploy_to, '/opt/lockers_and_study_spaces'
 # Install yarn devDependencies, not just the prod ones
 set :yarn_flags, '--silent --no-progress'
 
+set :assets_manifests, ['app/assets/config/manifest.js']
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
