@@ -1,3 +1,3 @@
 # Procfile
 backend: bin/rails s -p 3000
-frontend: bin/vite dev
+frontend: bundle exec vite dev
