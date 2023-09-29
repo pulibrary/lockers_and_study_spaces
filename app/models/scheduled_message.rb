@@ -49,6 +49,10 @@ class ScheduledMessage < ApplicationRecord
     return unless results.nil?
 
     relevant_assignments(building_id).each do |assignment|
+      if assignment.email.include?('@@')
+        assignment.email = assignment.email.gsub('@@', '@')
+        byebug
+      end
       UserMailer.with(assignment:, template_name: template)
                 .renewal_email
                 .deliver_now

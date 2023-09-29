@@ -127,5 +127,17 @@ RSpec.describe ScheduledMessage do
         expect(message_to_send.reload.results['success'].count).to eq(2)
       end
     end
+
+    context 'when email has two @ symbols' do
+      let!(:user) {FactoryBot.create(:user, uid: "uid384y96767632y@")}
+      let!(:app) {FactoryBot.create(:locker_application, user: user)}
+      let!(:assignment) {FactoryBot.create(:locker_assignment, locker_application: app)}
+      it 'does not send messages' do
+        message_to_send.send_emails
+          mail = ActionMailer::Base.deliveries.last
+          byebug
+          expect(mail.bcc).to eq 'uid384y96767632y@princeton.edu'
+      end
+    end
   end
 end

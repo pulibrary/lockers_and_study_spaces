@@ -79,6 +79,26 @@ RSpec.describe UserMailer do
     end
   end
 
+  describe "#renewal_email" do
+    let(:assignment) { FactoryBot.create(:locker_assignment) }
+    it 'sends a renewal email to the asignee' do
+      expect { described_class.with(assignment:, template_name: 'firestone_locker_renewal').renewal_email.deliver }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
+      mail = ActionMailer::Base.deliveries.last
+    end
+
+    it 'sends a renewal email to the assignee with two @ in email' do
+      # allow(described_class).to receive(:mail).and_call_original()
+      allow(assignment).to receive(:email).and_return('is4684@@princeton.edu')
+      user_mailer = described_class.with(assignment:, template_name: 'firestone_locker_renewal')
+      expect { user_mailer.renewal_email.deliver }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
+      # mail = ActionMailer::Base.deliveries.last
+      # expect(user_mailer).to have_received(:mail).with(bcc: 'is4684@princeton.edu', subject: 'Locker Renewal', template_name: 'firestone_locker_renewal').once
+    end
+  
+  end
+
   describe '#study_room_violation' do
     let(:study_room_assignment) { FactoryBot.create(:study_room_assignment) }
 
