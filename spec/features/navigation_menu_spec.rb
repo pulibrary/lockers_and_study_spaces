@@ -20,6 +20,11 @@ RSpec.describe 'Navigation menu', js: true do
       expect(page).to have_content('Locker Management')
     end
 
+    it 'has a generic header for the application' do
+      visit 'locker_renewal_messages/new'
+      expect(page.find_by_id('appName').text).to eq('Princeton University Library Lockers and Study Rooms')
+    end
+
     context 'when user is Firestone admin' do
       let(:building) { FactoryBot.create(:building, name: 'Firestone Library') }
 
