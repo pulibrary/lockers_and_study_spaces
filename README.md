@@ -46,9 +46,9 @@ bundle exec rails db:seed:replant
 
 ## Development
 
-   * run foreman
+   * start the rails server
      ```
-     bundle exec foreman start
+     bundle exec rails s
      ```
    * run mail catcher
      run once

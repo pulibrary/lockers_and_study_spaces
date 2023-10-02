@@ -56,7 +56,6 @@ end
 group :development do
   gem 'bcrypt_pbkdf'
   gem 'ed25519'
-  gem 'foreman'
   gem 'listen'
   gem 'rspec-rails'
   gem 'web-console', '>= 3.3.0'

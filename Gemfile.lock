@@ -138,7 +138,6 @@ GEM
     flipflop (2.7.0)
       activesupport (>= 4.0)
       terminal-table (>= 1.8)
-    foreman (0.87.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
@@ -367,7 +366,6 @@ DEPENDENCIES
   ed25519
   factory_bot
   flipflop (~> 2.7)
-  foreman
   honeybadger (~> 4.0)
   jbuilder (~> 2.5)
   listen
