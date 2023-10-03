@@ -8,7 +8,7 @@ gem 'rails', '~> 7.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 5.6'
+gem 'puma'
 # Use SCSS for stylesheets
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
@@ -43,9 +43,9 @@ gem 'whenever'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'capistrano', '~> 3.16.0', require: false
+  gem 'capistrano', require: false
   gem 'capistrano-passenger'
-  gem 'capistrano-rails', '~> 1.6', require: false
+  gem 'capistrano-rails', require: false
   gem 'factory_bot'
   gem 'rails-controller-testing'
   gem 'rubocop'
