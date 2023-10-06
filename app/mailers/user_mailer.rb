@@ -36,7 +36,6 @@ class UserMailer < ApplicationMailer
 
   def renewal_email
     @assignment = params[:assignment]
-    byebug
     mail(
       bcc: @assignment.email,
       subject: 'Locker Renewal',

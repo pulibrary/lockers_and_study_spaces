@@ -33,7 +33,8 @@ class Applicant
   end
 
   def email
-    ldap[:email] || "#{user.uid}@princeton.edu"
+    email = ldap[:email] || "#{user.uid}@princeton.edu"
+    email.gsub('@@', '@')
   end
 
   def name
