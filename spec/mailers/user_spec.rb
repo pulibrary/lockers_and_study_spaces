@@ -79,6 +79,15 @@ RSpec.describe UserMailer do
     end
   end
 
+  describe '#renewal_email' do
+    let(:assignment) { FactoryBot.create(:locker_assignment) }
+
+    it 'sends a renewal email to the asignee' do
+      expect { described_class.with(assignment:, template_name: 'firestone_locker_renewal').renewal_email.deliver }
+        .to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+
   describe '#study_room_violation' do
     let(:study_room_assignment) { FactoryBot.create(:study_room_assignment) }
 
