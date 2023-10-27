@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
-RSpec.describe 'Study Room Assign', js: true do
+RSpec.describe 'Study Room Assign', :js do
   let(:user) { FactoryBot.create(:user, :admin) }
   let!(:study_room1) { FactoryBot.create(:study_room, general_area: 'Classic Reading Room') }
   let!(:study_room2) { FactoryBot.create(:study_room, general_area: 'Classic Reading Room') }

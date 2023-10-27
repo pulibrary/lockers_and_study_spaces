@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Application New', js: true do
+RSpec.describe 'Locker Application New', :js do
   let(:user) { FactoryBot.create(:user) }
   let(:building_one) { FactoryBot.create(:building, id: 1) }
   let(:building_two) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
@@ -101,7 +101,8 @@ RSpec.describe 'Locker Application New', js: true do
         fill_in('Additional accessibility needs', with: 'Not low to the ground')
         click_button('Submit Locker Application')
         new_application.reload
-        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)', 'Near an elevator', 'Not low to the ground'])
+        expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)', 'Near an elevator',
+                                                                       'Not low to the ground')
       end
 
       it 'does not create an additional empty accessibility need' do
@@ -113,7 +114,7 @@ RSpec.describe 'Locker Application New', js: true do
         check('Keyed entry (rather than combination)')
         click_button('Submit Locker Application')
         new_application.reload
-        expect(new_application.accessibility_needs).to match_array(['Keyed entry (rather than combination)'])
+        expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)')
       end
     end
 
@@ -229,7 +230,7 @@ RSpec.describe 'Locker Application New', js: true do
         expect(page).to have_field('Additional accessibility needs', with: 'Another need')
         uncheck('Keyed entry (rather than combination)')
         click_button('Submit Locker Application')
-        expect(locker_application.reload.accessibility_needs).to match_array(['Another need'])
+        expect(locker_application.reload.accessibility_needs).to contain_exactly('Another need')
       end
     end
   end

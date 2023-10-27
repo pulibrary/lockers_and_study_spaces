@@ -18,7 +18,7 @@ RSpec.describe 'lockers rake tasks' do
 
     it 'creates valid locker locations' do
       run_described_task
-      expect(Locker.all.pluck(:location)).to include(
+      expect(Locker.pluck(:location)).to include(
         '301', '302', '310', '352',
         '401', '402', '410', '452'
       )

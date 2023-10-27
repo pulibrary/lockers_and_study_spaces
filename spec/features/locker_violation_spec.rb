@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Violation', js: true do
+RSpec.describe 'Locker Violation', :js do
   let(:firestone) { FactoryBot.create(:building, id: 1) }
   let(:user) { FactoryBot.create(:user, :admin, building: firestone) }
   let(:locker_assignment) { FactoryBot.create(:locker_assignment) }
@@ -15,7 +15,7 @@ RSpec.describe 'Locker Violation', js: true do
   it 'enables me to record a locker violation' do
     visit lockers_path
     expect(page).to have_text(locker_assignment.locker.location)
-    click_on 'Record Violation'
+    click_link 'Record Violation'
     fill_in :locker_violation_number_of_books, with: 2
     expect { click_button 'Record Locker Violation' }.to change { ActionMailer::Base.deliveries.count }.by(1)
   end

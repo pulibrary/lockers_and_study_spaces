@@ -12,3 +12,6 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
     - 'db/*.rb'
     - 'config/*.rb'
+
+RSpec/IndexedLet:
+  Enabled: false

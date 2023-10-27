@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'axe-rspec'
 
-describe 'accessibility', js: true do
+describe 'accessibility', :js do
   context 'when visiting the home page' do
     before do
       visit '/'

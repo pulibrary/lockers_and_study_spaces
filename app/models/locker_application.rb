@@ -60,7 +60,7 @@ class LockerApplication < ApplicationRecord
   end
 
   def department_list
-    self.class.all.pluck(:department_at_application).uniq.sort
+    self.class.pluck(:department_at_application).uniq.sort
   end
 
   def department_choices

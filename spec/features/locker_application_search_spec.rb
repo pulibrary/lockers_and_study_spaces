@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Application Search', js: true do
+RSpec.describe 'Locker Application Search', :js do
   let(:user) { FactoryBot.create(:user, :admin) }
   let(:user1) { FactoryBot.create(:user) }
   let(:user2) { FactoryBot.create(:user) }
