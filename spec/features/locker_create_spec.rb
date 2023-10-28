@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'securerandom'
 
-RSpec.describe 'Locker Create', js: true do
+RSpec.describe 'Locker Create', :js do
   let(:building) { FactoryBot.create(:building, name: 'Firestone Library') }
   let(:user) { FactoryBot.create(:user, :admin, building:) }
 
@@ -36,8 +36,7 @@ RSpec.describe 'Locker Create', js: true do
 
   context 'when Lewis patron feature is on' do
     before do
-      allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
-      allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
     end
 
     it 'shows the Firestone floor options' do

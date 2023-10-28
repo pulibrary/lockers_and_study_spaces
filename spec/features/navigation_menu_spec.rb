@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Navigation menu', js: true do
+RSpec.describe 'Navigation menu', :js do
   let(:building) { FactoryBot.create(:building, name: 'Lewis Library') }
   let(:user) { FactoryBot.create(:user, :admin, building:) }
 
@@ -48,12 +48,12 @@ RSpec.describe 'Navigation menu', js: true do
     context 'when user is Lewis admin' do
       it 'does not show study room admin options' do
         visit '/'
-        expect(page).to have_no_content('Study Room Management')
+        expect(page).not_to have_content('Study Room Management')
       end
 
       it 'does not show reports options' do
         visit '/'
-        expect(page).to have_no_content('Reporting')
+        expect(page).not_to have_content('Reporting')
       end
 
       it 'does show renewal email admin options' do

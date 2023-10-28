@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Footer', js: true do
+RSpec.describe 'Footer', :js do
   it 'displays on the home page' do
     visit '/'
     within('footer') do

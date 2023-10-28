@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Locker Application Assign', js: true do
+RSpec.describe 'Locker Application Assign', :js do
   let(:user) { FactoryBot.create(:user, :admin) }
   let(:user1) { FactoryBot.create(:user) }
   let(:user2) { FactoryBot.create(:user) }
@@ -39,7 +39,7 @@ RSpec.describe 'Locker Application Assign', js: true do
     select locker.location, from: 'locker_assignment_locker_id'
 
     expect { click_button 'Submit Locker Assignment' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    click_on 'Card for printing'
+    click_link 'Card for printing'
   end
 
   it 'has a unique <title>' do
@@ -51,8 +51,7 @@ RSpec.describe 'Locker Application Assign', js: true do
     let(:lewis_admin) { FactoryBot.create(:user, :admin, building_id: lewis.id) }
 
     before do
-      allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
-      allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
       sign_in lewis_admin
     end
 

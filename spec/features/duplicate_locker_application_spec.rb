@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Duplicate Locker Applications', js: true do
+RSpec.describe 'Duplicate Locker Applications', :js do
   let(:admin) { FactoryBot.create(:user, :admin) }
   let(:user) { FactoryBot.create(:user) }
   let(:lewis) { FactoryBot.create(:building, name: 'Lewis Library') }
@@ -60,7 +60,7 @@ RSpec.describe 'Duplicate Locker Applications', js: true do
       within("#application_#{first_application.id}") do
         find('summary.duplicate-applications').click
         within('.duplicate-applications-detail') { click_link 'Archive' }
-        expect(page).not_to have_selector('summary.duplicate-applications')
+        expect(page).not_to have_css('summary.duplicate-applications')
       end
     end
 

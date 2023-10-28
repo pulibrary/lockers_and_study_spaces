@@ -65,9 +65,9 @@ RSpec.describe LockerApplication do
           locker_application.save!
           expect(described_class.awaiting_assignment).not_to be_empty
           expect(locker_application.accessible).to be true
-          expect(locker_application.accessibility_needs).to match_array(['Near an elevator'])
+          expect(locker_application.accessibility_needs).to contain_exactly('Near an elevator')
           described_class.migrate_accessible_field
-          expect(locker_application.reload.accessibility_needs).to match_array(['Unspecified accessibility need', 'Near an elevator'])
+          expect(locker_application.reload.accessibility_needs).to contain_exactly('Unspecified accessibility need', 'Near an elevator')
         end
       end
     end

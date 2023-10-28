@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ScheduledMessage, js: true do
+RSpec.describe ScheduledMessage, :js do
   let(:firestone) { FactoryBot.create(:building, id: 1) }
   let(:lewis) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
   let(:firestone_admin) { FactoryBot.create(:user, :admin, building: firestone) }
@@ -58,8 +58,7 @@ RSpec.describe ScheduledMessage, js: true do
 
   context 'when a Lewis admin' do
     before do
-      allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
-      allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
       sign_in lewis_admin
     end
 

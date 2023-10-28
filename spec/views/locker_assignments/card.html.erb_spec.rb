@@ -14,8 +14,7 @@ RSpec.describe 'locker_assignments/card' do
 
   context 'with lewis_patrons on' do
     before do
-      allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
-      allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
     end
 
     context 'with firestone_locker_assignment' do

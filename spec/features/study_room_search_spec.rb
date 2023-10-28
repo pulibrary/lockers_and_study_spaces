@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Study Room Search', js: true do
+RSpec.describe 'Study Room Search', :js do
   let(:user) { FactoryBot.create(:user, :admin) }
   let(:study_room1) { FactoryBot.create(:study_room) }
   let(:study_room2) { FactoryBot.create(:study_room) }

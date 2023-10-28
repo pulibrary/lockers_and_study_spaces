@@ -65,9 +65,9 @@ RSpec.describe User do
       end
 
       it 'does not add any additional users to the database' do
-        expect(User.all.count).to eq(1)
+        expect(User.count).to eq(1)
         User.from_cas(access_token)
-        expect(User.all.count).to eq(1)
+        expect(User.count).to eq(1)
       end
 
       it "does not modify the existing user's provider" do
@@ -79,9 +79,9 @@ RSpec.describe User do
       let(:access_token) { OmniAuth::AuthHash.new(provider: 'cas', uid: 'aNewUser') }
 
       it 'creates a new user in the database' do
-        expect(User.all.count).to eq(1)
+        expect(User.count).to eq(1)
         User.from_cas(access_token)
-        expect(User.all.count).to eq(2)
+        expect(User.count).to eq(2)
       end
     end
   end

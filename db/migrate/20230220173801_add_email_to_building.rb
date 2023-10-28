@@ -3,7 +3,7 @@
 class AddEmailToBuilding < ActiveRecord::Migration[7.0]
   def change
     add_column :buildings, :email, :string
-    Building.all.each do |building|
+    Building.find_each do |building|
       building.email =
         case building.name
         when 'Firestone Library'

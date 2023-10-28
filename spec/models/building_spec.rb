@@ -41,9 +41,9 @@ RSpec.describe Building do
       end
 
       it 'adds two buildings' do
-        expect(described_class.all.count).to eq(0)
+        expect(described_class.count).to eq(0)
         described_class.seed
-        expect(described_class.all.count).to eq(2)
+        expect(described_class.count).to eq(2)
       end
 
       it 'attaches all unattached lockers to Firestone' do
@@ -82,7 +82,7 @@ RSpec.describe Building do
     context 'when buildings have already been seeded' do
       it 'does not add any additional buildings' do
         described_class.seed
-        expect(described_class.all.count).to eq(2)
+        expect(described_class.count).to eq(2)
       end
     end
   end

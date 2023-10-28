@@ -71,7 +71,6 @@ RSpec.describe LockerAssignment do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#search' do
     let(:locker_application1) { FactoryBot.create(:locker_application, status_at_application: 'junior', department_at_application: 'History Department') }
     let(:locker_application2) { FactoryBot.create(:locker_application, status_at_application: 'senior', department_at_application: 'Math Department') }
@@ -149,7 +148,6 @@ RSpec.describe LockerAssignment do
                                                status_at_application: 'junior' })).to contain_exactly(locker_assignment1)
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   describe '#not_a_senior_or_faculty' do
     let(:user) { FactoryBot.create(:user) }
