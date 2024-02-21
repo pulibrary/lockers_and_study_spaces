@@ -1,7 +1,7 @@
 ---
 version: 2.1
 orbs:
-  browser-tools: circleci/browser-tools@1.2.4
+  browser-tools: circleci/browser-tools@1.4.3
   node: circleci/node@5.1.0
 executors:
   lockers_and_study_spaces-executor:
@@ -64,7 +64,7 @@ jobs:
       - setup-bundler
       - node/install:
           install-yarn: true
-          node-version: '18.17.0'
+          node-version: '20.11.1'
 
       # Only necessary if app uses webpacker or yarn in some other way
       - restore_cache:
@@ -101,9 +101,9 @@ jobs:
             java -jar /usr/local/bin/selenium.jar --version
           name: Check install
 
-      # ensure we have psql which we need for db:schema:load
-      - run: sudo apt-get update --allow-releaseinfo-change
-      - run: sudo apt-get install -y postgresql-client || true
+      - run:
+          name: install psql
+          command: sudo apt install postgresql-client
 
       - run:
           name: Wait for DB
