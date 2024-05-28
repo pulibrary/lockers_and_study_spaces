@@ -62,7 +62,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    address: 'lib-ponyexpr.princeton.edu',
+    address: 'lib-ponyexpr-prod.princeton.edu',
     open_timeout: 10,
     read_timeout: 10
   }
