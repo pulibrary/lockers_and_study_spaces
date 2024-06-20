@@ -88,7 +88,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
-    builder (3.2.4)
+    builder (3.3.0)
     byebug (11.1.3)
     capistrano (3.17.3)
       airbrussh (>= 1.0.0)
@@ -116,7 +116,7 @@ GEM
     chronic (0.10.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concurrent-ruby (1.2.3)
+    concurrent-ruby (1.3.3)
     crass (1.0.6)
     date (3.3.4)
     descendants_tracker (0.0.4)
@@ -132,7 +132,7 @@ GEM
     dry-cli (1.0.0)
     dumb_delegator (1.0.0)
     ed25519 (1.3.0)
-    erubi (1.12.0)
+    erubi (1.13.0)
     factory_bot (6.3.0)
       activesupport (>= 5.0.0)
     ffi (1.16.2)
@@ -143,7 +143,7 @@ GEM
       activesupport (>= 6.1)
     hashie (5.0.0)
     honeybadger (4.12.2)
-    i18n (1.14.1)
+    i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     jbuilder (2.11.5)
@@ -167,7 +167,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
-    minitest (5.22.2)
+    minitest (5.24.0)
     msgpack (1.7.2)
     net-imap (0.4.10)
       date
@@ -200,9 +200,9 @@ GEM
       addressable (~> 2.8)
       nokogiri (~> 1.12)
       omniauth (~> 2.1)
-    omniauth-rails_csrf_protection (0.1.2)
+    omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
-      omniauth (>= 1.3.1)
+      omniauth (~> 2.0)
     orm_adapter (0.5.0)
     pagy (4.11.0)
     parallel (1.23.0)
@@ -388,6 +388,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   listen
   net-ldap
+  omniauth
   omniauth-cas
   omniauth-rails_csrf_protection
   pagy (< 5.0.0)

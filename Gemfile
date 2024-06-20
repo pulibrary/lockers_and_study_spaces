@@ -31,6 +31,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Single sign on
 gem 'devise'
+gem 'omniauth'
 gem 'omniauth-cas'
 gem 'omniauth-rails_csrf_protection'
 

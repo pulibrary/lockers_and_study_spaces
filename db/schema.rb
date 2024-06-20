@@ -39,9 +39,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_153224) do
     t.bigint "user_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.boolean "archived", default: false
     t.bigint "building_id", default: 1
     t.boolean "complete", default: false
+    t.boolean "archived", default: false
     t.text "accessibility_needs", default: [], array: true
     t.index ["building_id"], name: "index_locker_applications_on_building_id"
     t.index ["user_id"], name: "index_locker_applications_on_user_id"
