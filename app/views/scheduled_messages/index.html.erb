@@ -2,7 +2,7 @@
   <%= controller_name.humanize.titleize %>
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
 <h1> <%= controller_name.humanize.titleize %> </h1>
@@ -27,11 +27,11 @@
 </data-table>
 
 
-<grid-container>
-  <grid-item columns="sm-2">
+<lux-grid-container>
+  <lux-grid-item columns="sm-2">
     <%= link_to 'Schedule a new message', new_scheduled_message_path %>
-  </grid-item>
-</grid-container>
+  </lux-grid-item>
+</lux-grid-container>
 
 
 <data-table caption="Sent messages"

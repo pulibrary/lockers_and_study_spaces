@@ -2,82 +2,82 @@
 Locker <%=@locker.location %>
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
-<card size="full-width"> 
+<lux-card size="full-width"> 
     <heading level="h1" size="h2">Locker <%=@locker.location %></heading>
-   <grid-container>
-    <grid-item columns="lg-1 md-2 sm-12">
+   <lux-grid-container>
+    <lux-grid-item columns="lg-1 md-2 sm-12">
       <strong>Size:</strong>
       <span><%= @locker.size %></span>
-    </grid-item>
-    <grid-item columns="lg-3 md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-4 sm-12">
       <strong>General area:</strong>
       <span><%= @locker.general_area %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-3 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-3 sm-12">
       <strong>Accessible:</strong>
       <span><%= @locker.accessible %></span>
-    </grid-item>
-    <grid-item columns="lg-3 md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-4 sm-12">
       <strong>Combination:</strong>
       <span><%= @locker.combination %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-3 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-3 sm-12">
       <strong>Code:</strong>
       <span><%= @locker.code %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-4 sm-12">
       <strong>Tag:</strong>
       <span><%= @locker.tag %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-3 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-3 sm-12">
       <strong>Discs:</strong>
       <span><%= @locker.discs %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-3 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-3 sm-12">
       <strong>Clutch:</strong>
       <span><%= @locker.clutch %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-4 sm-12">
       <strong>Hubpos:</strong>
       <span><%= @locker.hubpos %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-4 sm-12">
       <strong>Key number:</strong>
       <span><%= @locker.key_number %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-4 sm-12">
       <strong>Floor:</strong>
       <span><%= @locker.floor %></span>
-    </grid-item>
-    <grid-item columns="lg-12 md-12 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-12 md-12 sm-12">
       <strong>Notes:</strong>
       <span><%= @locker.notes %></span>
-    </grid-item>
-    <grid-item columns="lg-12 md-12 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-12 md-12 sm-12">
       <%= link_to 'Edit', edit_locker_path(@locker) %>
       <%= link_to 'Back', lockers_path %>
-    </grid-item>
-   </grid-container>
-</card>
+    </lux-grid-item>
+   </lux-grid-container>
+</lux-card>
 <% if @locker.current_assignment.present? %>
-<card size="full-width">
+<lux-card size="full-width">
   <heading level="h2" size="h4">Currently Assigned to Applicant</heading>
-   <grid-container>
-    <grid-item columns="lg-3 md-6 sm-12">
+   <lux-grid-container>
+    <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Start date:</strong>
       <%= link_to @locker.current_assignment.uid, locker_assignment_path(@locker.current_assignment) %>
-    </grid-item>
-    <grid-item columns="lg-3 md-6 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Start date:</strong>
       <%= @locker.current_assignment.start_date %>
-    </grid-item>
-    <grid-item columns="lg-3 md-6 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Expiration date:</strong>
       <%= @locker.current_assignment.expiration_date %>
-    </grid-item>
-   </grid-container>
-</card>
+    </lux-grid-item>
+   </lux-grid-container>
+</lux-card>
 <%end %>

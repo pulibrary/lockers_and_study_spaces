@@ -1,6 +1,6 @@
 <%= form_with(model: scheduled_message, local: true) do |form| %>
   <% if scheduled_message.errors.any? %>
-    <card id="error_explanation" size="full-width">
+    <lux-card id="error_explanation" size="full-width">
       <h2><%= pluralize(scheduled_message.errors.count, "error") %> prohibited this scheduled_message from being saved:</h2>
 
       <ul>
@@ -8,32 +8,32 @@
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
-    </card>
+    </lux-card>
   <% end %>
 
   <input type="hidden" id="building_id" name="building_id" value="<%= current_user.building_id %>">
-  <card size="full-width">
-    <grid-container>
-    <grid-item columns="md-4 sm-12">
+  <lux-card size="full-width">
+    <lux-grid-container>
+    <lux-grid-item columns="md-4 sm-12">
       <lux-date-picker id="schedule" name="schedule" label="Scheduled date"
         mode="single"
         :disabled-dates="[{ start: null, end: new Date() }]">
         </lux-date-picker>
-    </grid-item>
-    <grid-item columns="md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="md-4 sm-12">
       <lux-date-picker id="applicable_range" name="applicable_range" label="Range covered" mode="range"
         :disabled-dates="[{ start: null, end: new Date() }]">
         </lux-date-picker>
-    </grid-item>
-    <grid-item columns="md-4 sm-12"></grid-item>
-    </grid-container>
-    <grid-container>
-    <grid-item columns="lg-2 md-4 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="md-4 sm-12"></lux-grid-item>
+    </lux-grid-container>
+    <lux-grid-container>
+    <lux-grid-item columns="lg-2 md-4 sm-12">
     <div class="actions">
-      <input-button type="submit" variation="solid" block>Submit</input-button>
+      <lux-input-button type="submit" variation="solid" block>Submit</lux-input-button>
     </div>
-    </grid-item>
-    </grid-container>
-  </card>
+    </lux-grid-item>
+    </lux-grid-container>
+  </lux-card>
 
 <% end %>

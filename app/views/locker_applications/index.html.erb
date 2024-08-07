@@ -2,24 +2,24 @@
 Locker Applications
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
-<card id="locker-form-header" size="full-width">
-  <card-header>
-    <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
+<lux-card id="locker-form-header" size="full-width">
+  <lux-card-header>
+    <!-- lux-hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
     <heading level="h1" size="h3">Locker Applications</heading>
-  </card-header>
-  <card-content>
+  </lux-card-header>
+  <lux-card-content>
   <%= form_tag(locker_applications_path, method: :get) do %>
   <search-box >
     <input-text id="search" name="search" label="Search by user netid" :hide-label="true" placeholder="Search by user netid" size="large" value="<%= params[:search]%>"></input-text>
-    <input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></input-button>
+    <lux-input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></lux-input-button>
   </search-box>    
   <% end %>
   <%= link_to 'Clear Search', locker_applications_path %>
-  </card-content>
-</card>
+  </lux-card-content>
+</lux-card>
 
 <%= render partial: "index_view", collection: @locker_applications, as: :locker_application %>
 

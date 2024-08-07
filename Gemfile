@@ -79,6 +79,6 @@ gem 'honeybadger', '~> 4.0'
 
 gem 'flipflop', '~> 2.7'
 
-gem 'vite_rails', '~> 3.0'
+gem 'vite_rails'
 
 gem 'capistrano-yarn', '~> 2.0'
