@@ -27,7 +27,7 @@ RSpec.describe 'locker_assignments/edit' do
       assert_select 'select[name=?]', 'locker_assignment[released_date(1i)]'
       assert_select 'select[name=?]', 'locker_assignment[released_date(2i)]'
       assert_select 'select[name=?]', 'locker_assignment[released_date(3i)]'
-      assert_select 'input-select[name=?]', 'locker_assignment[locker_id]'
+      assert_select 'lux-input-select[name=?]', 'locker_assignment[locker_id]'
     end
   end
 end

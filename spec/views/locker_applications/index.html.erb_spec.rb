@@ -36,14 +36,14 @@ RSpec.describe 'locker_applications/index' do
 
   it 'renders a list of locker_applications' do
     render
-    assert_select 'grid-item>strong', text: 'User:'
-    assert_select 'grid-item>strong', text: 'Department:'
-    assert_select 'grid-item>strong', text: 'Status:'
-    assert_select 'grid-item>strong', text: 'Semester:'
-    assert_select 'grid-item>span', text: user1.to_s
-    assert_select 'grid-item>span', text: user2.to_s
-    assert_select 'grid-item>span', text: 'Semester'.to_s, count: 2
-    assert_select 'grid-item>span', text: 'Status At Application'.to_s, count: 2
-    assert_select 'grid-item>span', text: 'Department At Application'.to_s, count: 2
+    assert_select 'lux-grid-item>strong', text: 'User:'
+    assert_select 'lux-grid-item>strong', text: 'Department:'
+    assert_select 'lux-grid-item>strong', text: 'Status:'
+    assert_select 'lux-grid-item>strong', text: 'Semester:'
+    assert_select 'lux-grid-item>span', text: user1.to_s
+    assert_select 'lux-grid-item>span', text: user2.to_s
+    assert_select 'lux-grid-item>span', text: 'Semester'.to_s, count: 2
+    assert_select 'lux-grid-item>span', text: 'Status At Application'.to_s, count: 2
+    assert_select 'lux-grid-item>span', text: 'Department At Application'.to_s, count: 2
   end
 end

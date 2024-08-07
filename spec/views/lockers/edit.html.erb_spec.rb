@@ -25,9 +25,9 @@ RSpec.describe 'lockers/edit' do
     render
 
     assert_select 'form[action=?][method=?]', locker_path(@locker), 'post' do
-      assert_select 'input-select[name=?]', 'locker[size]'
+      assert_select 'lux-input-select[name=?]', 'locker[size]'
 
-      assert_select 'input-select[name=?]', 'locker[floor]'
+      assert_select 'lux-input-select[name=?]', 'locker[floor]'
 
       assert_select 'input[type="checkbox"][name=?]', 'locker[accessible]'
 

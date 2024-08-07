@@ -1,10 +1,10 @@
-<wrapper>
+<lux-wrapper>
   <%= form_with(model: locker_application, local: true) do |form| %>
     <%= form.hidden_field :user_uid , value: locker_application.uid %>
-    <grid-container horizontal="center" class="stretch-height">
-      <grid-item columns="lg-4 md-6 sm-12 auto"  vertical="center" >
+    <lux-grid-container horizontal="center" class="stretch-height">
+      <lux-grid-item columns="lg-4 md-6 sm-12 auto"  vertical="center" >
         <div class="library-selection-box">
-          <input-select 
+          <lux-input-select 
             label="Library"
             name="locker_application[building_id]"
             id="locker_application_building_id"
@@ -12,10 +12,10 @@
             value=""
             required
             :options="<%= Building.building_choices.to_json %>"
-          ></input-select>
-          <input-button type="submit" variation="solid">Next</input-button>
+          ></lux-input-select>
+          <lux-input-button type="submit" variation="solid">Next</lux-input-button>
         </div>
-      </grid-item>
-    </grid-container>
+      </lux-grid-item>
+    </lux-grid-container>
   <% end %>
-</wrapper>
+</lux-wrapper>

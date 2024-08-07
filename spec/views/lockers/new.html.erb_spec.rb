@@ -27,9 +27,9 @@ RSpec.describe 'lockers/new' do
     assert_select 'form[action=?][method=?]', lockers_path, 'post' do
       assert_select 'input-text[name=?]', 'locker[location]', value: 'location'
 
-      assert_select 'input-select[name=?]', 'locker[size]', value: '4'
+      assert_select 'lux-input-select[name=?]', 'locker[size]', value: '4'
 
-      assert_select 'input-select[name=?]', 'locker[floor]', value: 'floor'
+      assert_select 'lux-input-select[name=?]', 'locker[floor]', value: 'floor'
 
       assert_select 'input[type="checkbox"][name=?]', 'locker[accessible]', value: false
 

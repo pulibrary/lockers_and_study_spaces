@@ -1,11 +1,11 @@
-<wrapper>
-  <grid-container class="stretch-height" horizontal="center">
-    <grid-item vertical="center" columns="sm-8 lg-8">
-      <text-style variation="default">
+<lux-wrapper>
+  <lux-grid-container class="stretch-height" horizontal="center">
+    <lux-grid-item vertical="center" columns="sm-8 lg-8">
+      <lux-text-style variation="default">
         You must
-        <hyperlink href="<%= user_cas_omniauth_authorize_path %>" variation="button solid" data-method="post" size="large">Login with NetID</hyperlink>
+        <lux-hyperlink href="<%= user_cas_omniauth_authorize_path %>" variation="button solid" data-method="post" size="large">Login with NetID</lux-hyperlink>
         to view the requested resource.
-      </text-style>
-    </grid-item>
-  </grid-container>
-</wrapper>
+      </lux-text-style>
+    </lux-grid-item>
+  </lux-grid-container>
+</lux-wrapper>

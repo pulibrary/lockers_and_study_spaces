@@ -26,15 +26,15 @@ RSpec.describe 'locker_applications/edit' do
     render
 
     assert_select 'form[action=?][method=?]', locker_application_path(@locker_application), 'post' do
-      assert_select 'input-select[name=?]', 'locker_application[preferred_size]'
+      assert_select 'lux-input-select[name=?]', 'locker_application[preferred_size]'
 
-      assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]'
+      assert_select 'lux-input-select[name=?]', 'locker_application[preferred_general_area]'
 
       assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessibility_needs][]'
 
-      assert_select 'input-select[name=?]', 'locker_application[semester]'
+      assert_select 'lux-input-select[name=?]', 'locker_application[semester]'
 
-      assert_select 'input-select[name=?]', 'locker_application[status_at_application]'
+      assert_select 'lux-input-select[name=?]', 'locker_application[status_at_application]'
 
       assert_select 'input-text[name=?]', 'locker_application[department_at_application]'
 
@@ -54,15 +54,15 @@ RSpec.describe 'locker_applications/edit' do
       render
 
       assert_select 'form[action=?][method=?]', locker_application_path(@locker_application), 'post' do
-        assert_select 'input-select[name=?]', 'locker_application[preferred_size]'
+        assert_select 'lux-input-select[name=?]', 'locker_application[preferred_size]'
 
-        assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]'
+        assert_select 'lux-input-select[name=?]', 'locker_application[preferred_general_area]'
 
         assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessibility_needs][]'
 
-        assert_select 'input-select[name=?]', 'locker_application[semester]'
+        assert_select 'lux-input-select[name=?]', 'locker_application[semester]'
 
-        assert_select 'input-select[name=?]', 'locker_application[status_at_application]'
+        assert_select 'lux-input-select[name=?]', 'locker_application[status_at_application]'
 
         assert_select 'input-text[name=?]', 'locker_application[department_at_application]'
 

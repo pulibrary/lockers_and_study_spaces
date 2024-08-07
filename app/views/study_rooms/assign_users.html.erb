@@ -1,20 +1,20 @@
 <% content_for :title do %>
 Assign Users to Study Room
 <% end %>
-<card size="full-width">
-  <card-header>
+<lux-card size="full-width">
+  <lux-card-header>
     <heading level="h1" size="h3">Assign Users to Study Room locations in <%= params[:general_area] %></heading>
-  </card-header>
-</card>
+  </lux-card-header>
+</lux-card>
 
-<card id="assign-form" size="full-width">
+<lux-card id="assign-form" size="full-width">
     <%= form_tag(update_assignments_study_rooms_path, method: :put) do %>
-     <grid-container>
-      <grid-item columns="lg-12 md-12 sm-12">
-        <input-button id="assign_sumbit" type="submit" size="medium">Update Assignments</input-button>
-      </grid-item>
+     <lux-grid-container>
+      <lux-grid-item columns="lg-12 md-12 sm-12">
+        <lux-input-button id="assign_sumbit" type="submit" size="medium">Update Assignments</lux-input-button>
+      </lux-grid-item>
       <%= render partial: "assign_view", collection: @study_rooms, as: :study_room %>
-     </grid-container>
+     </lux-grid-container>
     <% end %>
-</card>
+</lux-card>
 

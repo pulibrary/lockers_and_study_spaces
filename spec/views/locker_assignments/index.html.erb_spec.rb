@@ -25,15 +25,15 @@ RSpec.describe 'locker_assignments/index' do
 
   it 'renders a list of locker_assignments' do
     render
-    assert_select 'grid-item>strong', text: 'Start Date:'
-    assert_select 'grid-item>strong', text: 'Expiration Date:'
-    assert_select 'grid-item>strong', text: 'Released Date:'
-    assert_select 'grid-item>strong', text: 'Applicant:'
-    assert_select 'grid-item>strong', text: 'Location:'
-    assert_select 'grid-item>span', text: locker_application1.uid
-    assert_select 'grid-item>span', text: locker_application2.uid
-    assert_select 'grid-item>span', text: locker1.location
-    assert_select 'grid-item>span', text: locker2.location
+    assert_select 'lux-grid-item>strong', text: 'Start Date:'
+    assert_select 'lux-grid-item>strong', text: 'Expiration Date:'
+    assert_select 'lux-grid-item>strong', text: 'Released Date:'
+    assert_select 'lux-grid-item>strong', text: 'Applicant:'
+    assert_select 'lux-grid-item>strong', text: 'Location:'
+    assert_select 'lux-grid-item>span', text: locker_application1.uid
+    assert_select 'lux-grid-item>span', text: locker_application2.uid
+    assert_select 'lux-grid-item>span', text: locker1.location
+    assert_select 'lux-grid-item>span', text: locker2.location
   end
 
   it "has a header containing the name of the admin user's library" do

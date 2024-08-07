@@ -2,37 +2,37 @@
 Assignment
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
-<card size="full-width">
+<lux-card size="full-width">
   <heading level="h2">Assignment</heading>
-  <card size="full-width">
-   <grid-container>
-    <grid-item columns="lg-3 md-6 sm-12">
+  <lux-card size="full-width">
+   <lux-grid-container>
+    <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Start date:</strong>
       <%= @locker_assignment.start_date %>
-    </grid-item>
-    <grid-item columns="lg-3 md-6 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Expiration date:</strong>
       <%= @locker_assignment.expiration_date %>
-    </grid-item>
-    <grid-item columns="lg-3 md-6 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Released date:</strong>
       <%= @locker_assignment.released_date %>
-    </grid-item>
-    <grid-item columns="lg-3 md-6 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Locker:</strong>
       <%= link_to @locker_assignment.locker.location, locker_path(@locker_assignment.locker) %>
-    </grid-item>
-   </grid-container>
-  </card>
-</card>
+    </lux-grid-item>
+   </lux-grid-container>
+  </lux-card>
+</lux-card>
 
-<card size="full-width">
+<lux-card size="full-width">
   <heading level="h2">Application</heading>
   <%= render '/locker_applications/view', locker_application: @locker_assignment.locker_application %>
-</card>
+</lux-card>
 
 <%= link_to 'Edit', edit_locker_assignment_path(@locker_assignment) %> |
 <%= link_to 'Card for printing', card_locker_assignment_path(@locker_assignment), target: :_blank %> |

@@ -1,6 +1,6 @@
 <%= form_with(model: locker, local: true) do |form| %>
   <% if locker.errors.any? %>
-    <card id="error_explanation" size="full-width">
+    <lux-card id="error_explanation" size="full-width">
       <h2><%= pluralize(locker.errors.count, "error") %> prohibited this locker from being saved:</h2>
 
       <ul>
@@ -8,99 +8,99 @@
         <li><%= message %></li>
       <% end %>
       </ul>
-    </card>
+    </lux-card>
   <% end %>
 
-  <card size="full-width">
-   <grid-container>
-   <grid-item columns="lg-2 md-4 sm-12">
+  <lux-card size="full-width">
+   <lux-grid-container>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_location" 
                 name="locker[location]" 
                 value="<%= locker.location %>" 
                 label="Location" width="expand"
                 required></input-text>
-   </grid-item>
-   <grid-item columns="lg-1 md-4 sm-12">
-     <input-select label="Size" name="locker[size]"
+   </lux-grid-item>
+   <lux-grid-item columns="lg-1 md-4 sm-12">
+     <lux-input-select label="Size" name="locker[size]"
                       id="locker_size"
                       width="expand"
                       value="<%= locker.size %>"
                       :options="<%= locker.size_choices(building: current_user&.building).to_json %>"
-        ></input-select>
-   </grid-item>
+        ></lux-input-select>
+   </lux-grid-item>
 
-   <grid-item columns="lg-2 md-4 sm-12">
-     <input-select label="Floor" name="locker[floor]"
+   <lux-grid-item columns="lg-2 md-4 sm-12">
+     <lux-input-select label="Floor" name="locker[floor]"
                       id="locker_floor"
                       width="expand"
                       value="<%= locker.floor %>"
                       :options="<%= locker.floor_choices(building: current_user&.building).to_json %>"
-        ></input-select>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+        ></lux-input-select>
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
          <%= check_box :locker, :accessible, {}, "true", "false" %>
          <%= label(:locker, :accessible, "Accessible") %>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_combination" 
                 name="locker[combination]" 
                 value="<%= locker.combination %>" 
                 label="Combination" width="expand"
                 required></input-text>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_code" 
                 name="locker[code]" 
                 value="<%= locker.code %>" 
                 label="Code" width="expand"></input-text>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_tag" 
                 name="locker[tag]" 
                 value="<%= locker.tag %>" 
                 label="Tag" width="expand"></input-text>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_discs" 
                 name="locker[discs]" 
                 value="<%= locker.discs %>" 
                 label="Discs" width="expand"></input-text>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_clutch" 
                 name="locker[clutch]" 
                 value="<%= locker.clutch %>" 
                 label="Clutch" width="expand"></input-text>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_hubpos" 
                 name="locker[hubpos]" 
                 value="<%= locker.hubpos %>" 
                 label="Hubpos" width="expand"></input-text>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_key_number" 
                 name="locker[key_number]" 
                 value="<%= locker.key_number %>" 
                 label="Key Number" width="expand"></input-text>
-   </grid-item>
-   <grid-item columns="lg-2 md-4 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-2 md-4 sm-12">
      <input-text id="locker_general_area" 
                 name="locker[general_area]" 
                 value="<%= locker.general_area %>" 
                 label="General Area" width="expand"
                 required></input-text>
-   </grid-item>
-   <grid-item columns="lg-6 md-12 sm-12">
+   </lux-grid-item>
+   <lux-grid-item columns="lg-6 md-12 sm-12">
      <input-text id="locker_notes" type="textarea"
                 name="locker[notes]" 
                 value="<%= locker.notes %>" 
                 label="Notes" width="expand"></input-text>
-   </grid-item>
+   </lux-grid-item>
 
-  <grid-item columns="lg-12 md-12 sm-12">
-    <input-button type="submit" variation="solid">Submit Locker</input-button>
-  </grid-item>
-  </grid-container>
-</card>
+  <lux-grid-item columns="lg-12 md-12 sm-12">
+    <lux-input-button type="submit" variation="solid">Submit Locker</lux-input-button>
+  </lux-grid-item>
+  </lux-grid-container>
+</lux-card>
 <% end %>
