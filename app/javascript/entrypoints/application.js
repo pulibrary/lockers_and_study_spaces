@@ -5,6 +5,7 @@ import "lux-design-system/dist/system/tokens/tokens.scss";
 // eslint-disable-next-line no-unused-vars
 import Rails from "@rails/ujs"; // we need to import Rails so vite adds it to the module
 import CopyToClipboard from "../components/copy_to_clipboard";
+import LockerSizeFilter from "../components/locker_size_filter";
 
 Vue.use(system);
 
@@ -18,4 +19,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   new CopyToClipboard();
+  new LockerSizeFilter();
 });
