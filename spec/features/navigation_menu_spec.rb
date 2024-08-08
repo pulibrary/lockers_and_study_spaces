@@ -22,7 +22,7 @@ RSpec.describe 'Navigation menu', :js do
 
     it 'has a generic header for the application' do
       visit 'locker_renewal_messages/new'
-      expect(page.find_by_id('appName').text).to eq('Princeton University Library Lockers and Study Rooms')
+      expect(page.find_by_id('appName').text).to eq('Lockers and Study Rooms')
     end
 
     context 'when user is Firestone admin' do
