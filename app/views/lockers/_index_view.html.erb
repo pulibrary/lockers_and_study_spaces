@@ -1,23 +1,23 @@
 
-  <card size="full-width">
-   <grid-container>
-    <grid-item columns="lg-2 md-3 sm-12">
+  <lux-card size="full-width">
+   <lux-grid-container>
+    <lux-grid-item columns="lg-2 md-3 sm-12">
       <strong>Location:</strong>
       <span><%= locker.location %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-3 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-3 sm-12">
       <strong>Size:</strong>
       <span><%= locker.size %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-6 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-6 sm-12">
       <strong>General Area:</strong>
       <span><%= locker.general_area %></span>
-    </grid-item>
-    <grid-item columns="lg-2 md-3 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-3 sm-12">
       <strong>Accessible:</strong>
       <span><%= locker.accessible %></span>
-    </grid-item>
-    <grid-item columns="lg-4 md-6 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-4 md-6 sm-12">
       <%= link_to 'Record Violation', new_locker_violation_path(locker_violation: {locker_id: locker.id}) %>
       <%= link_to 'Edit', edit_locker_path(locker) %>
       <% if locker.disabled %>
@@ -25,6 +25,6 @@
       <% else %>
         <%= link_to "Disable", disable_locker_path(locker), id: "disable_#{locker.id}" %>
       <% end %%>
-    </grid-item>
-   </grid-container>
-</card>
+    </lux-grid-item>
+   </lux-grid-container>
+</lux-card>

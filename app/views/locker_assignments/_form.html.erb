@@ -1,12 +1,12 @@
 <% if locker_assignment.locker.present?%>
-<card size="full-width">
+<lux-card size="full-width">
   <heading level="h3" size="h4">Locker is already Assigned to <%= link_to locker_assignment.locker.location, locker_path(locker_assignment.locker) %> Locker.  Submitting this form will change the assigned locker! </heading>
-</card>
+</lux-card>
 <% end %>
 <%= render '/locker_applications/view', locker_application: locker_assignment.locker_application if locker_assignment.locker_application.present? %>
 <%= form_with(model: locker_assignment, local: true) do |form| %>
   <% if locker_assignment.errors.any? %>
-    <card id="error_explanation" size="full-width">
+    <lux-card id="error_explanation" size="full-width">
       <h2><%= pluralize(locker_assignment.errors.count, "error") %> prohibited this locker_assignment from being saved:</h2>
 
       <ul>
@@ -14,46 +14,46 @@
         <li><%= message %></li>
       <% end %>
       </ul>
-    </card>
+    </lux-card>
   <% end %>
-  <card size="full-width">
-   <grid-container>
-     <grid-item columns="lg-3 md-6 sm-12">
+  <lux-card size="full-width">
+   <lux-grid-container>
+     <lux-grid-item columns="lg-3 md-6 sm-12">
        <%= form.label :start_date %>
        <%= form.date_select :start_date %>
-     </grid-item>
+     </lux-grid-item>
 
-     <grid-item columns="lg-3 md-6 sm-12">
+     <lux-grid-item columns="lg-3 md-6 sm-12">
        <%= form.label :expiration_date  %>
        <%= form.date_select :expiration_date, {:default => DateTime.now.to_date.next_year} %>
-     </grid-item>
+     </lux-grid-item>
 
-     <grid-item columns="lg-3 md-6 sm-12">
+     <lux-grid-item columns="lg-3 md-6 sm-12">
         <%= form.label :released_date %>
         <%= form.date_select :released_date, {:include_blank => true, :default => nil} %>
-     </grid-item>
+     </lux-grid-item>
 
      <%= form.hidden_field :locker_application_id , value: locker_assignment.locker_application&.id %>
 
-   <grid-item columns="lg-6 md-6 sm-12">
-     <input-select label="Lockers Available in Preferred General Area/Size" name="locker_assignment[locker_id]"
+   <lux-grid-item columns="lg-6 md-6 sm-12">
+     <lux-input-select label="Lockers Available in Preferred General Area/Size" name="locker_assignment[locker_id]"
                       id="locker_assignment_locker_id"
                       width="expand"
                       value="<%= locker_assignment.locker %>"
                       :options="<%= locker_assignment.preferred_locker_choices(building: current_user&.building).to_json %>"
-        ></input-select>
-   </grid-item>
+        ></lux-input-select>
+   </lux-grid-item>
 
-   <grid-item columns="lg-6 md-6 sm-12">
-     <input-select label="Lockers Available in Any Area" name="locker_assignment[any_locker_id]"
+   <lux-grid-item columns="lg-6 md-6 sm-12">
+     <lux-input-select label="Lockers Available in Any Area" name="locker_assignment[any_locker_id]"
                       id="any_locker_assignment_locker_id"
                       width="expand"
                       :options="<%= locker_assignment.locker_choices(building: current_user&.building).to_json %>"
-        ></input-select>
-   </grid-item>
+        ></lux-input-select>
+   </lux-grid-item>
 
-    <grid-item columns="lg-12 md-12 sm-12">
-      <input-button type="submit" variation="solid">Submit Locker Assignment</input-button>
-    </grid-item>
-  </grid-container>
+    <lux-grid-item columns="lg-12 md-12 sm-12">
+      <lux-input-button type="submit" variation="solid">Submit Locker Assignment</lux-input-button>
+    </lux-grid-item>
+  </lux-grid-container>
 <% end %>

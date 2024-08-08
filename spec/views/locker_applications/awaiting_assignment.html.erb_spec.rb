@@ -41,15 +41,15 @@ RSpec.describe 'locker_applications/awaiting_assignment' do
   it 'renders a list of locker_applications' do
     render
     assert_select 'h1', text: 'Firestone Library Locker Applications'
-    assert_select 'grid-item>strong', text: 'User:'
-    assert_select 'grid-item>strong', text: 'Department:'
-    assert_select 'grid-item>strong', text: 'Status:'
-    assert_select 'grid-item>strong', text: 'Semester:'
-    assert_select 'grid-item>span', text: user1.to_s
-    assert_select 'grid-item>span', text: user2.to_s
-    assert_select 'grid-item>span', text: 'Semester'.to_s, count: 2
-    assert_select 'grid-item>span', text: 'Status At Application'.to_s, count: 2
-    assert_select 'grid-item>span', text: 'Department At Application'.to_s, count: 2
+    assert_select 'lux-grid-item>strong', text: 'User:'
+    assert_select 'lux-grid-item>strong', text: 'Department:'
+    assert_select 'lux-grid-item>strong', text: 'Status:'
+    assert_select 'lux-grid-item>strong', text: 'Semester:'
+    assert_select 'lux-grid-item>span', text: user1.to_s
+    assert_select 'lux-grid-item>span', text: user2.to_s
+    assert_select 'lux-grid-item>span', text: 'Semester'.to_s, count: 2
+    assert_select 'lux-grid-item>span', text: 'Status At Application'.to_s, count: 2
+    assert_select 'lux-grid-item>span', text: 'Department At Application'.to_s, count: 2
   end
 
   context 'when admin is from Lewis library' do
@@ -83,15 +83,15 @@ RSpec.describe 'locker_applications/awaiting_assignment' do
     it 'renders a list of lewis locker_applications' do
       render
       assert_select 'h1', text: 'Lewis Library Locker Applications'
-      assert_select 'grid-item>strong', text: 'User:'
-      assert_select 'grid-item>strong', text: 'Department:'
-      assert_select 'grid-item>strong', text: 'Status:'
-      assert_select 'grid-item>strong', text: 'Semester:'
-      assert_select 'grid-item>span', text: user1.to_s
-      assert_select 'grid-item>span', text: user2.to_s
-      assert_select 'grid-item>span', text: 'Semester'.to_s, count: 2
-      assert_select 'grid-item>span', text: 'Status At Application'.to_s, count: 2
-      assert_select 'grid-item>span', text: 'Department At Application'.to_s, count: 2
+      assert_select 'lux-grid-item>strong', text: 'User:'
+      assert_select 'lux-grid-item>strong', text: 'Department:'
+      assert_select 'lux-grid-item>strong', text: 'Status:'
+      assert_select 'lux-grid-item>strong', text: 'Semester:'
+      assert_select 'lux-grid-item>span', text: user1.to_s
+      assert_select 'lux-grid-item>span', text: user2.to_s
+      assert_select 'lux-grid-item>span', text: 'Semester'.to_s, count: 2
+      assert_select 'lux-grid-item>span', text: 'Status At Application'.to_s, count: 2
+      assert_select 'lux-grid-item>span', text: 'Department At Application'.to_s, count: 2
     end
   end
 end

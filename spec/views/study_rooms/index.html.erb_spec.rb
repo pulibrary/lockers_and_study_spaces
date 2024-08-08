@@ -22,10 +22,10 @@ RSpec.describe 'study_rooms/index' do
   it 'renders a list of study rooms' do
     render
 
-    assert_select 'grid-item>strong', text: 'Location:'
-    assert_select 'grid-item>strong', text: 'General Area:'
-    assert_select 'grid-item>span', text: 'Location'.to_s, count: 2
-    assert_select 'grid-item>span', text: 'General Area'.to_s, count: 2
+    assert_select 'lux-grid-item>strong', text: 'Location:'
+    assert_select 'lux-grid-item>strong', text: 'General Area:'
+    assert_select 'lux-grid-item>span', text: 'Location'.to_s, count: 2
+    assert_select 'lux-grid-item>span', text: 'General Area'.to_s, count: 2
     expect(rendered).to match(/#{study_room_path(@study_rooms[0])}/)
     expect(rendered).to match(/#{edit_study_room_path(@study_rooms[0])}/)
     expect(rendered).to match(/#{study_room_path(@study_rooms[1])}/)
