@@ -42,6 +42,11 @@ RSpec.describe 'locker_applications/edit' do
     end
   end
 
+  it 'limits the length of the department field to 70' do
+    render
+    assert_select '#locker_application_department_at_application[maxlength="70"]'
+  end
+
   context 'with an administrative user' do
     let(:user) { FactoryBot.create(:user, :admin) }
 

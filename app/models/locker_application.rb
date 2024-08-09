@@ -14,6 +14,8 @@ class LockerApplication < ApplicationRecord
                                               .where('locker_assignments.locker_application_id = locker_applications.id'))
   }
 
+  validates :department_at_application, length: { maximum: 70 }
+
   def self.awaiting_assignment
     where(complete: true).where.missing(:locker_assignment).order('locker_applications.created_at')
   end
