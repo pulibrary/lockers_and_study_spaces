@@ -162,8 +162,6 @@ RSpec.describe 'Locker Application New', :js do
 
         it 'can assign the application to an existing user' do
           visit root_path
-          select('Firestone Library', from: :locker_application_building_id)
-          click_button('Next')
           new_application = LockerApplication.last
           expect(new_application.user).to eq(admin)
           expect(page).to have_content('Firestone Library Locker Application')
