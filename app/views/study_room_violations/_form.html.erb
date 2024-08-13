@@ -28,10 +28,10 @@
     <%= form.hidden_field :study_room_id , value: study_room_violation.study_room.id %>
     <lux-grid-container>
       <lux-grid-item columns="lg-6 md-12 sm-12">
-        <input-text id="study_room_violation_number_of_books" 
+        <lux-input-text id="study_room_violation_number_of_books" 
                     name="study_room_violation[number_of_books]" 
                     value="<%= study_room_violation.number_of_books %>" 
-                    label="Number of Books" width="expand"></input-text>
+                    label="Number of Books" width="expand"></lux-input-text>
       </lux-grid-item>
       <lux-grid-item columns="lg-6 md-12 sm-12">
         <lux-input-button type="submit" variation="solid">Record Violation</lux-input-button>

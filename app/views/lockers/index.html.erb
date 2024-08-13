@@ -10,7 +10,7 @@
   <lux-card-content>
   <%= form_tag(lockers_path, method: :get) do %>
   <search-box >
-    <input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></input-text>
+    <lux-input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></lux-input-text>
     <lux-input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></lux-input-button>
   </search-box>    
   <% end %>

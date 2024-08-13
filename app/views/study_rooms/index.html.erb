@@ -4,14 +4,14 @@ Study Rooms
 <lux-card id="study_room-form-header" size="full-width">
   <lux-card-header>
     <!-- lux-hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
-    <heading level="h1" size="h3">Study Rooms</heading>
+    <lux-heading level="h1" size="h3">Study Rooms</lux-heading>
   </lux-card-header>
     <lux-card-content>
     <%= form_tag(study_rooms_path, method: :get) do %>
-    <search-box >
-      <input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></input-text>
+    <lux-search-box >
+      <lux-input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></lux-input-text>
       <lux-input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></lux-input-button>
-    </search-box>    
+    </lux-search-box>    
     <% end %>
     <%= link_to 'Clear Search', study_rooms_path %>
   </lux-card-content>

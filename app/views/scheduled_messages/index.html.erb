@@ -7,7 +7,7 @@
 
 <h1> <%= controller_name.humanize.titleize %> </h1>
 
-<data-table caption="Upcoming messages"
+<lux-data-table caption="Upcoming messages"
   :columns="[
     { 'name': 'schedule', 'display_name': 'Date scheduled', 'datatype': 'date', 'sortable': true },
     { 'name': 'applicable_range', 'display_name': 'Range covered' },
@@ -24,7 +24,7 @@
         'edit': { 'value': 'Edit', link: '<%= edit_scheduled_message_path(scheduled_message) %>'}
       },
     <% end %>]"/>
-</data-table>
+</lux-data-table>
 
 
 <lux-grid-container>
@@ -34,7 +34,7 @@
 </lux-grid-container>
 
 
-<data-table caption="Sent messages"
+<lux-data-table caption="Sent messages"
     :columns="[
       { 'name': 'schedule', 'display_name': 'Date scheduled', 'datatype': 'date', 'sortable': true },
       { 'name': 'applicable_range', 'display_name': 'Range covered' },
@@ -55,4 +55,4 @@
 
       },
     <% end %>]"/>
-</data-table>
+</lux-data-table>

@@ -2,7 +2,7 @@
     <%#= label :user %>
     <%#= text_field :user %>
     <%= fields_for 'study_room_assignment[]', study_room do |desk| %>
-      <input-text id="study_room_assignment_<%= desk.object.id %>_user_netid" name="study_room_assignment[<%= desk.object.id %>][user_netid]" label="<%= desk.object.location %>"  placeholder="User Netid" size="large" value="<%= desk.object.current_uid %>"></input-text>
+      <lux-input-text id="study_room_assignment_<%= desk.object.id %>_user_netid" name="study_room_assignment[<%= desk.object.id %>][user_netid]" label="<%= desk.object.location %>"  placeholder="User Netid" size="large" value="<%= desk.object.current_uid %>"></lux-input-text>
     <% end %>
 
   </lux-grid-item>
