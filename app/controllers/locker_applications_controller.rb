@@ -43,7 +43,7 @@ class LockerApplicationsController < ApplicationController
     redirect_back(fallback_location: awaiting_assignment_locker_applications_path)
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
   # POST /locker_applications or /locker_applications.json
   def create
     @locker_application = LockerApplication.new(locker_application_params)
@@ -55,7 +55,7 @@ class LockerApplicationsController < ApplicationController
     @locker_application.complete = true if current_user.admin? || !Flipflop.lewis_patrons?
     update_or_create(@locker_application.save, message: 'Locker application was successfully created.', method: :new)
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   # PATCH/PUT /locker_applications/1 or /locker_applications/1.json
   def update
