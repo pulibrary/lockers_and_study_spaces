@@ -27,7 +27,7 @@ RSpec.describe 'study_room_violations/edit' do
       assert_select 'form[action=?][method=?]', study_room_violation_path(@study_room_violation), 'post' do
         assert_select 'input[type=hidden][name=?]', 'study_room_violation[user_id]'
         assert_select 'input[type=hidden][name=?]', 'study_room_violation[study_room_id]'
-        assert_select 'input-text[name=?]', 'study_room_violation[number_of_books]'
+        assert_select 'lux-input-text[name=?]', 'study_room_violation[number_of_books]'
         expect(rendered).not_to match(/There is no user currently assigned to the study room!/)
       end
     end

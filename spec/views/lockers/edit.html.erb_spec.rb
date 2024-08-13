@@ -31,25 +31,25 @@ RSpec.describe 'lockers/edit' do
 
       assert_select 'input[type="checkbox"][name=?]', 'locker[accessible]'
 
-      assert_select 'input-text[name=?]', 'locker[location]'
+      assert_select 'lux-input-text[name=?]', 'locker[location]'
 
-      assert_select 'input-text[name=?]', 'locker[notes]'
+      assert_select 'lux-input-text[name=?]', 'locker[notes]'
 
-      assert_select 'input-text[name=?]', 'locker[combination]'
+      assert_select 'lux-input-text[name=?]', 'locker[combination]'
 
-      assert_select 'input-text[name=?]', 'locker[code]'
+      assert_select 'lux-input-text[name=?]', 'locker[code]'
 
-      assert_select 'input-text[name=?]', 'locker[tag]'
+      assert_select 'lux-input-text[name=?]', 'locker[tag]'
 
-      assert_select 'input-text[name=?]', 'locker[discs]'
+      assert_select 'lux-input-text[name=?]', 'locker[discs]'
 
-      assert_select 'input-text[name=?]', 'locker[clutch]'
+      assert_select 'lux-input-text[name=?]', 'locker[clutch]'
 
-      assert_select 'input-text[name=?]', 'locker[hubpos]'
+      assert_select 'lux-input-text[name=?]', 'locker[hubpos]'
 
-      assert_select 'input-text[name=?]', 'locker[key_number]'
+      assert_select 'lux-input-text[name=?]', 'locker[key_number]'
 
-      assert_select 'input-text[name=?]', 'locker[general_area]'
+      assert_select 'lux-input-text[name=?]', 'locker[general_area]'
     end
   end
 end

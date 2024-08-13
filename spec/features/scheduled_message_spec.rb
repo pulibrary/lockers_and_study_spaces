@@ -39,8 +39,8 @@ RSpec.describe ScheduledMessage, :js do
     it 'can create a new Firestone scheduled message' do
       visit '/locker_renewal_messages/new'
 
-      fill_in 'Scheduled date', with: Time.zone.today.strftime('%m/%d/%y')
-      fill_in 'Range covered', with: "#{Time.zone.today.strftime('%m/%d/%y')} - #{Time.zone.today.strftime('%m/%d/%y')}"
+      fill_in 'schedule', with: Time.zone.today.strftime('%m/%d/%y')
+      fill_in 'applicable_range', with: "#{Time.zone.today.strftime('%m/%d/%y')} - #{Time.zone.today.strftime('%m/%d/%y')}"
 
       expect do
         click_button 'Submit'
@@ -70,8 +70,8 @@ RSpec.describe ScheduledMessage, :js do
     it 'can create a new Lewis scheduled message' do
       visit '/locker_renewal_messages/new'
 
-      fill_in 'Scheduled date', with: Time.zone.today.strftime('%m/%d/%y')
-      fill_in 'Range covered', with: "#{Time.zone.today.strftime('%m/%d/%y')} - #{Time.zone.today.strftime('%m/%d/%y')}"
+      fill_in 'schedule', with: Time.zone.today.strftime('%m/%d/%y')
+      fill_in 'applicable_range', with: "#{Time.zone.today.strftime('%m/%d/%y')} - #{Time.zone.today.strftime('%m/%d/%y')}"
 
       expect do
         click_button 'Submit'

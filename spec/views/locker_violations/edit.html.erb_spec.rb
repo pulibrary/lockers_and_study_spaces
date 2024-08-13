@@ -28,7 +28,7 @@ RSpec.describe 'locker_violations/edit' do
       assert_select 'form[action=?][method=?]', locker_violation_path(@locker_violation), 'post' do
         assert_select 'input[type=hidden][name=?]', 'locker_violation[user_id]'
         assert_select 'input[type=hidden][name=?]', 'locker_violation[locker_id]'
-        assert_select 'input-text[name=?]', 'locker_violation[number_of_books]'
+        assert_select 'lux-input-text[name=?]', 'locker_violation[number_of_books]'
         expect(rendered).not_to match(/There is no user currently assigned to the locker!/)
       end
     end
