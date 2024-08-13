@@ -19,7 +19,7 @@ class LockerApplicationsController < ApplicationController
 
   # GET /locker_applications/new
   def new
-    @locker_application = LockerApplication.new(user: current_user)
+    @locker_application = LockerApplication.new(user: current_user, building_id: current_user.building_id)
   end
 
   # GET /locker_applications/1/edit
@@ -52,7 +52,7 @@ class LockerApplicationsController < ApplicationController
 
     @locker_application.preferred_size = 2 if @locker_application.building&.name == 'Lewis Library'
 
-    @locker_application.complete = true unless Flipflop.lewis_patrons?
+    @locker_application.complete = true if current_user.admin? || !Flipflop.lewis_patrons?
     update_or_create(@locker_application.save, message: 'Locker application was successfully created.', method: :new)
   end
   # rubocop:enable Metrics/AbcSize
