@@ -3,14 +3,14 @@ Applications awaiting assignment
 <% end %>
 
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
 <h1><%= current_user&.building&.name %> Locker Applications</h1>
 
-<card size="full-width">
+<lux-card size="full-width">
   <%= button_to archive_display_text(@archived), awaiting_assignment_locker_applications_path, params: { archived: !@archived, building_id: current_user.building_id }, method: :get %>
-</card>
+</lux-card>
 
 <%= render partial: "index_view", collection: @locker_applications, as: :locker_application %>
 

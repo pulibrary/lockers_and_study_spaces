@@ -2,58 +2,58 @@
 <%= current_user&.building&.name %> Locker Assignments
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
 <%= form_tag(locker_assignments_path, method: :get) do %>
-<card id="locker-form-header" size="full-width">
-  <card-header>
+<lux-card id="locker-form-header" size="full-width">
+  <lux-card-header>
     <heading level="h1"><%= current_user&.building&.name %> Locker Assignments</heading>
-  </card-header>
-  <card-content class="row">
-    <search-box >
-      <input-text id="query_uid" name="query[uid]" label="Search by user netid" :hide-label="true" placeholder="Search by user netid" size="large" value="<%= params.fetch(:query,{})[:uid]%>"></input-text>
-      <input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></input-button>
-    </search-box> 
+  </lux-card-header>
+  <lux-card-content class="row">
+    <lux-search-box>
+      <lux-input-text id="query_uid" name="query[uid]" label="Search by user netid" :hide-label="true" placeholder="Search by user netid" size="large" value="<%= params.fetch(:query,{})[:uid]%>"></lux-input-text>
+      <lux-input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></lux-input-button>
+    </lux-search-box> 
     <%= link_to locker_assignments_path do %>
       <lux-icon-base icon-name="clear - return to all results"> <lux-icon-denied></lux-icon-denied> </lux-icon-base>   
     <% end %>
-  </card-content>
-</card>
-<card size="full-width">
-   <grid-container>
-    <grid-item columns="lg-2 md-6 sm-12">
-      <input-select class="row" label="Applicant Status" id="query_status_at_application" name="query[status_at_application]" class="search-select" value="<%= params.fetch(:query,{})[:status_at_application]%>" :options="<%= LockerApplication.new.status_choices.to_json %>"></input-select>
-    </grid-item>
-    <grid-item columns="lg-2 md-6 sm-12">
-      <input-select class="row" label="Floor" id="query_floor" name="query[floor]" class="search-select" value="<%= params.fetch(:query,{})[:floor]%>" :options="<%= Locker.new.floor_choices.to_json %>"></input-select>
-    </grid-item>
-    </grid-item>
-    <grid-item columns="lg-4 md-4 sm-12">
-    <input-select class="row" label="General Area" id="query_general_area" name="query[general_area]" class="search-select" value="<%= params.fetch(:query,{})[:general_area]%>" :options="<%= Locker.new.general_area_choices.to_json %>"></input-select>
-    </grid-item>
-    <grid-item columns="lg-3 md-6 sm-12" >
+  </lux-card-content>
+</lux-card>
+<lux-card size="full-width">
+   <lux-grid-container>
+    <lux-grid-item columns="lg-2 md-6 sm-12">
+      <lux-input-select class="row" label="Applicant Status" id="query_status_at_application" name="query[status_at_application]" class="search-select" value="<%= params.fetch(:query,{})[:status_at_application]%>" :options="<%= LockerApplication.new.status_choices.to_json %>"></lux-input-select>
+    </lux-grid-item>
+    <lux-grid-item columns="lg-2 md-6 sm-12">
+      <lux-input-select class="row" label="Floor" id="query_floor" name="query[floor]" class="search-select" value="<%= params.fetch(:query,{})[:floor]%>" :options="<%= Locker.new.floor_choices.to_json %>"></lux-input-select>
+    </lux-grid-item>
+    </lux-grid-item>
+    <lux-grid-item columns="lg-4 md-4 sm-12">
+    <lux-input-select class="row" label="General Area" id="query_general_area" name="query[general_area]" class="search-select" value="<%= params.fetch(:query,{})[:general_area]%>" :options="<%= Locker.new.general_area_choices.to_json %>"></lux-input-select>
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-6 sm-12" >
       <%= check_box :query, :active, { checked: !params[:query].present? || params[:query][:active]=="1"} %>
       <%= label(:query, :active, "Only Active Assignments") %>
-    </grid-item>
-    <grid-item columns="lg-6 md-8 sm-12">
-    <input-select class="row" label="Department" id="query_department_at_application" name="query[department_at_application]" class="search-select" value="<%= params.fetch(:query,{})[:department_at_application]%>" :options="<%= LockerApplication.new.department_choices.to_json %>"></input-select>
-    </grid-item>
-    <grid-item columns="lg-6 md-8 sm-12">
+    </lux-grid-item>
+    <lux-grid-item columns="lg-6 md-8 sm-12">
+    <lux-input-select class="row" label="Department" id="query_department_at_application" name="query[department_at_application]" class="search-select" value="<%= params.fetch(:query,{})[:department_at_application]%>" :options="<%= LockerApplication.new.department_choices.to_json %>"></lux-input-select>
+    </lux-grid-item>
+    <lux-grid-item columns="lg-6 md-8 sm-12">
       <lux-date-picker id="query_daterange" name="query[daterange]" label="Expiration Date" mode="range" />
-    </grid-item>
-    <grid-item columns="lg-3 md-4 sm-11">
-    <input-button id="filter_submit" type="submit" size="medium">Filter</input-button>
+    </lux-grid-item>
+    <lux-grid-item columns="lg-3 md-4 sm-11">
+    <lux-input-button id="filter_submit" type="submit" size="medium">Filter</lux-input-button>
     <%= link_to locker_assignments_path do %>
       <lux-icon-base icon-name="clear - return to all results"> <lux-icon-denied></lux-icon-denied> </lux-icon-base>   
     <% end %>
-    </grid-item>
-</card>
+    </lux-grid-item>
+</lux-card>
   <% end %>
 
-<card size="full-width">
+<lux-card size="full-width">
 <%= render partial: "index_view", collection: @locker_assignments, as: :locker_assignment %>
 
 <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
 <%== pagy_nav(@pagy) %>
-</card>
+</lux-card>

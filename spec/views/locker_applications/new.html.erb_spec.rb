@@ -56,17 +56,17 @@ RSpec.describe 'locker_applications/new' do
       render
 
       assert_select 'form[action=?][method=?]', locker_applications_path, 'post' do
-        assert_select 'input-select[name=?]', 'locker_application[preferred_size]', value: '1'
+        assert_select 'lux-input-select[name=?]', 'locker_application[preferred_size]', value: '1'
 
-        assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
+        assert_select 'lux-input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
 
         assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessibility_needs][]'
 
-        assert_select 'input-select[name=?]', 'locker_application[semester]', value: 'Fall'
+        assert_select 'lux-input-select[name=?]', 'locker_application[semester]', value: 'Fall'
 
-        assert_select 'input-select[name=?]', 'locker_application[status_at_application]', value: 'junior'
+        assert_select 'lux-input-select[name=?]', 'locker_application[status_at_application]', value: 'junior'
 
-        assert_select 'input-text[name=?]', 'locker_application[department_at_application]', value: 'department'
+        assert_select 'lux-input-text[name=?]', 'locker_application[department_at_application]', value: 'department'
 
         assert_select 'input[type=hidden][name=?]', 'locker_application[user_uid]'
       end
@@ -79,21 +79,21 @@ RSpec.describe 'locker_applications/new' do
         render
 
         assert_select 'form[action=?][method=?]', locker_applications_path, 'post' do
-          assert_select 'input-select[name=?]', 'locker_application[preferred_size]', value: '1'
+          assert_select 'lux-input-select[name=?]', 'locker_application[preferred_size]', value: '1'
 
-          assert_select 'input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
+          assert_select 'lux-input-select[name=?]', 'locker_application[preferred_general_area]', value: 'area'
 
           assert_select 'input[type="checkbox"][name=?]', 'locker_application[accessibility_needs][]'
 
-          assert_select 'input-select[name=?]', 'locker_application[semester]', value: 'Fall'
+          assert_select 'lux-input-select[name=?]', 'locker_application[semester]', value: 'Fall'
 
-          assert_select 'input-select[name=?]', 'locker_application[status_at_application]', value: 'junior'
+          assert_select 'lux-input-select[name=?]', 'locker_application[status_at_application]', value: 'junior'
 
-          assert_select 'input-text[name=?]', 'locker_application[department_at_application]', value: 'department'
+          assert_select 'lux-input-text[name=?]', 'locker_application[department_at_application]', value: 'department'
 
           assert_select 'input[type=hidden][name=?]', 'locker_application[user_uid]', count: 0
 
-          assert_select 'input-text[name=?]', 'locker_application[user_uid]', value: user.uid
+          assert_select 'lux-input-text[name=?]', 'locker_application[user_uid]', value: user.uid
         end
       end
     end

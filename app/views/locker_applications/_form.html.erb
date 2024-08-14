@@ -1,24 +1,24 @@
-<card id="locker-form-header" size="full-width">
-  <card-header>
-    <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
-    <heading level="h2" size="h3"><hyperlink href="#"><%= locker_application&.building&.name %> Locker Application</hyperlink></heading>
-  </card-header>
-</card>
+<lux-card id="locker-form-header" size="full-width">
+  <lux-card-header>
+    <!-- lux-hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
+    <heading level="h2" size="h3"><lux-hyperlink href="#"><%= locker_application&.building&.name %> Locker Application</lux-hyperlink></heading>
+  </lux-card-header>
+</lux-card>
 <%= form_with(model: locker_application, local: true) do |form| %>
   <% if locker_application.errors.any? %>
-    <card id="error_explanation" size="full-width">
+    <lux-card id="error_explanation" size="full-width">
       <h2><%= pluralize(locker_application.errors.count, "error") %> prohibited this locker_application from being saved:</h2>
       <ul>
       <% locker_application.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </card>
+    </lux-card>
   <% end %>
-  <card size="full-width">
-   <grid-container class="locker-form">
-   <grid-item columns="lg-4 md-6 sm-12">
-     <input-select label="Preferred Size" name="locker_application[preferred_size]"
+  <lux-card size="full-width">
+   <lux-grid-container class="locker-form">
+   <lux-grid-item columns="lg-4 md-6 sm-12">
+     <lux-input-select label="Preferred Size" name="locker_application[preferred_size]"
                       id="locker_application_preferred_size"
                       width="expand"
                       value="<%= locker_application.preferred_size.to_s %>"
@@ -26,69 +26,69 @@
                         disabled=true
                       <% end %>
                       :options="<%= locker_application.size_choices(locker_application&.building&.name).to_json %>"
-        ></input-select>
-   </grid-item>
-   <grid-item columns="lg-4 md-6 sm-12">
-     <input-select label="Preferred Floor" name="locker_application[preferred_general_area]"
+        ></lux-input-select>
+   </lux-grid-item>
+   <lux-grid-item columns="lg-4 md-6 sm-12">
+     <lux-input-select label="Preferred Floor" name="locker_application[preferred_general_area]"
                       id="locker_application_preferred_general_area"
                       width="expand"
                       value="<%= locker_application.preferred_general_area %>"
                       :options="<%= locker_application.floor_choices(locker_application&.building&.name).to_json %>"
-        ></input-select>
-   </grid-item>
-   <grid-item columns="lg-4 md-6 sm-12">
-     <input-select label="Semester of Occupancy" name="locker_application[semester]"
+        ></lux-input-select>
+   </lux-grid-item>
+   <lux-grid-item columns="lg-4 md-6 sm-12">
+     <lux-input-select label="Semester of Occupancy" name="locker_application[semester]"
                       id="locker_semester"
                       width="expand"
                       value="<%= locker_application.semester %>"
                       :options="<%= locker_application.semester_choices.to_json %>"
-        ></input-select>
-   </grid-item>
-  <grid-item columns="lg-6 md-6 sm-12">
+        ></lux-input-select>
+   </lux-grid-item>
+  <lux-grid-item columns="lg-6 md-6 sm-12">
     <%= field_set_tag('Accessibility Needs') do %>
       <% locker_application.accessibility_needs_choices(locker_application&.building).each do |choice| %>
         <%= check_box_tag('locker_application[accessibility_needs][]', choice[:description], @locker_application.accessibility_needs.include?(choice[:description]), { id: choice[:id] }) %>
         <%= label_tag(choice[:id], choice[:description]) %><br>
       <% end %>
       <% uncontrolled_values = @locker_application.accessibility_needs - locker_application.accessibility_needs_choices(locker_application&.building).map { |choice| choice[:description] } %>
-      <input-text id='locker_application_accessibility_needs'
+      <lux-input-text id='locker_application_accessibility_needs'
                     name='locker_application[accessibility_needs][]'
                     label="Additional accessibility needs"
                     width="expand"
                     value="<%= uncontrolled_values.join(', ') %>"
-      ></input-text>
+      ></lux-input-text>
     <% end %>
-  </grid-item>
-   <grid-item columns="lg-6 md-6 sm-12">
-     <input-select label="Student/Staff/Faculty Status" name="locker_application[status_at_application]"
+  </lux-grid-item>
+   <lux-grid-item columns="lg-6 md-6 sm-12">
+     <lux-input-select label="Student/Staff/Faculty Status" name="locker_application[status_at_application]"
                       id="locker_application_status_at_application"
                       width="expand"
                       value="<%= locker_application.status_at_application %>"
                       :options="<%= locker_application.status_choices.to_json %>"
-        ></input-select>
-   </grid-item>
-   <grid-item columns="lg-6 md-6 sm-12">
-     <input-text id="locker_application_department_at_application" 
+        ></lux-input-select>
+   </lux-grid-item>
+   <lux-grid-item columns="lg-6 md-6 sm-12">
+     <lux-input-text id="locker_application_department_at_application" 
                 name="locker_application[department_at_application]" 
                 value="<%= locker_application.department_at_application %>"
                 maxlength="70"
-                label="Department" width="expand"></input-text>
-   </grid-item>
+                label="Department" width="expand"></lux-input-text>
+   </lux-grid-item>
 
   <% if current_user.admin? %>
-    <grid-item columns="lg-12 md-6  sm-12">
-      <input-text id="locker_application_user_uid" name="locker_application[user_uid]" value="<%= locker_application.uid %>" label="Applicant Netid"></input-text>
-    </grid-item>
+    <lux-grid-item columns="lg-12 md-6  sm-12">
+      <lux-input-text id="locker_application_user_uid" name="locker_application[user_uid]" value="<%= locker_application.uid %>" label="Applicant Netid"></lux-input-text>
+    </lux-grid-item>
   <% else %>
     <%= form.hidden_field :user_uid , value: locker_application.uid %>
   <% end %>
 
-  <grid-item columns="lg-12 md-12 sm-12">
+  <lux-grid-item columns="lg-12 md-12 sm-12">
     Lockers are assigned based on your eligibility by department, application date, and applicant’s status. First priority will be given to seniors and graduate students in their final year of study. You will be notified by email when your locker is assigned.
-  </grid-item>
-  <grid-item columns="lg-12 md-12 sm-12">
-    <input-button type="submit" variation="solid">Submit Locker Application</input-button>
-  </grid-item>
-  </grid-container>
-</card>
+  </lux-grid-item>
+  <lux-grid-item columns="lg-12 md-12 sm-12">
+    <lux-input-button type="submit" variation="solid">Submit Locker Application</lux-input-button>
+  </lux-grid-item>
+  </lux-grid-container>
+</lux-card>
 <% end %>

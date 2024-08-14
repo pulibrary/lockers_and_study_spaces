@@ -1,6 +1,6 @@
 <%= form_with(model: locker_violation, local: true) do |form| %>
  <% if locker_violation.errors.any? %>
-    <card id="error_explanation" size="full-width">
+    <lux-card id="error_explanation" size="full-width">
       <h2><%= pluralize(locker_violation.errors.count, "error") %> prohibited this locker_violation from being saved:</h2>
 
       <ul>
@@ -8,37 +8,37 @@
         <li><%= message %></li>
       <% end %>
       </ul>
-    </card>
+    </lux-card>
   <% end %>
-  <card size="full-width">
-    <grid-container>
-      <grid-item columns="lg-2 md-4 sm-12">
+  <lux-card size="full-width">
+    <lux-grid-container>
+      <lux-grid-item columns="lg-2 md-4 sm-12">
         <strong>Locker:</strong>
         <span><%= locker_violation.locker.location %></span>
-      </grid-item>
-      <grid-item columns="lg-1 md-4 sm-12">
+      </lux-grid-item>
+      <lux-grid-item columns="lg-1 md-4 sm-12">
         <strong>User:</strong>
         <span><%= locker_violation.current_user %></span>
-      </grid-item>
-    </grid-container>
-  </card>
-  <card size="full-width">
+      </lux-grid-item>
+    </lux-grid-container>
+  </lux-card>
+  <lux-card size="full-width">
    <% if locker_violation.current_user.present? %>
     <%= form.hidden_field :user_id , value: locker_violation.current_user.id %>
     <%= form.hidden_field :locker_id , value: locker_violation.locker.id %>
-    <grid-container>
-      <grid-item columns="lg-6 md-12 sm-12">
-        <input-text id="locker_violation_number_of_books" 
+    <lux-grid-container>
+      <lux-grid-item columns="lg-6 md-12 sm-12">
+        <lux-input-text id="locker_violation_number_of_books" 
                     name="locker_violation[number_of_books]" 
                     value="<%= locker_violation.number_of_books %>" 
-                    label="Number of Books" width="expand"></input-text>
-      </grid-item>
-      <grid-item columns="lg-6 md-12 sm-12">
-        <input-button type="submit" variation="solid">Record Locker Violation</input-button>
-      </grid-item>
-    </grid-container>
+                    label="Number of Books" width="expand"></lux-input-text>
+      </lux-grid-item>
+      <lux-grid-item columns="lg-6 md-12 sm-12">
+        <lux-input-button type="submit" variation="solid">Record Locker Violation</lux-input-button>
+      </lux-grid-item>
+    </lux-grid-container>
     <% else %>
       There is no user currently assigned to the locker!
     <% end %>
- </card>
+ </lux-card>
 <% end %>

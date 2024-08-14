@@ -2,23 +2,23 @@
 <%= current_user&.building&.name %> Lockers
 <% end %>
 
-<card id="locker-form-header" size="full-width">
-  <card-header>
-    <!-- Hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
+<lux-card id="locker-form-header" size="full-width">
+  <lux-card-header>
+    <!-- lux-hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
     <heading level="h1" size="h3"><%= current_user&.building&.name %> Lockers</heading>
-  </card-header>
-  <card-content>
+  </lux-card-header>
+  <lux-card-content>
   <%= form_tag(lockers_path, method: :get) do %>
-  <search-box >
-    <input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></input-text>
-    <input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></input-button>
-  </search-box>    
+  <lux-search-box>
+    <lux-input-text id="search" name="search" label="Search by location" :hide-label="true" placeholder="Search by location" size="large" value="<%= params[:search]%>"></lux-input-text>
+    <lux-input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></lux-input-button>
+  </lux-search-box>    
   <% end %>
   <%= link_to 'Clear Search', lockers_path %>
-  </card-content>
-</card>
+  </lux-card-content>
+</lux-card>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
 <%= render partial: "index_view", collection: @lockers, as: :locker %>

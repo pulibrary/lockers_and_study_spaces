@@ -2,7 +2,7 @@
 Assign application
 <% end %>
 <% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
+  <lux-alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></lux-alert>
 <% end %>
 
 <%= render '/locker_assignments/form', locker_assignment: @locker_assignment %>
