@@ -51,10 +51,9 @@ end
 group :test do
   gem 'axe-core-rspec'
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.38'
-  gem 'selenium-webdriver'
-  # Easy installation and use of chromedriver to run system tests with Chrome
+  gem 'capybara'
   gem 'rspec_junit_formatter'
+  gem 'selenium-webdriver'
   gem 'simplecov'
 end
 
