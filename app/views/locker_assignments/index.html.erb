@@ -11,10 +11,10 @@
     <heading level="h1"><%= current_user&.building&.name %> Locker Assignments</heading>
   </lux-card-header>
   <lux-card-content class="row">
-    <search-box >
+    <lux-search-box>
       <lux-input-text id="query_uid" name="query[uid]" label="Search by user netid" :hide-label="true" placeholder="Search by user netid" size="large" value="<%= params.fetch(:query,{})[:uid]%>"></lux-input-text>
       <lux-input-button id="search_submit" type="submit" variation="icon" size="medium" icon="search"></lux-input-button>
-    </search-box> 
+    </lux-search-box> 
     <%= link_to locker_assignments_path do %>
       <lux-icon-base icon-name="clear - return to all results"> <lux-icon-denied></lux-icon-denied> </lux-icon-base>   
     <% end %>
