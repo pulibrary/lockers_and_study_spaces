@@ -1,7 +1,7 @@
 ---
 version: 2.1
 orbs:
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@1.4.8
   node: circleci/node@5.1.0
 executors:
   lockers_and_study_spaces-executor:
@@ -98,7 +98,6 @@ jobs:
           command: |
             google-chrome --version
             chromedriver --version
-            java -jar /usr/local/bin/selenium.jar --version
           name: Check install
 
       - run:
