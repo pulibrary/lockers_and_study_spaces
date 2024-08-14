@@ -4,7 +4,7 @@
   "type": "module",
   "dependencies": {
     "@rails/ujs": "^7.0.4-1",
-    "lux-design-system": "^5.6.1",
+    "lux-design-system": "^5.6.3",
     "postcss-import": "^16.1.0",
     "vue": "^3.4.36"
   },
