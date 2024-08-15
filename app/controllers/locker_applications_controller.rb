@@ -131,7 +131,9 @@ class LockerApplicationsController < ApplicationController
     respond_to do |format|
       if valid
         if method == :new && Flipflop.lewis_patrons?
-          format.html { redirect_to edit_locker_application_url(@locker_application) }
+          format.html do
+            redirect_to edit_locker_application_url(@locker_application), notice: { message: 'Application successfully created', type: 'success' }
+          end
         else
           format.html { redirect_to @locker_application, notice: { message:, type: 'success' } }
         end
