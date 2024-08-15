@@ -162,18 +162,15 @@ RSpec.describe 'Locker Application New', :js do
 
         it 'can assign the application to an existing user' do
           visit root_path
-          select('Firestone Library', from: :locker_application_building_id)
-          click_button('Next')
-          new_application = LockerApplication.last
-          expect(new_application.user).to eq(admin)
           expect(page).to have_content('Firestone Library Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
           check('Keyed entry (rather than combination)')
           fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
           expect(page).to have_field('Applicant Netid', with: user.uid)
           click_button('Submit Locker Application')
+          new_application = LockerApplication.last
           expect(page).not_to have_content('User must exist')
-          expect(page).to have_current_path(locker_application_path(new_application))
+          expect(page).to have_current_path(edit_locker_application_path(new_application))
           expect(new_application.reload.complete).to be true
           expect(new_application.reload.user).to eq(user)
         end
@@ -182,18 +179,15 @@ RSpec.describe 'Locker Application New', :js do
       context 'with a valid user that does not exist yet' do
         it 'can create and assign an application to a new user' do
           visit root_path
-          select('Firestone Library', from: :locker_application_building_id)
-          click_button('Next')
-          new_application = LockerApplication.last
-          expect(new_application.user).to eq(admin)
           expect(page).to have_content('Firestone Library Locker Application')
           expect(page).to have_field('Applicant Netid', with: admin.uid)
           fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
           fill_in('Additional accessibility needs', with: 'Lower row')
           expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
           click_button('Submit Locker Application')
+          new_application = LockerApplication.last
           expect(page).not_to have_content('User must exist')
-          expect(page).to have_current_path(locker_application_path(new_application))
+          expect(page).to have_current_path(edit_locker_application_path(new_application))
         end
       end
     end
