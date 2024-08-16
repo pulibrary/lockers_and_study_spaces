@@ -1,9 +1,6 @@
 <% content_for :title do %>
 Edit application
 <% end %>
-<% if notice.present? %>
-  <alert status="<%= notice['type'] %>" dismissible><%= notice['message'] %></alert>
-<% end %>
 <%= render 'form', locker_application: @locker_application %>
 
 <%= link_to 'Show', @locker_application %> |
