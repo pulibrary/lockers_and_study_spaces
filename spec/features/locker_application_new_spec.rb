@@ -190,6 +190,29 @@ RSpec.describe 'Locker Application New', :js do
           expect(page).to have_current_path(edit_locker_application_path(new_application))
         end
       end
+
+      context 'with a Lewis admin' do
+        let(:lewis_admin) { FactoryBot.create(:user, admin: true, building: building_two) }
+        before do
+          sign_in lewis_admin
+        end
+
+        it 'can create a application for the Lewis library' do
+          visit root_path
+          expect(page).to have_content('Lewis Library Locker Application')
+          expect(page).to have_field('Applicant Netid', with: lewis_admin.uid)
+
+          click_button('Submit Locker Application')
+
+          new_application = LockerApplication.last
+          expect(page).to have_current_path(edit_locker_application_path(new_application))
+          expect(page).to have_content('Lewis Library Locker Application')
+          expect(page).to have_content('Locker application was successfully created.')
+          expect(new_application.reload.building).to eq(building_two)
+        end
+      end
+
+
     end
 
     context 'with lewis_patrons off' do
