@@ -198,6 +198,9 @@ RSpec.describe 'Locker Application New', :js do
       end
 
       context 'with a Lewis admin' do
+        before do
+          allow(Flipflop).to receive(:lewis_staff?).and_return(true)
+        end
         let(:lewis_admin) { FactoryBot.create(:user, admin: true, building: building_two) }
         before do
           sign_in lewis_admin
@@ -207,18 +210,19 @@ RSpec.describe 'Locker Application New', :js do
           visit root_path
           expect(page).to have_content('Lewis Library Locker Application')
           expect(page).to have_field('Applicant Netid', with: lewis_admin.uid)
-
+          fill_in('Additional accessibility needs', with: 'Lower row')
+          building_field = page.find_by_id('locker_application_building_id', visible: false)
+          expect(building_field.value).to eq(lewis_admin.building.id.to_s)
           click_button('Submit Locker Application')
 
+          expect(page).to have_content('Application successfully created')
           new_application = LockerApplication.last
           expect(page).to have_current_path(edit_locker_application_path(new_application))
           expect(page).to have_content('Lewis Library Locker Application')
-          expect(page).to have_content('Locker application was successfully created.')
           expect(new_application.reload.building).to eq(building_two)
+          expect(new_application.reload.user).to eq(lewis_admin)
         end
       end
-
-
     end
 
     context 'with lewis_patrons off' do
