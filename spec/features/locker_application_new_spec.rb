@@ -194,11 +194,10 @@ RSpec.describe 'Locker Application New', :js do
       context 'with a Lewis admin' do
         before do
           allow(Flipflop).to receive(:lewis_staff?).and_return(true)
-        end
-        let(:lewis_admin) { FactoryBot.create(:user, admin: true, building: building_two) }
-        before do
           sign_in lewis_admin
         end
+
+        let(:lewis_admin) { FactoryBot.create(:user, admin: true, building: building_two) }
 
         it 'can create a application for the Lewis library' do
           visit root_path
