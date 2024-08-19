@@ -40,7 +40,7 @@ RSpec.describe 'locker_applications/new' do
       it 'renders new locker_application form and allows the user netid to be edited' do
         render
 
-        assert_select 'input-text[name=?]', 'locker_application[user_uid]', count: 1
+        assert_select 'lux-input-text[name=?]', 'locker_application[user_uid]', count: 1
       end
     end
   end
