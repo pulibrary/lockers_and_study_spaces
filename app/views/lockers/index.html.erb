@@ -26,4 +26,6 @@
 <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
 <%== pagy_nav(@pagy) %>
 
-<%= link_to 'New Locker', new_locker_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= new_locker_path %>" variation="button solid">New Locker</lux-hyperlink>
+<% end %>

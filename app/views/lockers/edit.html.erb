@@ -3,13 +3,8 @@ Editing Locker
 <% end %>
 <lux-card size="full-width"><lux-heading level="h1">Editing Locker</lux-heading></lux-card>
 <%= render 'form', locker: @locker %>
-<lux-card size="medium">
-  <lux-grid-container>
-    <lux-grid-item columns="lg-6 md-6 sm-6">
-      <%= link_to 'Show', @locker %>
-    </lux-grid-item>
-    <lux-grid-item columns="lg-6 md-6 sm-6">
-      <%= link_to 'Back', lockers_path %>
-    </lux-grid-item>
-  </lux-grid-container>
-</lux-card>
+
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= locker_path(@locker) %>" variation="button solid">Show</lux-hyperlink>
+  <lux-hyperlink href="<%= lockers_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

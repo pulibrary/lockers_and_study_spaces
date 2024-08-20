@@ -38,4 +38,6 @@ Study Room Assignments
 <%== pagy_nav(@pagy) %>
 
 
-<%= link_to 'New Study Room Assignment', new_study_room_assignment_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= new_study_room_assignment_path %>" variation="button solid">New Study Room Assignment</lux-hyperlink>
+<% end %>

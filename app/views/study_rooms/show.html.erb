@@ -20,5 +20,7 @@
   <%= @study_room.notes %>
 </p>
 
-<%= link_to 'Edit', edit_study_room_path(@study_room) %> |
-<%= link_to 'Back', study_rooms_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= edit_study_room_path(@study_room) %>" variation="button solid">Edit</lux-hyperlink>
+  <lux-hyperlink href="<%= study_rooms_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

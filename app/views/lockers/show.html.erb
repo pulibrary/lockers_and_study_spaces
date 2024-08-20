@@ -56,12 +56,12 @@ Locker <%=@locker.location %>
       <strong>Notes:</strong>
       <span><%= @locker.notes %></span>
     </lux-grid-item>
-    <lux-grid-item columns="lg-12 md-12 sm-12">
-      <%= link_to 'Edit', edit_locker_path(@locker) %>
-      <%= link_to 'Back', lockers_path %>
-    </lux-grid-item>
    </lux-grid-container>
 </lux-card>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= edit_locker_path(@locker) %>" variation="button solid">Edit</lux-hyperlink>
+  <lux-hyperlink href="<%= lockers_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>
 <% if @locker.current_assignment.present? %>
 <lux-card size="full-width">
   <lux-heading level="h2" size="h4">Currently Assigned to Applicant</lux-heading>

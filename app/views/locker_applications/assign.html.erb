@@ -7,4 +7,6 @@ Assign application
 
 <%= render '/locker_assignments/form', locker_assignment: @locker_assignment %>
 
-<%= link_to 'Back', awaiting_assignment_locker_applications_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= awaiting_assignment_locker_applications_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

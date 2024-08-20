@@ -1,3 +1,11 @@
 // Place all the styles related to the Lockers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+main.lux {
+    margin-bottom: var(--space-base);
+}
+
+nav.lux-wrapper.button-well {
+    margin-top: var(--space-small);
+    margin-bottom: var(--space-small);
+}

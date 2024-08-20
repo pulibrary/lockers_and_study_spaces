@@ -4,4 +4,6 @@ New Locker
 <lux-card size="full-width"><lux-heading level="h1">New Locker</lux-heading></lux-card>
 <%= render 'form', locker: @locker %>
 
-<%= link_to 'Back', lockers_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= lockers_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

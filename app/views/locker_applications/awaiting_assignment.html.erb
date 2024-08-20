@@ -19,4 +19,7 @@ Applications awaiting assignment
 <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
 <%== pagy_nav(@pagy) %>
 
-<%= link_to 'Firestone Library Locker Application', new_locker_application_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= new_locker_application_path %>" variation="button solid">New Locker Application</lux-hyperlink>
+<% end %>
+
