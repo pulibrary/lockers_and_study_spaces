@@ -5,7 +5,7 @@
 <lux-card id="locker-form-header" size="full-width">
   <lux-card-header>
     <!-- lux-hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
-    <heading level="h1" size="h3"><%= current_user&.building&.name %> Lockers</heading>
+    <lux-heading level="h1" size="h3"><%= current_user&.building&.name %> Lockers</lux-heading>
   </lux-card-header>
   <lux-card-content>
   <%= form_tag(lockers_path, method: :get) do %>

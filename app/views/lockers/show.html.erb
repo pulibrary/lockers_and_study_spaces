@@ -6,7 +6,7 @@ Locker <%=@locker.location %>
 <% end %>
 
 <lux-card size="full-width"> 
-    <heading level="h1" size="h2">Locker <%=@locker.location %></heading>
+    <lux-heading level="h1" size="h2">Locker <%=@locker.location %></lux-heading>
    <lux-grid-container>
     <lux-grid-item columns="lg-1 md-2 sm-12">
       <strong>Size:</strong>
@@ -64,7 +64,7 @@ Locker <%=@locker.location %>
 </lux-card>
 <% if @locker.current_assignment.present? %>
 <lux-card size="full-width">
-  <heading level="h2" size="h4">Currently Assigned to Applicant</heading>
+  <lux-heading level="h2" size="h4">Currently Assigned to Applicant</lux-heading>
    <lux-grid-container>
     <lux-grid-item columns="lg-3 md-6 sm-12">
       <strong>Start date:</strong>

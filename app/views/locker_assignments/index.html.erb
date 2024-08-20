@@ -8,7 +8,7 @@
 <%= form_tag(locker_assignments_path, method: :get) do %>
 <lux-card id="locker-form-header" size="full-width">
   <lux-card-header>
-    <heading level="h1"><%= current_user&.building&.name %> Locker Assignments</heading>
+    <lux-heading level="h1"><%= current_user&.building&.name %> Locker Assignments</lux-heading>
   </lux-card-header>
   <lux-card-content class="row">
     <lux-search-box>

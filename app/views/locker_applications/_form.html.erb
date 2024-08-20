@@ -1,7 +1,7 @@
 <lux-card id="locker-form-header" size="full-width">
   <lux-card-header>
     <!-- lux-hyperlink is the text screen readers would read, we don't want to wrap the entire card -->
-    <heading level="h2" size="h3"><lux-hyperlink href="#"><%= locker_application&.building&.name %> Locker Application</lux-hyperlink></heading>
+    <lux-heading level="h2" size="h3"><lux-hyperlink href="#"><%= locker_application&.building&.name %> Locker Application</lux-hyperlink></lux-heading>
   </lux-card-header>
 </lux-card>
 <%= form_with(model: locker_application, local: true) do |form| %>
