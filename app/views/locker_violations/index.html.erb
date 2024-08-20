@@ -33,4 +33,6 @@ Locker Violations
 
 <br>
 
-<%= link_to 'New LockerViolation', new_locker_violation_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= new_locker_violation_path %>" variation="button solid">New Locker Violation</lux-hyperlink>
+<% end %>

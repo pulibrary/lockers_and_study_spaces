@@ -20,5 +20,7 @@ Locker Violation
   <%= @locker_violation.number_of_books %>
 </p>
 
-<%= link_to 'Edit', edit_locker_violation_path(@locker_violation) %> |
-<%= link_to 'Back', locker_violations_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= edit_locker_violation_path(@locker_violation) %>" variation="button solid">Edit</lux-hyperlink>
+  <lux-hyperlink href="<%= locker_violations_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

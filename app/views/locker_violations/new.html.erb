@@ -5,4 +5,6 @@ New Locker Violation
 
 <%= render 'form', locker_violation: @locker_violation %>
 
-<%= link_to 'Back', locker_violations_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= locker_violations_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

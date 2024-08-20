@@ -27,11 +27,9 @@
 </lux-data-table>
 
 
-<lux-grid-container>
-  <lux-grid-item columns="sm-2">
-    <%= link_to 'Schedule a new message', new_scheduled_message_path %>
-  </lux-grid-item>
-</lux-grid-container>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= new_scheduled_message_path %>" variation="button solid">Schedule a new message</lux-hyperlink>
+<% end %>
 
 
 <lux-data-table caption="Sent messages"

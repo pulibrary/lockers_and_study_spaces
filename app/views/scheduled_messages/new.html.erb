@@ -5,4 +5,7 @@ New Scheduled Message
 
 <%= render 'form', scheduled_message: @scheduled_message %>
 
-<%= link_to 'Back', scheduled_messages_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= scheduled_messages_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>
+  

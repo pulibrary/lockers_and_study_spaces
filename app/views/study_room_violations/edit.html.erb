@@ -5,5 +5,7 @@ Editing Study Room Violation
 
 <%= render 'form', study_room_violation: @study_room_violation %>
 
-<%= link_to 'Show', @study_room_violation %> |
-<%= link_to 'Back', study_room_violations_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= study_room_violation_path(@study_room_violation) %>" variation="button solid">Show</lux-hyperlink>
+  <lux-hyperlink href="<%= study_room_violations_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

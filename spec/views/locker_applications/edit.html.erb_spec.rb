@@ -45,7 +45,7 @@ RSpec.describe 'locker_applications/edit' do
 
   it 'has a link to the show page' do
     render
-    assert_select 'a', text: 'Show'
+    assert_select 'lux-hyperlink', text: 'Show'
   end
 
   context 'when the application is not yet complete' do
@@ -58,7 +58,7 @@ RSpec.describe 'locker_applications/edit' do
 
     it 'does not have a link to the show page' do
       render
-      assert_select 'a', { count: 0, text: 'Show' }, 'DOM has no link called Show'
+      assert_select 'lux-hyperlink', { count: 0, text: 'Show' }, 'DOM has no link called Show'
     end
   end
 

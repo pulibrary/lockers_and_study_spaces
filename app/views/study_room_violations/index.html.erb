@@ -33,4 +33,6 @@ Study Room Violations
 
 <br>
 
-<%= link_to 'New Study Room Violation', new_study_room_violation_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= new_study_room_violation_path %>" variation="button solid">New Study Room Violation</lux-hyperlink>
+<% end %>

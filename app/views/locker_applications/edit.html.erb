@@ -7,6 +7,8 @@ Edit application
 <%= render 'form', locker_application: @locker_application %>
 
 <% if @locker_application.complete %>
-  <%= link_to 'Show', @locker_application %> |
-  <%= link_to 'Back', locker_applications_path %>
+  <%= render layout: '/shared/related_actions' do %>
+    <lux-hyperlink href="<%= locker_application_path(@locker_application) %>" variation="button solid">Show</lux-hyperlink>
+    <lux-hyperlink href="<%= locker_applications_path %>" variation="button solid">Back</lux-hyperlink>
+  <% end %>
 <% end %>
