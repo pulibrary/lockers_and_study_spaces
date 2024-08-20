@@ -38,6 +38,6 @@ RSpec.describe 'locker_assignments/index' do
 
   it "has a header containing the name of the admin user's library" do
     render
-    assert_select 'heading', text: 'Library of Alexandria Locker Assignments'
+    assert_select 'lux-heading', text: 'Library of Alexandria Locker Assignments'
   end
 end

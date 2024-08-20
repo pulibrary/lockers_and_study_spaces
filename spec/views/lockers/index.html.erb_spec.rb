@@ -61,6 +61,6 @@ RSpec.describe 'lockers/index' do
 
   it "has a header containing the name of the admin user's library" do
     render
-    assert_select 'heading', text: 'My Excellent Library Lockers'
+    assert_select 'lux-heading', text: 'My Excellent Library Lockers'
   end
 end
