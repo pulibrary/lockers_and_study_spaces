@@ -5,7 +5,7 @@ describe('LockerSizeFilter', () => {
     document.body.innerHTML =
       '<div id="locker-form-header"><a>Firestone Library</a></div><select id="locker_application_preferred_size"><option value="4">4-foot</option><option value="6">6-foot</option></select><select id="locker_application_preferred_general_area"><option value="A floor">A floor</option><option value="B floor">B floor</option></select>';
     new LockerSizeFilter();
-    let select = await document.getElementById(
+    const select = await document.getElementById(
       'locker_application_preferred_general_area'
     );
     select.value = 'A floor';
