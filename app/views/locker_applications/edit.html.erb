@@ -6,5 +6,7 @@ Edit application
 <% end %>
 <%= render 'form', locker_application: @locker_application %>
 
-<%= link_to 'Show', @locker_application %> |
-<%= link_to 'Back', locker_applications_path %>
+<% if @locker_application.complete %>
+  <%= link_to 'Show', @locker_application %> |
+  <%= link_to 'Back', locker_applications_path %>
+<% end %>

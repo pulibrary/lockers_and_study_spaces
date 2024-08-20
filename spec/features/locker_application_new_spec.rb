@@ -39,6 +39,8 @@ RSpec.describe 'Locker Application New', :js do
           click_button('Next')
         end.to change(LockerApplication, :count)
         expect(page).to have_current_path(edit_locker_application_path(id: LockerApplication.last.id), ignore_query: true)
+        # Since the application is still incomplete, we don't show the "successfully created" message yet
+        expect(page).not_to have_content('Application successfully created')
       end
 
       it 'can apply for a new locker' do

@@ -120,7 +120,7 @@ class LockerApplicationsController < ApplicationController
     return if current_user.admin? && current_user.works_at_enabled_building?
 
     # Non-admins can only edit or update their application if it is not yet complete
-    return if (action_name == 'update' || action_name == 'edit') && !@locker_application.complete? && @locker_application.user == current_user
+    return if (action_name == 'update' || action_name == 'edit') && !@locker_application.complete && @locker_application.user == current_user
 
     redirect_to :root, alert: 'Only administrators have access to the everyone\'s Locker Applications!'
   end
@@ -132,7 +132,7 @@ class LockerApplicationsController < ApplicationController
       if valid
         if method == :new && Flipflop.lewis_patrons?
           format.html do
-            redirect_to edit_locker_application_url(@locker_application), notice: { message: 'Application successfully created', type: 'success' }
+            redirect_to edit_locker_application_url(@locker_application), notice: creation_notice
           end
         else
           format.html { redirect_to @locker_application, notice: { message:, type: 'success' } }
@@ -151,6 +151,12 @@ class LockerApplicationsController < ApplicationController
     return false if params[:archived].blank?
 
     ActiveModel::Type::Boolean.new.cast(params[:archived])
+  end
+
+  def creation_notice
+    return unless @locker_application.complete
+
+    { message: 'Application successfully created', type: 'success' }
   end
 end
 
