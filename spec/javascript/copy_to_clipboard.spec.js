@@ -10,7 +10,6 @@ describe('CopyToClipboard', () => {
         return Promise.resolve();
       },
     };
-    // eslint-disable-next-line no-undef
     global.navigator.clipboard = mockClipboard;
   });
 
