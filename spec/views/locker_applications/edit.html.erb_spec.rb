@@ -18,6 +18,7 @@ RSpec.describe 'locker_applications/edit' do
                                                         semester: 'MyString',
                                                         status_at_application: 'MyString',
                                                         department_at_application: 'MyString',
+                                                        complete: true,
                                                         user:
                                                       ))
   end
@@ -39,6 +40,25 @@ RSpec.describe 'locker_applications/edit' do
       assert_select 'lux-input-text[name=?]', 'locker_application[department_at_application]'
 
       assert_select 'input[type=hidden][name=?]', 'locker_application[user_uid]'
+    end
+  end
+
+  it 'has a link to the show page' do
+    render
+    assert_select 'a', text: 'Show'
+  end
+
+  context 'when the application is not yet complete' do
+    before do
+      @locker_application = assign(:locker_application, LockerApplication.create!(
+                                                          complete: false,
+                                                          user:
+                                                        ))
+    end
+
+    it 'does not have a link to the show page' do
+      render
+      assert_select 'a', { count: 0, text: 'Show' }, 'DOM has no link called Show'
     end
   end
 
