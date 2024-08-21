@@ -20,5 +20,7 @@ Study Room Violation
   <%= @study_room_violation.number_of_books %>
 </p>
 
-<%= link_to 'Edit', edit_study_room_violation_path(@study_room_violation) %> |
-<%= link_to 'Back', study_room_violations_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= edit_study_room_violation_path(@study_room_violation) %>" variation="button solid">Edit</lux-hyperlink>
+  <lux-hyperlink href="<%= study_room_violations_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

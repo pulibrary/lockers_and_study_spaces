@@ -35,5 +35,7 @@ Scheduled Message
   <%= @scheduled_message.results %>
 </p>
 
-<%= link_to 'Edit', edit_scheduled_message_path(@scheduled_message) %> |
-<%= link_to 'Back', scheduled_messages_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= edit_scheduled_message_path(@scheduled_message) %>" variation="button solid">Edit</lux-hyperlink>
+  <lux-hyperlink href="<%= scheduled_messages_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

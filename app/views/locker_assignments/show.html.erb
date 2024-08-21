@@ -34,6 +34,8 @@ Assignment
   <%= render '/locker_applications/view', locker_application: @locker_assignment.locker_application %>
 </lux-card>
 
-<%= link_to 'Edit', edit_locker_assignment_path(@locker_assignment) %> |
-<%= link_to 'Card for printing', card_locker_assignment_path(@locker_assignment), target: :_blank %> |
-<%= link_to 'Back', locker_assignments_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= edit_locker_assignment_path(@locker_assignment) %>" variation="button solid">Edit</lux-hyperlink>
+  <lux-hyperlink href="<%= card_locker_assignment_path(@locker_assignment) %>" variation="button solid">Card for printing</lux-hyperlink>
+  <lux-hyperlink href="<%= locker_assignments_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

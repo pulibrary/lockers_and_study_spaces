@@ -25,5 +25,7 @@ Study Room Assignment
   <%= @study_room_assignment.study_room %>
 </p>
 
-<%= link_to 'Edit', edit_study_room_assignment_path(@study_room_assignment) %> |
-<%= link_to 'Back', study_room_assignments_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= edit_study_room_assignment_path(@study_room_assignment) %>" variation="button solid">Edit</lux-hyperlink>
+  <lux-hyperlink href="<%= study_room_assignments_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>

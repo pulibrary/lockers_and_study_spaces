@@ -5,5 +5,7 @@ Editing Study Room
 
 <%= render 'form', study_room: @study_room %>
 
-<%= link_to 'Show', @study_room %> |
-<%= link_to 'Back', study_rooms_path %>
+<%= render layout: '/shared/related_actions' do %>
+  <lux-hyperlink href="<%= study_room_path(@study_room) %>" variation="button solid">Show</lux-hyperlink>
+  <lux-hyperlink href="<%= study_rooms_path %>" variation="button solid">Back</lux-hyperlink>
+<% end %>
