@@ -1,0 +1,11 @@
+# Common large paths
+node_modules/
+vendor/
+*.min.js
+spec/
+
+# Semgrep rules folder
+.semgrep
+
+# Semgrep-action log folder
+.semgrep_logs/
