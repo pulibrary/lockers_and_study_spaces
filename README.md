@@ -25,12 +25,6 @@ An application to manage and reserve locker and study spaces for the library.  T
 ## Database creation
    * `bundle exec rake servers:start`
 
-   * create, and migrate the database
-     ```
-     bundle exec rails db:create
-     bundle exec rails db:migrate
-     ```
-
 ## Database seeding for development
 * If you want a set of example data for development, seed the database. 
 * This data includes *fake* lockers and study spaces for Firestone, and users with fake UIDs. 
