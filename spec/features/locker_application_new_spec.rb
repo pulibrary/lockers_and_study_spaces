@@ -118,6 +118,15 @@ RSpec.describe 'Locker Application New', :js do
         new_application.reload
         expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)')
       end
+
+      it 'keeps the selected locker size when selecting floor' do
+        visit root_path
+        select('Firestone Library', from: :locker_application_building_id)
+        click_button('Next')
+        select('6-foot', from: :locker_application_preferred_size)
+        select('C floor', from: :locker_application_preferred_general_area)
+        expect(page).to have_select('Preferred Size', selected: '6-foot')
+      end
     end
 
     context 'with lewis_patrons off' do
