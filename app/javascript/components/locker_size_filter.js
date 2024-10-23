@@ -15,6 +15,7 @@ export default class LockerSizeFilter {
   #addListener() {
     this.preferredFloor.addEventListener('change', () => {
       if (this.library === 'Firestone') {
+        const selectedFloor = this.preferredSize.value;
         if (this.preferredFloor.value === 'A floor') {
           this.preferredSize.options.length = 0;
           this.preferredSize[0] = new Option('6-foot', 6);
@@ -22,6 +23,7 @@ export default class LockerSizeFilter {
           this.preferredSize.options.length = 0;
           this.preferredSize[0] = new Option('4-foot', 4);
           this.preferredSize[1] = new Option('6-foot', 6);
+          this.preferredSize.value = selectedFloor;
         }
       }
     });
