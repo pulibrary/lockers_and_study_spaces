@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   mount Flipflop::Engine => '/flipflop'
+  mount HealthMonitor::Engine, at: '/'
   resources :locker_renewal_messages
   resources :study_room_violations
   resources :locker_violations
