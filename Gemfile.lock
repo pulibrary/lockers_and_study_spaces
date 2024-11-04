@@ -155,6 +155,8 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
+    health-monitor-rails (12.3.0)
+      railties (>= 6.1)
     honeybadger (4.12.2)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
@@ -414,6 +416,7 @@ DEPENDENCIES
   ed25519
   factory_bot
   flipflop (~> 2.7)
+  health-monitor-rails (~> 12.3)
   honeybadger (~> 4.0)
   jbuilder (~> 2.5)
   net-ldap

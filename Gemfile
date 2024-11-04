@@ -67,3 +67,5 @@ gem 'flipflop', '~> 2.7'
 gem 'vite_rails'
 
 gem 'capistrano-yarn', '~> 2.0'
+
+gem 'health-monitor-rails', '~> 12.3'
