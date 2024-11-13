@@ -23,6 +23,17 @@ describe 'accessibility', :js do
     end
   end
 
+  context 'when visiting the sign in page' do
+    before do
+      visit '/sign_in'
+    end
+
+    it 'complies with wcag' do
+      expect(page).to be_axe_clean
+        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+    end
+  end
+
   context 'when editing new locker application' do
     before do
       sign_in admin
@@ -34,17 +45,6 @@ describe 'accessibility', :js do
 
     it 'complies with wcag' do
       visit edit_locker_application_path(id: locker_application.id)
-      expect(page).to be_axe_clean
-        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
-    end
-  end
-
-  context 'when visiting the sign in page' do
-    before do
-      visit '/sign_in'
-    end
-
-    it 'complies with wcag' do
       expect(page).to be_axe_clean
         .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
     end
