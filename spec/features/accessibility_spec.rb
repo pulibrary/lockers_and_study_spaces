@@ -15,4 +15,15 @@ describe 'accessibility', :js do
         .skipping(:list)
     end
   end
+
+  context 'when visiting the sign in page' do
+    before do
+      visit '/sign_in'
+    end
+
+    it 'complies with wcag' do
+      expect(page).to be_axe_clean
+        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+    end
+  end
 end
