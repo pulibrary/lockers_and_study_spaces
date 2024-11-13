@@ -68,4 +68,4 @@ gem 'vite_rails'
 
 gem 'capistrano-yarn', '~> 2.0'
 
-gem 'health-monitor-rails', '~> 12.4.0'
+gem 'health-monitor-rails', '12.4.0'
