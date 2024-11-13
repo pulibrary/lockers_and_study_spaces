@@ -4,8 +4,8 @@ require 'rails_helper'
 require 'axe-rspec'
 
 describe 'accessibility', :js do
-  let(:admin) { FactoryBot.create(:user, admin: true) }
   let(:firestone) { FactoryBot.create(:building, name: 'Firestone Library', id: 1) }
+  let(:admin) { FactoryBot.create(:user, admin: true, building: firestone) }
 
   before do
     firestone
@@ -45,6 +45,18 @@ describe 'accessibility', :js do
 
     it 'complies with wcag' do
       visit edit_locker_application_path(id: locker_application.id)
+      expect(page).to be_axe_clean
+        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+    end
+  end
+
+  context 'when visiting lockers page' do
+    before do
+      sign_in admin
+    end
+
+    it 'complies with wcag' do
+      visit '/lockers'
       expect(page).to be_axe_clean
         .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
     end
