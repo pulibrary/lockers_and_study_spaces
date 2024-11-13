@@ -23,7 +23,7 @@ describe 'accessibility', :js do
     end
   end
 
-  context 'when creating new locker application' do
+  context 'when editing new locker application' do
     before do
       sign_in admin
     end
