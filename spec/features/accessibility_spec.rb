@@ -34,7 +34,7 @@ describe 'accessibility', :js do
     end
   end
 
-  context 'when editing new locker application' do
+  context 'when signed in as an admin' do
     before do
       sign_in admin
     end
@@ -43,34 +43,28 @@ describe 'accessibility', :js do
       FactoryBot.create(:locker_application, complete: true, accessibility_needs: ['Keyed entry (rather than combination)', 'Another need'])
     end
 
-    it 'complies with wcag' do
-      visit edit_locker_application_path(id: locker_application.id)
-      expect(page).to be_axe_clean
-        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
-    end
-  end
-
-  context 'when visiting lockers page' do
-    before do
-      sign_in admin
+    context 'when editing new locker application' do
+      it 'complies with wcag' do
+        visit edit_locker_application_path(id: locker_application.id)
+        expect(page).to be_axe_clean
+          .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+      end
     end
 
-    it 'complies with wcag' do
-      visit '/lockers'
-      expect(page).to be_axe_clean
-        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
-    end
-  end
-
-  context 'when visiting locker applications page' do
-    before do
-      sign_in admin
+    context 'when visiting lockers page' do
+      it 'complies with wcag' do
+        visit '/lockers'
+        expect(page).to be_axe_clean
+          .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+      end
     end
 
-    it 'complies with wcag' do
-      visit '/locker_applications'
-      expect(page).to be_axe_clean
-        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+    context 'when visiting locker applications page' do
+      it 'complies with wcag' do
+        visit '/locker_applications'
+        expect(page).to be_axe_clean
+          .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+      end
     end
   end
 end
