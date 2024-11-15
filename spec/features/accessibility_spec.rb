@@ -61,4 +61,16 @@ describe 'accessibility', :js do
         .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
     end
   end
+
+  context 'when visiting locker applications page' do
+    before do
+      sign_in admin
+    end
+
+    it 'complies with wcag' do
+      visit '/locker_applications'
+      expect(page).to be_axe_clean
+        .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+    end
+  end
 end
