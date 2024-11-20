@@ -114,5 +114,13 @@ describe 'accessibility', :js do
           .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
       end
     end
+
+    context 'when assigning users to the classics graduate study room' do
+      it 'complies with wcag' do
+        visit '/study_rooms/assign_users?general_area=Classics+Graduate+Study+Room'
+        expect(page).to be_axe_clean
+          .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+      end
+    end
   end
 end
