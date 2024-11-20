@@ -98,5 +98,13 @@ describe 'accessibility', :js do
           .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
       end
     end
+
+    context 'when visiting the locker renewal messages page' do
+      it 'complies with wcag' do
+        visit '/locker_renewal_messages'
+        expect(page).to be_axe_clean
+          .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+      end
+    end
   end
 end
