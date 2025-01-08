@@ -37,6 +37,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'rails-controller-testing'
   gem 'rubocop'
+  gem 'rubocop-factory_bot', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
 end

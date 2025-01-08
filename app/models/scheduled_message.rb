@@ -3,7 +3,7 @@
 class ScheduledMessage < ApplicationRecord
   validates :building_id, presence: true
 
-  scope :past, -> { where('schedule < ?', Date.today) }
+  scope :past, -> { where(schedule: ...Date.today) }
   scope :today, -> { where('schedule = ?', Date.today) }
   scope :future, -> { where('schedule > ?', Date.today) }
   scope :already_sent, ->(building_id) { where.not(results: nil).where(building_id:) }
@@ -18,12 +18,12 @@ class ScheduledMessage < ApplicationRecord
       # Handle the dates that lux gives us, e.g. "5/19/2022 - 5/24/2022"
       value = daterange_string_to_daterange(value)
     end
-    super(value)
+    super
   end
 
   def schedule=(value)
     value = Date.strptime(value, '%m/%d/%Y') if value.is_a?(String) && value.present?
-    super(value)
+    super
   end
 
   def daterange_string_to_daterange(string)

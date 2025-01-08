@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :locker_assignment do
-    locker { FactoryBot.create(:locker, building_id: 1) }
+    locker { FactoryBot.create(:locker, building: FactoryBot.create(:building)) }
     locker_application { FactoryBot.create(:locker_application) }
     start_date { DateTime.now.to_date }
     expiration_date { DateTime.now.to_date.next_year }

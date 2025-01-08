@@ -5,9 +5,10 @@ class UserMailer < ApplicationMailer
     @locker_assignment = params[:locker_assignment]
     attachments['Locker Space Agreement.pdf'] = Rails.root.join('locker_agreement.pdf').read
     email = @locker_assignment.email
+    from = @locker_assignment.locker.building.email if @locker_assignment
     mail(to: email,
          template_name: template_for_building(@locker_assignment&.locker&.building),
-         from: @locker_assignment&.locker&.building&.email || 'access@princeton.edu',
+         from: from || 'access@princeton.edu',
          subject: 'Your Locker has been assigned')
   end
 
@@ -48,8 +49,9 @@ class UserMailer < ApplicationMailer
       assignments = relevant_assignments(message)
       assignments.each do |assignment|
         @assignment = assignment
+        from = assignments.locker.building.email if assignments
         mail(
-          from: assignment&.locker&.building&.email,
+          from: from,
           bcc: assignment.email,
           subject: 'Locker Renewal',
           template_name: message.template
@@ -65,8 +67,9 @@ class UserMailer < ApplicationMailer
   # Allow library-specific templates, by placing them at, for example,
   # app/views/user_mailer/lewis_locker_assignment_confirmation.html.erb
   def template_for_building(building)
-    calling_method = caller_locations.first.label
-    prefix = building&.name&.split&.first&.downcase
+    calling_method = caller_locations.first.base_label
+    building_name = building&.name
+    prefix = building_name.split.first.downcase if building_name
     template_name = "#{prefix}_#{calling_method}"
     return template_name if lookup_context.find_all(template_name, Array(self.class.mailer_name)).any?
 
