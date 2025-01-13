@@ -47,9 +47,9 @@ class LockerAssignment < ApplicationRecord
     def search_by_date(field:, value:)
       value = DateTime.tomorrow.to_date if field == :active
       if %i[expiration_date_start active].include?(field)
-        where('expiration_date >= ?', value)
+        where(expiration_date: value..)
       else
-        where('expiration_date <= ?', value)
+        where(expiration_date: ..value)
       end
     end
   end

@@ -6,7 +6,7 @@ orbs:
 executors:
   lockers_and_study_spaces-executor:
     docker:
-      - image: cimg/ruby:3.1.3-browsers
+      - image: cimg/ruby:3.4.1-browsers
         environment:
           BUNDLER_VERSION: 2.0.1
           BUNDLE_JOBS: 3
@@ -176,7 +176,7 @@ jobs:
 
   bearer:
     docker:
-      - image: cimg/ruby:3.2
+      - image: cimg/ruby:3.4
     environment:
       # Set to default branch of your repo
       DEFAULT_BRANCH: main

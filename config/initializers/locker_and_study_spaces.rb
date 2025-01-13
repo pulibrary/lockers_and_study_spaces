@@ -18,7 +18,7 @@ module LockerAndStudySpaces
   end
 
   def config_file
-    Rails.root.join('config', 'locker_and_study_spaces.yml')
+    Rails.root.join('config/locker_and_study_spaces.yml')
   end
 
   def read_config_file
