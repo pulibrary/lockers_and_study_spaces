@@ -113,7 +113,7 @@ RSpec.describe Locker do
     end
 
     it 'can create a Lewis Locker without a combination' do
-      expect { Locker.create! building: lewis, location: '123', general_area: 'by the staircase' }.not_to raise_error(ActiveRecord::RecordInvalid)
+      expect { Locker.create! building: lewis, location: '123', general_area: 'by the staircase' }.not_to raise_error
     end
   end
 end
