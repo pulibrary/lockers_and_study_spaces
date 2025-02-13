@@ -21,6 +21,13 @@ executors:
           POSTGRES_DB: lockers_and_study_spaces_test
           POSTGRES_HOST_AUTH_METHOD: trust
     working_directory: ~/project
+  basic-executor:
+    docker:
+      - image: cimg/ruby:3.4.1-browsers
+        environment:
+          RAILS_ENV: test
+    resource_class: large
+    working_directory: ~/project
 
 commands:
   setup-bundler:
@@ -194,6 +201,13 @@ jobs:
           name: Check code against community-provided and custom semgrep rules
           command: semgrep ci --config auto
 
+  deploy:
+    executor: basic-executor
+    steps:
+      - run:
+          name: Deploy to Staging
+          command: "curl -k \"https://ansible-tower.princeton.edu/api/v2/job_templates/57/launch/\" --header \"Content-Type: application/json\" --header \"Authorization: Bearer $TOWER_TOKEN\" -d '{\"credential_passwords\":{},\"extra_vars\":{\"repo_name\":\"lockers_and_study_spaces\"}}'"
+
 workflows:
   build_accept:
     jobs:
@@ -213,5 +227,12 @@ workflows:
       - coverage_report:
          requires:
           - test
+      - deploy:
+         requires:
+           - test
+         filters:
+           branches:
+             only:
+               - main
       - bearer
       - semgrep
