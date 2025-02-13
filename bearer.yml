@@ -13,8 +13,7 @@ rule:
     # Tickets to remediate these rules and remove from this stanza:
     #   ruby_rails_password_length - https://github.com/pulibrary/lockers_and_study_spaces/issues/332
     #   ruby_rails_permissive_parameters - https://github.com/pulibrary/lockers_and_study_spaces/issues/333
-    #   ruby_rails_default_encryption - https://github.com/pulibrary/lockers_and_study_spaces/issues/334
-    skip-rule: [ruby_rails_password_length, ruby_rails_permissive_parameters, ruby_rails_default_encryption]
+    skip-rule: [ruby_rails_password_length, ruby_rails_permissive_parameters]
 scan:
     context: ""
     data_subject_mapping: ""

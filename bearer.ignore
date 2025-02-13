@@ -1,0 +1,14 @@
+{
+  "a6e77c6d42db8f03ffbe5acae290f72c_0": {
+    "author": "Max Kadel",
+    "comment": "These are for institutional buildings' public information, not for personal information",
+    "false_positive": true,
+    "ignored_at": "2025-02-12T21:05:45Z"
+  },
+  "a6e77c6d42db8f03ffbe5acae290f72c_1": {
+    "author": "Max Kadel",
+    "comment": "These are for institutional buildings' public information, not for personal information",
+    "false_positive": true,
+    "ignored_at": "2025-02-12T21:06:35Z"
+  }
+}
