@@ -40,6 +40,8 @@ group :development, :test do
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'rubocop-capybara'
+  gem 'rubocop-rspec_rails'
 end
 
 group :development do
