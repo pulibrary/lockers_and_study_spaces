@@ -38,7 +38,10 @@ RSpec.describe 'Locker Application Assign', :js do
     expect(page).to have_text('Preferred general area: A floor')
     select locker.location, from: 'locker_assignment_locker_id'
 
-    expect { click_button 'Submit Locker Assignment' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect do
+      click_button 'Submit Locker Assignment'
+      expect(page).to have_current_path %r{/locker_assignments/\d+}
+    end.to change { ActionMailer::Base.deliveries.count }.by(1)
     click_link 'Card for printing'
   end
 

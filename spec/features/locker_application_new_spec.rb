@@ -37,6 +37,7 @@ RSpec.describe 'Locker Application New', :js do
         # Submit library as first step
         expect do
           click_button('Next')
+          expect(page).to have_current_path %r{/locker_applications/\d+/edit}
         end.to change(LockerApplication, :count)
         expect(page).to have_current_path(edit_locker_application_path(id: LockerApplication.last.id), ignore_query: true)
         # Since the application is still incomplete, we don't show the "successfully created" message yet
@@ -47,6 +48,7 @@ RSpec.describe 'Locker Application New', :js do
         visit root_path
         select('Firestone Library', from: :locker_application_building_id)
         click_button('Next')
+        expect(page).to have_current_path %r{/locker_applications/\d+/edit}
         new_application = LockerApplication.last
         expect(page).to have_content('Firestone Library Locker Application')
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
@@ -241,6 +243,7 @@ RSpec.describe 'Locker Application New', :js do
         fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
         expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
         click_button('Submit Locker Application')
+        expect(page).to have_current_path %r{/locker_applications/\d+$}
         new_application = LockerApplication.last
         expect(page).not_to have_content('User must exist')
         expect(page).to have_current_path(locker_application_path(new_application))
@@ -261,6 +264,7 @@ RSpec.describe 'Locker Application New', :js do
         expect(page).to have_field('Additional accessibility needs', with: 'Another need')
         uncheck('Keyed entry (rather than combination)')
         click_button('Submit Locker Application')
+        expect(page).to have_current_path %r{/locker_applications/\d+$}
         expect(locker_application.reload.accessibility_needs).to contain_exactly('Another need')
       end
     end
