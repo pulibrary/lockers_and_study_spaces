@@ -16,6 +16,9 @@ RSpec.describe 'Study Room Violation', :js do
     expect(page).to have_text(study_room_assignment.study_room.location)
     click_link 'Record Violation'
     fill_in :study_room_violation_number_of_books, with: 2
-    expect { click_button 'Record Violation' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect do
+      click_button 'Record Violation'
+      expect(page).to have_current_path %r{/study_room_violations/\d+}
+    end.to change { ActionMailer::Base.deliveries.count }.by(1)
   end
 end
