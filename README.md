@@ -67,6 +67,7 @@ bundle exec rails db:seed:replant
 * To run all the ruby tests, run `bundle exec rspec`
 * To run a specific ruby test, run `bundle exec rspec path/to/some_spec.rb:line_number`
 * To run the js tests, run `yarn test`
+* To see a test in Chrome while you run it, run `RUN_IN_BROWSER=true bundle exec rspec path/to/some_spec.rb:line_number`
 
 ### Troubleshooting the tests
 If you have unexplained failures in the feature specs locally, but not in CI, it could be that an older version of Lux is hanging around causing trouble. Try moving the old repo and re-cloning from github, and see whether that fixes the issue.

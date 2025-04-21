@@ -85,7 +85,11 @@ RSpec.configure do |config|
     Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
   end
 
-  Capybara.javascript_driver = :chrome_headless
+  Capybara.javascript_driver = if ENV['RUN_IN_BROWSER']
+                                 :selenium_chrome
+                               else
+                                 :chrome_headless
+                               end
 
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
