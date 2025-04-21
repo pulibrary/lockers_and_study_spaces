@@ -48,12 +48,16 @@ RSpec.describe 'Navigation menu', :js do
     context 'when user is Lewis admin' do
       it 'does not show study room admin options' do
         visit '/'
+        # rubocop:disable Capybara/NegationMatcherAfterVisit
         expect(page).not_to have_content('Study Room Management')
+        # rubocop:enable Capybara/NegationMatcherAfterVisit
       end
 
       it 'does not show reports options' do
         visit '/'
+        # rubocop:disable Capybara/NegationMatcherAfterVisit
         expect(page).not_to have_content('Reporting')
+        # rubocop:enable Capybara/NegationMatcherAfterVisit
       end
 
       it 'does show renewal email admin options' do
@@ -71,7 +75,9 @@ RSpec.describe 'Navigation menu', :js do
 
     it 'cannot see locker management navbar item' do
       visit '/'
+      # rubocop:disable Capybara/NegationMatcherAfterVisit
       expect(page).not_to have_text('Locker Management')
+      # rubocop:enable Capybara/NegationMatcherAfterVisit
     end
 
     context 'when user is a Firestone admin' do
@@ -89,7 +95,9 @@ RSpec.describe 'Navigation menu', :js do
 
     it 'cannot see locker management navbar item' do
       visit '/'
+      # rubocop:disable Capybara/NegationMatcherAfterVisit
       expect(page).not_to have_text('Locker Management')
+      # rubocop:enable Capybara/NegationMatcherAfterVisit
     end
   end
 end
