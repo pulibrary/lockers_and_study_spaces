@@ -90,6 +90,7 @@ RSpec.configure do |config|
                                else
                                  :chrome_headless
                                end
+  Capybara.default_max_wait_time = 4
 
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
