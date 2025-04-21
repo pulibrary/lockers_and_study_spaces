@@ -47,9 +47,11 @@ RSpec.describe 'Study Room Assign', :js do
     # fill in users
     fill_in "study_room_assignment_#{study_room2.id}_user_netid", with: user2.uid
 
-    expect { click_button 'Update Assignments' }
-      .to change { StudyRoomAssignment.count }.by(1)
-                                              .and not_change { User.count }
+    expect do
+      click_button 'Update Assignments'
+      sleep 1 # We can't use Capybara's typical waiting capabilities, since the page does not change
+    end.to change { StudyRoomAssignment.count }.by(1)
+                                               .and not_change { User.count }
       .and change {
              ActionMailer::Base.deliveries.count
            }.by(1)
@@ -67,11 +69,13 @@ RSpec.describe 'Study Room Assign', :js do
     # fill in users
     fill_in "study_room_assignment_#{study_room2.id}_user_netid", with: 'abc123'
 
-    expect { click_button 'Update Assignments' }
-      .to change { StudyRoomAssignment.count }.by(1).and change { User.count }.by(1)
-                                                                              .and change {
-                                                                                     ActionMailer::Base.deliveries.count
-                                                                                   }.by(1)
+    expect do
+      click_button 'Update Assignments'
+      sleep 1 # We can't use Capybara's typical waiting capabilities, since the page does not change
+    end.to change { StudyRoomAssignment.count }.by(1).and change { User.count }.by(1)
+                                                                               .and change {
+                                                                                      ActionMailer::Base.deliveries.count
+                                                                                    }.by(1)
   end
 
   it 'unasigns a user if the uid is blank' do

@@ -44,7 +44,7 @@ RSpec.describe ScheduledMessage, :js do
 
       expect do
         click_button 'Submit'
-        expect(page).to have_current_path %r{/locker_renewal_messages/\d+}
+        expect(page).to have_current_path %r{/locker_renewal_messages/\d+$}
       end.to change(described_class, :count).by(1)
     end
 
@@ -53,6 +53,7 @@ RSpec.describe ScheduledMessage, :js do
 
       expect do
         click_link 'Remove from schedule'
+        expect(page).to have_current_path '/locker_renewal_messages'
       end.to change(described_class, :count).by(-1)
     end
   end
@@ -76,7 +77,7 @@ RSpec.describe ScheduledMessage, :js do
 
       expect do
         click_button 'Submit'
-        expect(page).to have_current_path %r{/locker_renewal_messages/\d+}
+        expect(page).to have_current_path %r{/locker_renewal_messages/\d+$}
       end.to change(described_class, :count).by(1)
     end
 
@@ -85,6 +86,7 @@ RSpec.describe ScheduledMessage, :js do
 
       expect do
         click_link 'Remove from schedule'
+        expect(page).to have_current_path '/locker_renewal_messages'
       end.to change(described_class, :count).by(-1)
     end
   end
