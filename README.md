@@ -2,6 +2,7 @@
 An application to manage and reserve locker and study spaces for the library.  This is a replacement for the system already developed on lib-dbserver
 
 [![CircleCI](https://circleci.com/gh/pulibrary/lockers_and_study_spaces/tree/main.svg?style=svg)](https://circleci.com/gh/pulibrary/lockers_and_study_spaces/tree/main)
+[![Coverage Status](https://coveralls.io/repos/github/pulibrary/lockers_and_study_spaces/badge.svg?branch=main)](https://coveralls.io/github/pulibrary/lockers_and_study_spaces?branch=main)
 
 ## Ruby version
 
