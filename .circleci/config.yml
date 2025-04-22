@@ -2,6 +2,7 @@
 version: 2.1
 orbs:
   browser-tools: circleci/browser-tools@1.5.2
+  coveralls: coveralls/coveralls@2.2.5
   node: circleci/node@5.1.0
 executors:
   lockers_and_study_spaces-executor:
@@ -133,6 +134,7 @@ jobs:
       - store_test_results:
           path: test_results
 
+      - coveralls/upload
       - persist_to_workspace:
           root: '~/project'
           paths: 
