@@ -20,7 +20,7 @@ RSpec.describe Ldap do
   context 'with a working ldap connection' do
     let(:expected_attributes) do
       { netid: 'abc123', department: 'Library Information Technology', status: 'staff', pustatus: 'stf',
-        universityid: '999999999', class_year: nil, email: 'sally.smith@princeton.edu', name: 'Sally Smith' }
+        universityid: '999999999', class_year: nil, email: 'abc123@princeton.edu', name: 'Sally Smith' }
     end
 
     describe '#find_by_email' do
