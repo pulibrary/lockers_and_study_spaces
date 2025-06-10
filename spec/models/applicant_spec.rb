@@ -27,7 +27,7 @@ RSpec.describe Applicant do
   end
 
   it 'looks up ldap on initialization' do
-    expect(applicant.ldap).to eq(class_year: nil, department: 'Library Information Technology', email: 'sally.smith@princeton.edu',
+    expect(applicant.ldap).to eq(class_year: nil, department: 'Library Information Technology', email: 'abc123@princeton.edu',
                                  netid: 'abc123', pustatus: 'stf', status: 'staff', universityid: '999999999', name: 'Sally Smith')
   end
 

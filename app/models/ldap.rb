@@ -48,6 +48,8 @@ class Ldap
     private
 
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/AbcSize
     def attributes(result)
       {
         netid: result[:uid]&.first,
@@ -56,11 +58,13 @@ class Ldap
         pustatus: result[:pustatus]&.first,
         universityid: result[:universityid]&.first,
         class_year: result[:puclassyear]&.first,
-        email: result[:mail]&.first,
+        email: result[:edupersonprincipalname]&.first || result[:mail]&.first,
         name: result[:displayname]&.first
       }
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def department(result)
       result[:purescollege]&.first || result[:ou]&.first
