@@ -35,7 +35,12 @@ class Locker < ApplicationRecord
   end
 
   def space_totals
-    @space_totals ||= self.class.group(:size).group(:floor).order(:floor).count.transform_keys { |key| key.join("' ") }
+    @space_totals ||= self.class.where(building: firestone)
+                          .group(:size)
+                          .group(:floor)
+                          .order(:floor)
+                          .count
+                          .transform_keys { |key| key.join("' ") }
   end
 
   def assignable_space_totals
@@ -78,5 +83,11 @@ class Locker < ApplicationRecord
                    else
                      firestone_locker_sizes
                    end
+  end
+
+  private
+
+  def firestone
+    Building.find_by(name: 'Firestone Library')
   end
 end

@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'csv'
+
+RSpec::Matchers.define :have_column_with_data do |column_name, expected_data|
+  match do |row|
+    return false unless row.is_a? CSV::Row
+
+    row.find { |k, _v| k.strip == column_name }&.second&.strip == expected_data
+  end
+end
 
 RSpec.describe LockerAssignmentsController do
   render_views
@@ -66,6 +75,38 @@ RSpec.describe LockerAssignmentsController do
     expect(response.body).to include("6' 3rd floor, 207, 207, 207, 0")
     expect(response.body).to include("4' 2nd floor, 189, 189, 189, 0")
     expect(response.body).to include("6' 2nd floor, 171, 171, 171, 0")
+  end
+
+  it 'does not include Lewis lockers in the occupancy report' do
+    FactoryBot.create(:locker_assignment,
+                      locker_application: FactoryBot.create(:locker_application, status_at_application: 'junior'),
+                      locker: FactoryBot.create(:locker, size: 6, building: FactoryBot.create(:building, name: 'Firestone Library'), floor: '2nd floor'))
+    FactoryBot.create(:locker_assignment,
+                      locker_application: FactoryBot.create(:locker_application, status_at_application: 'junior'),
+                      locker: FactoryBot.create(:locker, size: 2, building: FactoryBot.create(:building, name: 'Lewis Library'), floor: '3rd floor'))
+
+    get :occupancy_report, format: :csv
+
+    expect(response.body).to include("6' 2nd floor")
+    expect(response.body).not_to include("2' 3rd floor")
+  end
+
+  it 'does not include Lewis lockers in the assignment report' do
+    firestone = FactoryBot.create(:building, name: 'Firestone Library')
+    lewis = FactoryBot.create(:building, name: 'Lewis Library')
+    FactoryBot.create(:locker_assignment,
+                      locker_application: FactoryBot.create(:locker_application, status_at_application: 'junior', department_at_application: 'Classics',
+                                                                                 building: firestone),
+                      locker: FactoryBot.create(:locker, size: 6, building: firestone, floor: '2nd floor'))
+    FactoryBot.create(:locker_assignment,
+                      locker_application: FactoryBot.create(:locker_application, status_at_application: 'senior', department_at_application: 'Biology',
+                                                                                 building: lewis),
+                      locker: FactoryBot.create(:locker, size: 2, building: lewis, floor: '3rd floor'))
+
+    get :assignment_report, format: :csv
+    csv = CSV.parse(response.body, headers: true)
+    expect(csv.find { |row| row['Department'] == 'Classics' }).to have_column_with_data 'Juniors', '1'
+    expect(csv.find { |row| row['Department'] == 'Biology' }).not_to have_column_with_data 'Seniors', '1'
   end
 
   context 'when admin is at the Lewis Library' do
