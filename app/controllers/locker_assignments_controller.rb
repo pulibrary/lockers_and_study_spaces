@@ -44,7 +44,7 @@ class LockerAssignmentsController < ApplicationController
   end
 
   def assignment_report
-    @report_data = LockerAssignment.search(queries: { active: true })
+    @report_data = LockerAssignment.search(queries: { active: true, building_id: firestone.id })
                                    .joins(:locker_application)
                                    .group(:department_at_application)
                                    .group(:status_at_application)
@@ -135,6 +135,10 @@ class LockerAssignmentsController < ApplicationController
         format.json { render json: @locker_assignment.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def firestone
+    Building.find_by name: 'Firestone Library'
   end
 end
 

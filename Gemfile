@@ -26,6 +26,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'net-ldap'
 gem 'pagy', '< 5.0.0'
 
+gem 'csv'
 gem 'whenever'
 
 group :development, :test do
