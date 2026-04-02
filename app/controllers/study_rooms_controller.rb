@@ -82,7 +82,7 @@ class StudyRoomsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def study_room_params
-    params.require(:study_room).permit(:location, :general_area, :notes)
+    params.expect(study_room: %i[location general_area notes])
   end
 
   def study_room_assignment_params

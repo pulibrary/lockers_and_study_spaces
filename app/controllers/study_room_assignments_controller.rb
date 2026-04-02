@@ -67,7 +67,7 @@ class StudyRoomAssignmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def study_room_assignment_params
-    params.require(:study_room_assignment).permit(:start_date, :expiration_date, :user_id, :study_room_id)
+    params.expect(study_room_assignment: %i[start_date expiration_date user_id study_room_id])
   end
 
   def force_admin

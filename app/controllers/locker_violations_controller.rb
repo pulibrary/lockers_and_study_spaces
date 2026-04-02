@@ -69,7 +69,7 @@ class LockerViolationsController < ApplicationController
   def locker_violation_params
     return {} if params[:locker_violation].blank?
 
-    params.require(:locker_violation).permit(:locker_id, :user_id, :number_of_books)
+    params.expect(locker_violation: %i[locker_id user_id number_of_books])
   end
 
   def force_admin
