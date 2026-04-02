@@ -87,9 +87,9 @@ class LockerApplicationsController < ApplicationController
   end
 
   def lookup_objects_from_params
-    locker_params = params.require(:locker_application).permit(:preferred_size, :preferred_general_area, :accessible, :semester,
-                                                               :status_at_application, :department_at_application, :user_uid,
-                                                               :building_id, :complete, accessibility_needs: [])
+    locker_params = params.expect(locker_application: [:preferred_size, :preferred_general_area, :accessible, :semester,
+                                                       :status_at_application, :department_at_application, :user_uid,
+                                                       :building_id, :complete, { accessibility_needs: [] }])
                           # If a user_uid is not passed in, something suspicious is going on and should raise an error
                           .tap do |application_params|
       application_params.require(:user_uid)

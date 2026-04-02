@@ -90,8 +90,8 @@ class LockersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def locker_params
-    params.require(:locker).permit(:location, :size, :general_area, :accessible, :boolean, :notes, :combination,
-                                   :code, :tag, :discs, :clutch, :hubpos, :key_number, :floor, :disabled)
+    params.expect(locker: %i[location size general_area accessible boolean notes combination
+                             code tag discs clutch hubpos key_number floor disabled])
   end
 
   def force_admin

@@ -69,7 +69,7 @@ class StudyRoomViolationsController < ApplicationController
   def study_room_violation_params
     return {} if params[:study_room_violation].blank?
 
-    params.require(:study_room_violation).permit(:user_id, :study_room_id, :number_of_books)
+    params.expect(study_room_violation: %i[user_id study_room_id number_of_books])
   end
 
   def force_admin
