@@ -7,6 +7,7 @@ RSpec.describe ScheduledMessage, :js do
   let(:lewis) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
   let(:firestone_admin) { FactoryBot.create(:user, :admin, building: firestone) }
   let(:lewis_admin) { FactoryBot.create(:user, :admin, building: lewis) }
+  let(:user) { FactoryBot.create(:user) }
 
   let(:yesterday_firestone) do
     described_class.create!(schedule: Date.yesterday, applicable_range: Date.yesterday..Date.yesterday, building_id: firestone.id)
@@ -87,6 +88,17 @@ RSpec.describe ScheduledMessage, :js do
         click_link 'Remove from schedule'
         expect(page).to have_current_path '/locker_renewal_messages'
       end.to change(described_class, :count).by(-1)
+    end
+  end
+
+  context 'when a non-admin user' do
+    before do
+      sign_in user
+    end
+
+    it 'redirects to root' do
+      visit '/locker_renewal_messages'
+      expect(page).to have_current_path(root_path)
     end
   end
 end

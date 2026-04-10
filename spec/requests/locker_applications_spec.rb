@@ -232,7 +232,7 @@ RSpec.describe '/locker_applications' do
 
         it 'brings the user to the second step of the locker application' do
           post locker_applications_url, params: { locker_application: building_select_attributes }
-          application_id = response.location.match(/locker_applications\/(\d+)\/edit/)[1]
+          application_id = response.location.match(%r{locker_applications/(\d+)/edit})[1]
           expect(response).to redirect_to(edit_locker_application_url(application_id))
         end
       end
