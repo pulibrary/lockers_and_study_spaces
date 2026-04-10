@@ -19,6 +19,13 @@ RSpec.describe User do
   end
 
   describe '#from_uid' do
+    let(:ldap_attributes) do
+      {
+        netid: 'test',
+        email: 'test@princeton.edu'
+      }
+    end
+
     it 'finds an existing user' do
       user1 = FactoryBot.create(:user)
       expect do
@@ -30,13 +37,6 @@ RSpec.describe User do
       expect do
         User.from_uid('abc123')
       end.to change { User.count }.by(1)
-    end
-
-    let(:ldap_attributes) do
-      {
-        netid: 'test',
-        email: 'test@princeton.edu'
-      }
     end
 
     it 'creates a user from their email' do
