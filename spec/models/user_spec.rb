@@ -32,7 +32,15 @@ RSpec.describe User do
       end.to change { User.count }.by(1)
     end
 
+    let(:ldap_attributes) do
+      {
+        netid: 'test',
+        email: 'test@princeton.edu'
+      }
+    end
+
     it 'creates a user from their email' do
+      allow(Ldap.find_by_email('test@princeton.edu')).to return_a(User)
       expect do
         User.from_email('test@princeton.edu')
       end.to change { User.count }.by(1)
