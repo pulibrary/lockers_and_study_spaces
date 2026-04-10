@@ -60,7 +60,6 @@ RSpec.describe ScheduledMessage, :js do
 
   context 'when a Lewis admin' do
     before do
-      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
       sign_in lewis_admin
     end
 

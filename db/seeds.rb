@@ -7,11 +7,6 @@ lewis = Building.find_or_create_by(name: 'Lewis Library')
 lewis.email = 'lewislib@princeton.edu'
 Rails.logger.warn("Created #{Building.count} Buildings")
 
-# Turn Lewis features on
-Rake::Task['flipflop:turn_on'].execute(feature: 'lewis_staff', strategy: 'active_record')
-Rake::Task['flipflop:turn_on'].execute(feature: 'lewis_patrons', strategy: 'active_record')
-Rails.logger.warn('Turned on Lewis features')
-
 # Create admin users
 team_uids = %w[mk8066 kr2 rl8282 cc62 heberlei js7389]
 team_uids.each do |uid|

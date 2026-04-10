@@ -1,7 +1,7 @@
 <% content_for :title do %>
 Locker application
 <% end %>
-<% if current_user.admin? || !Flipflop.lewis_patrons? %>
+<% if current_user.admin? %>
   <%= render 'form', locker_application: @locker_application %>
 <% else %>
   <%= render 'building_select_form', locker_application: @locker_application %>

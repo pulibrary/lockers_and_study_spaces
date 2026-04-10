@@ -15,7 +15,7 @@
     <header class="lux">
       <lux-library-header app-name="Lockers and Study Rooms" abbr-name="Lockers" app-url="<%= root_path %>" :max-width=1440 theme="dark">
         <lux-menu-bar type="main-menu" :menu-items="[
-          <% if current_user&.admin && current_user&.works_at_enabled_building? %>
+          <% if current_user&.admin %>
             <% if current_user&.building&.name === 'Firestone Library' %>
               {name: 'Reporting', component: 'Reporting', children: [
                 {name: 'Locker Assignments by Department', component: 'Locker Assignments by Department', href: '/locker_assignments/assignment_report'},

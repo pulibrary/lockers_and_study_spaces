@@ -52,7 +52,7 @@ class LockerApplicationsController < ApplicationController
 
     @locker_application.preferred_size = 2 if @locker_application.building&.name == 'Lewis Library'
 
-    @locker_application.complete = true if current_user.admin? || !Flipflop.lewis_patrons?
+    @locker_application.complete = true if current_user.admin?
     update_or_create(@locker_application.save, message: 'Locker application was successfully created.', method: :new)
   end
   # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
@@ -96,7 +96,7 @@ class LockerApplicationsController < ApplicationController
     end
     locker_params[:accessibility_needs]&.compact_blank!
     locker_params = lookup_user_from_params(locker_params)
-    locker_params = lookup_building_from_params(locker_params) if Flipflop.lewis_patrons? && locker_params[:building_id].present?
+    locker_params = lookup_building_from_params(locker_params) if locker_params[:building_id].present?
     locker_params
   end
 
@@ -119,7 +119,7 @@ class LockerApplicationsController < ApplicationController
   end
 
   def force_admin
-    return if current_user.admin? && current_user.works_at_enabled_building?
+    return if current_user.admin?
 
     # Non-admins can only edit or update their application if it is not yet complete
     return if %w[update edit].include?(action_name) && !@locker_application.complete && @locker_application.user == current_user
@@ -132,7 +132,7 @@ class LockerApplicationsController < ApplicationController
   def update_or_create(valid, message: 'Locker application was successfully updated.', method: :edit)
     respond_to do |format|
       if valid
-        if method == :new && Flipflop.lewis_patrons?
+        if method == :new
           format.html do
             redirect_to edit_locker_application_url(@locker_application), notice: creation_notice
           end

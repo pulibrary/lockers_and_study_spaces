@@ -50,11 +50,10 @@ RSpec.describe 'Locker Application Assign', :js do
     expect(page).to have_title('Applications awaiting assignment - Lockers and Study Spaces')
   end
 
-  context 'with lewis_patrons on' do
+  context 'when a Lewis admin' do
     let(:lewis_admin) { FactoryBot.create(:user, :admin, building_id: lewis.id) }
 
     before do
-      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
       sign_in lewis_admin
     end
 

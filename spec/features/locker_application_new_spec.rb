@@ -17,11 +17,7 @@ RSpec.describe 'Locker Application New', :js do
       sign_in user
     end
 
-    context 'with lewis_patrons on' do
-      before do
-        allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
-      end
-
+    context 'when creating an application for a Lewis locker' do
       it 'requires users to choose a library' do
         visit root_path
         expect(page.find_field('locker_application_building_id')[:required]).to eq 'true'
@@ -138,30 +134,6 @@ RSpec.describe 'Locker Application New', :js do
         expect(page).to have_select('Preferred Size', selected: '6-foot')
       end
     end
-
-    context 'with lewis_patrons off' do
-      before do
-        allow(Flipflop).to receive(:lewis_patrons?).and_return(false)
-      end
-
-      it 'has a single step application process' do
-        visit root_path
-        expect(page).to have_content('Firestone Library Locker Application')
-        expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
-        expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
-        expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
-        expect(page).to have_unchecked_field('Near an elevator')
-        expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
-        expect(page).to have_field('Department')
-        expect(page).to have_button('Submit Locker Application')
-        expect do
-          click_button('Submit Locker Application')
-        end.to change(LockerApplication, :count)
-        new_application = LockerApplication.last
-        expect(page).to have_current_path(locker_application_path(id: new_application.id))
-        expect(new_application.reload.complete).to be true
-      end
-    end
   end
 
   context 'with an administrator' do
@@ -171,94 +143,66 @@ RSpec.describe 'Locker Application New', :js do
       sign_in admin
     end
 
-    context 'with lewis_patrons on' do
+    context 'with an existing user' do
       before do
-        allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
+        user
       end
 
-      context 'with an existing user' do
-        before do
-          user
-        end
-
-        it 'can assign the application to an existing user' do
-          visit root_path
-          expect(page).to have_content('Firestone Library Locker Application')
-          expect(page).to have_field('Applicant Netid', with: admin.uid)
-          check('Keyed entry (rather than combination)')
-          fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
-          expect(page).to have_field('Applicant Netid', with: user.uid)
-          click_button('Submit Locker Application')
-          expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
-          new_application = LockerApplication.last
-          expect(page).not_to have_content('User must exist')
-          expect(page).to have_current_path(edit_locker_application_path(new_application))
-          expect(new_application.reload.complete).to be true
-          expect(new_application.reload.user).to eq(user)
-        end
-      end
-
-      context 'with a valid user that does not exist yet' do
-        it 'can create and assign an application to a new user' do
-          visit root_path
-          expect(page).to have_content('Firestone Library Locker Application')
-          expect(page).to have_field('Applicant Netid', with: admin.uid)
-          fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
-          fill_in('Additional accessibility needs', with: 'Lower row')
-          expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
-          click_button('Submit Locker Application')
-          expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
-          new_application = LockerApplication.last
-          expect(page).not_to have_content('User must exist')
-          expect(page).to have_current_path(edit_locker_application_path(new_application))
-        end
-      end
-
-      context 'with a Lewis admin' do
-        before do
-          allow(Flipflop).to receive(:lewis_staff?).and_return(true)
-          sign_in lewis_admin
-        end
-
-        let(:lewis_admin) { FactoryBot.create(:user, admin: true, building: building_two) }
-
-        it 'can create a application for the Lewis library' do
-          visit root_path
-          expect(page).to have_content('Lewis Library Locker Application')
-          expect(page).to have_field('Applicant Netid', with: lewis_admin.uid)
-          fill_in('Additional accessibility needs', with: 'Lower row')
-          building_field = page.find_by_id('locker_application_building_id', visible: false)
-          expect(building_field.value).to eq(lewis_admin.building.id.to_s)
-          click_button('Submit Locker Application')
-
-          expect(page).to have_content('Application successfully created')
-          new_application = LockerApplication.last
-          expect(page).to have_current_path(edit_locker_application_path(new_application))
-          expect(page).to have_content('Lewis Library Locker Application')
-          expect(new_application.reload.building).to eq(building_two)
-          expect(new_application.reload.user).to eq(lewis_admin)
-        end
+      it 'can assign the application to an existing user' do
+        visit root_path
+        expect(page).to have_content('Firestone Library Locker Application')
+        expect(page).to have_field('Applicant Netid', with: admin.uid)
+        check('Keyed entry (rather than combination)')
+        fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
+        expect(page).to have_field('Applicant Netid', with: user.uid)
+        click_button('Submit Locker Application')
+        expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
+        new_application = LockerApplication.last
+        expect(page).not_to have_content('User must exist')
+        expect(page).to have_current_path(edit_locker_application_path(new_application))
+        expect(new_application.reload.complete).to be true
+        expect(new_application.reload.user).to eq(user)
       end
     end
 
-    context 'with lewis_patrons off' do
-      before do
-        allow(Flipflop).to receive(:lewis_patrons?).and_return(false)
-      end
-
+    context 'with a valid user that does not exist yet' do
       it 'can create and assign an application to a new user' do
         visit root_path
         expect(page).to have_content('Firestone Library Locker Application')
         expect(page).to have_field('Applicant Netid', with: admin.uid)
         fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
+        fill_in('Additional accessibility needs', with: 'Lower row')
         expect(page).to have_field('Applicant Netid', with: 'arbitrary netid')
         click_button('Submit Locker Application')
-        expect(page).to have_current_path %r{/locker_applications/\d+$}
+        expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
         new_application = LockerApplication.last
         expect(page).not_to have_content('User must exist')
-        expect(page).to have_current_path(locker_application_path(new_application))
-        new_user = User.last
-        expect(new_application.user).to eq(new_user)
+        expect(page).to have_current_path(edit_locker_application_path(new_application))
+      end
+    end
+
+    context 'with a Lewis admin' do
+      before do
+        sign_in lewis_admin
+      end
+
+      let(:lewis_admin) { FactoryBot.create(:user, admin: true, building: building_two) }
+
+      it 'can create a application for the Lewis library' do
+        visit root_path
+        expect(page).to have_content('Lewis Library Locker Application')
+        expect(page).to have_field('Applicant Netid', with: lewis_admin.uid)
+        fill_in('Additional accessibility needs', with: 'Lower row')
+        building_field = page.find_by_id('locker_application_building_id', visible: false)
+        expect(building_field.value).to eq(lewis_admin.building.id.to_s)
+        click_button('Submit Locker Application')
+
+        expect(page).to have_content('Application successfully created')
+        new_application = LockerApplication.last
+        expect(page).to have_current_path(edit_locker_application_path(new_application))
+        expect(page).to have_content('Lewis Library Locker Application')
+        expect(new_application.reload.building).to eq(building_two)
+        expect(new_application.reload.user).to eq(lewis_admin)
       end
     end
 

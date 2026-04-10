@@ -95,7 +95,7 @@ class LockerAssignmentsController < ApplicationController
   end
 
   def force_admin
-    return if current_user.admin? && current_user.works_at_enabled_building?
+    return if current_user.admin?
 
     redirect_to :root, alert: 'Only administrators have access to Locker Assignments!'
   end

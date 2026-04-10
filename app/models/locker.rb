@@ -67,7 +67,7 @@ class Locker < ApplicationRecord
     firestone_floor_list = LockerAndStudySpaces.config.fetch(:firestone_locker_floors, []).keys
     lewis_floor_list = LockerAndStudySpaces.config.fetch(:lewis_locker_floors, []).keys
 
-    @floor_list ||= if Flipflop.lewis_patrons? && building&.name == 'Lewis Library'
+    @floor_list ||= if building&.name == 'Lewis Library'
                       lewis_floor_list
                     else
                       firestone_floor_list
@@ -78,7 +78,7 @@ class Locker < ApplicationRecord
     firestone_locker_sizes = LockerAndStudySpaces.config.fetch(:locker_sizes, [])['Firestone Library']
     lewis_locker_sizes = LockerAndStudySpaces.config.fetch(:locker_sizes, [])['Firestone Library']
 
-    @size_list ||= if Flipflop.lewis_patrons? && building&.name == 'Lewis Library'
+    @size_list ||= if building&.name == 'Lewis Library'
                      lewis_locker_sizes
                    else
                      firestone_locker_sizes
