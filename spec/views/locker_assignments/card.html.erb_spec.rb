@@ -12,29 +12,23 @@ RSpec.describe 'locker_assignments/card' do
                                                                       locker:))
   end
 
-  context 'with lewis_patrons on' do
-    before do
-      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
+  context 'with firestone_locker_assignment' do
+    let(:locker) { FactoryBot.create(:locker, building: building_one) }
+    let(:locker_application) { FactoryBot.create(:locker_application, building: building_one) }
+
+    it 'shows a print view of the locker assignment' do
+      render
+      expect(rendered).to match(/Firestone Library/)
     end
+  end
 
-    context 'with firestone_locker_assignment' do
-      let(:locker) { FactoryBot.create(:locker, building: building_one) }
-      let(:locker_application) { FactoryBot.create(:locker_application, building: building_one) }
+  context 'with lewis_locker_assignment' do
+    let(:locker) { FactoryBot.create(:locker, building: building_two) }
+    let(:locker_application) { FactoryBot.create(:locker_application, building: building_two) }
 
-      it 'shows a print view of the locker assignment' do
-        render
-        expect(rendered).to match(/Firestone Library/)
-      end
-    end
-
-    context 'with lewis_locker_assignment' do
-      let(:locker) { FactoryBot.create(:locker, building: building_two) }
-      let(:locker_application) { FactoryBot.create(:locker_application, building: building_two) }
-
-      it 'shows a print view of the locker assignment' do
-        render
-        expect(rendered).to match(/Lewis Library/)
-      end
+    it 'shows a print view of the locker assignment' do
+      render
+      expect(rendered).to match(/Lewis Library/)
     end
   end
 end

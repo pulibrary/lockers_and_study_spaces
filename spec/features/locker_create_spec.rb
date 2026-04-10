@@ -36,10 +36,6 @@ RSpec.describe 'Locker Create', :js do
   end
 
   context 'when Lewis patron feature is on' do
-    before do
-      allow(Flipflop).to receive_messages(lewis_patrons?: true, lewis_staff?: true)
-    end
-
     it 'shows the Firestone floor options' do
       visit '/lockers/new'
       expect(page).to have_select('locker_floor', options: ['A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])

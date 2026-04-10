@@ -19,6 +19,13 @@ RSpec.describe User do
   end
 
   describe '#from_uid' do
+    let(:ldap_attributes) do
+      {
+        netid: 'test',
+        email: 'test@princeton.edu'
+      }
+    end
+
     it 'finds an existing user' do
       user1 = FactoryBot.create(:user)
       expect do
@@ -29,6 +36,13 @@ RSpec.describe User do
     it 'creates a new user' do
       expect do
         User.from_uid('abc123')
+      end.to change { User.count }.by(1)
+    end
+
+    it 'creates a user from their email' do
+      allow(Ldap).to receive(:find_by_email).and_return(ldap_attributes)
+      expect do
+        User.from_email('test@princeton.edu')
       end.to change { User.count }.by(1)
     end
   end
@@ -82,49 +96,6 @@ RSpec.describe User do
         expect(User.count).to eq(1)
         User.from_cas(access_token)
         expect(User.count).to eq(2)
-      end
-    end
-  end
-
-  describe '#works_at_enabled_building?' do
-    let(:building) { FactoryBot.create(:building, name: 'Lewis Library') }
-    let(:user) { FactoryBot.create(:user, admin: true, building:) }
-
-    context 'when user is at Firestone' do
-      let(:building) { FactoryBot.create(:building, name: 'Firestone Library') }
-
-      it 'is true' do
-        expect(user.works_at_enabled_building?).to be(true)
-      end
-    end
-
-    context 'when user is at Lewis' do
-      context 'when Lewis staff feature is turned on' do
-        before do
-          allow(Flipflop).to receive(:lewis_staff?).and_return(true)
-        end
-
-        it 'is true' do
-          expect(user.works_at_enabled_building?).to be(true)
-        end
-      end
-
-      context 'when Lewis staff feature is turned off' do
-        before do
-          allow(Flipflop).to receive(:lewis_staff?).and_return(false)
-        end
-
-        it 'is false' do
-          expect(user.works_at_enabled_building?).to be(false)
-        end
-      end
-    end
-
-    context 'when user has no building' do
-      let(:user) { FactoryBot.create(:user, admin: true, building: nil) }
-
-      it 'is false' do
-        expect(user.works_at_enabled_building?).to be(false)
       end
     end
   end

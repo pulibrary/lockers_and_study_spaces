@@ -10,11 +10,7 @@ RSpec.describe 'Navigation menu', :js do
     sign_in user
   end
 
-  context 'when Lewis Library staff features are turned on' do
-    before do
-      allow(Flipflop).to receive(:lewis_staff?).and_return(true)
-    end
-
+  context 'when visiting the application' do
     it 'can see locker management navbar item' do
       visit '/'
       expect(page).to have_content('Locker Management')
@@ -64,28 +60,6 @@ RSpec.describe 'Navigation menu', :js do
         visit '/'
         click_button 'Locker Management'
         expect(page).to have_content('Renewal Emails')
-      end
-    end
-  end
-
-  context 'when Lewis Library staff features are turned off' do
-    before do
-      allow(Flipflop).to receive(:lewis_staff?).and_return(false)
-    end
-
-    it 'cannot see locker management navbar item' do
-      visit '/'
-      # rubocop:disable Capybara/NegationMatcherAfterVisit
-      expect(page).not_to have_text('Locker Management')
-      # rubocop:enable Capybara/NegationMatcherAfterVisit
-    end
-
-    context 'when user is a Firestone admin' do
-      let(:building) { FactoryBot.create(:building, name: 'Firestone Library') }
-
-      it 'can see locker management navbar item' do
-        visit '/'
-        expect(page).to have_text('Locker Management')
       end
     end
   end

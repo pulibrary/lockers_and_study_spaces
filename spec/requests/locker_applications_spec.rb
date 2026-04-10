@@ -20,6 +20,12 @@ RSpec.describe '/locker_applications' do
       complete: true
     }
   end
+  let(:building_select_attributes) do
+    {
+      building_id: building_one.id,
+      user_uid: user.uid
+    }
+  end
   let(:valid_form_attributes) do
     {
       building_id: building_one.id,
@@ -154,43 +160,37 @@ RSpec.describe '/locker_applications' do
   end
 
   describe 'POST /create' do
-    context 'with lewis_patrons on' do
-      let(:valid_form_attributes) do
-        {
-          building_id: building_one.id,
-          user_uid: user.uid
-        }
-      end
+    let(:valid_form_attributes) do
+      {
+        building_id: building_one.id,
+        user_uid: user.uid
+      }
+    end
 
+    context "another existing user's application" do
       before do
-        allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
+        valid_form_attributes[:user_uid] = FactoryBot.create(:user).uid
       end
 
-      context "another existing user's application" do
-        before do
-          valid_form_attributes[:user_uid] = FactoryBot.create(:user).uid
+      context 'as an admin' do
+        let(:user) { FactoryBot.create(:user, :admin) }
+
+        it 'redirects to the edit form' do
+          expect do
+            post locker_applications_url, params: { locker_application: valid_form_attributes }
+          end.to change(LockerApplication, :count).by(1)
+          expect(response).to redirect_to(edit_locker_application_url(LockerApplication.last))
         end
+      end
 
-        context 'as an admin' do
-          let(:user) { FactoryBot.create(:user, :admin) }
+      context 'as a regular user' do
+        let(:user) { FactoryBot.create(:user, admin: false) }
 
-          it 'redirects to the edit form' do
-            expect do
-              post locker_applications_url, params: { locker_application: valid_form_attributes }
-            end.to change(LockerApplication, :count).by(1)
-            expect(response).to redirect_to(edit_locker_application_url(LockerApplication.last))
-          end
-        end
-
-        context 'as a regular user' do
-          let(:user) { FactoryBot.create(:user, admin: false) }
-
-          it 'redirects to root' do
-            expect do
-              post locker_applications_url, params: { locker_application: valid_form_attributes }
-            end.not_to change(LockerApplication, :count)
-            expect(response).to redirect_to(root_path)
-          end
+        it 'redirects to root' do
+          expect do
+            post locker_applications_url, params: { locker_application: valid_form_attributes }
+          end.not_to change(LockerApplication, :count)
+          expect(response).to redirect_to(root_path)
         end
       end
 
@@ -225,13 +225,15 @@ RSpec.describe '/locker_applications' do
       context 'creates an application for the user' do
         it 'creates a locker application' do
           expect do
-            post locker_applications_url, params: { locker_application: valid_form_attributes }
+            post locker_applications_url, params: { locker_application: building_select_attributes }
+            patch response.location.sub('/edit', ''), params: { locker_application: valid_form_attributes }
           end.to change(LockerApplication, :count).by(1)
         end
 
         it 'brings the user to the second step of the locker application' do
-          post locker_applications_url, params: { locker_application: valid_form_attributes }
-          expect(response).to redirect_to(edit_locker_application_url(LockerApplication.last))
+          post locker_applications_url, params: { locker_application: building_select_attributes }
+          application_id = response.location.match(%r{locker_applications/(\d+)/edit})[1]
+          expect(response).to redirect_to(edit_locker_application_url(application_id))
         end
       end
 
@@ -259,60 +261,6 @@ RSpec.describe '/locker_applications' do
           post locker_applications_url, params: { locker_application: invalid_form_attributes }
           expect(response).to be_unprocessable
           expect(response).to render_template(:new)
-        end
-      end
-    end
-
-    context 'with lewis_patrons off' do
-      before do
-        allow(Flipflop).to receive(:lewis_patrons?).and_return(false)
-      end
-
-      context 'creates an application for the user' do
-        it 'creates a new locker application' do
-          expect do
-            post locker_applications_url, params: { locker_application: valid_form_attributes }
-          end.to change(LockerApplication, :count).by(1)
-        end
-
-        it 'Shows the user their application' do
-          post locker_applications_url, params: { locker_application: valid_form_attributes }
-          expect(response).to redirect_to(locker_application_url(LockerApplication.last))
-        end
-
-        context "another's application" do
-          before do
-            valid_form_attributes[:user_uid] = FactoryBot.create(:user).uid
-          end
-
-          it 'redirects to root' do
-            expect do
-              post locker_applications_url, params: { locker_application: valid_form_attributes }
-            end.not_to change(LockerApplication, :count)
-            expect(response).to redirect_to(root_path)
-          end
-        end
-      end
-
-      context 'with invalid building attributes' do
-        it 'does not create a new application' do
-          expect do
-            post locker_applications_url, params: { locker_application: invalid_no_building_attributes }
-          end.not_to change(LockerApplication, :count)
-        end
-
-        it 'is unprocessable' do
-          post locker_applications_url, params: { locker_application: invalid_no_building_attributes }
-          expect(response).to be_unprocessable
-          expect(response).to render_template(:new)
-        end
-      end
-
-      context 'with no user passed in' do
-        it 'raises an error do' do
-          expect do
-            post locker_applications_url, params: { locker_application: invalid_no_user_attributes }
-          end.to raise_error(ActionController::ParameterMissing)
         end
       end
     end
@@ -415,9 +363,9 @@ RSpec.describe '/locker_applications' do
           end.to change(LockerApplication, :count).by(1)
         end
 
-        it 'redirects to the created locker_application' do
+        it 'redirects to the created locker_applications edit page' do
           post locker_applications_url, params: { locker_application: valid_form_attributes }
-          expect(response).to redirect_to(locker_application_url(LockerApplication.last))
+          expect(response).to redirect_to(edit_locker_application_url(LockerApplication.last))
         end
       end
 

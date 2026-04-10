@@ -44,10 +44,6 @@ RSpec.describe Locker do
   end
 
   describe '#floor_list' do
-    before do
-      allow(Flipflop).to receive(:lewis_patrons?).and_return(true)
-    end
-
     it 'accepts an optional building param' do
       lewis = FactoryBot.create(:building, name: 'Lewis Library')
       expect(described_class.new.floor_list(building: lewis).count).to eq(2)
