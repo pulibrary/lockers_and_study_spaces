@@ -31,6 +31,12 @@ RSpec.describe User do
         User.from_uid('abc123')
       end.to change { User.count }.by(1)
     end
+
+    it 'creates a user from their email' do
+      expect do
+        User.from_email('test@princeton.edu')
+      end.to change { User.count }.by(1)
+    end
   end
 
   describe '#from_email' do
