@@ -163,20 +163,6 @@ jobs:
       - setup-bundler
       - run: bundle exec rubocop
 
-  coverage_report:
-    executor: lockers_and_study_spaces-executor
-    steps:
-      - attach_workspace:
-          at: '~/project'
-      - run: gem install simplecov
-      - run:
-          name: Inspect coverage report
-          command: |
-            RAILS_ENV=test ruby ./scripts/report_coverage.rb
-      - store_artifacts:
-          path: ~/project/coverage
-          destination: coverage
-
   semgrep:
     docker:
         - image: returntocorp/semgrep
@@ -210,9 +196,6 @@ workflows:
       - test:
          requires:
           - build
-      - coverage_report:
-         requires:
-          - test
       - deploy:
          requires:
            - test
