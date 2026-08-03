@@ -3,8 +3,13 @@
 source 'https://gem.coop'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.1'
+gem 'actionmailer'
+gem 'actionpack'
+gem 'actionview'
+gem 'activemodel'
+gem 'activerecord'
+gem 'activesupport'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
