@@ -148,7 +148,7 @@ jobs:
           at: '~/project'
       - run: yarn run lint
 
-  jest:
+  javascript_tests:
     executor: lockers_and_study_spaces-executor
     steps:
       - attach_workspace:
@@ -187,7 +187,7 @@ workflows:
       - eslint:
          requires:
           - build
-      - jest:
+      - javascript_tests:
          requires:
           - build
       - rubocop:
