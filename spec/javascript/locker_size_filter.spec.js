@@ -1,4 +1,5 @@
 import LockerSizeFilter from '#components/locker_size_filter.js';
+import { describe, it, expect } from 'vitest';
 
 describe('LockerSizeFilter', () => {
   it("changes the locker options to only 6' for A floor", async () => {

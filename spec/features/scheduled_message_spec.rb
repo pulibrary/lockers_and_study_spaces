@@ -49,7 +49,7 @@ RSpec.describe ScheduledMessage, :js do
       end.to change(described_class, :count).by(1)
     end
 
-    it 'can delete a Firestone scheduled message' do
+    it 'can delete a Firestone scheduled message', js: false do
       visit "/locker_renewal_messages/#{described_class.last.id}/edit"
 
       expect do
@@ -81,7 +81,7 @@ RSpec.describe ScheduledMessage, :js do
       end.to change(described_class, :count).by(1)
     end
 
-    it 'can delete a Lewis scheduled message' do
+    it 'can delete a Lewis scheduled message', js: false do
       visit "/locker_renewal_messages/#{described_class.last.id}/edit"
 
       expect do

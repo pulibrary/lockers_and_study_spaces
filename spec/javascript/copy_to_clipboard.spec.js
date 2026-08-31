@@ -1,4 +1,5 @@
 import CopyToClipboard from '#components/copy_to_clipboard.js';
+import { describe, beforeEach, it, expect } from 'vitest';
 
 describe('CopyToClipboard', () => {
   let clipboardData = '';
@@ -10,7 +11,7 @@ describe('CopyToClipboard', () => {
         return Promise.resolve();
       },
     };
-    global.navigator.clipboard = mockClipboard;
+    navigator.clipboard = mockClipboard;
   });
 
   it('sets the button text to Copied!', async () => {

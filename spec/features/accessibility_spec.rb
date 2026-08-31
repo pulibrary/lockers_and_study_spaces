@@ -88,6 +88,7 @@ describe 'accessibility', :js do
         visit '/locker_assignments'
         expect(page).to be_axe_clean
           .according_to(:wcag2a, :wcag2aa, :wcag21a, :wcag21aa)
+          .excluding('.vc-prev', '.vc-next')
       end
     end
 

@@ -65,7 +65,7 @@ jobs:
       - setup-bundler
       - node/install:
           install-yarn: true
-          node-version: '22.15.0'
+          node-version: '26.8.1'
 
       # Only necessary if app uses webpacker or yarn in some other way
       - restore_cache:
@@ -148,7 +148,7 @@ jobs:
           at: '~/project'
       - run: yarn run lint
 
-  jest:
+  javascript_tests:
     executor: lockers_and_study_spaces-executor
     steps:
       - attach_workspace:
@@ -187,7 +187,7 @@ workflows:
       - eslint:
          requires:
           - build
-      - jest:
+      - javascript_tests:
          requires:
           - build
       - rubocop:

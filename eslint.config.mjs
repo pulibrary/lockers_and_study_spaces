@@ -1,5 +1,4 @@
 import globals from "globals";
-import babelParser from "@babel/eslint-parser";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
@@ -29,8 +28,6 @@ export default [{
             ...globals.browser,
             ...globals.node,
         },
-
-        parser: babelParser,
     },
 
     rules: {
