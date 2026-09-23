@@ -114,7 +114,8 @@ GEM
       terminal-table (>= 1.8)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    hashie (5.0.0)
+    hashie (5.1.0)
+      logger
     health-monitor-rails (12.9.0)
       railties (>= 6.1)
     honeybadger (4.12.2)
@@ -190,7 +191,7 @@ GEM
       addressable (~> 2.8)
       nokogiri (~> 1.12)
       omniauth (~> 2.1)
-    omniauth-rails_csrf_protection (1.0.2)
+    omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
