@@ -22,6 +22,7 @@ class Ldap
       {}
     end
 
+    # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     def find_by_email(email, ldap_connection: default_connection)
       attempts ||= 0
@@ -46,6 +47,7 @@ class Ldap
       {}
     end
     # rubocop:enable Metrics/AbcSize
+    # rubocop: enable Metrics/MethodLength
 
     private
 
