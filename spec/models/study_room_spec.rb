@@ -32,8 +32,7 @@ RSpec.describe StudyRoom do
       assignment = FactoryBot.create(:study_room_assignment)
       expect do
         assignment.study_room.assign_user(assignment.study_room.current_uid)
-      end.to not_change { StudyRoomAssignment.count }
-        .and(not_change { User.count })
+      end.not_to(change { [StudyRoomAssignment.count, User.count] })
     end
 
     it 'create a user if needed' do
