@@ -43,6 +43,7 @@ class Ldap
         retry
       end
       Rails.logger.warn('Retry attempts exceeded. Moving on.')
+      {}
     end
     # rubocop:enable Metrics/AbcSize
 
