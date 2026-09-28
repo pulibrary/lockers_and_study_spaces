@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@rails/ujs": "^7.0.4-1",
+    "@rails/ujs": "^7.1.600",
     "lux-design-system": "^7.14.0",
     "vue": "^3.5.42"
   },
