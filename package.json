@@ -21,7 +21,7 @@
     "sass": "^1.103.1",
     "vite": "^8.0.0",
     "vite-plugin-ruby": "^5.2.0",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.1"
   },
   "scripts": {
     "lint": "eslint app/javascript spec/javascript",
