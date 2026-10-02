@@ -8,23 +8,24 @@ An application to manage and reserve locker and study spaces for the library.  T
 
   3.4.1
 
-## System dependencies
 
-   * Node
-   * Yarn
-   * Rails
-   * Bundler
+## Initial Setup: lando
 
-## Configuration
+* `bundle install`
+* `yarn install`
+* `bundle exec rake servers:start`
 
-   * Bundle & Yarn install
-     ```
-     bundle install
-     yarn install
-     ```
+## Initial Setup: devbox
 
-## Database creation
-   * `bundle exec rake servers:start`
+* `devbox shell`
+* `devbox run setup`
+
+If you already have postgres running locally on port 5432:
+
+* `devbox shell`
+* `export PGPORT=5555`
+* `devbox run setup`
+
 
 ## Database seeding for development
 * If you want a set of example data for development, seed the database. 
@@ -65,6 +66,7 @@ bundle exec rails db:seed:replant
   Once the tunnel is open [you can see the mail that has been sent on staging here]( http://localhost:1082/)
 
 ## Running the tests
+* To run all tests: `devbox run test`
 * To run all the ruby tests, run `bundle exec rspec`
 * To run a specific ruby test, run `bundle exec rspec path/to/some_spec.rb:line_number`
 * To run the js tests, run `yarn test`
