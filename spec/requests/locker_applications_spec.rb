@@ -23,7 +23,8 @@ RSpec.describe '/locker_applications' do
   let(:building_select_attributes) do
     {
       building_id: building_one.id,
-      user_uid: user.uid
+      user_uid: user.uid,
+      department_at_application: 'Antelope Studies'
     }
   end
   let(:valid_form_attributes) do
