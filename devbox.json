@@ -15,7 +15,16 @@
     ],
     "scripts": {
       "test": [
-        "echo \"Error: no test specified\" && exit 1"
+        "devbox run setup",
+        "bundle exec rspec",
+        "yarn test"
+      ],
+      "setup": [
+        "test -f \"$PGDATA/PG_VERSION\" || initdb",
+        "lsof -i -sTCP:LISTEN | grep 5432 || if [[ -z $PGPORT ]] ; then echo 'There is already something running on port 5432, export PGPORT=4321 or similar to choose a different port for postgres' && exit 1; fi",
+        "devbox services up -b || echo 'devbox services are already running'",
+        "bundle install",
+        "yarn install"
       ]
     }
   }
