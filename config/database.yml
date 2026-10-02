@@ -23,9 +23,9 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV["lando_lockers_dev_database_creds_database"] %>
-  host: <%= ENV["lando_lockers_dev_database_conn_host"] %>
-  port: <%= ENV["lando_lockers_dev_database_conn_port"] %>
+  database: <%= ENV["lando_lockers_dev_database_creds_database"] || 'locker_and_study_spaces_dev' %>
+  host: <%= ENV["lando_lockers_dev_database_conn_host"] || 'localhost' %>
+  port: <%= ENV["lando_lockers_dev_database_conn_port"] || ENV['PGPORT'] || 5432 %>
   username: <%= ENV["lando_lockers_dev_database_creds_user"] %>
   password: <%= ENV["lando_lockers_dev_database_creds_password"] %>
 
@@ -62,8 +62,8 @@ development:
 test:
   <<: *default
   database: <%= ENV["lando_lockers_test_database_creds_database"] || "locker_and_study_spaces_test" %>
-  host: <%= ENV["lando_lockers_test_database_conn_host"] %>
-  port: <%= ENV["lando_lockers_test_database_conn_port"] %>
+  host: <%= ENV["lando_lockers_test_database_conn_host"] || 'localhost' %>
+  port: <%= ENV["lando_lockers_test_database_conn_port"] || ENV['PGPORT'] || 5432 %>
   username: <%= ENV["lando_lockers_test_database_creds_user"] %>
   password: <%= ENV["lando_lockers_test_database_creds_password"] %>
 
