@@ -26,6 +26,9 @@ If you already have postgres running locally on port 5432:
 * `export PGPORT=5555`
 * `devbox run setup`
 
+If you encounter the error `Unix-domain socket path is too long
+
+* `export PGHOST=/tmp`
 
 ## Database seeding for development
 * If you want a set of example data for development, seed the database. 
