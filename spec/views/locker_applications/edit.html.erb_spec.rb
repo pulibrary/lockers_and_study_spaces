@@ -52,6 +52,7 @@ RSpec.describe 'locker_applications/edit' do
     before do
       @locker_application = assign(:locker_application, LockerApplication.create!(
                                                           complete: false,
+                                                          department_at_application: 'Squid studies',
                                                           user:
                                                         ))
     end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe LockerApplication do
-  subject(:locker_application) { described_class.new(user:) }
+  subject(:locker_application) { described_class.new(user:, department_at_application: 'Bat-eared Fox Studies') }
 
   let(:building_one) { FactoryBot.create(:building, id: 1) }
   let(:building_two) { FactoryBot.create(:building, name: 'Lewis Library', id: 2) }
@@ -22,7 +22,7 @@ RSpec.describe LockerApplication do
     expect(locker_application.accessible).to be_nil
     expect(locker_application.semester).to be_nil
     expect(locker_application.status_at_application).to be_nil
-    expect(locker_application.department_at_application).to be_nil
+    expect(locker_application.department_at_application).to eq 'Bat-eared Fox Studies'
     expect(locker_application.locker_assignment).to be_nil
     expect(locker_application.archived).to be(false)
     expect(locker_application.building).to eq(building_one)
@@ -31,7 +31,7 @@ RSpec.describe LockerApplication do
   end
 
   context 'with an application created prior to having complete in the database' do
-    subject(:locker_application) { described_class.new(user:, complete: nil) }
+    subject(:locker_application) { described_class.new(user:, complete: nil, department_at_application: 'Orca studies') }
 
     let(:user) { FactoryBot.create(:user) }
 
@@ -44,7 +44,7 @@ RSpec.describe LockerApplication do
   end
 
   context 'with an application with an unspecified accessibility need' do
-    subject(:locker_application) { described_class.new(user:, accessible: true, complete: true) }
+    subject(:locker_application) { described_class.new(user:, accessible: true, complete: true, department_at_application: 'Ocelot studies') }
 
     let(:user) { FactoryBot.create(:user) }
 
@@ -59,7 +59,10 @@ RSpec.describe LockerApplication do
       end
 
       context 'with both unspecific and specific accessibility needs' do
-        subject(:locker_application) { described_class.new(user:, accessible: true, accessibility_needs: ['Near an elevator'], complete: true) }
+        subject(:locker_application) do
+          described_class.new(user:, accessible: true, accessibility_needs: ['Near an elevator'], complete: true,
+                              department_at_application: 'Tardigrade studies')
+        end
 
         it 'can add the info to the accessibility_needs field' do
           locker_application.save!

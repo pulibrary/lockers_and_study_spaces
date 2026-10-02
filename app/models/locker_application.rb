@@ -26,7 +26,7 @@ class LockerApplication < ApplicationRecord
 
   after_initialize do |_locker_application|
     if user.present?
-      self.department_at_application ||= department
+      self.department_at_application ||= department || ''
       self.status_at_application ||= status
     end
   end
