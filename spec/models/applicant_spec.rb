@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-# rubocop:disable Layout/LineLength
+# rubocop:disable-next Layout/LineLength
 RSpec.describe Applicant do
   subject(:applicant) { described_class.new(user) }
 
@@ -124,4 +124,3 @@ RSpec.describe Applicant do
     end
   end
 end
-# rubocop:enable Layout/LineLength

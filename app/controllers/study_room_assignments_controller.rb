@@ -30,8 +30,8 @@ class StudyRoomAssignmentsController < ApplicationController
         format.json { render :show, status: :created, location: @study_room_assignment }
         UserMailer.with(study_room_assignment: @study_room_assignment).study_room_assignment_confirmation.deliver
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @study_room_assignment.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @study_room_assignment.errors, status: :unprocessable_content }
       end
     end
   end
@@ -43,8 +43,8 @@ class StudyRoomAssignmentsController < ApplicationController
         format.html { redirect_to @study_room_assignment, notice: { message: 'Study room assignment was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @study_room_assignment }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @study_room_assignment.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @study_room_assignment.errors, status: :unprocessable_content }
       end
     end
   end
@@ -62,7 +62,7 @@ class StudyRoomAssignmentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_study_room_assignment
-    @study_room_assignment = StudyRoomAssignment.find(params[:id])
+    @study_room_assignment = StudyRoomAssignment.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.

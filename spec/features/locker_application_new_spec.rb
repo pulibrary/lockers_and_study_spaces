@@ -40,7 +40,7 @@ RSpec.describe 'Locker Application New', :js do
         expect(page).not_to have_content('Application successfully created')
       end
 
-      # rubocop:disable RSpec/MultipleExpectations
+      # rubocop:disable-next RSpec/MultipleExpectations
       it 'can apply for a new locker' do
         visit root_path
         select('Firestone Library', from: :locker_application_building_id)
@@ -66,7 +66,6 @@ RSpec.describe 'Locker Application New', :js do
         expect(new_application.complete).to be true
         expect(page).to have_current_path(locker_application_path(new_application))
       end
-      # rubocop:enable RSpec/MultipleExpectations
 
       it 'can apply for a new Lewis locker' do
         visit root_path

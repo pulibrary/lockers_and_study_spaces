@@ -30,8 +30,8 @@ class LockerViolationsController < ApplicationController
         format.html { redirect_to @locker_violation, notice: { message: 'LockerViolation was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @locker_violation }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @locker_violation.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @locker_violation.errors, status: :unprocessable_content }
       end
     end
   end
@@ -43,8 +43,8 @@ class LockerViolationsController < ApplicationController
         format.html { redirect_to @locker_violation, notice: { message: 'LockerViolation was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @locker_violation }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @locker_violation.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @locker_violation.errors, status: :unprocessable_content }
       end
     end
   end
@@ -62,7 +62,7 @@ class LockerViolationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_violation
-    @locker_violation = LockerViolation.find(params[:id])
+    @locker_violation = LockerViolation.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.

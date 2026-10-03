@@ -31,8 +31,8 @@ class ScheduledMessagesController < ApplicationController
         format.html { redirect_to @scheduled_message, notice: { message: 'Scheduled message was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @scheduled_message }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @scheduled_message.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @scheduled_message.errors, status: :unprocessable_content }
       end
     end
   end
@@ -44,8 +44,8 @@ class ScheduledMessagesController < ApplicationController
         format.html { redirect_to @scheduled_message, notice: { message: 'Scheduled message was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @scheduled_message }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @scheduled_message.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @scheduled_message.errors, status: :unprocessable_content }
       end
     end
   end
@@ -70,7 +70,7 @@ class ScheduledMessagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_scheduled_message
-    @scheduled_message = ScheduledMessage.find(params[:id])
+    @scheduled_message = ScheduledMessage.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.

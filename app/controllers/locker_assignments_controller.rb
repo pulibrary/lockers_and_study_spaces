@@ -83,7 +83,7 @@ class LockerAssignmentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_locker_assignment
-    @locker_assignment = LockerAssignment.find(params[:id])
+    @locker_assignment = LockerAssignment.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.
@@ -131,8 +131,8 @@ class LockerAssignmentsController < ApplicationController
         format.json { render :show, status: :created, location: @locker_assignment }
       else
         @locker_application = @locker_assignment.locker_application
-        format.html { render error_location, status: :unprocessable_entity }
-        format.json { render json: @locker_assignment.errors, status: :unprocessable_entity }
+        format.html { render error_location, status: :unprocessable_content }
+        format.json { render json: @locker_assignment.errors, status: :unprocessable_content }
       end
     end
   end

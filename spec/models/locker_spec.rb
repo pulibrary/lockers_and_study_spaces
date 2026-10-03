@@ -6,10 +6,10 @@ RSpec.describe Locker do
   describe '#available_lockers' do
     let(:locker_application) {  FactoryBot.create(:locker_application) }
     let(:locker_assignment) { FactoryBot.create(:locker_assignment, locker_application:, locker: locker1) }
-    let(:locker1) {  FactoryBot.create(:locker) }
-    let(:locker2) {  FactoryBot.create(:locker) }
-    let(:locker3) {  FactoryBot.create(:locker) }
-    let(:locker4) {  FactoryBot.create(:locker) }
+    let(:locker1) { FactoryBot.create(:locker) }
+    let(:locker2) { FactoryBot.create(:locker) }
+    let(:locker3) { FactoryBot.create(:locker) }
+    let(:locker4) { FactoryBot.create(:locker) }
     let(:our_building) { FactoryBot.create(:building) }
     let(:other_building) { FactoryBot.create(:building, name: 'Other library') }
 

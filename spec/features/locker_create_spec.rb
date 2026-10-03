@@ -24,7 +24,7 @@ RSpec.describe 'Locker Create', :js do
       expect(page).to have_current_path %r{/lockers/\d+}
     end.to change(Locker, :count).by(1)
 
-    expect(Locker.order('created_at').last.building).to eq(building)
+    expect(Locker.order(:created_at).last.building).to eq(building)
   end
 
   it 'indicates the required fields' do

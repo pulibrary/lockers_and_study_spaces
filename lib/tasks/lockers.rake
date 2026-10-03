@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 namespace :lockers do
   namespace :lewis do
     desc 'Add lockers for the Lewis Library'
@@ -41,4 +41,3 @@ namespace :lockers do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

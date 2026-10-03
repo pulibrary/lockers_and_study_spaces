@@ -38,9 +38,9 @@ class LockerApplicationsController < ApplicationController
 
   # PUT /locker_applications/1/toggle_archived
   def toggle_archived
-    @locker_application = LockerApplication.find(params[:id])
+    @locker_application = LockerApplication.find(params.expect(:id))
     @locker_application.update(archived: !@locker_application.archived)
-    redirect_back(fallback_location: awaiting_assignment_locker_applications_path)
+    redirect_back_or_to(awaiting_assignment_locker_applications_path)
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -77,7 +77,7 @@ class LockerApplicationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_locker_application
-    @locker_application = LockerApplication.find(params[:id])
+    @locker_application = LockerApplication.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.
@@ -128,7 +128,7 @@ class LockerApplicationsController < ApplicationController
   end
 
   # TODO: Address rubocop error
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable-next Metrics/AbcSize
   def update_or_create(valid, message: 'Locker application was successfully updated.', method: :edit)
     respond_to do |format|
       if valid
@@ -142,12 +142,11 @@ class LockerApplicationsController < ApplicationController
         format.json { render :show, status: :ok, location: @locker_application }
       else
         @locker_application.user ||= User.new
-        format.html { render method, status: :unprocessable_entity }
-        format.json { render json: @locker_application.errors, status: :unprocessable_entity }
+        format.html { render method, status: :unprocessable_content }
+        format.json { render json: @locker_application.errors, status: :unprocessable_content }
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def archived_param
     return false if params[:archived].blank?
