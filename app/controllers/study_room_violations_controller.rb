@@ -30,8 +30,8 @@ class StudyRoomViolationsController < ApplicationController
         format.html { redirect_to @study_room_violation, notice: { message: 'Study room violation was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @study_room_violation }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @study_room_violation.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @study_room_violation.errors, status: :unprocessable_content }
       end
     end
   end
@@ -43,8 +43,8 @@ class StudyRoomViolationsController < ApplicationController
         format.html { redirect_to @study_room_violation, notice: { message: 'Study room violation was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @study_room_violation }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @study_room_violation.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @study_room_violation.errors, status: :unprocessable_content }
       end
     end
   end
@@ -62,7 +62,7 @@ class StudyRoomViolationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_study_room_violation
-    @study_room_violation = StudyRoomViolation.find(params[:id])
+    @study_room_violation = StudyRoomViolation.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.

@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'rake'
 
-# rubocop:disable RSpec/DescribeClass
+# rubocop:disable-next RSpec/DescribeClass
 RSpec.describe 'lockers rake tasks' do
   before do
     LockerAndStudySpaces::Application.load_tasks
@@ -61,4 +61,3 @@ RSpec.describe 'lockers rake tasks' do
     Rake::Task['lockers:lewis:seed'].reenable
   end
 end
-# rubocop:enable RSpec/DescribeClass

@@ -29,8 +29,8 @@ class LockersController < ApplicationController
         format.html { redirect_to @locker, notice: { message: 'Locker was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @locker }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @locker.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @locker.errors, status: :unprocessable_content }
       end
     end
   end
@@ -42,8 +42,8 @@ class LockersController < ApplicationController
         format.html { redirect_to @locker, notice: { message: 'Locker was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @locker }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @locker.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @locker.errors, status: :unprocessable_content }
       end
     end
   end
@@ -64,7 +64,7 @@ class LockersController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to lockers_url, notice: { message: 'Unable to enable locker.', type: 'error' } }
-        format.json { render json: ['Unable to enable locker.'], status: :unprocessable_entity }
+        format.json { render json: ['Unable to enable locker.'], status: :unprocessable_content }
       end
     end
   end
@@ -76,7 +76,7 @@ class LockersController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to lockers_url, notice: { message: 'Unable to disable locker.', type: 'error' } }
-        format.json { render json: ['Unable to disable locker.'], status: :unprocessable_entity }
+        format.json { render json: ['Unable to disable locker.'], status: :unprocessable_content }
       end
     end
   end
@@ -85,7 +85,7 @@ class LockersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_locker
-    @locker = Locker.find(params[:id])
+    @locker = Locker.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.

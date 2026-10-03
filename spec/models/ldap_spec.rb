@@ -4,14 +4,13 @@ require 'rails_helper'
 
 RSpec.describe Ldap do
   let(:ldap_connection) { Net::LDAP.new }
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable-next Layout/LineLength
   let(:valid_ldap_response) do
     [{ dn: ['uid=abc123,o=princeton university,c=us'], telephonenumber: ['111-222-3333'], edupersonaffiliation: %w[member staff employee], puhomedepartmentnumber: ['99999'], sn: ['Smith'],
        objectclass: %w[inetorgperson organizationalPerson person top puPerson nsMessagingServerUser inetUser ipUser inetMailUser inetLocalMailRecipient nManagedPerson userPresenceProfile oblixorgperson oblixPersonPwdPolicy eduPerson posixAccount],
        givenname: ['Sally'], uid: ['abc123'], displayname: ['Sally Smith'], ou: ['Library Information Technology'], pudisplayname: ['Smith, Sally'], edupersonprincipalname: ['abc123@princeton.edu'], pustatus: ['stf'], edupersonprimaryaffiliation: ['staff'], cn: ['Sally Smith'], universityid: ['999999999'],
        loginshell: ['/bin/no login'], mail: ['sally.smith@princeton.edu'], edupersonentitlement: ['urn:mace:dir:entitlement:common-lib-terms'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], title: ['Staff, Library - Information Technology.'], street: ['B-1H-1 Firestone Library'] }]
   end
-  # rubocop:enable Layout/LineLength
 
   before do
     allow(Ldap).to receive(:default_connection).and_return(ldap_connection)

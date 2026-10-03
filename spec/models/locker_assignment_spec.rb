@@ -11,10 +11,10 @@ RSpec.describe LockerAssignment do
   let(:locker_assignment2) do
     described_class.create(locker_application: locker_application2, locker: locker4, start_date: DateTime.now, expiration_date: DateTime.now.next_year)
   end
-  let(:locker1) {  FactoryBot.create(:locker) }
-  let(:locker2) {  FactoryBot.create(:locker) }
-  let(:locker3) {  FactoryBot.create(:locker, floor: locker_application1.preferred_general_area) }
-  let(:locker4) {  FactoryBot.create(:locker, floor: locker_application1.preferred_general_area) }
+  let(:locker1) { FactoryBot.create(:locker) }
+  let(:locker2) { FactoryBot.create(:locker) }
+  let(:locker3) { FactoryBot.create(:locker, floor: locker_application1.preferred_general_area) }
+  let(:locker4) { FactoryBot.create(:locker, floor: locker_application1.preferred_general_area) }
   let(:our_building) { FactoryBot.create(:building) }
   let(:other_building) { FactoryBot.create(:building, name: 'Other library') }
 

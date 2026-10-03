@@ -29,8 +29,8 @@ class StudyRoomsController < ApplicationController
         format.html { redirect_to @study_room, notice: { message: 'Study room was successfully created.', type: 'success' } }
         format.json { render :show, status: :created, location: @study_room }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @study_room.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
+        format.json { render json: @study_room.errors, status: :unprocessable_content }
       end
     end
   end
@@ -42,8 +42,8 @@ class StudyRoomsController < ApplicationController
         format.html { redirect_to @study_room, notice: { message: 'Study room was successfully updated.', type: 'success' } }
         format.json { render :show, status: :ok, location: @study_room }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @study_room.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
+        format.json { render json: @study_room.errors, status: :unprocessable_content }
       end
     end
   end
@@ -77,7 +77,7 @@ class StudyRoomsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_study_room
-    @study_room = StudyRoom.find(params[:id])
+    @study_room = StudyRoom.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.

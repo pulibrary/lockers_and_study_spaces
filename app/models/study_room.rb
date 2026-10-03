@@ -16,7 +16,7 @@ class StudyRoom < ApplicationRecord
     return if study_room_assignment.present? # assignment already exists, no changes needed
 
     # release any existing assignment
-    current_assignment.release if current_assignment.present?
+    current_assignment.presence&.release
     study_room_assignment = StudyRoomAssignment.create(user:, study_room: self)
 
     # send mail

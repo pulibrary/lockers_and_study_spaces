@@ -12,11 +12,10 @@ RSpec.describe 'Health Check' do
 
   context 'with a bad database configuration' do
     before do
-      # rubocop:disable RSpec/AnyInstance
+      # rubocop:disable-next RSpec/AnyInstance
       allow_any_instance_of(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter).to receive(:execute) do |instance|
         raise StandardError if database.blank? || instance.pool.db_config.name == database.to_s
       end
-      # rubocop:enable RSpec/AnyInstance
     end
 
     it 'errors' do

@@ -75,6 +75,7 @@ class LockerAssignment < ApplicationRecord
     save!
   end
 
+  # rubocop:disable-next Naming/PredicateMethod
   def not_a_senior_or_faculty
     user.status != 'senior' && user.status != 'faculty'
   end

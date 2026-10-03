@@ -119,9 +119,8 @@ RSpec.describe 'Duplicate Locker Applications', :js do
       it 'does not show a duplicate application alert' do
         sign_in admin
         visit awaiting_assignment_locker_applications_path
-        # rubocop:disable Capybara/NegationMatcherAfterVisit
+        # rubocop:disable-next Capybara/NegationMatcherAfterVisit
         expect(page).not_to have_text('There is one duplicate application')
-        # rubocop:enable Capybara/NegationMatcherAfterVisit
       end
     end
   end
