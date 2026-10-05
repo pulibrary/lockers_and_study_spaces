@@ -39,7 +39,7 @@ RSpec.describe 'lockers/index' do
                           floor: 3
                         )
                       ])
-    assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    assign(:pagy, instance_double(Pagy::Offset, series_nav: nil))
     allow(view).to receive(:current_user).and_return(user)
   end
 

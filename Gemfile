@@ -29,7 +29,7 @@ gem 'omniauth-rails_csrf_protection'
 
 # ldap
 gem 'net-ldap'
-gem 'pagy', '< 5.0.0'
+gem 'pagy', '< 44.0.0'
 
 gem 'csv'
 gem 'whenever'
