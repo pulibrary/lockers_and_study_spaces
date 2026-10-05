@@ -13,8 +13,8 @@ RSpec.describe 'study_rooms/show' do
 
   it 'renders attributes in <p>' do
     render
-    expect(rendered).to match(/Location/)
-    expect(rendered).to match(/General Area/)
-    expect(rendered).to match(/Notes/)
+    expect(rendered).to include('Location')
+    expect(rendered).to include('General Area')
+    expect(rendered).to include('Notes')
   end
 end

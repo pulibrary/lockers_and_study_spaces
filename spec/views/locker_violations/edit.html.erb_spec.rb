@@ -13,7 +13,7 @@ RSpec.describe 'locker_violations/edit' do
       assert_select 'input[type=hidden][name=?]', 'locker_violation[user_id]', count: 0
       assert_select 'input[type=hidden][name=?]', 'locker_violation[locker_id]', count: 0
       assert_select 'input-text[name=?]', 'locker_violation[number_of_books]', count: 0
-      expect(rendered).to match(/There is no user currently assigned to the locker!/)
+      expect(rendered).to include('There is no user currently assigned to the locker!')
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe 'locker_violations/edit' do
         assert_select 'input[type=hidden][name=?]', 'locker_violation[user_id]'
         assert_select 'input[type=hidden][name=?]', 'locker_violation[locker_id]'
         assert_select 'lux-input-text[name=?]', 'locker_violation[number_of_books]'
-        expect(rendered).not_to match(/There is no user currently assigned to the locker!/)
+        expect(rendered).not_to include('There is no user currently assigned to the locker!')
       end
     end
   end

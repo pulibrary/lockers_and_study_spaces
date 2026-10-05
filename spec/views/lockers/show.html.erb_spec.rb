@@ -23,19 +23,19 @@ RSpec.describe 'lockers/show' do
 
   it 'renders attributes in <p>' do
     render
-    expect(rendered).to match(/Location/)
-    expect(rendered).to match(/2/)
-    expect(rendered).to match(/General Area/)
-    expect(rendered).to match(/false/)
-    expect(rendered).to match(/Notes/)
-    expect(rendered).to match(/Combination/)
-    expect(rendered).to match(/Code/)
-    expect(rendered).to match(/Tag/)
-    expect(rendered).to match(/Discs/)
-    expect(rendered).to match(/Clutch/)
-    expect(rendered).to match(/Hubpos/)
-    expect(rendered).to match(/Key Number/)
-    expect(rendered).to match(/3/)
+    expect(rendered).to include('Location')
+    expect(rendered).to include('2')
+    expect(rendered).to include('General Area')
+    expect(rendered).to include('false')
+    expect(rendered).to include('Notes')
+    expect(rendered).to include('Combination')
+    expect(rendered).to include('Code')
+    expect(rendered).to include('Tag')
+    expect(rendered).to include('Discs')
+    expect(rendered).to include('Clutch')
+    expect(rendered).to include('Hubpos')
+    expect(rendered).to include('Key Number')
+    expect(rendered).to include('3')
   end
 
   context 'An assigned locker' do

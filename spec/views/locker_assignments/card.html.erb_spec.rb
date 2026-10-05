@@ -18,7 +18,7 @@ RSpec.describe 'locker_assignments/card' do
 
     it 'shows a print view of the locker assignment' do
       render
-      expect(rendered).to match(/Firestone Library/)
+      expect(rendered).to include('Firestone Library')
     end
   end
 
@@ -28,7 +28,7 @@ RSpec.describe 'locker_assignments/card' do
 
     it 'shows a print view of the locker assignment' do
       render
-      expect(rendered).to match(/Lewis Library/)
+      expect(rendered).to include('Lewis Library')
     end
   end
 end

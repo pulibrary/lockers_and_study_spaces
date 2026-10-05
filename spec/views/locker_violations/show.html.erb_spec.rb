@@ -9,6 +9,6 @@ RSpec.describe 'locker_violations/show' do
 
   it 'renders attributes in <p>' do
     render
-    expect(rendered).to match(/5/)
+    expect(rendered).to include('5')
   end
 end

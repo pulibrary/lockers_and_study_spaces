@@ -14,7 +14,7 @@ RSpec.describe 'study_room_violations/new' do
       assert_select 'input[type=hidden][name=?]', 'study_room_violation[user_id]', count: 0
       assert_select 'input[type=hidden][name=?]', 'study_room_violation[study_room_id]', count: 0
       assert_select 'input-text[name=?]', 'study_room_violation[number_of_books]', count: 0
-      expect(rendered).to match(/There is no user currently assigned to the study room!/)
+      expect(rendered).to include('There is no user currently assigned to the study room!')
     end
   end
 end

@@ -24,14 +24,14 @@ RSpec.describe 'locker_applications/show' do
 
   it 'renders attributes in <p>' do
     render
-    expect(rendered).to match(/2/)
-    expect(rendered).to match(/Preferred General Area/)
-    expect(rendered).to match(/false/)
-    expect(rendered).to match(/Semester/)
-    expect(rendered).to match(/Status At Application/)
-    expect(rendered).to match(/Department At Application/)
-    expect(rendered).to match(/Need one/)
-    expect(rendered).to match(/Need two/)
+    expect(rendered).to include('2')
+    expect(rendered).to include('Preferred General Area')
+    expect(rendered).to include('false')
+    expect(rendered).to include('Semester')
+    expect(rendered).to include('Status At Application')
+    expect(rendered).to include('Department At Application')
+    expect(rendered).to include('Need one')
+    expect(rendered).to include('Need two')
     expect(rendered).to match(/#{user.uid}/)
   end
 end

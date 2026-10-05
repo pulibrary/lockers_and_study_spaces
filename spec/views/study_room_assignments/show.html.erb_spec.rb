@@ -15,7 +15,7 @@ RSpec.describe 'study_room_assignments/show' do
 
   it 'renders attributes in <p>' do
     render
-    expect(rendered).to match(//)
-    expect(rendered).to match(//)
+    expect(rendered).to include('')
+    expect(rendered).to include('')
   end
 end
