@@ -13,11 +13,11 @@ RSpec.describe UserMailer do
       expect(mail.subject).to eq 'Your Locker has been assigned'
       expect(mail.to).to eq [locker_assignment.email]
       expect(mail.from).to eq ['access@princeton.edu']
-      expect(mail.html_part.body.to_s).to have_content('Firestone Library Locker Assignment')
-      expect(mail.html_part.body.to_s).to have_content(locker_assignment.name)
-      expect(mail.html_part.body.to_s).to have_content(locker_assignment.combination)
-      expect(mail.html_part.body.to_s).to have_content('To Unlock')
-      expect(mail.html_part.body.to_s).to have_content('To Lock')
+      expect(mail.html_part.body.to_s).to have_text('Firestone Library Locker Assignment')
+      expect(mail.html_part.body.to_s).to have_text(locker_assignment.name)
+      expect(mail.html_part.body.to_s).to have_text(locker_assignment.combination)
+      expect(mail.html_part.body.to_s).to have_text('To Unlock')
+      expect(mail.html_part.body.to_s).to have_text('To Lock')
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Locker Space Agreement.pdf"')
     end
 
@@ -40,7 +40,7 @@ RSpec.describe UserMailer do
         expect { described_class.with(locker_assignment:).locker_assignment_confirmation.deliver }
           .to change { ActionMailer::Base.deliveries.count }.by(1)
         mail = ActionMailer::Base.deliveries.last
-        expect(mail.html_part.body.to_s).to have_content('Lewis Library Locker Assignment')
+        expect(mail.html_part.body.to_s).to have_text('Lewis Library Locker Assignment')
       end
     end
   end
@@ -56,9 +56,9 @@ RSpec.describe UserMailer do
       expect(mail.subject).to eq 'Uncharged Materials in Locker'
       expect(mail.to).to eq [locker_violation.email]
       expect(mail.from).to eq ['access@princeton.edu']
-      expect(mail.html_part.body.to_s).to have_content('Firestone Library Locker Violation')
-      expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your locker #{locker_violation.location} " \
-                                                       'that were not checked out and we returned them to Circulation')
+      expect(mail.html_part.body.to_s).to have_text('Firestone Library Locker Violation')
+      expect(mail.html_part.body.to_s).to have_text("Today 8 books were found in your locker #{locker_violation.location} " \
+                                                    'that were not checked out and we returned them to Circulation')
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Locker Space Agreement.pdf"')
     end
   end
@@ -73,8 +73,8 @@ RSpec.describe UserMailer do
       expect(mail.subject).to eq 'Your study room location has been assigned'
       expect(mail.to).to eq [study_room_assignment.email]
       expect(mail.from).to eq ['access@princeton.edu']
-      expect(mail.html_part.body.to_s).to have_content("#{study_room_assignment.general_area} Assignment")
-      expect(mail.html_part.body.to_s).to have_content(study_room_assignment.name)
+      expect(mail.html_part.body.to_s).to have_text("#{study_room_assignment.general_area} Assignment")
+      expect(mail.html_part.body.to_s).to have_text(study_room_assignment.name)
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Study Room Agreement.pdf"')
     end
   end
@@ -99,9 +99,9 @@ RSpec.describe UserMailer do
       expect(mail.subject).to eq 'Uncharged Materials in Study Room'
       expect(mail.to).to eq [study_room_violation.email]
       expect(mail.from).to eq ['access@princeton.edu']
-      expect(mail.html_part.body.to_s).to have_content('Firestone Library Study Room Violation')
-      expect(mail.html_part.body.to_s).to have_content("Today 8 books were found in your study room area #{study_room_violation.location} " \
-                                                       'that were not checked out and we returned them to Circulation')
+      expect(mail.html_part.body.to_s).to have_text('Firestone Library Study Room Violation')
+      expect(mail.html_part.body.to_s).to have_text("Today 8 books were found in your study room area #{study_room_violation.location} " \
+                                                    'that were not checked out and we returned them to Circulation')
       expect(mail.attachments.first.content_type).to eq('application/pdf; filename="Study Room Agreement.pdf"')
     end
   end

@@ -13,7 +13,7 @@ RSpec.describe 'Navigation menu', :js do
   context 'when visiting the application' do
     it 'can see locker management navbar item' do
       visit '/'
-      expect(page).to have_content('Locker Management')
+      expect(page).to have_text('Locker Management')
     end
 
     it 'has a generic header for the application' do
@@ -26,18 +26,18 @@ RSpec.describe 'Navigation menu', :js do
 
       it 'shows study room admin options' do
         visit '/'
-        expect(page).to have_content('Study Room Management')
+        expect(page).to have_text('Study Room Management')
       end
 
       it 'shows reports options' do
         visit '/'
-        expect(page).to have_content('Reporting')
+        expect(page).to have_text('Reporting')
       end
 
       it 'shows renewal email admin options' do
         visit '/'
         click_button 'Locker Management'
-        expect(page).to have_content('Renewal Emails')
+        expect(page).to have_text('Renewal Emails')
       end
     end
 
@@ -45,19 +45,19 @@ RSpec.describe 'Navigation menu', :js do
       it 'does not show study room admin options' do
         visit '/'
         # rubocop:disable-next Capybara/NegationMatcherAfterVisit
-        expect(page).not_to have_content('Study Room Management')
+        expect(page).not_to have_text('Study Room Management')
       end
 
       it 'does not show reports options' do
         visit '/'
         # rubocop:disable-next Capybara/NegationMatcherAfterVisit
-        expect(page).not_to have_content('Reporting')
+        expect(page).not_to have_text('Reporting')
       end
 
       it 'does show renewal email admin options' do
         visit '/'
         click_button 'Locker Management'
-        expect(page).to have_content('Renewal Emails')
+        expect(page).to have_text('Renewal Emails')
       end
     end
   end

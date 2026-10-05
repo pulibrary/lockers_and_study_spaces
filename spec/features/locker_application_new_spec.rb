@@ -37,17 +37,16 @@ RSpec.describe 'Locker Application New', :js do
         end.to change(LockerApplication, :count)
         expect(page).to have_current_path(edit_locker_application_path(id: LockerApplication.last.id), ignore_query: true)
         # Since the application is still incomplete, we don't show the "successfully created" message yet
-        expect(page).not_to have_content('Application successfully created')
+        expect(page).not_to have_text('Application successfully created')
       end
 
-      # rubocop:disable-next RSpec/MultipleExpectations
       it 'can apply for a new locker' do
         visit root_path
         select('Firestone Library', from: :locker_application_building_id)
         click_button('Next')
         expect(page).to have_current_path %r{/locker_applications/\d+/edit}
         new_application = LockerApplication.last
-        expect(page).to have_content('Firestone Library Locker Application')
+        expect(page).to have_text('Firestone Library Locker Application')
         expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
         expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
@@ -73,7 +72,7 @@ RSpec.describe 'Locker Application New', :js do
         click_button('Next')
         expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
         new_application = LockerApplication.last
-        expect(page).to have_content('Lewis Library Locker Application')
+        expect(page).to have_text('Lewis Library Locker Application')
         expect(page).to have_select('Preferred Size', options: ['25" x 12"'], disabled: true)
         expect(page).to have_select('Preferred Floor', options: ['No preference', '3rd floor', '4th floor'])
         expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
@@ -149,7 +148,7 @@ RSpec.describe 'Locker Application New', :js do
 
       it 'can assign the application to an existing user' do
         visit root_path
-        expect(page).to have_content('Firestone Library Locker Application')
+        expect(page).to have_text('Firestone Library Locker Application')
         expect(page).to have_field('Applicant Netid', with: admin.uid)
         check('Keyed entry (rather than combination)')
         fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
@@ -157,7 +156,7 @@ RSpec.describe 'Locker Application New', :js do
         click_button('Submit Locker Application')
         expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
         new_application = LockerApplication.last
-        expect(page).not_to have_content('User must exist')
+        expect(page).not_to have_text('User must exist')
         expect(page).to have_current_path(edit_locker_application_path(new_application))
         expect(new_application.reload.complete).to be true
         expect(new_application.reload.user).to eq(user)
@@ -167,7 +166,7 @@ RSpec.describe 'Locker Application New', :js do
     context 'with a valid user that does not exist yet' do
       it 'can create and assign an application to a new user' do
         visit root_path
-        expect(page).to have_content('Firestone Library Locker Application')
+        expect(page).to have_text('Firestone Library Locker Application')
         expect(page).to have_field('Applicant Netid', with: admin.uid)
         fill_in('Applicant Netid', with: 'arbitrary netid', fill_options: { clear: :backspace })
         fill_in('Additional accessibility needs', with: 'Lower row')
@@ -175,7 +174,7 @@ RSpec.describe 'Locker Application New', :js do
         click_button('Submit Locker Application')
         expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
         new_application = LockerApplication.last
-        expect(page).not_to have_content('User must exist')
+        expect(page).not_to have_text('User must exist')
         expect(page).to have_current_path(edit_locker_application_path(new_application))
       end
     end
@@ -189,17 +188,17 @@ RSpec.describe 'Locker Application New', :js do
 
       it 'can create a application for the Lewis library' do
         visit root_path
-        expect(page).to have_content('Lewis Library Locker Application')
+        expect(page).to have_text('Lewis Library Locker Application')
         expect(page).to have_field('Applicant Netid', with: lewis_admin.uid)
         fill_in('Additional accessibility needs', with: 'Lower row')
         building_field = page.find_by_id('locker_application_building_id', visible: false)
         expect(building_field.value).to eq(lewis_admin.building.id.to_s)
         click_button('Submit Locker Application')
 
-        expect(page).to have_content('Application successfully created')
+        expect(page).to have_text('Application successfully created')
         new_application = LockerApplication.last
         expect(page).to have_current_path(edit_locker_application_path(new_application))
-        expect(page).to have_content('Lewis Library Locker Application')
+        expect(page).to have_text('Lewis Library Locker Application')
         expect(new_application.reload.building).to eq(building_two)
         expect(new_application.reload.user).to eq(lewis_admin)
       end
@@ -212,7 +211,7 @@ RSpec.describe 'Locker Application New', :js do
 
       it 'displays selected accessibility needs' do
         visit edit_locker_application_path(id: locker_application.id)
-        expect(page).to have_content('Accessibility Needs')
+        expect(page).to have_text('Accessibility Needs')
         expect(page).to have_checked_field('Keyed entry (rather than combination)')
         expect(page).to have_field('Additional accessibility needs', with: 'Another need')
         uncheck('Keyed entry (rather than combination)')
