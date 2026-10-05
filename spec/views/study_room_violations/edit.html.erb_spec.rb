@@ -13,7 +13,7 @@ RSpec.describe 'study_room_violations/edit' do
       assert_select 'input[type=hidden][name=?]', 'study_room_violation[user_id]', count: 0
       assert_select 'input[type=hidden][name=?]', 'study_room_violation[study_room_id]', count: 0
       assert_select 'input-text[name=?]', 'study_room_violation[number_of_books]', count: 0
-      expect(rendered).to match(/There is no user currently assigned to the study room!/)
+      expect(rendered).to include('There is no user currently assigned to the study room!')
     end
   end
 
@@ -28,7 +28,7 @@ RSpec.describe 'study_room_violations/edit' do
         assert_select 'input[type=hidden][name=?]', 'study_room_violation[user_id]'
         assert_select 'input[type=hidden][name=?]', 'study_room_violation[study_room_id]'
         assert_select 'lux-input-text[name=?]', 'study_room_violation[number_of_books]'
-        expect(rendered).not_to match(/There is no user currently assigned to the study room!/)
+        expect(rendered).not_to include('There is no user currently assigned to the study room!')
       end
     end
   end
