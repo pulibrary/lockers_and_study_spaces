@@ -18,3 +18,7 @@
 @import "home_page";
 @import "locker_applications";
 @import "lockers";
+
+.pagy a {
+    margin: var(--space-xx-small);
+}

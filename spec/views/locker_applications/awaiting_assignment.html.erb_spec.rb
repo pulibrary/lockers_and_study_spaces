@@ -35,7 +35,7 @@ RSpec.describe 'locker_applications/awaiting_assignment' do
                user: user2
              )
            ])
-    assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    assign(:pagy, instance_double(Pagy::Offset, series_nav: nil))
   end
 
   it 'renders a list of locker_applications' do

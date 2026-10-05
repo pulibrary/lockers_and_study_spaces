@@ -55,5 +55,5 @@
 <%= render partial: "index_view", collection: @locker_assignments, as: :locker_assignment %>
 
 <%# Note the double equals sign "==" which marks the output as trusted and html safe: %>
-<%== pagy_nav(@pagy) %>
+<%== @pagy.series_nav %>
 </lux-card>

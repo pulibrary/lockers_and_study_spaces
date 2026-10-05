@@ -17,7 +17,7 @@ RSpec.describe 'study_room_assignments/index' do
                study_room:
              )
            ])
-    assign(:pagy, instance_double(Pagy, prev: nil, next: nil, series: [], vars: { page: 1, items: 2, params: {} }))
+    assign(:pagy, instance_double(Pagy::Offset, series_nav: nil))
   end
 
   it 'renders a list of study_room_assignments' do
