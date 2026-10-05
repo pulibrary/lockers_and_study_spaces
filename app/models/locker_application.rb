@@ -37,9 +37,7 @@ class LockerApplication < ApplicationRecord
   end
 
   def size_choices(building_name)
-    choices = LockerAndStudySpaces.config.fetch(:locker_sizes, [])[building_name]
-    choices = [choices.first] if user.blank? || user.junior?
-    prepare_size_choices_for_lux(choices, building_name)
+    prepare_size_choices_for_lux(locker_size_choices.call(user:, building_name:), building_name)
   end
 
   def floor_choices(building_name)
@@ -100,4 +98,8 @@ class LockerApplication < ApplicationRecord
                      .where(user:)                # Include only applications made by the same user as this one
                      .where.not(id:)              # Don't include this specific application as a duplicate of itself
   end
+
+  private
+
+  def locker_size_choices = @locker_size_choices ||= LockerSizeChoices.new
 end

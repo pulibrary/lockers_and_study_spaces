@@ -8,13 +8,13 @@ class Applicant
     @ldap = ldap
   end
 
-  def senior?
-    undergraduate? && current_academic_year == class_year
-  end
+  def senior? = undergraduate? && years_until_graduation.zero?
 
-  def junior?
-    undergraduate? && current_academic_year + 1 == class_year
-  end
+  def junior? = undergraduate? && years_until_graduation == 1
+
+  def sophomore? = undergraduate? && years_until_graduation == 2
+
+  def first_year? = undergraduate? && years_until_graduation > 2
 
   def undergraduate?
     ldap[:pustatus] == 'undergraduate'
@@ -50,12 +50,18 @@ class Applicant
       'senior'
     elsif junior?
       'junior'
+    elsif sophomore?
+      'sophomore'
+    elsif first_year?
+      'first-year student'
     else
       ldap[:status]
     end
   end
 
   private
+
+  def years_until_graduation = class_year - current_academic_year
 
   def class_year
     ldap[:class_year].to_i

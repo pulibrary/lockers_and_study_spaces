@@ -39,6 +39,14 @@ RSpec.describe Applicant do
     expect(applicant).not_to be_junior
   end
 
+  it 'is not a sophomore' do
+    expect(applicant).not_to be_sophomore
+  end
+
+  it 'is not a first_year' do
+    expect(applicant).not_to be_first_year
+  end
+
   it 'is staff' do
     expect(applicant).to be_staff
   end
@@ -71,6 +79,10 @@ RSpec.describe Applicant do
     it 'is not a graduate student' do
       expect(applicant).not_to be_graduate_student
     end
+
+    it 'has status senior' do
+      expect(applicant.status).to eq 'senior'
+    end
   end
 
   context 'a student graduating next academic year' do
@@ -97,6 +109,86 @@ RSpec.describe Applicant do
     it 'is not a graduate student' do
       expect(applicant).not_to be_graduate_student
     end
+
+    it 'has status junior' do
+      expect(applicant.status).to eq 'junior'
+    end
+  end
+
+  context 'a student graduating in two academic years' do
+    let(:valid_ldap_response) do
+      [{ dn: ['uid=abc123,o=princeton university,c=us'], telephonenumber: ['111-222-3333'], edupersonaffiliation: %w[member staff employee], puhomedepartmentnumber: ['99999'], sn: ['Smith'],
+         objectclass: %w[inetorgperson organizationalPerson person top puPerson nsMessagingServerUser inetUser ipUser inetMailUser inetLocalMailRecipient nManagedPerson userPresenceProfile oblixorgperson oblixPersonPwdPolicy eduPerson posixAccount],
+         givenname: ['Sally'], uid: ['abc123'], displayname: ['Sally Smith'], ou: ['Library Information Technology'], pudisplayname: ['Smith, Sally'], edupersonprincipalname: ['abc123@princeton.edu'], pustatus: ['undergraduate'], edupersonprimaryaffiliation: ['staff'], cn: ['Sally Smith'], universityid: ['999999999'],
+         loginshell: ['/bin/no login'], mail: ['sally.smith@princeton.edu'], edupersonentitlement: ['urn:mace:dir:entitlement:common-lib-terms'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], title: ['Staff, Library - Information Technology.'], street: ['B-1H-1 Firestone Library'],
+         puclassyear: [(current_academic_year + 2).to_s] }]
+    end
+
+    it 'is not a senior' do
+      expect(applicant).not_to be_senior
+    end
+
+    it 'is not a junior' do
+      expect(applicant).not_to be_junior
+    end
+
+    it 'is a a sophomore' do
+      expect(applicant).to be_sophomore
+    end
+
+    it 'is not a first_year' do
+      expect(applicant).not_to be_first_year
+    end
+
+    it 'is not staff' do
+      expect(applicant).not_to be_staff
+    end
+
+    it 'is not a graduate student' do
+      expect(applicant).not_to be_graduate_student
+    end
+
+    it 'has status sophomore' do
+      expect(applicant.status).to eq 'sophomore'
+    end
+  end
+
+  context 'a student graduating in three academic years' do
+    let(:valid_ldap_response) do
+      [{ dn: ['uid=abc123,o=princeton university,c=us'], telephonenumber: ['111-222-3333'], edupersonaffiliation: %w[member staff employee], puhomedepartmentnumber: ['99999'], sn: ['Smith'],
+         objectclass: %w[inetorgperson organizationalPerson person top puPerson nsMessagingServerUser inetUser ipUser inetMailUser inetLocalMailRecipient nManagedPerson userPresenceProfile oblixorgperson oblixPersonPwdPolicy eduPerson posixAccount],
+         givenname: ['Sally'], uid: ['abc123'], displayname: ['Sally Smith'], ou: ['Library Information Technology'], pudisplayname: ['Smith, Sally'], edupersonprincipalname: ['abc123@princeton.edu'], pustatus: ['undergraduate'], edupersonprimaryaffiliation: ['staff'], cn: ['Sally Smith'], universityid: ['999999999'],
+         loginshell: ['/bin/no login'], mail: ['sally.smith@princeton.edu'], edupersonentitlement: ['urn:mace:dir:entitlement:common-lib-terms'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], title: ['Staff, Library - Information Technology.'], street: ['B-1H-1 Firestone Library'],
+         puclassyear: [(current_academic_year + 3).to_s] }]
+    end
+
+    it 'is not a senior' do
+      expect(applicant).not_to be_senior
+    end
+
+    it 'is not a junior' do
+      expect(applicant).not_to be_junior
+    end
+
+    it 'is not a sophomore' do
+      expect(applicant).not_to be_sophomore
+    end
+
+    it 'is a first_year' do
+      expect(applicant).to be_first_year
+    end
+
+    it 'is not staff' do
+      expect(applicant).not_to be_staff
+    end
+
+    it 'is not a graduate student' do
+      expect(applicant).not_to be_graduate_student
+    end
+
+    it 'has status first-year student' do
+      expect(applicant.status).to eq 'first-year student'
+    end
   end
 
   context 'a graduate student' do
@@ -113,6 +205,14 @@ RSpec.describe Applicant do
 
     it 'is not a junior' do
       expect(applicant).not_to be_junior
+    end
+
+    it 'is not a sophomore' do
+      expect(applicant).not_to be_sophomore
+    end
+
+    it 'is not a first_year' do
+      expect(applicant).not_to be_first_year
     end
 
     it 'is not staff' do

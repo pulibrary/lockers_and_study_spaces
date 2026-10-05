@@ -17,120 +17,120 @@ RSpec.describe 'Locker Application New', :js do
       sign_in user
     end
 
-    context 'when creating an application for a Lewis locker' do
-      it 'requires users to choose a library' do
-        visit root_path
-        expect(page.find_field('locker_application_building_id')[:required]).to eq 'true'
-        click_button('Next')
-        expect(page).to have_current_path('/')
-      end
+    it 'requires users to choose a library' do
+      visit root_path
+      expect(page.find_field('locker_application_building_id')[:required]).to eq 'true'
+      click_button('Next')
+      expect(page).to have_current_path('/')
+    end
 
-      it 'has a two step application process' do
-        visit root_path
-        expect(page).to have_select('Library', options: ['Select Library', 'Firestone Library', 'Lewis Library'])
-        select('Firestone Library', from: :locker_application_building_id)
-        expect(page).to have_button('Next')
-        # Submit library as first step
-        expect do
-          click_button('Next')
-          expect(page).to have_current_path %r{/locker_applications/\d+/edit}
-        end.to change(LockerApplication, :count)
-        expect(page).to have_current_path(edit_locker_application_path(id: LockerApplication.last.id), ignore_query: true)
-        # Since the application is still incomplete, we don't show the "successfully created" message yet
-        expect(page).not_to have_text('Application successfully created')
-      end
-
-      it 'can apply for a new locker' do
-        visit root_path
-        select('Firestone Library', from: :locker_application_building_id)
+    it 'has a two step application process' do
+      visit root_path
+      expect(page).to have_select('Library', options: ['Select Library', 'Firestone Library', 'Lewis Library'])
+      select('Firestone Library', from: :locker_application_building_id)
+      expect(page).to have_button('Next')
+      # Submit library as first step
+      expect do
         click_button('Next')
         expect(page).to have_current_path %r{/locker_applications/\d+/edit}
-        new_application = LockerApplication.last
-        expect(page).to have_text('Firestone Library Locker Application')
-        expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
-        expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
-        expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
-        expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
-        expect(page).to have_field('Department')
-        uid_field = page.find_by_id('locker_application_user_uid', visible: false)
-        expect(uid_field.value).to eq(user.uid)
-        expect(page).to have_button('Submit Locker Application')
-        # Add some values to form
-        select('4-foot', from: :locker_application_preferred_size)
-        expect(new_application.reload.complete).to be false
-        click_button('Submit Locker Application')
-        expect(page).to have_current_path %r{/locker_applications/\d+$}
-        new_application.reload
-        expect(new_application.preferred_size).to eq(4)
-        expect(new_application.complete).to be true
-        expect(page).to have_current_path(locker_application_path(new_application))
-      end
+      end.to change(LockerApplication, :count)
+      expect(page).to have_current_path(edit_locker_application_path(id: LockerApplication.last.id), ignore_query: true)
+      # Since the application is still incomplete, we don't show the "successfully created" message yet
+      expect(page).not_to have_text('Application successfully created')
+    end
 
-      it 'can apply for a new Lewis locker' do
-        visit root_path
-        select('Lewis Library', from: :locker_application_building_id)
-        click_button('Next')
-        expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
-        new_application = LockerApplication.last
-        expect(page).to have_text('Lewis Library Locker Application')
-        expect(page).to have_select('Preferred Size', options: ['25" x 12"'], disabled: true)
-        expect(page).to have_select('Preferred Floor', options: ['No preference', '3rd floor', '4th floor'])
-        expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
-        expect(page).to have_select('Student/Staff/Faculty Status', options: %w[senior junior graduate faculty staff])
-        expect(page).to have_field('Department')
-        uid_field = page.find_by_id('locker_application_user_uid', visible: false)
-        expect(uid_field.value).to eq(user.uid)
-        expect(page).to have_button('Submit Locker Application')
-        # Add some values to form
-        expect(new_application.reload.complete).to be false
-        click_button('Submit Locker Application')
-        new_application.reload
-        expect(new_application.preferred_size).to eq(2)
-        expect(new_application.complete).to be true
-        expect(page).to have_current_path(locker_application_path(new_application))
-      end
+    it 'can apply for a new Firestone locker' do
+      visit root_path
+      select('Firestone Library', from: :locker_application_building_id)
+      click_button('Next')
+      expect(page).to have_current_path %r{/locker_applications/\d+/edit}
+      new_application = LockerApplication.last
+      expect(page).to have_text('Firestone Library Locker Application')
+      expect(page).to have_select('Preferred Size', options: %w[4-foot 6-foot])
+      expect(page).to have_select('Preferred Floor', options: ['No preference', 'A floor', 'B floor', 'C floor', '2nd floor', '3rd floor'])
+      expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
+      expect(page).to have_select('Student/Staff/Faculty Status',
+                                  options: ['senior', 'junior', 'sophomore', 'first-year student', 'graduate', 'faculty', 'staff'])
+      expect(page).to have_field('Department')
+      uid_field = page.find_by_id('locker_application_user_uid', visible: false)
+      expect(uid_field.value).to eq(user.uid)
+      expect(page).to have_button('Submit Locker Application')
+      # Add some values to form
+      select('4-foot', from: :locker_application_preferred_size)
+      expect(new_application.reload.complete).to be false
+      click_button('Submit Locker Application')
+      expect(page).to have_current_path %r{/locker_applications/\d+$}
+      new_application.reload
+      expect(new_application.preferred_size).to eq(4)
+      expect(new_application.complete).to be true
+      expect(page).to have_current_path(locker_application_path(new_application))
+    end
 
-      it 'can indicate Accessibility Needs' do
-        visit root_path
-        select('Firestone Library', from: :locker_application_building_id)
-        click_button('Next')
-        expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
-        new_application = LockerApplication.last
-        expect(page).to have_unchecked_field('Keyed entry (rather than combination)')
-        check('Keyed entry (rather than combination)')
-        expect(page).to have_unchecked_field('Near an elevator')
-        check('Near an elevator')
-        expect(page).to have_field('Additional accessibility needs')
-        fill_in('Additional accessibility needs', with: 'Not low to the ground')
-        click_button('Submit Locker Application')
-        expect(page).to have_current_path %r{/locker_applications/\d+$}
-        new_application.reload
-        expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)', 'Near an elevator',
-                                                                       'Not low to the ground')
-      end
+    it 'can apply for a new Lewis locker' do
+      visit root_path
+      select('Lewis Library', from: :locker_application_building_id)
+      click_button('Next')
+      expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
+      new_application = LockerApplication.last
+      expect(page).to have_text('Lewis Library Locker Application')
+      expect(page).to have_select('Preferred Size', options: ['25" x 12"'], disabled: true)
+      expect(page).to have_select('Preferred Floor', options: ['No preference', '3rd floor', '4th floor'])
+      expect(page).to have_select('Semester of Occupancy', options: ['Fall & Spring', 'Spring Only'])
+      expect(page).to have_select('Student/Staff/Faculty Status',
+                                  options: ['senior', 'junior', 'sophomore', 'first-year student', 'graduate', 'faculty', 'staff'])
+      expect(page).to have_field('Department')
+      uid_field = page.find_by_id('locker_application_user_uid', visible: false)
+      expect(uid_field.value).to eq(user.uid)
+      expect(page).to have_button('Submit Locker Application')
+      # Add some values to form
+      expect(new_application.reload.complete).to be false
+      click_button('Submit Locker Application')
+      new_application.reload
+      expect(new_application.preferred_size).to eq(2)
+      expect(new_application.complete).to be true
+      expect(page).to have_current_path(locker_application_path(new_application))
+    end
 
-      it 'does not create an additional empty accessibility need' do
-        visit root_path
-        select('Firestone Library', from: :locker_application_building_id)
-        click_button('Next')
-        expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
-        new_application = LockerApplication.last
-        expect(page).to have_field('Additional accessibility needs')
-        check('Keyed entry (rather than combination)')
-        click_button('Submit Locker Application')
-        expect(page).to have_current_path %r{/locker_applications/\d+$}
-        new_application.reload
-        expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)')
-      end
+    it 'can indicate Accessibility Needs' do
+      visit root_path
+      select('Firestone Library', from: :locker_application_building_id)
+      click_button('Next')
+      expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
+      new_application = LockerApplication.last
+      expect(page).to have_unchecked_field('Keyed entry (rather than combination)')
+      check('Keyed entry (rather than combination)')
+      expect(page).to have_unchecked_field('Near an elevator')
+      check('Near an elevator')
+      expect(page).to have_field('Additional accessibility needs')
+      fill_in('Additional accessibility needs', with: 'Not low to the ground')
+      click_button('Submit Locker Application')
+      expect(page).to have_current_path %r{/locker_applications/\d+$}
+      new_application.reload
+      expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)', 'Near an elevator',
+                                                                     'Not low to the ground')
+    end
 
-      it 'keeps the selected locker size when selecting floor' do
-        visit root_path
-        select('Firestone Library', from: :locker_application_building_id)
-        click_button('Next')
-        select('6-foot', from: :locker_application_preferred_size)
-        select('C floor', from: :locker_application_preferred_general_area)
-        expect(page).to have_select('Preferred Size', selected: '6-foot')
-      end
+    it 'does not create an additional empty accessibility need' do
+      visit root_path
+      select('Firestone Library', from: :locker_application_building_id)
+      click_button('Next')
+      expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
+      new_application = LockerApplication.last
+      expect(page).to have_field('Additional accessibility needs')
+      check('Keyed entry (rather than combination)')
+      click_button('Submit Locker Application')
+      expect(page).to have_current_path %r{/locker_applications/\d+$}
+      new_application.reload
+      expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)')
+    end
+
+    it 'keeps the selected locker size when selecting floor' do
+      visit root_path
+      select('Firestone Library', from: :locker_application_building_id)
+      click_button('Next')
+      select('6-foot', from: :locker_application_preferred_size)
+      select('C floor', from: :locker_application_preferred_general_area)
+      expect(page).to have_select('Preferred Size', selected: '6-foot')
     end
   end
 
