@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :study_room_violations
   attr_writer :applicant
 
-  delegate :email, :name, :department, :status, :junior?, to: :applicant
+  delegate :email, :name, :department, :status, :junior?, :sophomore?, :first_year?, to: :applicant
 
   def number_of_violations
     locker_violations.count + study_room_violations.count

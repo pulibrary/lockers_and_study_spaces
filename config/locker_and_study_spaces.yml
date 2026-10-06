@@ -38,6 +38,8 @@ development: &default
   statuses:
     - senior
     - junior
+    - sophomore
+    - first-year student
     - graduate
     - faculty
     - staff

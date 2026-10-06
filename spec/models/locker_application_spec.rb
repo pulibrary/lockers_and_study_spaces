@@ -166,7 +166,7 @@ RSpec.describe LockerApplication do
 
   context 'a user is present' do
     let(:user) { FactoryBot.create(:user, applicant:) }
-    let(:applicant) { instance_double(Applicant, department: 'department', status: 'senior', junior?: false) }
+    let(:applicant) { instance_double(Applicant, department: 'department', status: 'senior', junior?: false, sophomore?: false, first_year?: false) }
 
     it 'knows the user is a senior' do
       expect(locker_application.status).to eq('senior')
