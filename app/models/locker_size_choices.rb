@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This class is responsible for determining which locker sizes are available
-# for the specified user at the specified user
+# for the specified user in a given building
 class LockerSizeChoices
   def initialize(config: LockerAndStudySpaces.config.fetch(:locker_sizes, []))
     @config = config
