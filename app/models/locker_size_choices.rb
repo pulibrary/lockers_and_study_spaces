@@ -7,9 +7,9 @@ class LockerSizeChoices
     @config = config
   end
 
-  def call(user:, building_name:, config: LockerAndStudySpaces.config.fetch(:locker_sizes, []))
+  def call(user:, building_name:)
     choices = config[building_name]
-    if user.blank? || user.junior? || user.sophomore? || user.first_year?
+    if user.blank? || user.sophomore? || user.first_year?
       [choices.first]
     else
       choices
