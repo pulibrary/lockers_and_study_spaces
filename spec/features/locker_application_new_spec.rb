@@ -97,8 +97,8 @@ RSpec.describe 'Locker Application New', :js do
       click_button('Next')
       expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
       new_application = LockerApplication.last
-      expect(page).to have_unchecked_field('Keyed entry (rather than combination)')
-      check('Keyed entry (rather than combination)')
+      expect(page).to have_unchecked_field('Physical key entry (rather than combination)')
+      check('Physical key entry (rather than combination)')
       expect(page).to have_unchecked_field('Near an elevator')
       check('Near an elevator')
       expect(page).to have_field('Additional accessibility needs')
@@ -106,7 +106,7 @@ RSpec.describe 'Locker Application New', :js do
       click_button('Submit Locker Application')
       expect(page).to have_current_path %r{/locker_applications/\d+$}
       new_application.reload
-      expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)', 'Near an elevator',
+      expect(new_application.accessibility_needs).to contain_exactly('Physical key entry (rather than combination)', 'Near an elevator',
                                                                      'Not low to the ground')
     end
 
@@ -117,11 +117,11 @@ RSpec.describe 'Locker Application New', :js do
       expect(page).to have_current_path %r{/locker_applications/\d+/edit$}
       new_application = LockerApplication.last
       expect(page).to have_field('Additional accessibility needs')
-      check('Keyed entry (rather than combination)')
+      check('Physical key entry (rather than combination)')
       click_button('Submit Locker Application')
       expect(page).to have_current_path %r{/locker_applications/\d+$}
       new_application.reload
-      expect(new_application.accessibility_needs).to contain_exactly('Keyed entry (rather than combination)')
+      expect(new_application.accessibility_needs).to contain_exactly('Physical key entry (rather than combination)')
     end
 
     it 'keeps the selected locker size when selecting floor' do
@@ -150,7 +150,7 @@ RSpec.describe 'Locker Application New', :js do
         visit root_path
         expect(page).to have_text('Firestone Library Locker Application')
         expect(page).to have_field('Applicant Netid', with: admin.uid)
-        check('Keyed entry (rather than combination)')
+        check('Physical key entry (rather than combination)')
         fill_in('Applicant Netid', with: user.uid, fill_options: { clear: :backspace })
         expect(page).to have_field('Applicant Netid', with: user.uid)
         click_button('Submit Locker Application')
@@ -206,15 +206,15 @@ RSpec.describe 'Locker Application New', :js do
 
     describe 'editing a completed application' do
       let(:locker_application) do
-        FactoryBot.create(:locker_application, complete: true, accessibility_needs: ['Keyed entry (rather than combination)', 'Another need'])
+        FactoryBot.create(:locker_application, complete: true, accessibility_needs: ['Physical key entry (rather than combination)', 'Another need'])
       end
 
       it 'displays selected accessibility needs' do
         visit edit_locker_application_path(id: locker_application.id)
         expect(page).to have_text('Accessibility Needs')
-        expect(page).to have_checked_field('Keyed entry (rather than combination)')
+        expect(page).to have_checked_field('Physical key entry (rather than combination)')
         expect(page).to have_field('Additional accessibility needs', with: 'Another need')
-        uncheck('Keyed entry (rather than combination)')
+        uncheck('Physical key entry (rather than combination)')
         click_button('Submit Locker Application')
         expect(page).to have_current_path %r{/locker_applications/\d+$}
         expect(locker_application.reload.accessibility_needs).to contain_exactly('Another need')

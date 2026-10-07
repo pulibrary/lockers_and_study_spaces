@@ -40,7 +40,7 @@ describe 'accessibility', :js do
     end
 
     let(:locker_application) do
-      FactoryBot.create(:locker_application, complete: true, accessibility_needs: ['Keyed entry (rather than combination)', 'Another need'])
+      FactoryBot.create(:locker_application, complete: true, accessibility_needs: ['Physical key entry (rather than combination)', 'Another need'])
     end
 
     context 'when editing new locker application' do
