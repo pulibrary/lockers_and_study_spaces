@@ -172,17 +172,30 @@ RSpec.describe LockerApplication do
       expect(locker_application.status).to eq('senior')
     end
 
-    it 'only has multiple size choices' do
+    it 'has multiple size choices' do
       expect(locker_application.size_choices(building_one.name)).to eq([{ label: '4-foot', value: 4 }, { label: '6-foot', value: 6 }])
     end
   end
 
   context 'a junior user is present' do
     let(:user) { FactoryBot.create(:user, applicant:) }
-    let(:applicant) { instance_double(Applicant, department: 'department', status: 'junior', junior?: true) }
+    let(:applicant) { instance_double(Applicant, department: 'department', status: 'junior', junior?: true, sophomore?: false, first_year?: false) }
 
     it 'knows the user is a junior' do
       expect(locker_application.status).to eq('junior')
+    end
+
+    it 'has multiple size choices' do
+      expect(locker_application.size_choices(building_one.name)).to eq([{ label: '4-foot', value: 4 }, { label: '6-foot', value: 6 }])
+    end
+  end
+
+  context 'a sophomore user is present' do
+    let(:user) { FactoryBot.create(:user, applicant:) }
+    let(:applicant) { instance_double(Applicant, department: 'department', status: 'sophomore', junior?: false, sophomore?: true) }
+
+    it 'knows the user is a sophomore' do
+      expect(locker_application.status).to eq('sophomore')
     end
 
     it 'only has one size choice' do
