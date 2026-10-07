@@ -96,7 +96,7 @@ RSpec.describe LockerApplication do
       expect(locker_application.accessibility_needs_choices(building_one).first).to be_an_instance_of(Hash)
       expect(locker_application.accessibility_needs_choices(building_one).first.keys).to match_array(%i[id description])
       expect(locker_application.accessibility_needs_choices(building_one).first[:id]).to eq('keyed_entry')
-      expect(locker_application.accessibility_needs_choices(building_one).first[:description]).to eq('Keyed entry (rather than combination)')
+      expect(locker_application.accessibility_needs_choices(building_one).first[:description]).to eq('Physical key entry (rather than combination)')
     end
 
     it 'has specific Lewis options' do
