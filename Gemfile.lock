@@ -118,7 +118,9 @@ GEM
       logger
     health-monitor-rails (12.9.0)
       railties (>= 6.1)
-    honeybadger (4.12.2)
+    honeybadger (6.9.3)
+      logger
+      ostruct
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     io-console (0.9.4)
@@ -410,7 +412,7 @@ DEPENDENCIES
   factory_bot
   flipflop (~> 2.7)
   health-monitor-rails (= 12.9.0)
-  honeybadger (~> 4.0)
+  honeybadger
   jbuilder (~> 2.5)
   net-ldap
   omniauth
