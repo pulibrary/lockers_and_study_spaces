@@ -52,7 +52,7 @@ RSpec.describe 'Locker Application New', :js do
       expect(page).to have_select('Student/Staff/Faculty Status',
                                   options: ['senior', 'junior', 'sophomore', 'first-year student', 'graduate', 'faculty', 'staff'])
       expect(page).to have_field('Department')
-      uid_field = page.find_by_id('locker_application_user_uid', visible: false)
+      uid_field = page.find_by_id('locker_application_user_uid', visible: :hidden)
       expect(uid_field.value).to eq(user.uid)
       expect(page).to have_button('Submit Locker Application')
       # Add some values to form
@@ -79,7 +79,7 @@ RSpec.describe 'Locker Application New', :js do
       expect(page).to have_select('Student/Staff/Faculty Status',
                                   options: ['senior', 'junior', 'sophomore', 'first-year student', 'graduate', 'faculty', 'staff'])
       expect(page).to have_field('Department')
-      uid_field = page.find_by_id('locker_application_user_uid', visible: false)
+      uid_field = page.find_by_id('locker_application_user_uid', visible: :hidden)
       expect(uid_field.value).to eq(user.uid)
       expect(page).to have_button('Submit Locker Application')
       # Add some values to form
@@ -191,7 +191,7 @@ RSpec.describe 'Locker Application New', :js do
         expect(page).to have_text('Lewis Library Locker Application')
         expect(page).to have_field('Applicant Netid', with: lewis_admin.uid)
         fill_in('Additional accessibility needs', with: 'Lower row')
-        building_field = page.find_by_id('locker_application_building_id', visible: false)
+        building_field = page.find_by_id('locker_application_building_id', visible: :hidden)
         expect(building_field.value).to eq(lewis_admin.building.id.to_s)
         click_button('Submit Locker Application')
 
