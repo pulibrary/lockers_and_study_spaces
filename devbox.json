@@ -3,7 +3,7 @@
   "packages": [
     "nodejs@26.8.0",
     "yarn@latest",
-    "ruby@3.4.1",
+    "ruby@4.0.9",
     "postgresql@13",
     "libyaml@latest",
     "libyaml.dev",
