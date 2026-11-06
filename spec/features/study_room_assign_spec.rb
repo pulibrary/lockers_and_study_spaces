@@ -27,9 +27,11 @@ RSpec.describe 'Study Room Assign', :js do
     fill_in "study_room_assignment_#{study_room1.id}_user_netid", with: user1.uid
     fill_in "study_room_assignment_#{study_room2.id}_user_netid", with: user2.uid
 
-    expect { click_button 'Update Assignments' }
-      .to change { StudyRoomAssignment.count }.by(2)
-                                              .and not_change { User.count }
+    expect do
+      click_button 'Update Assignments'
+      sleep 1
+    end.to change { StudyRoomAssignment.count }.by(2)
+                                               .and not_change { User.count }
       .and change {
              ActionMailer::Base.deliveries.count
            }.by(2)
@@ -91,10 +93,12 @@ RSpec.describe 'Study Room Assign', :js do
     # fill in users
     fill_in "study_room_assignment_#{study_room1.id}_user_netid", with: ''
 
-    expect { click_button 'Update Assignments' }
-      .to not_change { StudyRoomAssignment.count }
-      .and not_change { User.count }
-      .and(not_change { ActionMailer::Base.deliveries.count })
+    expect do
+      click_button 'Update Assignments'
+      sleep 1
+    end.to not_change { StudyRoomAssignment.count }
+       .and not_change { User.count }
+       .and(not_change { ActionMailer::Base.deliveries.count })
     expect(study_room_assignment.reload.released_date).to eq(DateTime.now.to_date)
   end
 end
