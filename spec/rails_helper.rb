@@ -81,7 +81,9 @@ RSpec.configure do |config|
     options = Selenium::WebDriver::Chrome::Options.new
     options.args << '--headless'
     options.args << '--window-size=1500,850'
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
+    driver = Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
+    driver.invalid_element_errors.push(Selenium::WebDriver::Error::UnknownError)
+    driver
   end
 
   Capybara.javascript_driver = if ENV['RUN_IN_BROWSER']
