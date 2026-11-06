@@ -118,7 +118,7 @@ GEM
       logger
     health-monitor-rails (12.9.0)
       railties (>= 6.1)
-    honeybadger (6.9.3)
+    honeybadger (6.10.1)
       logger
       ostruct
     i18n (1.15.2)
